@@ -1,0 +1,39 @@
+<div>
+  <div id="search-filters">
+    <ul>
+      <li *ngFor="let icon of filterIcons">
+        <i class="{{helpers.buildIconClass(icon.icon, 1)}}"
+           (click)="filter(icon)"
+           [style.color]="filters[icon.icon] ? icon.bgColor : 'white'">
+        </i>
+      </li>
+    </ul>
+  </div>
+
+
+  <h2 class="search-results-heading">search results</h2>
+  <!-- Users Results Found -->
+  <section *ngIf="users.length > 0">
+    <h3 class="search-subheading">users found</h3>
+    <ul>
+      <li *ngFor="let user of filteredUsers">
+        <a routerLink="/{{user.username}}" class="search-results-user-sign">
+          <user-sign [user]="user"></user-sign>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Signs Results Found -->
+  <section *ngIf="signs.length > 0">
+    <h3 class="search-subheading">signs found</h3>
+    <ul>
+      <li *ngFor="let sign of filteredSigns">
+        <!-- THIS SHOULD LINK TO THE OWNER OF THE SIGN'S SIGNPOST PAGE -->
+        <a routerLink="/" class="search-results-signs">
+          <sign [sign]="sign"></sign>
+        </a>
+      </li>
+    </ul>
+  </section>
+</div>

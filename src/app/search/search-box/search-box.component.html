@@ -1,0 +1,19 @@
+<!-- Search -->
+<div class="search-container">
+  <div class="search-box">
+    <form #searchForm="ngForm" name="searchForm" (ngSubmit)="searchUsers()" class="search-box-form">
+      <md-input-container md-float [ngStyle]="{'color': 'white'}" layout="row" class="search-box-input-container">
+        <input mdInput type="text" [(ngModel)]="searchStr" placeholder="find someone" name="search">
+      </md-input-container>
+
+      <button type="submit" class="sidenav-search-btn-icon">
+          <i class="fa fa-search fa-2x sp-hover"></i>
+        </button>
+    </form>
+  </div>
+
+  <div class="search-results-container" *ngIf="(foundUsers && foundUsers.length) || (foundSigns && foundSigns.length)">
+    <search-results [users]="foundUsers" [signs]="foundSigns"></search-results>
+  </div>
+</div>
+

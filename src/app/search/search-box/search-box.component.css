@@ -1,0 +1,16 @@
+.search-box {
+  margin-top: 20px;
+}
+
+.search-results-container {
+  max-width: 750px;
+}
+
+.md-input-element {
+  color: white;
+}
+
+.search-box-form {
+  display: flex;
+  flex-direction: row;
+}

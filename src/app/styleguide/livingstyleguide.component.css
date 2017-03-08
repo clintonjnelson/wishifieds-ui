@@ -1,0 +1,29 @@
+.lsg-card1 {
+  background-color: #617b7e;
+  margin-bottom: 30px;
+}
+.lsg-card2 {
+  background-color: #c3beb5;
+  margin-bottom: 30px;
+}
+.lsg-card3 {
+  background-color: #c1b0a3;
+  margin-bottom: 30px;
+}
+.lsg-card4 {
+  background-color: #d08b8b;
+  margin-bottom: 30px;
+}
+.lsg-card5 {
+  background-color: #b07b7b;
+  margin-bottom: 30px;
+}
+/*2017 PANTONE*/
+.lsg-card6 {
+  background-color: #88B04B;
+  margin-bottom: 30px;
+}
+
+md-card > h2 {
+  text-align: center;
+}

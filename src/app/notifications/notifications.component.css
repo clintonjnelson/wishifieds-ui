@@ -1,0 +1,13 @@
+.notification-message {
+  border-radius: 3px;
+  font-family: helvetica, sans-serif;
+  text-align: center;
+  padding-bottom: 2px;
+  padding-top: 2px;
+
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 120px);
+}

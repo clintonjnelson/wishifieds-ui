@@ -1,0 +1,50 @@
+<div class="sign-content-component">
+  <!-- Sign Info -->
+  <div class="sign-content" *ngIf="!isEditing">
+    <h3 class="sign-content-title">{{ sign.knownAs }}</h3>
+    <p class="sign-content-first-line"> {{ sign.description }} </p>
+  </div>
+
+  <!-- Sign Edit Form -->
+  <div *ngIf="isEditing" class="sign-content-edit-form-container">
+    <form flex #signform="ngForm" name="signForm" class="sign-form" layout="column">
+
+      <!-- Description -->
+      <md-input-container layout="row">
+        <i class="{{helpers.buildIconClass('info-circle', 1)}} centered-item"></i>
+        <input mdInput type="text" name="desc" ngControl="desc" [(ngModel)]="tempSign.description" placeholder="short description" md-maxlength="30">
+      </md-input-container>
+
+
+      <!-- Form Buttons -->
+      <div>
+        <!-- ok button -->
+        <a (click)="save(tempSign)" type="submit" class="sign-saveicon" >
+          <i class="{{helpers.buildIconClass('check', 2)}}"></i>
+        </a>
+        <!-- cancel button -->
+        <a (click)="cancel()" class="sign-cancelicon">
+          <i *ngIf="!showPreviewLabel" class="{{helpers.buildIconClass('times', 2)}}"></i>
+          <!-- I THINK THIS NEXT HTML TAG SHOULD NOT BE HERE, BUT VERIFY BEFORE REMOVE -->
+          <p *ngIf="showPreviewLabel"  class="preview-button-label">Preview</p>
+        </a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Right Sign Management Icons Container -->
+  <div *ngIf="auth.isLoggedIn && isOwner && !isEditing" [style.background]="sign.bgColor" class="sign-management-icons-container">
+    <!-- Delete Icon -->
+    <div class="sign-delete-icon">
+      <a (click)="destroy()" class="sign-delete-icon">
+        <i class="fa fa-times fa-1x" aria-hidden="true"></i>
+      </a>
+    </div>
+    <!-- Edit Icon -->
+    <div class="sign-edit-icon">
+      <a (click)="toggleEditing()" class="edit-icon">
+        <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+</div>

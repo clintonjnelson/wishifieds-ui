@@ -1,0 +1,13 @@
+<div class="dashboard-container">
+  <section class="info-container">
+    <dl>total users</dl>
+    <dt>{{users.length}}</dt>
+  </section>
+  <section class="users-list-container">
+    <ul>
+      <li *ngFor="let user of users">
+        {{user.username}}
+      </li>
+    </ul>
+  </section>
+</div>

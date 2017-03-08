@@ -1,0 +1,24 @@
+.dashboard-container {
+  color: white;
+  font-family: helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-container dl, .info-container dt {
+  display: inline-block;
+  padding-right: 10px;
+}
+
+dt {
+  font-weight: bold;
+  font-size: 20px
+}
+
+li {
+  margin-left: -40px;
+  list-style: none;
+}
+

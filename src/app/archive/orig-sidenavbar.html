@@ -1,0 +1,62 @@
+
+<md-sidenav-container layout="row">
+  <!-- MAY NEED A SIDENAV CONTAINER FOR PROPER OPERATION -->
+  <md-sidenav #start (open)="closeStartButton.focus()" class="md-sidenav-left">
+    Open The Navbar!
+    <button md-button #closeStartButton (click)="start.close()">Close</button>
+    <!-- Signed IN OR OUT content -->
+    <md-list>
+      <search-box></search-box>
+    </md-list>
+
+
+    <!-- Signed IN content -->
+    <md-list *ngIf="isSignedIn">
+      <!-- MAKE THIS A NG-REPEAT DIRECTIVE -->
+      <ul class="navbar-links">
+        <!-- <li *ngFor="let link of myLinks">
+          <navlink
+            linkPath={{link.path}}
+            linkIcon={{link.icon}}
+            linkName={{link.name}}>
+          </navlink>
+        </li> -->
+      </ul>
+    </md-list>
+
+
+    <!-- Signed OUT content -->
+    <md-list *ngIf="isSignedOut">
+
+      <!-- MAYBE START HERE WITH THE NGFOR LOOPING, CREATING LIST-ITEMS???? -->
+      <md-list-item>
+        <md-list>
+          <h4 class="sidenav-oauth-login-title"> login options </h4>
+          <!-- Oauth Login Links -->
+          <ul class="navbar-links">
+            <li *ngFor="let link of oauthLinks">
+              <navlink
+                linkPath={{link.path}}
+                linkIcon={{link.icon}}
+                linkName={{link.name}}>
+              </navlink>
+            </li>
+          </ul>
+
+          <br>
+          <h4 class="sidenav-oauth-login-title"> OR </h4>
+          <!-- Signpost Login Form -->
+          <login-signup-form></login-signup-form>
+          <br>
+
+        </md-list>
+      </md-list-item>
+    </md-list>
+  </md-sidenav>
+
+  <div class="sidenav-menu">
+    <div data-ng-click="openLeftMenu()" class="bg-gray">
+      <md-icon icon="menu" style="fill: white" size="50"></md-icon>
+    </div>
+  </div>
+</md-sidenav-container>

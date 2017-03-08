@@ -1,0 +1,82 @@
+<!-- Watermark - Shows Over Sign During Preview -->
+<div *ngIf="showPreviewLabel" class="preview-watermark">p r e v i e w</div>
+
+<!-- Sign Content Area & Content Form Area -->
+<div class="sign-content-component">
+  <!-- Sign Info -->
+  <div class="sign-content" *ngIf="!isEditing">
+    <h3 class="sign-content-title">{{ sign.signName }}</h3>
+    <p class="sign-content-first-line"> <small>{{ sign.description }}</small></p>
+    <a href="{{sign.linkUrl}}" class="sign-content-second-line"> {{ sign.linkUrl }} </a>
+  </div>
+
+  <!-- Sign Edit Form -->
+
+  <div *ngIf="isEditing" class="sign-content-edit-form-container">
+    <form #signForm="ngForm" name="signForm" class="sign-form">
+      <!-- sign Title -->
+      <div class="sign-content-input-container">
+        <md-input-container>
+          <i class="{{helpers.buildIconClass('star', 1)}}"></i>
+          <input mdInput type="text" name="title" [(ngModel)]="tempSign.signName" placeholder="Sign Title" md-maxlength="30" required/>
+        </md-input-container>
+        <div *ngIf="displayedValidationErrors.title" class="input-errors error">
+          {{ displayedValidationErrors.title }}
+        </div>
+      </div>
+
+      <!-- url -->
+      <div class="sign-content-input-container">
+        <md-input-container>
+          <i class="{{helpers.buildIconClass('link', 1)}}"></i>
+          <input mdInput type="url" name="url" [(ngModel)]="tempSign.linkUrl" placeholder="http://www.somewebsite.com/..." required/>
+        </md-input-container>
+        <div *ngIf="displayedValidationErrors.url" class="input-errors error">
+          {{ displayedValidationErrors.url }}
+        </div>
+      </div>
+
+      <!-- knownAs/username -->
+      <md-input-container>
+        <i class="{{helpers.buildIconClass('user-o', 1)}}"></i>
+        <input mdInput type="text" name="username" [(ngModel)]="tempSign.knownAs" placeholder="@myusername" md-maxlength="30">
+      </md-input-container>
+
+      <!-- description -->
+      <md-input-container>
+        <i class="{{helpers.buildIconClass('info-circle', 1)}}"></i>
+        <input mdInput type="text" name="desc" [(ngModel)]="tempSign.description" placeholder="short description">
+      </md-input-container>
+
+      <!-- form buttons -->
+      <div>
+        <!-- ok button -->
+        <a (click)="save(tempSign)" type="submit" class="sign-saveicon" [attr.disabled]="!signForm.form.valid">
+          <i class="{{helpers.buildIconClass('check', 2)}}"></i>
+        </a>
+        <!-- cancel button -->
+        <a (click)="cancel()" class="sign-cancelicon">
+          <i *ngIf="!showPreviewLabel" class="{{helpers.buildIconClass('times', 2)}}"></i>
+          <p *ngIf="showPreviewLabel"  class="preview-button-label">Preview</p>
+        </a>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Right Sign Management Icons Container -->
+  <div *ngIf="auth.isLoggedIn && isOwner && !isEditing" [style.background]="sign.bgColor" class="sign-management-icons-container">
+    <!-- Delete Icon -->
+    <div class="sign-delete-icon">
+      <a (click)="destroy()" class="sign-delete-icon">
+        <i class="fa fa-times fa-1x" aria-hidden="true"></i>
+      </a>
+    </div>
+    <!-- Edit Icon -->
+    <div class="sign-edit-icon">
+      <a (click)="toggleEditing()" class="edit-icon">
+        <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<!-- User Settings Form -->
+<div class="user-settings-container">
+  <h2 class="settings-page-heading">settings</h2>
+
+  <form name="userSettingsForm" class="user-settings-form" #userSettingsForm="ngForm">
+
+    <!-- Username -->
+    <div class="settings-input-error-container">
+      <md-input-container class="user-settings-input">
+        <i class="{{helpers.buildIconClass('user', 1)}}"></i>
+        <input mdInput type="text" name="username" [(ngModel)]="tempSettings.username" placeholder="your login/contact email" minlength="1" maxlength="20" unique="username" required/>
+      </md-input-container>
+      <!-- Show errors only if exist and input has been modified -->
+      <div *ngIf="displayedValidationErrors.username" class="input-errors error">
+        {{ displayedValidationErrors.username }}
+      </div>
+    </div>
+
+    <!-- Contact & Login Email -->
+    <div class="settings-input-error-container">
+      <md-input-container class="user-settings-input">
+        <i class="{{helpers.buildIconClass('envelope', 1)}}"></i>
+        <input mdInput type="email" name="email" [(ngModel)]="tempSettings.email" placeholder="your login/contact email" minlength="5" unique="email" required/>
+      </md-input-container>
+      <div *ngIf="displayedValidationErrors.email" class="input-errors error">
+        {{ displayedValidationErrors.email }}
+      </div>
+    </div>
+
+    <!-- Save/Cancel Buttons -->
+    <div class="save-cancel-buttons">
+      <!-- Save button - show only if for modified & dirty; hide if any part is not valid -->
+      <a (click)="save()" type="submit" class="user-settings-saveicon" [hidden]="!userSettingsForm.form.valid || !userSettingsForm.form.dirty" [attr.disabled]="!userSettingsForm.form.valid">
+        <i class="{{helpers.buildIconClass('check', 2)}}"></i>
+      </a>
+      <!-- Cancel button -->
+      <a (click)="cancel()" class="user-settings-cancelicon" [hidden]="!userSettingsForm.form.dirty">
+        <i class="{{helpers.buildIconClass('times', 2)}}"></i>
+      </a>
+    </div>
+  </form>
+</div>

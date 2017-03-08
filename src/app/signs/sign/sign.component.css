@@ -1,0 +1,76 @@
+.sign-container {
+  display: flex;
+  flex-direction: row;
+}
+.sign {
+  border: 3px solid #c9c9c9;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  max-width: 600px;
+  z-index: 999;
+  transform: rotate(0deg);
+  overflow: hidden;
+}
+
+.sign-image-container {
+  border-radius: 3px;
+  display: flex;
+  flex-direction: row;
+  height: 66px;
+  margin-right: 10px;     /*Shift text right for when there is no image*/
+  text-align: center;
+}
+i.underlay-icon {
+  transform:translateY(-5px);
+  opacity: 0.4;
+  width: 70px;
+  z-index: 1;
+}
+.centered-item {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.sign-image {
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+div.sign-content-container {
+  display: flex;
+  flex-direction: row;
+  width: calc(100% - 85px);  /*Creates responsive width to enable ellipsis later*/
+  max-width: 500px;
+  z-index: 10;
+}
+
+/*Based on a ngClass, since only need this when pic AND image exist*/
+.shift-left {
+  margin-left: -80px;
+}
+
+/*WHEN YOU MAKE A NEW COMPONENT, FLEX MAY NEED VALUES ON IT IN CSS!!!*/
+generic-sign-content, custom-sign-content, oauth-sign-content {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 2;
+  min-width: 0;
+}
+
+.sign-angled-tip {
+  border-top:    44px solid transparent;
+  border-bottom: 44px solid transparent;
+  border-left:   44px solid transparent;
+  display: flex;
+  align-self: flex-end;
+  margin-left: -2px;
+  width: 0;
+  height: 0;
+}
+
+

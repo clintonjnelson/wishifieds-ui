@@ -1,0 +1,54 @@
+.login-signup-form {
+  display: block;
+  border: 1px white solid;
+  border-radius: 2px;
+  padding: 15px;
+}
+
+.login-signup-input-error-container {}
+
+.input-errors {
+  margin-bottom: 5px;
+
+}
+
+.error {
+  color: pink;
+  font-family: helvetica, sans-serif;
+}
+
+.login-input-container {
+  color: white;
+  display: block;
+  padding-top: 5px;
+  width: 290px;
+}
+.login-input-container input {
+  font-size: 18px;
+}
+.login-signup-checkbox {
+  color: white;
+  font-family: helvetica, sans-serif;
+  display: block;
+}
+.checkbox-link-shared-line {
+  display: flex;
+  flex-direction: row;
+  /*justify-content: space-between;*/
+}
+.forgot-password-link {
+  font-family: helvetica, sans-serif;
+  margin-left: 20px;
+  transform: translateY(3px);
+}
+.login-signup-button {
+  text-align: left;
+  background: none;
+  border: none;
+}
+button[disabled].submit i, i:hover {
+  color: #ff9999 !important;
+}
+.cancel i:hover {
+  color:red;
+}

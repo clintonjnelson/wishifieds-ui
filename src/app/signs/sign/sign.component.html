@@ -1,0 +1,28 @@
+<div class="sign-container">
+  <div id="{{'sign_' + sign._id}}" class="sign" [style.background]="sign.bgColor" [style.borderColor]="sign.bgColor">
+
+
+    <!-- Main Icon - SHOW IF THERE'S A PIC URL -->
+    <div *ngIf="sign.picUrl" class="sign-image-container">
+      <a target="_blank" href="{{sign.linkUrl}}" class="centered-item">
+        <img src="{{sign.picUrl}}" height="70" width="70" class="sign-image">
+      </a>
+      <i class="{{helpers.buildIconClass(sign.icon, 5)}} underlay-icon"></i>
+    </div>
+
+    <!-- IF NO PIC URL THEN JUST SHOW ICON AS LINK -->
+    <div *ngIf="!sign.picUrl" class="sign-image-container">
+      <a href="{{sign.linkUrl}}" class="centered-item">
+        <i class="{{helpers.buildIconClass(sign.icon, 5)}} underlay-icon"></i>
+      </a>
+    </div>
+
+    <!-- Sign Content & Edit Form-->
+    <div class="sign-content-container" [ngSwitch]="getFormType(sign.signType)" [ngClass]="{'shift-left': sign.picUrl}">
+      <oauth-sign-content *ngSwitchCase="'oauth'" [sign]="sign" [forNewSign]="forNewSign" (saveEE)="save($event)" (destroyEE)="destroy($event)"></oauth-sign-content>
+      <custom-sign-content  *ngSwitchCase="'custom'"  [sign]="sign" [forNewSign]="forNewSign" (saveEE)="save($event)" (destroyEE)="destroy($event)"></custom-sign-content>
+      <generic-sign-content *ngSwitchCase="'generic'" [sign]="sign" [forNewSign]="forNewSign" (saveEE)="save($event)" (destroyEE)="destroy($event)"></generic-sign-content>
+    </div>
+  </div>
+  <div class="sign-angled-tip" [style.borderLeftColor]="sign.bgColor"></div>
+</div>

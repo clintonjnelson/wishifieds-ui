@@ -1,0 +1,20 @@
+<!-- Signs -->
+<div>
+  <!-- Viewer - No Abiliity to Modify -->
+  <section *ngIf="!isOwner">
+    <ul>
+      <li *ngFor="let sign of signs">
+        <sign [sign]="sign" (saveEE)="save($event)" (destroyEE)="destroy($event)"></sign>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Owner - Draggable Capabilities -->
+  <section *ngIf="isOwner">
+    <ul [dragula]="'bag-one'" [dragulaModel]="signs">
+      <li *ngFor="let sign of signs">
+        <sign [sign]="sign" (saveEE)="save($event)" (destroyEE)="destroy($event)"></sign>
+      </li>
+    </ul>
+  </section>
+</div>

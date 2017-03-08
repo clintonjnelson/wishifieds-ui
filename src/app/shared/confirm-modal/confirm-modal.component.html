@@ -1,0 +1,9 @@
+<div id="modal-container">
+  <!-- Confirmation Warning/Info -->
+  <h2>{{title}}</h2>
+  <p>{{msg}}</p>
+
+  <!-- OK/Close Buttons -->
+  <i class="{{helpers.buildIconClass('check', 2)}}" (click)="dialogRef.close(true)"></i>
+  <i class="{{helpers.buildIconClass('times', 2)}}" (click)="dialogRef.close(false)"></i>
+</div>

@@ -1,0 +1,19 @@
+h2.user-signs-heading {
+  color: white;
+  font-family: helvetica, sans-serif;
+  text-align: center;
+  font-weight: normal;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0px;
+}
+ul li {
+  margin-bottom: 5px;
+}
+
+/*Drag & Drop Custom Styling*/
+.gu-mirror {
+  list-style: none;
+}

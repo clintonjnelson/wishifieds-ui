@@ -1,0 +1,19 @@
+<div *ngIf="notifService.display" id="notifications-container" [ngSwitch]="notifService.display.type">
+  <section *ngSwitchCase="'error'" class="notification-message" [style.backgroundColor]="'#5a5a5a'" [style.color]="'pink'">
+    This is an error message.
+    {{notifService.display.msg}}
+  </section>
+  <section *ngSwitchCase="'warning'" class="notification-message" [style.backgroundColor]="'#5a5a5a'" [style.color]="'lightyellow'">
+    This is a warning message.
+    {{notifService.display.msg}}
+  </section>
+  <section *ngSwitchCase="'info'" class="notification-message" [style.backgroundColor]="'#5a5a5a'" [style.color]="'lightblue'">
+    This is an info message.
+    {{notifService.display.msg}}
+  </section>
+  <section *ngSwitchCase="'success'" class="notification-message" [style.backgroundColor]="'#5a5a5a'" [style.color]="'lightgreen'">
+    This is a success message.
+    {{notifService.display.msg}}
+  </section>
+</div>
+

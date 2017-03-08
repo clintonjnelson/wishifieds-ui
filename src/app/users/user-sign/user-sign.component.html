@@ -1,0 +1,24 @@
+<!-- DO WE REALLY NEED AN ID HERE WITH: id="{{'user-sign-' + sign._id}}"  -->
+<div class="sign">
+
+  <!-- Main Icon -->
+  <div class="sign-image-container">
+    <img *ngIf="user.picUrl" src="{{user.picUrl}}" alt="optional user image" height="70" width="70" class="centered-item">
+    <i class="{{helpers.buildIconClass('user', 4)}} underlay-icon centered-item"></i>
+  </div>
+
+  <!-- Sign Content & Edit Form-->
+  <div class="sign-content-container">
+    <div class="sign-content-component">
+      <!-- Sign Info -->
+      <div class="sign-content">
+        <h3 class="sign-content-title">{{ user.username }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isAdmin" class="user-management-container">
+    <i *ngIf="user.status === 'active'"   (click)="deactivateUser()" class="{{helpers.buildIconClass('times', 1)}}"></i>
+    <i *ngIf="user.status === 'inactive'" (click)="activateUser()"   class="{{helpers.buildIconClass('refresh', 1)}}"></i>
+  </div>
+</div>

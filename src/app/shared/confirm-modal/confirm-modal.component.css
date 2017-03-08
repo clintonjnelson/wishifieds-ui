@@ -1,0 +1,12 @@
+/deep/ md-dialog-container.md-dialog-container {
+  position: absolute;
+  left: 20%;
+  top: 10%;
+  max-width: 400px;
+  max-height: 200px;
+  z-index: 9999;
+
+  background-color: #5a5a5a;
+  font-family: helvetica;
+  color: white;
+}

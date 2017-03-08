@@ -1,0 +1,112 @@
+.preview-watermark {
+  position: absolute;
+  left: 20%;
+  top: 10%;
+  transform: rotate(15deg);
+
+  color: white;
+  font-size: 52px;
+  font-family: helvetica, sans-serif;
+  opacity: 0.2;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.sign-content-component {
+  display: flex;
+  flex-direction: row;
+  /*flex-grow: 2;*/
+  width: 100%;
+  justify-content: space-between;
+}
+.sign-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+  width: 100%;
+}
+h3, p {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.sign-content-title, .sign-content-first-line, .sign-content-second-line {
+  font-family: helvetica, sans-serif;
+  color: white;
+  margin: 0;
+}
+.sign-content-first-line {}
+.sign-content-second-line {
+  font-size: 16px;
+}
+.sign-content-title {
+  font-size: 20px;
+  font-weight: normal;
+  /*Next Part is for Truncating Long String... not sure if it works or not*/
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*Sign Content Edit Form*/
+.sign-form {
+  display: flex;
+  flex-direction: column;
+}
+md-input-container {
+  color: white;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.sign-content-input-container {
+  display: inline-block;
+}
+.md-input-element {
+  color: white;
+}
+.preview-button-label {
+  color: white;
+  font-family: helvetica, sans-serif;
+  font-weight: bold;
+  display: inline-block;
+  margin: 0 0 0 10px;
+}
+
+
+/* Sign Form Errors */
+.settings-input-error-container {
+  display: inline-block;
+  float: left;
+  margin-top: 10px;
+}
+.input-errors {
+  margin-top: -15px;
+}
+.error {
+  color: #ff77aa;
+  font-family: helvetica, sans-serif;
+}
+
+/* Sign Management Container Area */
+.sign-management-icons-container {
+  position: absolute;   /* testing */
+  right: 0;             /* testing */
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.sign-delete-icon {
+  color: white;
+  font-family: helvetica, sans-serif;
+  font-weight: bold;
+  top: 0px;
+}
+.sign-delete-icon:hover, .sign-delete-icon > i:hover {
+  color: #FF3030;
+}
+.sign-edit-icon {
+  bottom: 0;
+  margin-bottom: 8px;
+}

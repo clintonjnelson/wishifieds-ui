@@ -1,0 +1,79 @@
+<div class="sign-content-component">
+  <!-- Sign Info -->
+  <div class="sign-content" *ngIf="!isEditing">
+    <h3 class="sign-content-title">{{ titleText(sign) }}</h3>
+    <p class="sign-content-first-line"> <small>{{ firstLineText(sign) }}</small></p>
+  </div>
+
+  <!-- Sign Edit Form -->
+  <div *ngIf="isEditing" class="sign-content-edit-form-container">
+    <form #signForm="ngForm" name="signForm" class="sign-form" layout="column">
+
+      <!-- Choose ONE Key Data Input Based on Sign Type -->
+      <div [ngSwitch]="sign.signName">
+        <!-- email -->
+        <md-input-container *ngSwitchCase="'email'">
+          <i class="{{helpers.buildIconClass('envelope', 1)}}"></i>
+          <input mdInput type="email" name="email" ngControl="email" [(ngModel)]="tempSign.knownAs" placeholder="emailmee@example.com" required/>
+        </md-input-container>
+        <div *ngIf="displayedValidationErrors.email" class="input-errors error">
+          {{ displayedValidationErrors.email }}
+        </div>
+
+        <!-- phone -->
+        <md-input-container *ngSwitchCase="'phone'">
+          <i class="{{helpers.buildIconClass('phone', 1)}}"></i>
+          <input mdInput type="tel" name="phone" ngControl="phone" [(ngModel)]="tempSign.knownAs" placeholder="(555)555-5555" required/>
+        </md-input-container>
+        <div *ngIf="displayedValidationErrors.phone" class="input-errors error">
+          {{ displayedValidationErrors.phone }}
+        </div>
+
+        <!-- Website -->
+        <md-input-container *ngSwitchCase="'website'">
+          <i class="{{helpers.buildIconClass('globe', 1)}}"></i>
+          <input mdInput type="url" name="website" ngControl="website" [(ngModel)]="tempSign.linkUrl" placeholder="www.mywebsite.com" required/>
+        </md-input-container>
+        <div *ngIf="displayedValidationErrors.website" class="input-errors error">
+          {{ displayedValidationErrors.website }}
+        </div>
+
+      </div>
+
+      <!-- description -->
+      <md-input-container layout="row">
+        <i class="{{helpers.buildIconClass('info-circle', 1)}}"></i>
+        <input mdInput type="text" name="desc" ngControl="desc" [(ngModel)]="tempSign.description" placeholder="short description" md-maxlength="30">
+      </md-input-container>
+
+      <!-- form buttons -->
+      <div>
+        <!-- ok button -->
+        <a (click)="save(tempSign)" type="submit" class="sign-saveicon" [attr.disabled]="!signForm.form.valid">
+          <i class="{{helpers.buildIconClass('check', 2)}}"></i>
+        </a>
+        <!-- cancel button -->
+        <a (click)="cancel()" class="sign-cancelicon">
+          <i *ngIf="!showPreviewLabel" class="{{helpers.buildIconClass('times', 2)}}"></i>
+          <p *ngIf="showPreviewLabel"  class="preview-button-label">Preview</p>
+        </a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Right Sign Management Icons Container -->
+  <div *ngIf="auth.isLoggedIn && isOwner && !isEditing" [style.background]="sign.bgColor" class="sign-management-icons-container">
+    <!-- Delete Icon -->
+    <div class="sign-delete-icon">
+      <a (click)="destroy()" class="sign-delete-icon">
+        <i class="fa fa-times fa-1x" aria-hidden="true"></i>
+      </a>
+    </div>
+    <!-- Edit Icon -->
+    <div class="sign-edit-icon">
+      <a (click)="toggleEditing()" class="edit-icon">
+        <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+</div>

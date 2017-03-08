@@ -1,0 +1,13 @@
+<!--
+  Things that NEED to be dynamic in here:
+    - data-ng-href
+    - icon - name goes between the tags
+    - text inside "strong"
+ -->
+
+<md-list-item class="sidenav-link">
+  <a [href]="linkPath">
+    <i [ngClass]="linkIcon"></i>
+    <strong>{{linkName}}</strong>
+  </a>
+</md-list-item>

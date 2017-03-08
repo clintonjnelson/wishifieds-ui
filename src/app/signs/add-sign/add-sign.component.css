@@ -1,0 +1,30 @@
+.add-sign-icon-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/deep/ label.md-input-placeholder.md-empty:not(.md-focused) {
+  margin-left: 20px;
+}
+
+p.heading {
+  color: white;
+  font-family: helvetica, sans-serif;
+  text-align: center;
+}
+
+ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-left: 0;
+}
+
+ul > li {
+  margin-right: 5px;
+}
+
+.oauth-icons-list {
+  list-style: none;
+}
