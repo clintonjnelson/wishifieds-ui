@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router     } from '@angular/router';
 import { Subject    } from 'rxjs/Subject';
+import { SignpostApi } from '../api/signpost-api.service';
 
+// Observable libaraies
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/catch';
 
 export class UserAuth {
   isLoggedIn:  boolean;
@@ -37,8 +41,8 @@ export class AuthService {
     return false; // this.role === 'admin';
   }
 
-  login() {
-    console.log("AUTH LOGIN CLICKED");
+  login(username: string, password: string) {
+    var encodedCreds = window.btoa(username + ':' + password);
 
     // ATTEMPT TO RE-ROUTE AFTER LOGIN IF THERE"S A VALUE IN THERE
     // CLEAR THE VALUE AFTER ATTEMPTING

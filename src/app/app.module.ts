@@ -5,6 +5,7 @@ import { BrowserModule }   from '@angular/platform-browser';
 import { RouterModule }    from '@angular/router';
 import { AppRouterModule } from './app-routing.module';
 import { FormsModule }     from '@angular/forms'
+import { HttpModule }      from '@angular/http';
 import { MaterialModule }  from '@angular/material';
 import { DragulaModule }   from 'ng2-dragula/ng2-dragula';
 import 'hammerjs';
@@ -53,6 +54,10 @@ import { HelpersService }      from './shared/helpers/helpers.service';
 import { AuthService }         from './core/auth/auth.service';
 import { NotificationService } from './core/services/notification.service';
 import { ModalService }        from './core/services/modal.service';
+import { SignpostApi }         from './core/api/signpost-api.service';
+import { ApiUsersService }     from './core/api/api-users.service';
+import { ApiAuthService }      from './core/api/api-auth.service';
+
 
 // Guards
 import { AdminGuard } from './core/auth/admin-guard.service';
@@ -63,6 +68,7 @@ import { OwnerGuard } from './core/auth/owner-guard.service';
                   BrowserModule,
                   AppRouterModule,
                   FormsModule,
+                  HttpModule,
                   MaterialModule.forRoot(),
                   DragulaModule,
                 ],
@@ -107,6 +113,9 @@ import { OwnerGuard } from './core/auth/owner-guard.service';
                   HelpersService,
                   NotificationService,
                   ModalService,
+                  SignpostApi,
+                  ApiUsersService,
+                  ApiAuthService,
                   AdminGuard,
                   OwnerGuard,
                 ],
