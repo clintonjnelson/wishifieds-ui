@@ -46,7 +46,7 @@ export class LoginSignupFormComponent {
           .subscribe(
             res => {
               console.log("RESPONSE TO SIGNUP FORM IS: ", res);
-              that.authService.setAuthCookies(res.eat, res.username, res.role);
+              that.authService.setAuthCookies(res.eat, res.username, res.userid, res.email, res.role);
             },
             err => {
               console.log("ERROR RESPONSE TO SIGNUP FORM IS: ", err);
