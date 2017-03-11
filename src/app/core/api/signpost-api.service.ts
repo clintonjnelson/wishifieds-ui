@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Headers    } from '@angular/http';
 
-@Injectable()
-
+// List of Signpost API Routes used in the UI
 const ROUTES = {
   // Auth
   login: '/login',
@@ -12,9 +11,12 @@ const ROUTES = {
   createUser: '/users',
 };
 
+
+@Injectable()
+
 export class SignpostApi {
   routes  = ROUTES;
-  headers: Object;
+  headers: any;
 
   constructor() {
     this.headers = {

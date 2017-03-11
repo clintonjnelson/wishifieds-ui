@@ -1,7 +1,9 @@
 import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
 import { NgForm, FormControl } from '@angular/forms';
 import { AuthService } from '../../core/auth/auth.service';
+import { ApiUsersService } from '../../core/api/api-users.service';
 import { UserCreds } from '../../users/user.model';
+
 
 
 const EMAIL_REGEX = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
@@ -21,7 +23,7 @@ export class LoginSignupFormComponent {
   @Output() close = new EventEmitter<any>();
   userCreds: UserCreds;
 
-  constructor( private authService: AuthService) {
+  constructor( private authService: AuthService, private apiUsersService: ApiUsersService) {
     this.userCreds = {
       email:      '',
       password:   '',
@@ -30,19 +32,35 @@ export class LoginSignupFormComponent {
     };
   };
 
-  login(): boolean {
+  loginOrSignup(): boolean {
     console.log("LOGIN CLICKED");
     console.log("LOGIN FORM IS: ", this.loginForm);
     console.log("USER CREDS IS: ", this.userCreds);
-    if(this.loginForm.form.valid) {
-      this.authService.login();
-      // VALIDATE SUCCESS BEFORE CLOSING WHEN HTTP HOOKED UP
-      this.close.emit(null);
-      return false;
+    console.log("CALLING LOGIN ON AUTHSERVICE WITH EMAIL, PASSWORD...");
+    var that = this;
+    if(!this.loginForm.form.valid) { return; } // Invalid, do nothing
+
+    if(this.userCreds.newAccount) {
+      if(this.userCreds.termsCond) {
+        this.apiUsersService.createUser(this.userCreds)
+          .subscribe(
+            res => {
+              console.log("RESPONSE TO SIGNUP FORM IS: ", res);
+              that.authService.setAuthCookies(res.eat, res.username, res.role);
+            },
+            err => {
+              console.log("ERROR RESPONSE TO SIGNUP FORM IS: ", err);
+            }
+          );
+        this.close.emit(null);
+      }
     }
     else {
-
+      this.authService.login(this.userCreds.email, this.userCreds.password);
+          // some callback stuff - like NEED EAT
+      this.close.emit(null);
     }
+    return false;
   }
 
   cancel(): boolean {

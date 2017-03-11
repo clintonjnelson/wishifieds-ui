@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router     } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 import { Subject    } from 'rxjs/Subject';
 import { SignpostApi } from '../api/signpost-api.service';
 
@@ -11,6 +12,7 @@ export class UserAuth {
   isLoggedIn:  boolean;
   isLoggedOut: boolean;
   username:    string;
+  role:        string;
   // SHOULD ADD ROLE HERE FOR ADMIN ROLE
 };
 
@@ -18,15 +20,16 @@ export class UserAuth {
 
 export class AuthService {
   // This is for User Authentication Controls
-  auth: UserAuth = {isLoggedIn: false, isLoggedOut: true, username: ''};
+  auth: UserAuth = {isLoggedIn: false, isLoggedOut: true, username: '', role: ''};
   userAuthEmit: Subject<UserAuth> = new Subject<UserAuth>();
   redirectUrl: string;
   role: string = 'admin';  // FIX THIS LATER FOR ADMIN AUTH; Should check once & be done so no foulplay
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private signpostApi: SignpostApi) {
     this.auth.isLoggedIn  = !!window.localStorage.getItem('authToken');
     this.auth.isLoggedOut = !this.auth.isLoggedIn;
     this.auth.username    = window.localStorage.getItem('username');
+    this.auth.role        = window.localStorage.getItem('role');
   }
 
   isOwner(username: string) {
@@ -41,12 +44,12 @@ export class AuthService {
     return false; // this.role === 'admin';
   }
 
-  login(username: string, password: string) {
-    var encodedCreds = window.btoa(username + ':' + password);
+  login(email: string, password: string) {
+    var encodedCreds = window.btoa(email + ':' + password);
 
     // ATTEMPT TO RE-ROUTE AFTER LOGIN IF THERE"S A VALUE IN THERE
     // CLEAR THE VALUE AFTER ATTEMPTING
-    this.setAuthCookies('supersecretkey', 'username');
+    this.setAuthCookies('supersecretkey', 'username', 'admin');
   }
 
   logout() {
@@ -60,12 +63,15 @@ export class AuthService {
     this.auth.isLoggedIn  = !!window.localStorage.getItem('authToken');
     this.auth.isLoggedOut = !this.auth.isLoggedIn;
     this.auth.username    = window.localStorage.getItem('username');
+    this.auth.role        = window.localStorage.getItem('role');
+
     this.userAuthEmit.next(this.auth);
   }
 
   deleteAuthCookies() {
     window.localStorage.setItem('authToken', '');
     window.localStorage.setItem('username', '');
+    window.localStorage.setItem('role', '');
     this.updateAuthFromCookies();
   }
 
@@ -73,9 +79,10 @@ export class AuthService {
   /// MAYBE REFACTOR THIS INTO the LOGIN Func, USING OPTIONAL PARAMS OF THESE VALUES
   /// IT WOULD THEN BE CLEAR WHAT IT"S DOING WHEN WE SET THE VALUES MANUALLY
   /// VERIFY WE DON"T NEED THE LOGIN FUNCTION TO HAVE PARAMS ANYWAY....
-  setAuthCookies(authToken: string, username: string) {
+  setAuthCookies(authToken: string, username: string, role: string = '') {
     window.localStorage.setItem('authToken', authToken);
     window.localStorage.setItem('username',  username);
+    window.localStorage.setItem('role',  role);
     this.updateAuthFromCookies();
   }
 }
