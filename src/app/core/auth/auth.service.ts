@@ -13,20 +13,20 @@ export class UserAuth {
   isLoggedOut: boolean;
   username:    string;
   role:        string;
-  // SHOULD ADD ROLE HERE FOR ADMIN ROLE
+  userid:      string;
 };
 
 @Injectable()
 
 export class AuthService {
   // This is for User Authentication Controls
-  auth: UserAuth = {isLoggedIn: false, isLoggedOut: true, username: '', role: ''};
+  auth: UserAuth = {isLoggedIn: false, isLoggedOut: true, username: '', userid: '', role: ''};
   userAuthEmit: Subject<UserAuth> = new Subject<UserAuth>();
   redirectUrl: string;
   role: string = 'admin';  // FIX THIS LATER FOR ADMIN AUTH; Should check once & be done so no foulplay
 
   constructor(private router: Router, private signpostApi: SignpostApi) {
-    this.auth.isLoggedIn  = !!window.localStorage.getItem('authToken');
+    this.auth.isLoggedIn  = !!window.localStorage.getItem('eatAuthToken');
     this.auth.isLoggedOut = !this.auth.isLoggedIn;
     this.auth.username    = window.localStorage.getItem('username');
     this.auth.role        = window.localStorage.getItem('role');
@@ -49,7 +49,7 @@ export class AuthService {
 
     // ATTEMPT TO RE-ROUTE AFTER LOGIN IF THERE"S A VALUE IN THERE
     // CLEAR THE VALUE AFTER ATTEMPTING
-    this.setAuthCookies('supersecretkey', 'username', 'admin');
+    this.setAuthCookies('supersecretkey', 'username', '123465', 'admin');
   }
 
   logout() {
@@ -59,19 +59,25 @@ export class AuthService {
     this.router.navigate(['']);
   }
 
+  getEatCookie() {
+    return window.localStorage.getItem('eatAuthToken');
+  }
+
   updateAuthFromCookies() {
-    this.auth.isLoggedIn  = !!window.localStorage.getItem('authToken');
+    this.auth.isLoggedIn  = !!window.localStorage.getItem('eatAuthToken');
     this.auth.isLoggedOut = !this.auth.isLoggedIn;
     this.auth.username    = window.localStorage.getItem('username');
     this.auth.role        = window.localStorage.getItem('role');
+    this.auth.userid      = window.localStorage.getItem('userid');
 
     this.userAuthEmit.next(this.auth);
   }
 
   deleteAuthCookies() {
-    window.localStorage.setItem('authToken', '');
+    window.localStorage.setItem('eatAuthToken', '');
     window.localStorage.setItem('username', '');
     window.localStorage.setItem('role', '');
+    window.localStorage.setItem('userid', '');
     this.updateAuthFromCookies();
   }
 
@@ -79,10 +85,16 @@ export class AuthService {
   /// MAYBE REFACTOR THIS INTO the LOGIN Func, USING OPTIONAL PARAMS OF THESE VALUES
   /// IT WOULD THEN BE CLEAR WHAT IT"S DOING WHEN WE SET THE VALUES MANUALLY
   /// VERIFY WE DON"T NEED THE LOGIN FUNCTION TO HAVE PARAMS ANYWAY....
-  setAuthCookies(authToken: string, username: string, role: string = '') {
-    window.localStorage.setItem('authToken', authToken);
-    window.localStorage.setItem('username',  username);
-    window.localStorage.setItem('role',  role);
+  setAuthCookies(eatAuthToken: string,
+                 username:     string,
+                 userid:       string,
+                 email:        string,
+                 role:         string = '') {
+    window.localStorage.setItem('eatAuthToken', eatAuthToken);
+    window.localStorage.setItem('username',     username);
+    window.localStorage.setItem('userid',       userid);
+    window.localStorage.setItem('email',        email);
+    window.localStorage.setItem('role',         role);
     this.updateAuthFromCookies();
   }
 }
