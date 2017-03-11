@@ -28,9 +28,9 @@ export class PasswordResetComponent {
     // Send the token and new password to the server
     // SUCCESS: Should get the user eat cookie & reroute to the user page
     if(!this.testing) {
-      var response = {eatCookie: "somecookie", username: "someone"};
-      this.authService.setAuthCookies(response.eatCookie, response.username);
-      this.router.navigate([response.username]);
+      var res = {eatCookie: "somecookie", username: "someone", userid: '123', email: 'r@em.co', role: ''};
+      this.authService.setAuthCookies(res.eatCookie, res.username, res.userid, res.email, res.role);
+      this.router.navigate([res.username]);
     }
     // ERROR: Could not save, waited too long (token expire)... other?
     else {
