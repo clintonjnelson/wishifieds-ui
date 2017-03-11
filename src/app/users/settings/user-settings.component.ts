@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm, FormControl } from '@angular/forms';
-import { UserSettings } from "../user.model";
-import { HelpersService } from '../../shared/helpers/helpers.service';
+import { UserSettings }        from "../user.model";
+import { HelpersService }      from '../../shared/helpers/helpers.service';
+import { AuthService }         from '../../core/auth/auth.service';
+import { ApiUsersService }     from '../../core/api/api-users.service';
 // import { UniqueValidatorDireceive } from '../../shared/validators/unique.directive';
 
 @Component({
@@ -17,12 +19,28 @@ export class UserSettingsComponent implements OnInit {
   userSettings: UserSettings;
   tempSettings: UserSettings;
 
-  constructor(private helpers: HelpersService) {}
+  constructor(private helpers:         HelpersService,
+              private authService:     AuthService,
+              private apiUsersService: ApiUsersService) {}
 
   ngOnInit() {
-    // GET THE USER SETTINGS FROM API. IF ALREADY HAVE, THEN REMOVE NG_ON_INIT
-    this.userSettings = {picUrl: '', username: 'adminuser', email: 'admin@example.com', status: 'active'};
-    this.resetSettingsCopy();
+    const that = this;
+    this.apiUsersService.getUserById(this.authService.auth.userid)
+                        .subscribe(
+                          user => {
+                            console.log("USER RETURNED FROM GET BY ID: ", user);
+                            that.userSettings = {
+                              username: user.username,
+                              email: user.email,
+                              picUrl: null,   // UPDATE THESE
+                              status: null};  // UPDATE THESE
+                          },
+                          error => {
+                            console.log("ERR RETURNED FROM GET BY ID: ", error);
+                            return error;
+                          }
+                        );
+    this.resetSettingsCopy();  // Prep the editable form;
   }
 
   // Save & Cancel Buttons
