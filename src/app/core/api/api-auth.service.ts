@@ -7,18 +7,17 @@ import { SignpostApi } from '../api/signpost-api.service';
 
 export class ApiAuthService {
   constructor(private http:        Http,
-              private headers:     Headers,
               private signpostApi: SignpostApi) {}
 
-  apiLoginBasicAuth(creds: string): Observable<any> {
-    let loginUrl = this.signpostApi.routes.login;
-    let authHeader = new Headers( { Authorization: 'Basic '+creds } );
+  apiLoginBasicAuth(encodedCreds: string): Observable<any> {
+    const loginUrl = this.signpostApi.routes.login;
+    const authHeader = new Headers( { Authorization: 'Basic '+encodedCreds } );
+    console.log("HAVE URL & HEADERS AND NOW ABOUT TO SEND")
     return this.http
                .get(loginUrl, {headers: authHeader})
-               .map( (res) => {
-                 let apiResponse = res.json();
-                 console.log("GOT AN API RESPONSE: ", apiResponse);
+               .map( res => {
+                 console.log("GOT AN API RESPONSE: ", res);
                  return res.json();
-               })
+               });
   }
 }

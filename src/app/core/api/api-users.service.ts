@@ -50,7 +50,7 @@ export class ApiUsersService {
   }
 
   getUserById(userid: string): Observable<any> {
-    let getUserUrl = this.signpostApi.buildUrl('getUserById', [ {':id': userid} ] );
+    let getUserUrl = this.signpostApi.buildUrl('getUserById', [ {':usernameOrId': userid} ] );
     return this.http
                .get(getUserUrl)
                .map( user => {
