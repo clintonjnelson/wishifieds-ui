@@ -2,13 +2,13 @@
 <div class="user-settings-container">
   <h2 class="settings-page-heading">settings</h2>
 
-  <form name="userSettingsForm" class="user-settings-form" #userSettingsForm="ngForm">
+  <form *ngIf="!isProcessing" name="userSettingsForm" class="user-settings-form" #userSettingsForm="ngForm">
 
     <!-- Username -->
     <div class="settings-input-error-container">
       <md-input-container class="user-settings-input">
         <i class="{{helpers.buildIconClass('user', 1)}}"></i>
-        <input mdInput type="text" name="username" [(ngModel)]="tempSettings.username" placeholder="your login/contact email" minlength="1" maxlength="20" unique="username" required/>
+        <input mdInput type="text" name="username" [(ngModel)]="tempSettings.username" placeholder="your signpost username" minlength="1" maxlength="20" unique="username" required/>
       </md-input-container>
       <!-- Show errors only if exist and input has been modified -->
       <div *ngIf="displayedValidationErrors.username" class="input-errors error">

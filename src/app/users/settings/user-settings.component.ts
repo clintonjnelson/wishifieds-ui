@@ -14,6 +14,7 @@ import { ApiUsersService }     from '../../core/api/api-users.service';
 })
 
 export class UserSettingsComponent implements OnInit {
+  isProcessing: boolean;
   userSettingsForm: NgForm;
   @ViewChild('userSettingsForm') currentForm: NgForm;
   userSettings: UserSettings;
@@ -25,6 +26,8 @@ export class UserSettingsComponent implements OnInit {
 
   ngOnInit() {
     const that = this;
+    this.userSettings = {username: "HELLO", email: "YO THERE", picUrl: null, status: null};
+    this.isProcessing = true;
     this.apiUsersService.getUserById(this.authService.auth.userid)
                         .subscribe(
                           user => {
@@ -34,13 +37,15 @@ export class UserSettingsComponent implements OnInit {
                               email: user.email,
                               picUrl: null,   // UPDATE THESE
                               status: null};  // UPDATE THESE
+                            that.resetSettingsCopy();  // Prep the editable form;
+                            that.isProcessing = false;
                           },
                           error => {
                             console.log("ERR RETURNED FROM GET BY ID: ", error);
                             return error;
                           }
                         );
-    this.resetSettingsCopy();  // Prep the editable form;
+    that.resetSettingsCopy();
   }
 
   // Save & Cancel Buttons
