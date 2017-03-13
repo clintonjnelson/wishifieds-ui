@@ -3,6 +3,7 @@ import { Router     } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subject    } from 'rxjs/Subject';
 import { SignpostApi } from '../api/signpost-api.service';
+import { ApiAuthService } from '../api/api-auth.service';
 
 // Observable libaraies
 import 'rxjs/add/observable/of';
@@ -25,11 +26,14 @@ export class AuthService {
   redirectUrl: string;
   role: string = 'admin';  // FIX THIS LATER FOR ADMIN AUTH; Should check once & be done so no foulplay
 
-  constructor(private router: Router, private signpostApi: SignpostApi) {
+  constructor(private router:      Router,
+              private signpostApi: SignpostApi,
+              private apiAuth:     ApiAuthService) {
     this.auth.isLoggedIn  = !!window.localStorage.getItem('eatAuthToken');
     this.auth.isLoggedOut = !this.auth.isLoggedIn;
     this.auth.username    = window.localStorage.getItem('username');
     this.auth.role        = window.localStorage.getItem('role');
+    this.auth.userid      = window.localStorage.getItem('userid');
   }
 
   isOwner(username: string) {
@@ -45,10 +49,25 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
+    const that = this;
     var encodedCreds = window.btoa(email + ':' + password);
+    console.log("ABOUT TO TRY TO LOGIN")
+    this.apiAuth.apiLoginBasicAuth(encodedCreds)
+      .subscribe(
+        success => {
+          console.log("RESPONSE IS: ", success);
+          that.setAuthCookies(
+            success.eat,
+            success.username,
+            success.userid,
+            success.email,
+            success.role);
+        },
+        error => {
+          console.log("ERROR IS: ", error);
+        }
+      );
 
-    // ATTEMPT TO RE-ROUTE AFTER LOGIN IF THERE"S A VALUE IN THERE
-    // CLEAR THE VALUE AFTER ATTEMPTING
     this.setAuthCookies('supersecretkey', 'username', '123465', 'admin');
   }
 
