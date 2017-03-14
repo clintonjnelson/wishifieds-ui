@@ -1,64 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Sign } from '../signs/sign.model';
 import { AuthService, UserAuth } from '../core/auth/auth.service';
+import { ApiSignsService } from '../core/api/api-signs.service';
 import { Subscription } from 'rxjs/Subscription';
-
-const OAUTH_FACEBOOK_SIGN: Sign = {
-    _id: '12345',
-    bgColor: '#3b5998',
-    description: 'some sign',
-    icon: 'facebook-official',
-    knownAs: 'my name',
-    linkUrl: 'http://facebook.com',
-    picUrl: 'https://il5.picdn.net/shutterstock/videos/3178849/thumb/1.jpg',
-    signName: 'facebook',
-    signType: 'oauth',
-    username: 'myactualusername',
-    owner: 'someusername'
-  };
-const CUSTOM_ETSY_SIGN: Sign = {
-    _id: '54321',
-    bgColor: 'orange',
-    description: 'etsy sign',
-    icon: 'etsy',
-    knownAs: 'my etsy name',
-    linkUrl: 'http://etsy.com',
-    picUrl: 'https://img0.etsystatic.com/161/0/98486062/iusa_75x75.48280840_n58p.jpg',
-    signName: 'etsy',
-    signType: 'custom',
-    username: 'myetsyusername',
-    owner: 'someusername'
-};
-const EMAIL_SIGN: Sign = {
-    _id: '111111',
-    bgColor: '#88B04B',
-    description: 'email sign',
-    icon: 'envelope',
-    knownAs: 'fakeemailsomething@example.com',
-    linkUrl: '',
-    picUrl: '',
-    signName: 'email',
-    signType: 'generic',
-    username: 'myemailname',
-    owner: 'someusername'
-};
-const PHONE_SIGN: Sign = {
-    _id: '555555',
-    bgColor: '#964F4C',
-    description: 'phone sign',
-    icon: 'phone',
-    knownAs: '(555)555-5555',
-    linkUrl: '',
-    picUrl: '',
-    signName: 'phone',
-    signType: 'generic',
-    username: 'myphonename',
-    owner: 'someusername'
-};
-
-const SIGNS: Sign[] = [OAUTH_FACEBOOK_SIGN, CUSTOM_ETSY_SIGN, EMAIL_SIGN, PHONE_SIGN];
-
-
 
 @Component({
   moduleId: module.id,
@@ -67,30 +12,49 @@ const SIGNS: Sign[] = [OAUTH_FACEBOOK_SIGN, CUSTOM_ETSY_SIGN, EMAIL_SIGN, PHONE_
   styleUrls:  ['user-page.component.css']
 })
 
+
 export class UserPageComponent {
   signs: Sign[];
-  isOwner: boolean = false;
   auth: UserAuth;
-  _subscription: Subscription;
+  authSubscription: Subscription;
+  isOwner: boolean = false;
+  isProcessing: boolean;
 
-  constructor( private authService: AuthService ) {
+  constructor( private authService:    AuthService,
+               private apiSignsService: ApiSignsService,
+               private route:          ActivatedRoute ) {
     this.auth = authService.auth;
-    this._subscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => {
+    this.authSubscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => {
       this.auth = newVal;
     });
   }
 
   ngOnDestroy() {
-    this._subscription.unsubscribe();
+    this.authSubscription.unsubscribe();
   }
 
   // TODO: GET THE USER'S SIGNS BASED ON THE USERNAME IN THE ROUTE
   ngOnInit(): void {
-    this.signs = SIGNS;
-    // LOOKUP USERNAME IN ROUTE & COMPARE TO USERNAME IN SESSION VIA AUTH SERVICE METHOD
-    var usernameFromRoute = "USERNAME222"
+    const that = this;
+    const usernameFromRoute = this.route.snapshot.params['username'];
+
+    // Not dynamic. Must reload component each time. MAY NEED TO CHANGE TO OBSREVABLE AT SOME POINT
     this.isOwner = ( this.authService.isOwner(usernameFromRoute) ? true : false);
     console.log("ISOWNER IS: ", this.isOwner);
+
+    this.isProcessing = true;
+    this.apiSignsService.getSignsByUsernameOrId(usernameFromRoute)
+      .subscribe(
+        signs => {
+          console.log("SIGNS RETURNED TO USER PAGE IS: ", signs);
+          that.signs = signs;  // data is structured at level above
+          that.isProcessing = false;
+        },
+        error => {
+          console.log("ERR RETURNED FROM GET BY ID: ", error);
+          return error;
+        }
+      );
   }
 
   destroy(event: any) {

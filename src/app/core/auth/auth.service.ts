@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Router     } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subject    } from 'rxjs/Subject';
-import { SignpostApi } from '../api/signpost-api.service';
 import { ApiAuthService } from '../api/api-auth.service';
 
 // Observable libaraies
@@ -27,7 +26,6 @@ export class AuthService {
   role: string = 'admin';  // FIX THIS LATER FOR ADMIN AUTH; Should check once & be done so no foulplay
 
   constructor(private router:      Router,
-              private signpostApi: SignpostApi,
               private apiAuth:     ApiAuthService) {
     this.auth.isLoggedIn  = !!window.localStorage.getItem('eatAuthToken');
     this.auth.isLoggedOut = !this.auth.isLoggedIn;
@@ -76,10 +74,6 @@ export class AuthService {
     // CLEAR THE REDIRECT URL IN HERE AS WELL TO BE SAFE
     this.deleteAuthCookies();
     this.router.navigate(['']);
-  }
-
-  getEatCookie() {
-    return window.localStorage.getItem('eatAuthToken');
   }
 
   updateAuthFromCookies() {

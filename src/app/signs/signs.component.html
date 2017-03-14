@@ -1,6 +1,6 @@
-<!-- Signs -->
-<div>
-  <!-- Viewer - No Abiliity to Modify -->
+<!-- Post has Signs -->
+<div *ngIf="signs && signs.length > 0">
+  <!-- Guest - No Abiliity to Modify -->
   <section *ngIf="!isOwner">
     <ul>
       <li *ngFor="let sign of signs">
@@ -17,4 +17,9 @@
       </li>
     </ul>
   </section>
+</div>
+
+<!-- Post has NO Signs -->
+<div *ngIf="signs && signs.length == 0">
+  <p id="no-signs-message">This post is signless...</p>
 </div>

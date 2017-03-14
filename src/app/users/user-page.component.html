@@ -3,5 +3,5 @@
   <add-sign *ngIf="auth.isLoggedIn && isOwner" [signs]="signs" (saveEE)="save($event)" (destroyEE)="destroy($event)"></add-sign>
 
   <!-- Load User's Signs -->
-  <signs-list [signs]="signs" (saveEE)="save($event)" (destroyEE)="destroy($event)"></signs-list>
+  <signs-list *ngIf="!isProcessing" [signs]="signs" (saveEE)="save($event)" (destroyEE)="destroy($event)"></signs-list>
 </div>

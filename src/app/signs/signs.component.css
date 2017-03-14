@@ -13,6 +13,14 @@ ul li {
   margin-bottom: 5px;
 }
 
+#no-signs-message {
+  color: white;
+  font-family: helvetica, sans-serif;
+  text-align: center;
+  font-weight: normal;
+  font-size: 1.5em;
+}
+
 /*Drag & Drop Custom Styling*/
 .gu-mirror {
   list-style: none;

@@ -50,14 +50,14 @@ import { HoverBackgroundDirective } from './shared/hover-background/hover-backgr
 import { UniqueValidatorDirective } from './shared/validators/unique.directive';
 
 // Services - make them available EVERYWHERE (otherwise, just add it specifically into Component as a provider)
-import { HelpersService }      from './shared/helpers/helpers.service';
 import { AuthService }         from './core/auth/auth.service';
 import { NotificationService } from './core/services/notification.service';
 import { ModalService }        from './core/services/modal.service';
 import { SignpostApi }         from './core/api/signpost-api.service';
-import { ApiUsersService }     from './core/api/api-users.service';
 import { ApiAuthService }      from './core/api/api-auth.service';
-
+import { ApiUsersService }     from './core/api/api-users.service';
+import { ApiSignsService }     from './core/api/api-signs.service';
+import { HelpersService }      from './shared/helpers/helpers.service';
 
 // Guards
 import { AdminGuard } from './core/auth/admin-guard.service';
@@ -109,15 +109,16 @@ import { OwnerGuard } from './core/auth/owner-guard.service';
                   AppComponent,
                 ],
   providers:    [
+                  AdminGuard,
+                  OwnerGuard,
                   AuthService,
                   HelpersService,
                   NotificationService,
                   ModalService,
                   SignpostApi,
-                  ApiUsersService,
                   ApiAuthService,
-                  AdminGuard,
-                  OwnerGuard,
+                  ApiUsersService,
+                  ApiSignsService,
                 ],
   entryComponents: [
                   ConfirmModalComponent,

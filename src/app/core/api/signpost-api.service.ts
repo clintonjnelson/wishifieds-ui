@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Headers    } from '@angular/http';
-import { AuthService } from '../auth/auth.service';
 
 // List of Signpost API Routes used in the UI
 const ROUTES = {
@@ -10,7 +9,10 @@ const ROUTES = {
 
   // Users
   createUser:  '/api/users',
-  getUserById: '/api/users/:usernameOrId'
+  getUserById: '/api/users/:usernameOrId',
+
+  // Signs
+  getSignsByUsernameOrId: '/api/signs/:usernameOrId',
 };
 
 
@@ -20,7 +22,7 @@ export class SignpostApi {
   routes  = ROUTES;
   headers: any;
 
-  constructor() {  //private authService: AuthService) {
+  constructor() {
     this.headers = {
       contentType: {
         appJson: (new Headers({'Content-Type': 'application/json'})),
@@ -29,10 +31,10 @@ export class SignpostApi {
   }
 
   // eat (encrypted authentication token) is required on each request
-  // getEatAuthCookieHeader() {
-  //   const eatCookie = this.authService.getEatCookie();
-  //   return new Headers( {eat: eatCookie} );
-  // }
+  getEatAuthCookieHeader() {
+    const eatCookie = window.localStorage.getItem('eatAuthToken');
+    return new Headers( {eat: eatCookie} );
+  }
 
   buildUrl(routeName: string, substitutions: Object[]): string {
     const baseUrl = this.routes[routeName];
