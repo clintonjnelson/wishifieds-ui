@@ -13,6 +13,7 @@ const ROUTES = {
 
   // Signs
   getSignsByUsernameOrId: '/api/signs/:usernameOrId',
+  createSign: '/api/signs'
 };
 
 
@@ -31,9 +32,8 @@ export class SignpostApi {
   }
 
   // eat (encrypted authentication token) is required on each request
-  getEatAuthCookieHeader() {
-    const eatCookie = window.localStorage.getItem('eatAuthToken');
-    return new Headers( {eat: eatCookie} );
+  getEatAuthCookie() {
+    return window.localStorage.getItem('eatAuthToken');
   }
 
   buildUrl(routeName: string, substitutions: Object[]): string {

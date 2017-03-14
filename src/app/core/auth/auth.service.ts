@@ -95,6 +95,10 @@ export class AuthService {
   }
 
   // *********************** Helpers ***********************
+  getEatAuthCookie() {
+    return window.localStorage.getItem('eatAuthToken');
+  }
+
   /// MAYBE REFACTOR THIS INTO the LOGIN Func, USING OPTIONAL PARAMS OF THESE VALUES
   /// IT WOULD THEN BE CLEAR WHAT IT"S DOING WHEN WE SET THE VALUES MANUALLY
   /// VERIFY WE DON"T NEED THE LOGIN FUNCTION TO HAVE PARAMS ANYWAY....

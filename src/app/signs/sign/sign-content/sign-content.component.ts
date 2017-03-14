@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output, OnInit, ViewChild, OnDestroy } 
 import { NgForm, FormControl }   from '@angular/forms';   // Remove if no validation logic
 import { HelpersService }        from '../../../shared/helpers/helpers.service';
 import { AuthService, UserAuth } from '../../../core/auth/auth.service';
+import { ApiSignsService }       from '../../../core/api/api-signs.service';
 import { ModalService }          from '../../../core/services/modal.service';
 import { Subscription }          from 'rxjs/Subscription';
 import { Sign }                  from '../../sign.model';
@@ -40,9 +41,10 @@ export class SignContentComponent implements OnInit {
   }
 
   // ************** Auth Methods **************
-  constructor( private helpers:      HelpersService,
-               private authService:  AuthService,
-               private modalService: ModalService) {
+  constructor( private helpers:         HelpersService,
+               private authService:     AuthService,
+               private apiSignsService: ApiSignsService,
+               private modalService:    ModalService) {
     this.auth = authService.auth;
     this._subscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => {
       this.auth = newVal;
@@ -90,18 +92,26 @@ export class SignContentComponent implements OnInit {
 
   // HAVE TEMP SIGN SO DONT NEED TO PASS INTO THE METHOD.... BEST PRACTICES HERE?
   save(tempSign: Sign) {
+    const that = this;
     if(this.forSignCreation) {
-      console.log("SUBMIT: THIS SHOULD CALL THE CREATE SIGN ROUTE");
+      console.log("CALLING THE CREATE SIGN ROUTE for this sign: ", tempSign);
+      this.apiSignsService.createSign(tempSign)
+        .subscribe(
+          sign => {
+            console.log("SUCCESSFUL SIGN CREATION: ", sign);
+            that.saveEE.emit(sign);  // pass the new sign up
+            that.toggleEditing(false);
+          },
+          error => {
+            console.log("GOT AN ERROR CREATING SIGN. ERROR: ", error);
+          });
     }
     else {
-      console.log("SUBMIT: THIS SHOULD CALL THE UPDATE SIGN ROUTE");
+      console.log("CALLING THE UPDATE SIGN ROUTE");
       // After success, update the sign and then reset the temp sign
       this.sign = Object.assign({}, tempSign);
       this.resetTempSign();
     }
-    // ONLY CLOSE THE ADDSIGN AREA & Toggle Editing UPON SUCCESS!!!!
-    this.toggleEditing(false);       // SHOULD ONLY DO UPON SUCCESS!!!!!!!
-    this.saveEE.emit(this.sign);      // keep passing the sign up
   }
 
   toggleEditing(input: any = null): void {
