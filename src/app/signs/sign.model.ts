@@ -6,11 +6,11 @@ export class Sign {
   icon:        string;
   knownAs:     string;
   linkUrl:     string;
+  owner:       string;   // REMOVE THIS. USE USERID INSTEAD
   picUrl:      string;
   signName:    string;
   signType:    string;
-  username:    string;
-  owner:       string;
+  userId:      string;
 }
 
 // export class EmailSign extends Sign {

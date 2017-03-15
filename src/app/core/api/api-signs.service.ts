@@ -32,9 +32,8 @@ export class ApiSignsService {
   createSign(proposedSign: Sign): Observable<Sign> {
     const createSignUrl = this.signpostApi.routes.createSign;
     let headers         = this.signpostApi.headers.contentType.appJson;
-    if(headers.has('eat')) { headers.set(   'eat', this.auth.getEatAuthCookie()) }
-    else                   { headers.append('eat', this.auth.getEatAuthCookie()); }
-
+    if(headers.has('eat')) { headers.set(   'eat', window.localStorage.getItem('eatAuthToken')) }
+    else                   { headers.append('eat', window.localStorage.getItem('eatAuthToken')) }
     const options       = new RequestOptions({headers: headers});
 
     return this.http
@@ -45,6 +44,30 @@ export class ApiSignsService {
                })
                .catch( error => {
                  console.log("ERROR CREATING SIGN: ", error);
+                 return error.json();
+               });
+  }
+
+  destroySign(sign: Sign): Observable<boolean> {
+    console.log("IN THE DESTROY_SIGN METHOD...");
+    const destroySignUrl = this.signpostApi.routes.destroySign;
+    let headers          = this.signpostApi.headers.contentType.appJson;
+    if(headers.has('eat')) { headers.set(   'eat', window.localStorage.getItem('eatAuthToken')); }
+    else                   { headers.append('eat', window.localStorage.getItem('eatAuthToken')); }
+    console.log("HEADERS IS FINALLY: ", headers);
+    const options        = new RequestOptions({
+                              headers: headers,
+                              body:    JSON.stringify({sign: sign})
+                           });
+
+    return this.http
+               .delete(destroySignUrl, options)
+               .map( res => {
+                 console.log("SUCCESSFUL DELETION OF SIGN. Response is: ", res);
+                 return res.json() as boolean;
+               })
+               .catch( error => {
+                 console.log("ERROR DELETING SIGN. Error is: ", error);
                  return error.json();
                });
   }

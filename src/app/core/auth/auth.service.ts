@@ -13,14 +13,14 @@ export class UserAuth {
   isLoggedOut: boolean;
   username:    string;
   role:        string;
-  userid:      string;
+  userId:      string;
 };
 
 @Injectable()
 
 export class AuthService {
   // This is for User Authentication Controls
-  auth: UserAuth = {isLoggedIn: false, isLoggedOut: true, username: '', userid: '', role: ''};
+  auth: UserAuth = {isLoggedIn: false, isLoggedOut: true, username: '', userId: '', role: ''};
   userAuthEmit: Subject<UserAuth> = new Subject<UserAuth>();
   redirectUrl: string;
   role: string = 'admin';  // FIX THIS LATER FOR ADMIN AUTH; Should check once & be done so no foulplay
@@ -31,7 +31,7 @@ export class AuthService {
     this.auth.isLoggedOut = !this.auth.isLoggedIn;
     this.auth.username    = window.localStorage.getItem('username');
     this.auth.role        = window.localStorage.getItem('role');
-    this.auth.userid      = window.localStorage.getItem('userid');
+    this.auth.userId      = window.localStorage.getItem('userId');
   }
 
   isOwner(username: string) {
@@ -57,7 +57,7 @@ export class AuthService {
           that.setAuthCookies(
             success.eat,
             success.username,
-            success.userid,
+            success.userId,
             success.email,
             success.role);
         },
@@ -81,7 +81,7 @@ export class AuthService {
     this.auth.isLoggedOut = !this.auth.isLoggedIn;
     this.auth.username    = window.localStorage.getItem('username');
     this.auth.role        = window.localStorage.getItem('role');
-    this.auth.userid      = window.localStorage.getItem('userid');
+    this.auth.userId      = window.localStorage.getItem('userId');
 
     this.userAuthEmit.next(this.auth);
   }
@@ -90,7 +90,7 @@ export class AuthService {
     window.localStorage.setItem('eatAuthToken', '');
     window.localStorage.setItem('username', '');
     window.localStorage.setItem('role', '');
-    window.localStorage.setItem('userid', '');
+    window.localStorage.setItem('userId', '');
     this.updateAuthFromCookies();
   }
 
@@ -104,12 +104,12 @@ export class AuthService {
   /// VERIFY WE DON"T NEED THE LOGIN FUNCTION TO HAVE PARAMS ANYWAY....
   setAuthCookies(eatAuthToken: string,
                  username:     string,
-                 userid:       string,
+                 userId:       string,
                  email:        string,
                  role:         string = '') {
     window.localStorage.setItem('eatAuthToken', eatAuthToken);
     window.localStorage.setItem('username',     username);
-    window.localStorage.setItem('userid',       userid);
+    window.localStorage.setItem('userId',       userId);
     window.localStorage.setItem('email',        email);
     window.localStorage.setItem('role',         role);
     this.updateAuthFromCookies();

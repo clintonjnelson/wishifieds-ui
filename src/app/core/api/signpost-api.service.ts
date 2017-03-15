@@ -4,7 +4,7 @@ import { Headers    } from '@angular/http';
 // List of Signpost API Routes used in the UI
 const ROUTES = {
   // Auth
-  login: '/api/login',
+  login:  '/api/login',
   logout: '/api/logout',
 
   // Users
@@ -13,7 +13,8 @@ const ROUTES = {
 
   // Signs
   getSignsByUsernameOrId: '/api/signs/:usernameOrId',
-  createSign: '/api/signs'
+  createSign:             '/api/signs',
+  destroySign:            '/api/signs',
 };
 
 
@@ -34,6 +35,17 @@ export class SignpostApi {
   // eat (encrypted authentication token) is required on each request
   getEatAuthCookie() {
     return window.localStorage.getItem('eatAuthToken');
+  }
+
+  headerUpsert(headers: Headers, name: string, value: string) {
+    // Update if already exists, else add new header
+    if(headers.has(name)) { return headers.set(   name, value) }
+    else                  { return headers.append(name, value) }
+  }
+
+  upsertEatHeader(headers: Headers) {
+    const that = this;
+    return this.headerUpsert(headers, 'eat', that.getEatAuthCookie());
   }
 
   buildUrl(routeName: string, substitutions: Object[]): string {

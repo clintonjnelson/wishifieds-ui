@@ -57,7 +57,7 @@ export class SignContentComponent implements OnInit {
 
   ngOnInit() {
     // this.signForm = this.currentForm;
-    this.isOwner = this.authService.isOwner(this.sign.username);
+    this.isOwner = this.authService.isOwner(this.sign.userId);
     this.resetTempSign();
   }
 
@@ -83,7 +83,16 @@ export class SignContentComponent implements OnInit {
         .confirm('Sign Deletion', 'Are you sure you want to delete this '+ that.sign.signName +' sign?')
         .subscribe((response) => {
           if(response === true) {
-            that.destroyEE.emit({sign: delSign, destroy: true, close: true});
+            console.log("ABOUT TO CALL DELETE METHOD SERVICE...")
+            this.apiSignsService.destroySign(that.sign)
+              .subscribe(
+                success => {
+                  console.log("SIGN SUCCESSFULLY DELETED. Success is: ", success);
+                  that.destroyEE.emit({sign: delSign, destroy: true, close: true});
+                },
+                error => {
+                  console.log("ERROR DELETING SIGN. Error is: ", error);
+                })
           }
         });
     }

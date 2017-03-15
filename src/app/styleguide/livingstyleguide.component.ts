@@ -16,7 +16,7 @@ const OAUTH_FACEBOOK_SIGN: Sign = {
     picUrl: 'https://il5.picdn.net/shutterstock/videos/3178849/thumb/1.jpg',
     signName: 'facebook',
     signType: 'oauth',
-    username: 'myactualusername',
+    userId: 'myactualusername',
     owner: 'someusername'
   };
 const CUSTOM_ETSY_SIGN: Sign = {
@@ -29,7 +29,7 @@ const CUSTOM_ETSY_SIGN: Sign = {
     picUrl: 'https://il5.picdn.net/shutterstock/videos/3178849/thumb/1.jpg',
     signName: 'etsy',
     signType: 'custom',
-    username: 'myetsyusername',
+    userId: 'myetsyusername',
     owner: 'someusername'
 };
 const EMAIL_SIGN: Sign = {
@@ -42,7 +42,7 @@ const EMAIL_SIGN: Sign = {
     picUrl: 'https://il5.picdn.net/shutterstock/videos/3178849/thumb/1.jpg',
     signName: 'email',
     signType: 'generic',
-    username: 'myemailname',
+    userId: 'myemailname',
     owner: 'someusername'
 };
 const PHONE_SIGN: Sign = {
@@ -55,7 +55,7 @@ const PHONE_SIGN: Sign = {
     picUrl: 'https://il5.picdn.net/shutterstock/videos/3178849/thumb/1.jpg',
     signName: 'phone',
     signType: 'generic',
-    username: 'myphonename',
+    userId: 'myphonename',
     owner: 'someusername'
 };
 

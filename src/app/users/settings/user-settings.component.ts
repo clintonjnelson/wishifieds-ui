@@ -28,7 +28,7 @@ export class UserSettingsComponent implements OnInit {
     const that = this;
     this.userSettings = {username: "HELLO", email: "YO THERE", picUrl: null, status: null};
     this.isProcessing = true;
-    this.apiUsersService.getUserById(this.authService.auth.userid)
+    this.apiUsersService.getUserById(this.authService.auth.userId)
                         .subscribe(
                           user => {
                             console.log("USER RETURNED FROM GET BY ID: ", user);
