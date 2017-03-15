@@ -55,7 +55,7 @@
           <i class="{{helpers.buildIconClass('check', 2)}}"></i>
         </a>
         <!-- cancel button -->
-        <a (click)="cancel()" class="sign-cancelicon">
+        <a (click)="(showPreviewLabel ? preview() : cancel())" class="sign-cancelicon">
           <i *ngIf="!showPreviewLabel" class="{{helpers.buildIconClass('times', 2)}}"></i>
           <p *ngIf="showPreviewLabel"  class="preview-button-label">Preview</p>
         </a>

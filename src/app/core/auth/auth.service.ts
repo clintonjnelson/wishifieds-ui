@@ -65,8 +65,6 @@ export class AuthService {
           console.log("ERROR IS: ", error);
         }
       );
-
-    this.setAuthCookies('supersecretkey', 'username', '123465', 'admin');
   }
 
   logout() {
@@ -90,6 +88,7 @@ export class AuthService {
     window.localStorage.setItem('eatAuthToken', '');
     window.localStorage.setItem('username', '');
     window.localStorage.setItem('role', '');
+    window.localStorage.setItem('email', '');
     window.localStorage.setItem('userId', '');
     this.updateAuthFromCookies();
   }

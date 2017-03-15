@@ -26,8 +26,8 @@ export class UserSettingsComponent implements OnInit {
 
   ngOnInit() {
     const that = this;
-    this.userSettings = {username: "HELLO", email: "YO THERE", picUrl: null, status: null};
     this.isProcessing = true;
+    console.log("AUTH OBJECT IS: ", this.authService.auth);
     this.apiUsersService.getUserById(this.authService.auth.userId)
                         .subscribe(
                           user => {

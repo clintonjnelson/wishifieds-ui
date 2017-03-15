@@ -34,8 +34,16 @@ export class SignComponent {
   }
 
   save(event: any): void {
-    console.log("SIGN AT THE SIGN_COMPONENT LEVEL IS: ", event);
-    this.saveEE.emit(event);    // keep passing the sign up
+    // Sign preview
+    if(event && event.preview === true) {
+      this.sign = event.sign;
+      return;
+    }
+    // Sign creation
+    else {
+      console.log("SIGN AT THE SIGN_COMPONENT LEVEL IS: ", event);
+      this.saveEE.emit(event);    // keep passing the sign up
+    }
   }
 }
 

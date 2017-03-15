@@ -67,6 +67,10 @@ export class SignContentComponent implements OnInit {
     this.toggleEditing();
     this.resetTempSign();
   }
+  preview() {
+    this.toggleEditing();
+    this.saveEE.emit({preview: true, sign: this.tempSign})
+  }
 
   destroy() {
     console.log("INSIDE DELETE...");
