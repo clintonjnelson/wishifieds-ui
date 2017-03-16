@@ -14,6 +14,7 @@ const ROUTES = {
   // Signs
   getSignsByUsernameOrId: '/api/signs/:usernameOrId',
   createSign:             '/api/signs',
+  updateSign:             '/api/signs',
   destroySign:            '/api/signs',
 };
 

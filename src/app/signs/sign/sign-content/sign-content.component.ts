@@ -56,7 +56,6 @@ export class SignContentComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.signForm = this.currentForm;
     this.isOwner = this.authService.isOwner(this.sign.userId);
     this.resetTempSign();
   }
@@ -106,6 +105,7 @@ export class SignContentComponent implements OnInit {
   // HAVE TEMP SIGN SO DONT NEED TO PASS INTO THE METHOD.... BEST PRACTICES HERE?
   save(tempSign: Sign) {
     const that = this;
+    // Create New Sign?
     if(this.forSignCreation) {
       console.log("CALLING THE CREATE SIGN ROUTE for this sign: ", tempSign);
       this.apiSignsService.createSign(tempSign)
@@ -114,16 +114,29 @@ export class SignContentComponent implements OnInit {
             console.log("SUCCESSFUL SIGN CREATION: ", sign);
             that.saveEE.emit(sign);  // pass the new sign up
             that.toggleEditing(false);
+            that.resetTempSign();
           },
           error => {
             console.log("GOT AN ERROR CREATING SIGN. ERROR: ", error);
           });
     }
+    // Else Update existing sign
     else {
       console.log("CALLING THE UPDATE SIGN ROUTE");
-      // After success, update the sign and then reset the temp sign
-      this.sign = Object.assign({}, tempSign);
-      this.resetTempSign();
+      this.apiSignsService.updateSign(tempSign)
+        .subscribe(
+          success => {  // returns {error: false}
+            console.log("SUCCESSFUL UPDATE. OBJECT IS: ", success);
+            // After success, update the sign and then reset the temp sign
+            that.sign = Object.assign({}, tempSign);
+            that.saveEE.emit(tempSign);  // pass the new sign up
+            that.toggleEditing(false);
+            that.resetTempSign();
+          },
+          error => {  // return {error: true, msg: }
+            console.log("ERROR DURING UPDATE. ERROR IS: ", error);
+            // SHOW SOME ERROR TO USER HERE
+          });
     }
   }
 

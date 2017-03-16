@@ -10,9 +10,9 @@
     <form #signForm="ngForm" name="signForm" class="sign-form" layout="column">
 
       <!-- Choose ONE Key Data Input Based on Sign Type -->
-      <div [ngSwitch]="sign.signName">
+      <div [ngSwitch]="sign.icon">
         <!-- email -->
-        <md-input-container *ngSwitchCase="'email'">
+        <md-input-container *ngSwitchCase="'envelope'">
           <i class="{{helpers.buildIconClass('envelope', 1)}}"></i>
           <input mdInput type="email" name="email" ngControl="email" [(ngModel)]="tempSign.knownAs" placeholder="emailmee@example.com" required/>
         </md-input-container>
@@ -30,7 +30,7 @@
         </div>
 
         <!-- Website -->
-        <md-input-container *ngSwitchCase="'website'">
+        <md-input-container *ngSwitchCase="'globe'">
           <i class="{{helpers.buildIconClass('globe', 1)}}"></i>
           <input mdInput type="url" name="website" ngControl="website" [(ngModel)]="tempSign.linkUrl" placeholder="www.mywebsite.com" required/>
         </md-input-container>
