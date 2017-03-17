@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
 import { NgForm, FormControl } from '@angular/forms';
 import { AuthService } from '../../core/auth/auth.service';
 import { ApiUsersService } from '../../core/api/api-users.service';
+import { ApiAuthService } from '../../core/api/api-auth.service';
 import { UserCreds } from '../../users/user.model';
 
 
@@ -23,7 +24,9 @@ export class LoginSignupFormComponent {
   @Output() close = new EventEmitter<any>();
   userCreds: UserCreds;
 
-  constructor( private authService: AuthService, private apiUsersService: ApiUsersService) {
+  constructor( private authService:     AuthService,
+               private apiUsersService: ApiUsersService,
+               private apiAuthService:  ApiAuthService ) {
     this.userCreds = {
       email:      '',
       password:   '',
@@ -56,11 +59,32 @@ export class LoginSignupFormComponent {
       }
     }
     else {
-      this.authService.login(this.userCreds.email, this.userCreds.password);
+      this.login(this.userCreds.email, this.userCreds.password);
           // some callback stuff - like NEED EAT
       this.close.emit(null);
     }
     return false;
+  }
+
+  login(email: string, password: string) {
+    const that = this;
+    var encodedCreds = window.btoa(email + ':' + password);
+    console.log("ABOUT TO TRY TO LOGIN")
+    this.apiAuthService.apiLoginBasicAuth(encodedCreds)
+      .subscribe(
+        success => {
+          console.log("RESPONSE IS: ", success);
+          that.authService.setAuthCookies(
+            success.eat,
+            success.username,
+            success.userId,
+            success.email,
+            success.role);
+        },
+        error => {
+          console.log("ERROR IS: ", error);
+        }
+      );
   }
 
   cancel(): boolean {

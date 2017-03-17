@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Router     } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subject    } from 'rxjs/Subject';
-import { ApiAuthService } from '../api/api-auth.service';
 
 // Observable libaraies
 import 'rxjs/add/observable/of';
@@ -25,8 +24,7 @@ export class AuthService {
   redirectUrl: string;
   role: string = 'admin';  // FIX THIS LATER FOR ADMIN AUTH; Should check once & be done so no foulplay
 
-  constructor(private router:      Router,
-              private apiAuth:     ApiAuthService) {
+  constructor(private router: Router,) {
     this.auth.isLoggedIn  = !!window.localStorage.getItem('eatAuthToken');
     this.auth.isLoggedOut = !this.auth.isLoggedIn;
     this.auth.username    = window.localStorage.getItem('username');
@@ -44,27 +42,6 @@ export class AuthService {
   isAdmin() {
     // FIX THIS - ONLY A TEMP HACK TO MOCK STORED USER IS AN ADMIN OR NOT
     return false; // this.role === 'admin';
-  }
-
-  login(email: string, password: string) {
-    const that = this;
-    var encodedCreds = window.btoa(email + ':' + password);
-    console.log("ABOUT TO TRY TO LOGIN")
-    this.apiAuth.apiLoginBasicAuth(encodedCreds)
-      .subscribe(
-        success => {
-          console.log("RESPONSE IS: ", success);
-          that.setAuthCookies(
-            success.eat,
-            success.username,
-            success.userId,
-            success.email,
-            success.role);
-        },
-        error => {
-          console.log("ERROR IS: ", error);
-        }
-      );
   }
 
   logout() {

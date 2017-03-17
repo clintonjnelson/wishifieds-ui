@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, RequestOptions } from '@angular/http';
+import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { SignpostApi } from '../api/signpost-api.service';
 import { UserCreds, User } from '../../users/user.model';
@@ -51,8 +51,12 @@ export class ApiUsersService {
 
   getUserById(usernameOrId: string): Observable<any> {
     let getUserUrl = this.signpostApi.buildUrl('getUserById', [ {':usernameOrId': usernameOrId} ] );
+    const headers = new Headers( {'eat': this.signpostApi.getEatAuthCookie()});
+    const options = new RequestOptions({headers: headers});
+    console.log("HEADERRS IS: ", headers);
+
     return this.http
-               .get(getUserUrl)
+               .get(getUserUrl, options)
                .map( user => {
                  console.log("RESPONSE FROM GET USER BY ID IS: ", user.json());
                  return user.json() as UserByIdResponse;

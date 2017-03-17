@@ -5,7 +5,7 @@ import { BrowserModule }   from '@angular/platform-browser';
 import { RouterModule }    from '@angular/router';
 import { AppRouterModule } from './app-routing.module';
 import { FormsModule }     from '@angular/forms'
-import { HttpModule }      from '@angular/http';
+import { HttpModule, Http, XHRBackend, RequestOptions }      from '@angular/http';
 import { MaterialModule }  from '@angular/material';
 import { DragulaModule }   from 'ng2-dragula/ng2-dragula';
 import 'hammerjs';
@@ -50,6 +50,7 @@ import { HoverBackgroundDirective } from './shared/hover-background/hover-backgr
 import { UniqueValidatorDirective } from './shared/validators/unique.directive';
 
 // Services - make them available EVERYWHERE (otherwise, just add it specifically into Component as a provider)
+import { HttpIntercept }       from './core/api/http-intercept';
 import { AuthService }         from './core/auth/auth.service';
 import { NotificationService } from './core/services/notification.service';
 import { ModalService }        from './core/services/modal.service';
@@ -119,6 +120,11 @@ import { OwnerGuard } from './core/auth/owner-guard.service';
                   ApiAuthService,
                   ApiUsersService,
                   ApiSignsService,
+                  {provide: Http,
+                    useFactory: (backend: XHRBackend, defaultOptions: RequestOptions, authService: AuthService) =>
+                    new HttpIntercept(backend, defaultOptions, authService),
+                    deps: [XHRBackend, RequestOptions, AuthService]
+                  },
                 ],
   entryComponents: [
                   ConfirmModalComponent,
