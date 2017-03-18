@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Headers    } from '@angular/http';
+import { Headers, RequestOptions } from '@angular/http';
 
 // List of Signpost API Routes used in the UI
 const ROUTES = {
@@ -33,20 +33,15 @@ export class SignpostApi {
     };
   }
 
-  // eat (encrypted authentication token) is required on each request
+  // eat (encrypted authentication token) is required on some requests
   getEatAuthCookie() {
     return window.localStorage.getItem('eatAuthToken');
   }
-
-  headerUpsert(headers: Headers, name: string, value: string) {
-    // Update if already exists, else add new header
-    if(headers.has(name)) { return headers.set(   name, value) }
-    else                  { return headers.append(name, value) }
+  getHeaderWithEat(): Headers {
+    return new Headers({'eat': this.getEatAuthCookie()});
   }
-
-  upsertEatHeader(headers: Headers) {
-    const that = this;
-    return this.headerUpsert(headers, 'eat', that.getEatAuthCookie());
+  getRequestOptionWithEatHeader() {
+    return new RequestOptions({headers: this.getHeaderWithEat()});
   }
 
   buildUrl(routeName: string, substitutions: Object[]): string {

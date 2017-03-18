@@ -51,10 +51,9 @@ export class ApiUsersService {
 
   getUserById(usernameOrId: string): Observable<any> {
     let getUserUrl = this.signpostApi.buildUrl('getUserById', [ {':usernameOrId': usernameOrId} ] );
-    const headers = new Headers( {'eat': this.signpostApi.getEatAuthCookie()});
-    const options = new RequestOptions({headers: headers});
-    console.log("HEADERRS IS: ", headers);
+    const options  = this.signpostApi.getRequestOptionWithEatHeader();
 
+    console.log("HEADERS IS: ", options);
     return this.http
                .get(getUserUrl, options)
                .map( user => {

@@ -31,10 +31,7 @@ export class ApiSignsService {
 
   createSign(proposedSign: Sign): Observable<Sign> {
     const createSignUrl = this.signpostApi.routes.createSign;
-    let headers         = this.signpostApi.headers.contentType.appJson;
-    if(headers.has('eat')) { headers.set(   'eat', window.localStorage.getItem('eatAuthToken')) }
-    else                   { headers.append('eat', window.localStorage.getItem('eatAuthToken')) }
-    const options       = new RequestOptions({headers: headers});
+    const options       = this.signpostApi.getRequestOptionWithEatHeader();
 
     return this.http
                .post(createSignUrl, JSON.stringify({sign: proposedSign}), options)
@@ -50,10 +47,7 @@ export class ApiSignsService {
 
   updateSign(proposedSign: Sign): Observable<Sign> {
     const updateSignUrl = this.signpostApi.routes.updateSign;
-    let headers         = this.signpostApi.headers.contentType.appJson;
-    if(headers.has('eat')) { headers.set(   'eat', window.localStorage.getItem('eatAuthToken')) }
-    else                   { headers.append('eat', window.localStorage.getItem('eatAuthToken')) }
-    const options       = new RequestOptions({headers: headers});
+    const options       = this.signpostApi.getRequestOptionWithEatHeader();
 
     return this.http
                .patch(updateSignUrl, JSON.stringify({sign: proposedSign}), options)
@@ -70,10 +64,7 @@ export class ApiSignsService {
   destroySign(sign: Sign): Observable<boolean> {
     console.log("IN THE DESTROY_SIGN METHOD...");
     const destroySignUrl = this.signpostApi.routes.destroySign;
-    let headers          = this.signpostApi.headers.contentType.appJson;
-    if(headers.has('eat')) { headers.set(   'eat', window.localStorage.getItem('eatAuthToken')); }
-    else                   { headers.append('eat', window.localStorage.getItem('eatAuthToken')); }
-    console.log("HEADERS IS FINALLY: ", headers);
+    let headers          = this.signpostApi.getHeaderWithEat();
     const options        = new RequestOptions({
                               headers: headers,
                               body:    JSON.stringify({sign: sign})

@@ -10,8 +10,9 @@ export class ApiAuthService {
               private signpostApi: SignpostApi) {}
 
   apiLoginBasicAuth(encodedCreds: string): Observable<any> {
-    const loginUrl = this.signpostApi.routes.login;
+    const loginUrl   = this.signpostApi.routes.login;
     const authHeader = new Headers( { Authorization: 'Basic '+encodedCreds } );
+
     console.log("HAVE URL & HEADERS AND NOW ABOUT TO SEND")
     return this.http
                .get(loginUrl, {headers: authHeader})
