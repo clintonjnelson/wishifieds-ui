@@ -6,7 +6,7 @@
         <input mdInput type="text" [(ngModel)]="searchStr" placeholder="find someone" name="search">
       </md-input-container>
 
-      <button type="submit" class="sidenav-search-btn-icon">
+      <button (click)="search()" type="submit" class="sidenav-search-btn-icon">
           <i class="fa fa-search fa-2x sp-hover"></i>
         </button>
     </form>

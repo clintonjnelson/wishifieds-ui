@@ -29,7 +29,7 @@ export class ApiSignsService {
                })
                .catch( (error: Response | any) => {
                  console.log("ERROR FROM GET SIGNS BY USER/ID IS: ", error);
-                 return error;
+                 return error.json();
                  // show error message to user
                  // Maybe use remote logging infrastructure
                });

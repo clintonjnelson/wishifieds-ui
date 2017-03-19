@@ -7,6 +7,9 @@ const ROUTES = {
   login:  '/api/login',
   logout: '/api/logout',
 
+  // Admin
+  adminGetUsers: '/api/users',
+
   // Users
   createUser:  '/api/users',
   getUserById: '/api/users/:usernameOrId',

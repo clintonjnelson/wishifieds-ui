@@ -56,6 +56,7 @@ import { NotificationService } from './core/services/notification.service';
 import { ModalService }        from './core/services/modal.service';
 import { SignpostApi }         from './core/api/signpost-api.service';
 import { ApiAuthService }      from './core/api/api-auth.service';
+import { ApiAdminService }     from './core/api/api-admin.service';
 import { ApiUsersService }     from './core/api/api-users.service';
 import { ApiSignsService }     from './core/api/api-signs.service';
 import { HelpersService }      from './shared/helpers/helpers.service';
@@ -118,6 +119,7 @@ import { OwnerGuard } from './core/auth/owner-guard.service';
                   ModalService,
                   SignpostApi,
                   ApiAuthService,
+                  ApiAdminService,
                   ApiUsersService,
                   ApiSignsService,
                   {provide: Http,

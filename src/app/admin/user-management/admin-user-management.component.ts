@@ -10,4 +10,7 @@ import { SearchBoxComponent } from '../../search/search-box/search-box.component
 
 export class AdminUserManagementComponent extends SearchBoxComponent {
 
+  search() {
+    return;
+  }
 }

@@ -1,13 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../../core/auth/auth.service';
+import { ApiAdminService } from '../../core/api/api-admin.service';
 import { User } from '../../users/user.model';
 
-const USERS: User[] = [
-  { username: "Jen",   picUrl: "https://upload.wikimedia.org/wikipedia/commons/e/e9/Official_portrait_of_Barack_Obama.jpg", status: "active" },
-  { username: "Clint", picUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/44_Bill_Clinton_3x4.jpg/220px-44_Bill_Clinton_3x4.jpg", status: "active"},
-  { username: "Eilee", picUrl: "", status: "active" },
-  { username: "Clara", picUrl: "", status: "active" },
-];
 
 @Component({
   moduleId: module.id,
@@ -18,16 +14,32 @@ const USERS: User[] = [
 
 export class AdminDashboardComponent implements OnInit {
   isAdmin: boolean;
-  @Input() users: User[];
+  users: User[];
+  isProcessing: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService:     AuthService,
+              private apiAdminService: ApiAdminService,
+              private router:          Router) {}
 
   ngOnInit() {
-    this.isAdmin = this.setIfAdmin();
-    this.users = USERS;
-  }
+    const that = this;
+    this.isAdmin = this.authService.isAdmin();
 
-  setIfAdmin() {
-    return true ? true : false;
+    this.isProcessing = true;
+    this.apiAdminService.getUsers()
+      .subscribe(
+        users => {
+          console.log("SUCCESSFUL USER FIND: ", users);
+          that.users = users;
+          that.isProcessing = false;
+        },
+        error => {
+          // HANDLE THE ERROR MESSAGE HERE;
+          console.log("ERROR ADMING GETTING USERS: ", error);
+          that.isProcessing = false;
+          if(error.status === 401 ) {
+            that.router.navigate(['']);
+          }
+        });
   }
 }
