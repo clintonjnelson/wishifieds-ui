@@ -10,7 +10,7 @@ import { SearchBoxComponent } from '../../search/search-box/search-box.component
 })
 
 export class AdminUserManagementComponent extends SearchBoxComponent {
-  // foundUsers & foundSigns is in the SearchBoxComponent
+  // reference SearchBoxComponent TS file for logic that is extended to here
   isAdmin: boolean;
 
   ngOnInit() {
