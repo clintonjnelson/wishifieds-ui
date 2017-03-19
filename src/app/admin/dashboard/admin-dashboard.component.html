@@ -6,7 +6,7 @@
   <section class="users-list-container">
     <ul>
       <li *ngFor="let user of users">
-        <a [routerLink]="[user.username]">{{user.username}}</a>
+        <a [routerLink]="['/', user.username]">{{user.username}}</a>
       </li>
     </ul>
   </section>
