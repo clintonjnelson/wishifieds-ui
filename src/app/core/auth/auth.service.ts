@@ -32,11 +32,11 @@ export class AuthService {
     this.auth.userId      = window.localStorage.getItem('userId');
   }
 
-  isOwner(username: string) {
-    // GET USERNAME FROM SESSION STORAGE & COMPARE
-    // MAYBE STORE USERNAME LOCALLY IN THIS AUTH SERVICE
-    // RETURN THE COMPARISON OF USERNAMES
-    return (true ? true : false);
+  isOwner(usernameOrId: string) {
+    console.log("SIGN USER ID IS: ", usernameOrId, ". AND CURRENT USER IS IS: ", this.auth.userId);
+    // Check both userId and username
+    return (usernameOrId === this.auth.userId ||
+            usernameOrId === this.auth.username);
   }
 
   isAdmin() {

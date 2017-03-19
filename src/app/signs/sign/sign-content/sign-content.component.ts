@@ -8,7 +8,6 @@ import { Subscription }          from 'rxjs/Subscription';
 import { Sign }                  from '../../sign.model';
 
 
-
 @Component({
   moduleId: module.id,
   selector: 'sign-content',

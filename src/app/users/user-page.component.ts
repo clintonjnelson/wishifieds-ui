@@ -39,7 +39,8 @@ export class UserPageComponent {
     const usernameFromRoute = this.route.snapshot.params['username'];
 
     // Not dynamic. Must reload component each time. MAY NEED TO CHANGE TO OBSREVABLE AT SOME POINT
-    this.isOwner = ( this.authService.isOwner(usernameFromRoute) ? true : false);
+    console.log("Username from route is: ", usernameFromRoute);
+    this.isOwner = this.authService.isOwner(usernameFromRoute);
     console.log("ISOWNER IS: ", this.isOwner);
 
     this.isProcessing = true;

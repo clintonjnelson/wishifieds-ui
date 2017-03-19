@@ -19,9 +19,9 @@ export class SearchBoxComponent {
   foundSigns: Sign[];     // signs found by search
   hasSearched: boolean = false;    // dont show "0 results" before a search
 
-  constructor(private apiSearchService: ApiSearchService,
-              private signpostApi:      SignpostApi,
-              private authService:      AuthService) {} // auth used when admin extends Component
+  constructor(private   apiSearchService: ApiSearchService,
+              private   signpostApi:      SignpostApi,
+              protected authService:      AuthService) {} // auth used when admin extends Component
 
   search(event: any) {
     event.preventDefault();
