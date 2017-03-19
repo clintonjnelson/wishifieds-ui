@@ -55,7 +55,7 @@ export class SignContentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isOwner = this.authService.isOwner(this.sign.userId);
+    this.isOwner = (this.forSignCreation ? true : this.authService.isOwner(this.sign.userId) );
     this.resetTempSign();
   }
 

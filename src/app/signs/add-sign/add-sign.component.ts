@@ -21,35 +21,35 @@ const OLINKS: Link[] = [
 
 const CUSTOM_SIGNS: Sign[] = [
   { signName: 'podcast', signType: 'custom', bgColor: 'red', icon: 'podcast',
-    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', username: '', owner: '' },
+    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
   { signName: 'etsy', signType: 'custom', bgColor: 'blue', icon: 'etsy',
-    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', username: '', owner: '' },
+    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
   { signName: 'quora', signType: 'custom', bgColor: 'brown', icon: 'quora',
-    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', username: '', owner: '' },
+    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
   { signName: 'meetup', signType: 'custom', bgColor: 'yellow', icon: 'meetup',
-    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', username: '', owner: '' },
+    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
   { signName: 'website', signType: 'custom', bgColor: 'green', icon: 'globe',
-    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', username: '', owner: '' },
+    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
   { signName: 'digg', signType: 'custom', bgColor: 'orange', icon: 'digg',
-    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', username: '', owner: '' },
+    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
   { signName: 'amazon', signType: 'custom', bgColor: 'yellow', icon: 'amazon',
-    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', username: '', owner: '' },
+    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
   { signName: 'angellist', signType: 'custom', bgColor: 'green', icon: 'angellist',
-    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', username: '', owner: '' },
+    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
   { signName: 'flickr', signType: 'custom', bgColor: 'black', icon: 'flickr',
-    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', username: '', owner: '' },
+    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
   { signName: 'houzz', signType: 'custom', bgColor: 'purple', icon: 'houzz',
-    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', username: '', owner: '' },
+    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
   { signName: 'spotify', signType: 'custom', bgColor: 'green', icon: 'spotify',
-    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', username: '', owner: '' },
+    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
 ]
 
 // HOW SHOW THE PHONE & EMAIL SIGNS?????
 const GENERIC_SIGNS: Sign[] = [
   { signName: 'phone', signType: 'generic', bgColor: 'purple', icon: 'phone',
-    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '#', username: '', owner: '' },
+    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '#', userId: '' },
   { signName: 'email', signType: 'generic', bgColor: 'black', icon: 'envelope',
-    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '#', username: '', owner: '' },
+    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '#', userId: '' },
 ];
 
 
@@ -88,6 +88,7 @@ export class AddSignComponent {
   // Set the sign to create RENAME: SET_CREATE_SIGN, SELECTED_CREATE_SIGN
   setSign(sign: Sign) {
     this.selectedSign = sign;
+    this.toggleShowAddSignIcons(false);
     console.log("SETTING SIGN TO: ", sign);
   }
 
