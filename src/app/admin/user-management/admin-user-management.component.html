@@ -1,24 +1,30 @@
 <!-- User Management Search -->
-<div class="search-container">
+<div class="search-container" *ngIf="isAdmin">
   <div class="search-box">
-    <form #searchForm="ngForm" name="searchForm" (ngSubmit)="searchUsers()" class="search-box-form">
+    <form #searchForm="ngForm" name="searchForm" (ngSubmit)="search($event)" class="search-box-form">
       <md-input-container md-float [ngStyle]="{'color': 'white'}" layout="row" class="search-box-input-container">
         <input mdInput type="text" [(ngModel)]="searchStr" placeholder="find someone" name="search">
       </md-input-container>
 
-      <button (click)="search()" type="submit" class="sidenav-search-btn-icon">
+      <button (click)="search($event)" type="submit" class="sidenav-search-btn-icon">
           <i class="fa fa-search fa-2x sp-hover"></i>
         </button>
     </form>
   </div>
 
-  <div class="search-results-container" *ngIf="foundUsers && foundUsers.length">
+  <!-- Results found -->
+  <div class="search-results-container" *ngIf="foundUsers?.length">
     <!-- Users Results Found -->
     <ul>
       <li *ngFor="let user of foundUsers" class="search-results-user-sign">
           <user-sign [user]="user"></user-sign>
       </li>
     </ul>
+  </div>
+
+  <!-- NO Results -->
+  <div class="search-results-container" *ngIf="hasSearched && foundUsers?.length === 0 && foundSigns?.length === 0">
+    <p class="no-results-message">0 results found for "{{searchStr}}"</p>
   </div>
 </div>
 

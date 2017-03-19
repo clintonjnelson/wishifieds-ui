@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { SearchBoxComponent } from '../../search/search-box/search-box.component';
 
 @Component({
@@ -9,8 +10,10 @@ import { SearchBoxComponent } from '../../search/search-box/search-box.component
 })
 
 export class AdminUserManagementComponent extends SearchBoxComponent {
+  // foundUsers & foundSigns is in the SearchBoxComponent
+  isAdmin: boolean;
 
-  search() {
-    return;
+  ngOnInit() {
+    this.isAdmin = this.authService.isAdmin();
   }
 }

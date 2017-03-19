@@ -59,6 +59,7 @@ import { ApiAuthService }      from './core/api/api-auth.service';
 import { ApiAdminService }     from './core/api/api-admin.service';
 import { ApiUsersService }     from './core/api/api-users.service';
 import { ApiSignsService }     from './core/api/api-signs.service';
+import { ApiSearchService }    from './core/api/api-search.service';
 import { HelpersService }      from './shared/helpers/helpers.service';
 
 // Guards
@@ -122,6 +123,7 @@ import { OwnerGuard } from './core/auth/owner-guard.service';
                   ApiAdminService,
                   ApiUsersService,
                   ApiSignsService,
+                  ApiSearchService,
                   {provide: Http,
                     useFactory: (backend: XHRBackend, defaultOptions: RequestOptions, authService: AuthService) =>
                     new HttpIntercept(backend, defaultOptions, authService),

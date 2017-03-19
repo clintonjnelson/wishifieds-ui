@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { User } from '../../users/user.model';
 import { Sign } from '../../signs/sign.model';
+import { AuthService } from '../../core/auth/auth.service';
 import { SignpostApi } from '../../core/api/signpost-api.service';
-import { ApiSignsService } from '../../core/api/api-signs.service';
+import { ApiSearchService } from '../../core/api/api-search.service';
 
 
 @Component({
@@ -16,11 +17,11 @@ export class SearchBoxComponent {
   searchStr: string;
   foundUsers: User[];     // users found by search
   foundSigns: Sign[];     // signs found by search
-  // isProcessing: boolean = false;   // wait for results to show
   hasSearched: boolean = false;    // dont show "0 results" before a search
 
-  constructor(private apiSignsService: ApiSignsService,
-              private signpostApi:     SignpostApi) {}
+  constructor(private apiSearchService: ApiSearchService,
+              private signpostApi:      SignpostApi,
+              private authService:      AuthService) {} // auth used when admin extends Component
 
   search(event: any) {
     event.preventDefault();
@@ -28,7 +29,7 @@ export class SearchBoxComponent {
     console.log("SEARCHING CLICKED!");
     console.log("Search string is: ", this.searchStr);
 
-    this.apiSignsService.search(that.searchStr)
+    this.apiSearchService.search(that.searchStr)
       .subscribe(
         searchResults => {
           console.log("SEARCH RESULTS FOUND ARE: ", searchResults);
@@ -41,55 +42,3 @@ export class SearchBoxComponent {
         });
   }
 }
-
-
-// 'use strict';
-
-// module.exports = function(app) {
-
-//   app.controller('searchController', [
-//     '$scope',
-//     '$routeParams',
-//     '$http',
-//     function($scope, $routeParams, $http) {
-
-//       console.log("ROUTE PARAMS IS: ", $routeParams);
-
-// ************ AFTER CLICKING SEARCH, THERE WILL BE SEARCH PARAMS IN THE ROUTE
-// ************ IF THEY EXIST, THIS MEANS WE NEED TO GRAB THOSE RESULTS & DISPLAY
-
-//       var init = function() {
-//         var paramsQuery = $routeParams.searchStr;
-//         if(paramsQuery) {
-//           databaseSearch(paramsQuery);
-//         }
-//       };
-//       init();
-
-//       $scope.searchStr = '';
-//       $scope.users     = [];    // found users
-//       $scope.signs     = [];    // found signs
-
-
-//       $scope.searchUsers = function() {
-//         console.log("SEARCHING CLICKED!");
-//         console.log("Search string is: ", $scope.searchStr);
-
-//         databaseSearch($scope.searchStr);
-//       };
-
-//       function databaseSearch(queryStr) {
-//         $http.get('/search', {params: {'searchStr': queryStr} })
-//           .success(function(data) {
-//             console.log("SUCCESSFUL SEARCH. DATA IS: ", data);
-//             $scope.users = data.users;
-//             $scope.signs = data.signs;
-//           })
-//           .error(function(err) {
-//             // TODO: SHOW ERROR MSG TO USER
-//             console.log("Error searching.");
-//           });
-//       }
-//     }
-//   ]);
-// };
