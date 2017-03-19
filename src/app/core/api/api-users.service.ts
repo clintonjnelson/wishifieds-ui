@@ -31,12 +31,10 @@ export class ApiUsersService {
   // Create a new User Account
   createUser(creds: UserCreds): Observable<any> {
     let createUserUrl = this.signpostApi.routes.createUser;
-    let headers       = this.signpostApi.headers.contentType.appJson;
-    let options       = new RequestOptions({headers: headers});
 
     console.log("DATA TO SEND IS: ", JSON.stringify(creds));
     return this.http
-               .post(createUserUrl, JSON.stringify(creds), options)
+               .post(createUserUrl, JSON.stringify(creds))
                .map( user =>  {
                  console.log("RESPONSE FROM USER CREATION IS: ", user.json());
                  return user.json();

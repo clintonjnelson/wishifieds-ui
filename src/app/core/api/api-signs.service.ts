@@ -4,6 +4,12 @@ import { Observable } from 'rxjs/Observable';
 import { SignpostApi } from './signpost-api.service';
 import { AuthService } from '../auth/auth.service';
 import { Sign } from '../../signs/sign.model';
+import { User } from '../../users/user.model';
+
+class SearchResults {
+  signs: Sign[];
+  users: User[];
+}
 
 @Injectable()
 
@@ -26,6 +32,23 @@ export class ApiSignsService {
                  return error;
                  // show error message to user
                  // Maybe use remote logging infrastructure
+               });
+  }
+
+  // Search is MOSTLY for signs right now, but maybe search users too for admin????
+  // MAYBE START AN API-SEARCH SERVICE
+  search(searchStr: string): Observable<SearchResults> {
+    console.log("IN FUNCTION iS: ", searchStr);
+    let searchUrl = this.signpostApi.buildUrl('search', [{':searchStr': searchStr}]);
+    return this.http
+               .get(searchUrl)
+               .map( res => {
+                 console.log("SUCCESS SEARCH: ", res);
+                 return res.json();
+               })
+               .catch( error => {
+                 console.log("ERROR DURING SEARCH: ", error);
+                 return error.json();
                });
   }
 

@@ -13,6 +13,7 @@ ul li {
   margin-bottom: 5px;
 }
 
+/*Similar to the message in No Search Results*/
 #no-signs-message {
   color: white;
   font-family: helvetica, sans-serif;

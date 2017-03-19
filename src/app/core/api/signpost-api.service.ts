@@ -16,22 +16,16 @@ const ROUTES = {
   createSign:             '/api/signs',
   updateSign:             '/api/signs',
   destroySign:            '/api/signs',
+
+  // Search
+  search: '/api/search?searchStr=:searchStr'
 };
 
 
 @Injectable()
 
 export class SignpostApi {
-  routes  = ROUTES;
-  headers: any;
-
-  constructor() {
-    this.headers = {
-      contentType: {
-        appJson: (new Headers({'Content-Type': 'application/json'})),
-      },
-    };
-  }
+  routes = ROUTES;
 
   // eat (encrypted authentication token) is required on some requests
   getEatAuthCookie() {
