@@ -9,16 +9,19 @@ export class Link {
   linkName: string;
 }
 
+// Move this to the DB?
 const OLINKS: Link[] = [
-  {url: 'www.google.com', icon: 'facebook',  bgColor: 'green',  linkName: 'facebook'},
-  {url: 'www.google.com', icon: 'instagram', bgColor: 'blue',   linkName: 'instagram'},
-  {url: 'www.google.com', icon: 'linkedin',  bgColor: 'red',    linkName: 'linkedin'},
-  {url: 'www.google.com', icon: 'vine',      bgColor: 'orange', linkName: 'vine'},
-  {url: 'www.google.com', icon: 'reddit',    bgColor: 'yellow', linkName: 'reddit'},
-  {url: 'www.google.com', icon: 'snapchat',  bgColor: 'purple', linkName: 'snapchat'},
-  {url: 'www.google.com', icon: 'pinterest', bgColor: 'black',  linkName: 'pinterest'}
+  {url: '/api/auto/facebook',      icon: 'facebook',      bgColor: 'green',  linkName: 'facebook'},
+  {url: '/api/auto/instagram',     icon: 'instagram',     bgColor: 'blue',   linkName: 'instagram'},
+  {url: '/api/auto/linkedin',      icon: 'linkedin',      bgColor: 'red',    linkName: 'linkedin'},
+  {url: '/api/auto/github',        icon: 'github',        bgColor: 'orange', linkName: 'github'},
+  {url: '/api/auto/twitter',       icon: 'twitter',       bgColor: 'yellow', linkName: 'twitter'},
+  {url: '/api/auto/google',        icon: 'google',        bgColor: 'purple', linkName: 'google'},
+  {url: '/api/auto/wordpress',     icon: 'wordpress',     bgColor: 'black',  linkName: 'wordpress'},
+  {url: '/api/auto/stackexchange', icon: 'stackoverflow', bgColor: 'green',  linkName: 'stackoverflow'},
 ];
 
+// Move this to the DB?
 const CUSTOM_SIGNS: Sign[] = [
   { signName: 'podcast', signType: 'custom', bgColor: 'red', icon: 'podcast',
     _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
@@ -72,6 +75,12 @@ export class AddSignComponent {
   @Input()  signs: Sign[];
   @Output() saveEE  = new EventEmitter<any>()
   @Output() destroyEE = new EventEmitter<any>();
+  // MAYBE: TO ENABLE DYNAMIC SIGN TYPE UPDATE, LISTEN VIA NEW @OUTPUT FOR CHANGES,
+  // WOULD PROBABLY HAVE TO BE SENT UPON EACH KEYSTROKE OR SOMETHING LIKE THAT.
+  // THEN CAPTURE DATA & SEND BACK THE TYPE-CHANGED SIGN WITH USER'S FORM DATA
+  // UDPATED IN THIS SIGN. THEN WONT HAVE TO TURN OFF TYPES AFTER SELECTION.
+  // WOULD HAVE ONE SELECTED_SIGN THAT GETS UPDATES WITH ONLY TYPE & COLOR & ICON
+  // WHEN ANOTHER TYPE IS CHANGED.
 
   constructor(private helpers: HelpersService) {}
 

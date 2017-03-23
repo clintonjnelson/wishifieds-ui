@@ -31,7 +31,9 @@ import { SignContentComponent }        from './signs/sign/sign-content/sign-cont
 import { OauthSignContentComponent }   from './signs/sign/sign-content/oauth/oauth-sign-content.component';
 import { CustomSignContentComponent }  from './signs/sign/sign-content/custom/custom-sign-content.component';
 import { GenericSignContentComponent } from './signs/sign/sign-content/generic/generic-sign-content.component';
+
 import { AddSignComponent }            from './signs/add-sign/add-sign.component';
+import { OauthLinkComponent }          from './signs/add-sign/oauth-link/oauth-link.component';
 
 import { LoginSignupFormComponent }    from './users/login-signup-form/login-signup-form.component';
 import { UserSignComponent }           from './users/user-sign/user-sign.component';
@@ -93,6 +95,7 @@ import { OwnerGuard } from './core/auth/owner-guard.service';
                   CustomSignContentComponent,
                   GenericSignContentComponent,
                   AddSignComponent,
+                  OauthLinkComponent,
 
                   UserSignComponent,
                   UserPageComponent,

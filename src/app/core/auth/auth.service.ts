@@ -82,11 +82,16 @@ export class AuthService {
                  userId:       string,
                  email:        string,
                  role:         string = '') {
+    // let encodedEat = encodeURIComponent(eatAuthToken);
     window.localStorage.setItem('eatAuthToken', eatAuthToken);
     window.localStorage.setItem('username',     username);
     window.localStorage.setItem('userId',       userId);
     window.localStorage.setItem('email',        email);
     window.localStorage.setItem('role',         role);
+
+    // Set cookie on window.cookie for oauth tokens
+    // document.cookie = 'eat=' + encodedEat;
+
     this.updateAuthFromCookies();
   }
 }
