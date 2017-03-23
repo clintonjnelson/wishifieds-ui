@@ -17,7 +17,6 @@ const OAUTH_FACEBOOK_SIGN: Sign = {
     signName: 'facebook',
     signType: 'oauth',
     userId: 'myactualusername',
-    owner: 'someusername'
   };
 const CUSTOM_ETSY_SIGN: Sign = {
     _id: '54321',
@@ -30,7 +29,6 @@ const CUSTOM_ETSY_SIGN: Sign = {
     signName: 'etsy',
     signType: 'custom',
     userId: 'myetsyusername',
-    owner: 'someusername'
 };
 const EMAIL_SIGN: Sign = {
     _id: '111111',
@@ -43,7 +41,6 @@ const EMAIL_SIGN: Sign = {
     signName: 'email',
     signType: 'generic',
     userId: 'myemailname',
-    owner: 'someusername'
 };
 const PHONE_SIGN: Sign = {
     _id: '555555',
@@ -56,7 +53,6 @@ const PHONE_SIGN: Sign = {
     signName: 'phone',
     signType: 'generic',
     userId: 'myphonename',
-    owner: 'someusername'
 };
 
 const SIGNS: Sign[] = [OAUTH_FACEBOOK_SIGN, CUSTOM_ETSY_SIGN, EMAIL_SIGN, PHONE_SIGN];

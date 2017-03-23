@@ -25,7 +25,13 @@ export class OauthLinkComponent {
     let eatToken = this.signpostApi.getEatAuthCookie();
     // console.log("EAT TOKEN PRIOR TO SENDING IS: ", eatToken);
     // document.cookie = 'eat=' + eatToken;
+    if(this.icon === 'twitter') {
+      document.cookie = 'oauth1eat=' + eatToken;
+      window.location.href = this.url + '?eat=' + eatToken;
+    }
+    else {
+      window.location.href = this.url + '?eat=' + eatToken;
+    }
 
-    window.location.href = this.url + '?eat=' + eatToken;
   }
 }
