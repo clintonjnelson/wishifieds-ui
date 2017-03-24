@@ -18,7 +18,7 @@ const OLINKS: Link[] = [
   {url: '/api/auto/twitter',       icon: 'twitter',       bgColor: 'yellow', linkName: 'twitter'},
   {url: '/api/auto/google',        icon: 'google',        bgColor: 'purple', linkName: 'google'},
   {url: '/api/auto/wordpress',     icon: 'wordpress',     bgColor: 'black',  linkName: 'wordpress'},
-  {url: '/api/auto/stackexchange', icon: 'stackoverflow', bgColor: 'green',  linkName: 'stackoverflow'},
+  {url: '/api/auto/stackexchange', icon: 'stack-overflow', bgColor: 'green',  linkName: 'stackoverflow'},
 ];
 
 // Move this to the DB?

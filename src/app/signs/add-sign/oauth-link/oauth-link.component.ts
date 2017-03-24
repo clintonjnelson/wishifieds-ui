@@ -21,17 +21,18 @@ export class OauthLinkComponent {
               private signpostApi: SignpostApi) {}
 
   submit() {
-    //let eatToken = this.signpostApi.getEatAuthCookie();
     let eatToken = this.signpostApi.getEatAuthCookie();
-    // console.log("EAT TOKEN PRIOR TO SENDING IS: ", eatToken);
-    // document.cookie = 'eat=' + eatToken;
-    if(this.icon === 'twitter') {
-      document.cookie = 'oauth1eat=' + eatToken;
-      window.location.href = this.url + '?eat=' + eatToken;
-    }
-    else {
-      window.location.href = this.url + '?eat=' + eatToken;
-    }
 
+    // Oauth1 requires current eat token in cookie
+    // Oauth2 token requires eat token in query
+    switch (this.icon) {
+      case 'twitter': {
+        document.cookie = 'oauth1eat=' + eatToken;
+        // I don't think Oauth1 needs the query. Won't use it.
+        window.location.href = this.url; // + '?eat=' + eatToken;
+        break;
+      }
+      default: { window.location.href = this.url + '?eat=' + eatToken; }
+    }
   }
 }
