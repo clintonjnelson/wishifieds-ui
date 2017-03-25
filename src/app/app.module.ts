@@ -5,7 +5,7 @@ import { BrowserModule }   from '@angular/platform-browser';
 import { RouterModule }    from '@angular/router';
 import { AppRouterModule } from './app-routing.module';
 import { FormsModule }     from '@angular/forms'
-import { HttpModule, Http, XHRBackend, RequestOptions }      from '@angular/http';
+import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { MaterialModule }  from '@angular/material';
 import { DragulaModule }   from 'ng2-dragula/ng2-dragula';
 import 'hammerjs';
@@ -63,10 +63,18 @@ import { ApiUsersService }     from './core/api/api-users.service';
 import { ApiSignsService }     from './core/api/api-signs.service';
 import { ApiSearchService }    from './core/api/api-search.service';
 import { HelpersService }      from './shared/helpers/helpers.service';
+import { ErrorRedirectComponent } from './core/services/error-redirect.component';  // really a component
 
 // Guards
 import { AdminGuard } from './core/auth/admin-guard.service';
 import { OwnerGuard } from './core/auth/owner-guard.service';
+
+// Providers
+export function HttpFactory(backend: XHRBackend,
+                            defaultOptions: RequestOptions,
+                            authService: AuthService) {
+  return new HttpIntercept(backend, defaultOptions, authService);
+}
 
 @NgModule({
   imports:      [
@@ -110,6 +118,8 @@ import { OwnerGuard } from './core/auth/owner-guard.service';
                   HoverColorDirective,
                   HoverBackgroundDirective,
                   UniqueValidatorDirective,
+
+                  ErrorRedirectComponent,      // Really a service, but built as component
                 ],
   bootstrap:    [
                   AppComponent,
@@ -128,8 +138,7 @@ import { OwnerGuard } from './core/auth/owner-guard.service';
                   ApiSignsService,
                   ApiSearchService,
                   {provide: Http,
-                    useFactory: (backend: XHRBackend, defaultOptions: RequestOptions, authService: AuthService) =>
-                    new HttpIntercept(backend, defaultOptions, authService),
+                    useFactory: HttpFactory,
                     deps: [XHRBackend, RequestOptions, AuthService]
                   },
                 ],

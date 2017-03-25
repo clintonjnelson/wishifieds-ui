@@ -74,3 +74,4 @@ export class HttpIntercept extends Http {
     return this.intercept(super.delete(url, this.getCustomOrDefaultOptionsArgs(options)));
   }
 }
+

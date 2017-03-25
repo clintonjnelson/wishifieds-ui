@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-//import { ActivatedRoute, Params } from '@Angular/router';
+// import { trigger, state, style, animate, transition } from '@angular/animations';
 import { HelpersService } from '../../shared/helpers/helpers.service';
 import { AuthService, UserAuth } from '../../core/auth/auth.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -20,8 +20,15 @@ const OAUTHS: OauthLink[] = [
 @Component({
   moduleId: module.id,
   selector: 'signpost-navbar',
-  templateUrl: 'navbar.component.html',
-  styleUrls:  ['navbar.component.css']
+  templateUrl: 'navbar.component.html',  // trigger: [@visibilityChanged]='showLoginLinks'
+  styleUrls:  ['navbar.component.css'],
+  // animations: [trigger('visibilityChanged', [
+  //               state('false', style({opacity: 0, transform: 'translateX(0)'})),
+  //               state('true',  style({opacity: 1, transform: 'translateX(0)'})),
+  //               transition('false => true', [style({opacity: 0, transform: 'translateX(100px)' }), animate('2000ms')]),  // between wildcard states
+  //               transition('true => false', [animate('2000ms', style({opacity: 0, transform: 'translateX(-100px)'}))])  // between wildcard states
+  //               ])
+  // ]
 })
 
 export class NavbarComponent {
@@ -92,14 +99,3 @@ export class NavbarComponent {
     this.authService.logout();
   }
 }
-
-// @Input()    // This component expects [] data from outside
-// isSignedIn: boolean;
-// isSignedOut: boolean;
-// myLinks: string[];       // fix this array type
-// oauthLinks: string[];    // fix this array type
-
-// this.isSignedIn = false;
-// this.isSignedOut = true;
-// this.myLinks = [];
-// this.oauthLinks = [];
