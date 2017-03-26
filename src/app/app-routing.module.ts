@@ -11,7 +11,7 @@ import { LivingStyleGuideComponent }     from './styleguide/livingstyleguide.com
 import { SearchBoxComponent }            from './search/search-box/search-box.component';
 import { UserPageComponent }             from './users/user-page.component';
 import { UserSettingsComponent }         from './users/settings/user-settings.component';
-import { ErrorRedirectComponent }         from './core/services/error-redirect.component';
+import { OauthRedirectComponent }        from './core/redirects/oauth-redirect.component';
 
 // Guards
 import { AdminGuard } from './core/auth/admin-guard.service';
@@ -19,7 +19,8 @@ import { OwnerGuard } from './core/auth/owner-guard.service';
 
 // App Routes
 const rootRoutes: Routes = [
-  { path: 'errors/:error', component: ErrorRedirectComponent, pathMatch: 'full'},
+  { path: 'oauth/errors/:redirecttype',  component: OauthRedirectComponent, pathMatch: 'full'},
+  { path: 'oauth/success/:redirecttype', component: OauthRedirectComponent, pathMatch: 'full'},
 
   { path: 'requestpasswordchange', component: RequestPasswordResetComponent, pathMatch: 'full'},
   { path: 'requestpasswordchange/change', component: PasswordResetComponent, pathMatch: 'full' },

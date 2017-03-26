@@ -63,7 +63,7 @@ import { ApiUsersService }     from './core/api/api-users.service';
 import { ApiSignsService }     from './core/api/api-signs.service';
 import { ApiSearchService }    from './core/api/api-search.service';
 import { HelpersService }      from './shared/helpers/helpers.service';
-import { ErrorRedirectComponent } from './core/services/error-redirect.component';  // really a component
+import { OauthRedirectComponent } from './core/redirects/oauth-redirect.component';  // really a component
 
 // Guards
 import { AdminGuard } from './core/auth/admin-guard.service';
@@ -119,7 +119,7 @@ export function HttpFactory(backend: XHRBackend,
                   HoverBackgroundDirective,
                   UniqueValidatorDirective,
 
-                  ErrorRedirectComponent,      // Really a service, but built as component
+                  OauthRedirectComponent,      // Really a service, but built as component
                 ],
   bootstrap:    [
                   AppComponent,

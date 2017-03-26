@@ -11,9 +11,12 @@ export class OauthLink {
 }
 
 const OAUTHS: OauthLink[] = [
-  {icon: 'facebook-official', url: 'http://localhost:3000/styleguide', bgColor: '#3b5998'},
-  {icon: 'instagram', url: 'http://localhost:3000/styleguide', bgColor: '#9b6954'},
-  {icon: 'linkedin', url: 'http://localhost:3000/styleguide', bgColor: '#007bb5'},
+  {icon: 'facebook-official', url: '/api/login/facebook',  bgColor: '#3b5998'},
+  {icon: 'instagram',         url: '/api/login/instagram', bgColor: '#9b6954'},
+  {icon: 'linkedin',          url: '/api/login/linkedin',  bgColor: '#007bb5'},
+  {icon: 'twitter',           url: '/api/login/twitter',   bgColor: '#007bb5'},
+  {icon: 'google',            url: '/api/login/google',    bgColor: '#007bb5'},
+  {icon: 'wordpress',         url: '/api/login/wordpress', bgColor: '#007bb5'},
 ]
 
 
