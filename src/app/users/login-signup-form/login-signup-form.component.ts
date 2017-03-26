@@ -1,9 +1,11 @@
 import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
 import { NgForm, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../../core/auth/auth.service';
 import { ApiUsersService } from '../../core/api/api-users.service';
 import { ApiAuthService } from '../../core/api/api-auth.service';
 import { UserCreds } from '../../users/user.model';
+import { NotificationService } from '../../core/services/notification.service';
 
 
 
@@ -26,7 +28,9 @@ export class LoginSignupFormComponent {
 
   constructor( private authService:     AuthService,
                private apiUsersService: ApiUsersService,
-               private apiAuthService:  ApiAuthService ) {
+               private apiAuthService:  ApiAuthService,
+               private router:          Router,
+               private notification:    NotificationService) {
     this.userCreds = {
       email:      '',
       password:   '',
@@ -35,12 +39,13 @@ export class LoginSignupFormComponent {
     };
   };
 
-  loginOrSignup(): boolean {
+  loginOrSignup(event): boolean {
+    event.preventDefault();  // Do not redirect.
+    const that = this;
     console.log("LOGIN CLICKED");
     console.log("LOGIN FORM IS: ", this.loginForm);
     console.log("USER CREDS IS: ", this.userCreds);
     console.log("CALLING LOGIN ON AUTHSERVICE WITH EMAIL, PASSWORD...");
-    var that = this;
     if(!this.loginForm.form.valid) { return; } // Invalid, do nothing
 
     if(this.userCreds.newAccount) {
@@ -50,6 +55,8 @@ export class LoginSignupFormComponent {
             res => {
               console.log("RESPONSE TO SIGNUP FORM IS: ", res);
               that.authService.setAuthCookies(res.eat, res.username, res.userid, res.email, res.role);
+              that.notification.notify('success', 'Welcome! We\'ve staked you a new post so you can hang some signs.');
+              that.router.navigate(['/', res.username]);
             },
             err => {
               console.log("ERROR RESPONSE TO SIGNUP FORM IS: ", err);
@@ -60,8 +67,6 @@ export class LoginSignupFormComponent {
     }
     else {
       this.login(this.userCreds.email, this.userCreds.password);
-          // some callback stuff - like NEED EAT
-      this.close.emit(null);
     }
     return false;
   }
@@ -80,9 +85,10 @@ export class LoginSignupFormComponent {
             success.userId,
             success.email,
             success.role);
+          that.close.emit(null);
         },
         error => {
-          console.log("ERROR IS: ", error);
+          that.displayedValidationErrors['login'] += that.validationErrorMessages.login.user;
         }
       );
   }
@@ -102,17 +108,21 @@ export class LoginSignupFormComponent {
   // displayed validtion errors could be pulled as the primary hasOwnProps keys of validationErrorMessages
   //
   displayedValidationErrors = {
-    email: '',  // No message, when valid
-    password: ''      // No message, when valid
+    email: '',    // No message, when valid
+    password: '', // No message, when valid
+    login: ''      // User not found
   };
 
   private validationErrorMessages = {
     email: {
       pattern: 'Improper email. Please try again.',
-      minlength: 'Email must be at least 6 characters',
+      minlength: 'Email must be at least 6 characters.',
     },
     password: {
-      minlength: "Password must be at least 6 characters"
+      minlength: "Password must be at least 6 characters."
+    },
+    login: {
+      user: "Invalid email/password combination. Please try again."
     }
   }
 
@@ -136,13 +146,15 @@ export class LoginSignupFormComponent {
 
     for(const inputName in this.displayedValidationErrors) {
       // clear previous error messages
+      console.log("INPUT NAME LOOKS LIKE: ", typeof inputName);
       this.displayedValidationErrors[inputName] = '';  // each error unser each inputName, clear it
       const control = form.get(inputName);             // get value from form input
 
-      // If control inputName is dirtied & not valid, show all applicable errors
-      if(control && control.dirty && !control.valid) {
+      // If control inputName is dirtied & not valid & new user, show all applicable form errors
+      if(control && control.dirty && !control.valid && this.userCreds.newAccount) {
         const msgs = this.validationErrorMessages[inputName];  // get all messages for inputName
         for(const error in control.errors) {
+          console.log("TYPEOF CONTROL.ERRORS IS: ", typeof control.errors);
           this.displayedValidationErrors[inputName] += msgs[error] + ' ';
         }
       }

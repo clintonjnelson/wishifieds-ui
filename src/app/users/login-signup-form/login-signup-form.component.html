@@ -39,7 +39,7 @@
 
     <div class="buttons-container">
       <!-- Submit Form Button -->
-      <button md-button type="submit" (click)="loginOrSignup()" class="login-signup-button submit" [disabled]="loginForm.invalid">
+      <button md-button type="submit" (click)="loginOrSignup($event)" class="login-signup-button submit" [disabled]="loginForm.invalid">
         <i class="fa fa-sign-in fa-3x"></i>
       </button>
 
@@ -47,6 +47,9 @@
       <button md-button type="cancel" (click)="cancel()" class="login-signup-button cancel">
         <i class="fa fa-times fa-3x"></i>
       </button>
+    </div>
+    <div *ngIf="displayedValidationErrors.login" class="input-errors error">
+      {{ displayedValidationErrors.login }}
     </div>
   </form>
 </div>

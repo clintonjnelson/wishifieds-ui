@@ -9,12 +9,13 @@
 
 .input-errors {
   margin-bottom: 5px;
-
+  max-width: 275px;
 }
 
 .error {
   color: pink;
   font-family: helvetica, sans-serif;
+  word-wrap: normal;
 }
 
 .login-input-container {

@@ -19,6 +19,10 @@ export class ApiAuthService {
                .map( res => {
                  console.log("GOT AN API RESPONSE: ", res);
                  return res.json();
+               })
+               .catch( err => {
+                 console.log("ERROR FROM THE API: ", err);
+                 return err.json();
                });
   }
 }
