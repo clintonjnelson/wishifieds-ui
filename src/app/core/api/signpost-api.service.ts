@@ -19,6 +19,7 @@ const ROUTES = {
   getSignsByUsernameOrId: '/api/signs/:usernameOrId',
   createSign:             '/api/signs',
   updateSign:             '/api/signs',
+  updateSignOrder:        '/api/signs/order',
   destroySign:            '/api/signs',
 
   // Search

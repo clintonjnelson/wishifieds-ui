@@ -62,6 +62,23 @@ export class ApiSignsService {
                });
   }
 
+  updateSignOrder(orderedSignIds: string[]): Observable<any> {
+    const updateSignOrderUrl = this.signpostApi.routes.updateSignOrder;
+    const options            = this.signpostApi.getRequestOptionWithEatHeader();
+
+    console.log("ABOUT TO SEND THIS LIST: ", orderedSignIds);
+    return this.http
+               .patch(updateSignOrderUrl, JSON.stringify({order: orderedSignIds}), options)
+               .map( res => {
+                 console.log("SUCCESS ORDERING RESPONSE: ", res);
+                 return res.json();  // DONT NEED, SUCCESS IS ENOUGH VERIFICATION
+               })
+               .catch( err => {
+                 console.log("FAILED ORDERING RESPONSE: ", err);
+                 return err.json();  // FAILURE INDICATES NOTIFY USER
+               });
+  }
+
   destroySign(sign: Sign): Observable<boolean> {
     console.log("IN THE DESTROY_SIGN METHOD...");
     const destroySignUrl = this.signpostApi.routes.destroySign;

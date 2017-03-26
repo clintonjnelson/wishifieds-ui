@@ -22,17 +22,12 @@ export class SignComponent {
       case 'custom':   return 'custom';
       case 'generic':  return 'generic';
       // If not made explicitly for another type, assume oauth type
-      default: {
-        console.log('Defaulting to oauth sign');
-        return 'oauth';
-      }
+      default:         return 'oauth';
     }
   }
 
   destroy(event: any) {
     console.log("SIGNCOMPONENT DESTROY EVENT IS EMITTING EVENT TO ADD-SIGN: ", event);
-    // COULD MAKE CONDITIONAL ON NEW SIGN, BUT THEN AGAIN MAY NEED TO UPDATE SIGNS
-    // DO WE REALLY NEED THE FULL OBJECT IF CAN CLOSE NEWSIGN STUFF BASE ON LOGIC IN HERE???
     this.destroyEE.emit(event);
   }
 
