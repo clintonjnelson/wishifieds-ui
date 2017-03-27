@@ -40,8 +40,8 @@ export class ApiUsersService {
                  return user.json();
                })
                .catch( (error: Response | any) => {
-                 console.log("ERROR FROM USER CREATION IS: ", error);
-                 return error;
+                 console.log("ERROR JSON IS: ", error.json());
+                 return Observable.throw(error);
                  // show error message to user
                  // Maybe use remote logging infrastructure
                });

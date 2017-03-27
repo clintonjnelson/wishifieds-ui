@@ -39,7 +39,7 @@ export class LoginSignupFormComponent {
     };
   };
 
-  loginOrSignup(event): boolean {
+  loginOrSignup(event: any): boolean {
     event.preventDefault();  // Do not redirect.
     const that = this;
     console.log("LOGIN CLICKED");
@@ -56,13 +56,19 @@ export class LoginSignupFormComponent {
               console.log("RESPONSE TO SIGNUP FORM IS: ", res);
               that.authService.setAuthCookies(res.eat, res.username, res.userid, res.email, res.role);
               that.notification.notify('success', 'Welcome! We\'ve staked you a new post so you can hang some signs.');
+              this.close.emit(null);
               that.router.navigate(['/', res.username]);
             },
             err => {
-              console.log("ERROR RESPONSE TO SIGNUP FORM IS: ", err);
+              let body = err.json();
+              console.log("ERROR TO HANDLE FINAL IS: ", body);
+              if(body.error === 'username') {
+                console.log("SHOWING FORM ERROR NOW...");
+                that.displayedValidationErrors['main'] += that.validationErrorMessages.email.taken;
+              }
+              console.log("ERROR RESPONSE TO SIGNUP FORM IS: ", body);
             }
           );
-        this.close.emit(null);
       }
     }
     else {
@@ -87,8 +93,8 @@ export class LoginSignupFormComponent {
             success.role);
           that.close.emit(null);
         },
-        error => {
-          that.displayedValidationErrors['login'] += that.validationErrorMessages.login.user;
+        err => {
+          that.displayedValidationErrors['main'] += that.validationErrorMessages.login.user;
         }
       );
   }
@@ -110,13 +116,14 @@ export class LoginSignupFormComponent {
   displayedValidationErrors = {
     email: '',    // No message, when valid
     password: '', // No message, when valid
-    login: ''      // User not found
+    main: ''      // User not found
   };
 
   private validationErrorMessages = {
     email: {
       pattern: 'Improper email. Please try again.',
       minlength: 'Email must be at least 6 characters.',
+      taken: 'This email is already taken.',
     },
     password: {
       minlength: "Password must be at least 6 characters."
@@ -160,86 +167,4 @@ export class LoginSignupFormComponent {
       }
     }
   }
-
-
 }
-
-
-
-
-
-
-
-///////////////////MAYBE MOVE THIS UP TO THE NAVBAR PARENT LEVEL TO CONTROL???
-///////////////////OR MAKE THE OAUTH LINKS THEIR OWN TYPE OF COMPOENT???
-// 'use strict';
-// /*
-//   Routes Covered:
-//     - /oauth
-//     - /login
-
-//   This module covers two cases:
-//   Oauth signin where a cookie is sent to /oauth and parsed out of the params
-//   Basic signin, where the user creates a login through the website
-// */
-// module.exports = function (app) {
-//     app.controller('sessionsController', [
-//         'sessions',
-//         '$scope',
-//         '$http',
-//         '$routeParams',
-//         '$window',
-//         function (sessions, $scope, $http, $routeParams, $window) {
-//             var currPath = sessions.currPath();
-//             //-------------------- LOGOUT ------------------
-//             if (checkPath('/logout')) {
-//                 sessions.resetSession(); // clear token, redirect greet
-//                 $window.location.reload();
-//                 sessions.redirect('/greet');
-//             }
-//             console.log("SHOULD NOT HIT THIS ON LOGOUT");
-//             //-------------------- OAUTH ------------------
-//             if (checkPath('/oauth') && $routeParams.token) {
-//                 console.log("ITS TRYING OAUTH", $routeParams.token);
-//                 sessions.setOauthSession(); // session+token+user => load/clear/redirect
-//             }
-//             else if (checkPath('/oauth')) {
-//                 sessions.redirect('/greet');
-//             }
-//             //--------------------- BASIC AUTH ---------------------
-//             // $scope & initial values
-//             $scope.user = {};
-//             $scope.user.newAccount = false;
-//             $scope.user.termsCond = false;
-//             // Functions
-//             $scope.login = function () {
-//                 if ($scope.user.newAccount) {
-//                     if ($scope.user.termsCond) {
-//                         $http.post('/users', $scope.user)
-//                             .success(function (data) {
-//                             sessions.setBasicSession(data); // sets: eat, user, http-eat-header
-//                             console.log('User created.');
-//                         })
-//                             .error(function (err) {
-//                             console.log('Error creating user.');
-//                         });
-//                     }
-//                     else {
-//                     }
-//                 }
-//                 else {
-//                     sessions.login($scope.user, function (err, data) {
-//                         if (err) {
-//                             return console.log("ERROR LOGGING IN: ", err);
-//                         }
-//                         console.log("LOGGED IN.");
-//                         sessions.redirect('/'); // redirects if not successful
-//                     });
-//                 }
-//             };
-//             function checkPath(path) {
-//                 return (currPath === path ? true : false);
-//             }
-//         }
-//     ]);
-// };
