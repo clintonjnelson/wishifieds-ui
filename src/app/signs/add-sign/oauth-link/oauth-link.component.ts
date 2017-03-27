@@ -29,10 +29,14 @@ export class OauthLinkComponent {
       case 'twitter': {
         document.cookie = 'oauth1eat=' + eatToken;
         // I don't think Oauth1 needs the query. Won't use it.
-        window.location.href = this.url; // + '?eat=' + eatToken;
+        window.location.href = this.url + '?signType=' + this.icon;
         break;
       }
-      default: { window.location.href = this.url + '?eat=' + eatToken; }
+      default: {
+        window.location.href = this.url +
+                                '?eat='      + eatToken +
+                                '&signType=' + this.icon;
+      }
     }
   }
 }
