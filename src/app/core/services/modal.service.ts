@@ -9,15 +9,20 @@ export class ModalService {
 
   constructor(private dialog: MdDialog) {}
 
-  public confirm(title: string, msg: string): Observable<boolean> {
+  public confirm(title:        string,
+                 msg:          string,
+                 showCheckbox: boolean = null,
+                 checkboxMsg:  string  = null): Observable<any> {
     // Use this component
     let dialogRef: MdDialogRef<ConfirmModalComponent>;
     let config = new MdDialogConfig();
     //config.viewContainerRef = viewContainerRef;  // Said don't need this anymore
 
     dialogRef = this.dialog.open(ConfirmModalComponent, config);
-    dialogRef.componentInstance.title = title;
-    dialogRef.componentInstance.msg   = msg;
+    dialogRef.componentInstance.title        = title;
+    dialogRef.componentInstance.msg          = msg;
+    dialogRef.componentInstance.showCheckbox = showCheckbox;
+    dialogRef.componentInstance.checkboxMsg  = checkboxMsg;
 
     return dialogRef.afterClosed();
   }

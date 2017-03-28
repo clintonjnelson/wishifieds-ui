@@ -1,9 +1,15 @@
 <div id="modal-container">
   <!-- Confirmation Warning/Info -->
-  <h2>{{title}}</h2>
-  <p>{{msg}}</p>
+  <h2 id="title" class="modal-content">{{title}}</h2>
+  <p id="msg" class="modal-content">{{msg}}</p>
 
-  <!-- OK/Close Buttons -->
-  <i class="{{helpers.buildIconClass('check', 2)}}" (click)="dialogRef.close(true)"></i>
-  <i class="{{helpers.buildIconClass('times', 2)}}" (click)="dialogRef.close(false)"></i>
+  <div *ngIf="showCheckbox" id="checkbox-container">
+    <md-checkbox [(ngModel)]="checkboxVal" color="primary" name="modal checkbox" id="modal-checkbox" class="modal-content">
+      {{checkboxMsg}}
+    </md-checkbox>
+  </div>
+
+  <!-- OK/Close Buttons - also return checkbox value -->
+  <i class="{{helpers.buildIconClass('check', 2)}}" (click)="dialogRef.close({response: true,  checkbox: checkboxVal})"></i>
+  <i class="{{helpers.buildIconClass('times', 2)}}" (click)="dialogRef.close({response: false})"></i>
 </div>

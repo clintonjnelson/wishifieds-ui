@@ -75,18 +75,22 @@ export class SignContentComponent implements OnInit {
     var that = this;
     var confirmResponse: boolean;
     var delSign = this.sign;
+    console.log("DEL SIGN IS: ", delSign);
     if(this.forSignCreation) {
       console.log("FOR NEW SIGN CREATION, SO PASSING CLOSE ONLY");
       this.destroyEE.emit({sign: null, destroy: false, close: true});
     }
     else {
+      var signDeleteMsg = 'Are you sure you want to delete this '+ delSign.signType +' sign?'
+      var showOauthDeleteCheckbox = (delSign.signType !== 'custom');
+      var checkboxMsg = 'Also remove ' + delSign.signType + ' login support?'
       // Open modal via service for confirmation
       this.modalService
-        .confirm('Sign Deletion', 'Are you sure you want to delete this '+ that.sign.signName +' sign?')
-        .subscribe((response) => {
-          if(response === true) {
-            console.log("ABOUT TO CALL DELETE METHOD SERVICE...")
-            this.apiSignsService.destroySign(that.sign)
+        .confirm('Sign Deletion', signDeleteMsg, showOauthDeleteCheckbox, checkboxMsg)
+        .subscribe((submit) => {
+          if(submit.response === true) {
+            console.log("ABOUT TO CALL DELETE METHOD SERVICE. RESPONSE WAS: ", submit);
+            this.apiSignsService.destroySign(that.sign, submit.checkbox)
               .subscribe(
                 success => {
                   console.log("SIGN SUCCESSFULLY DELETED. Success is: ", success);

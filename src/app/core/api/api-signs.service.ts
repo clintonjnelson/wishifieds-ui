@@ -79,13 +79,13 @@ export class ApiSignsService {
                });
   }
 
-  destroySign(sign: Sign): Observable<boolean> {
+  destroySign(sign: Sign, deleteOauth: boolean): Observable<boolean> {
     console.log("IN THE DESTROY_SIGN METHOD...");
     const destroySignUrl = this.signpostApi.routes.destroySign;
     let headers          = this.signpostApi.getHeaderWithEat();
     const options        = new RequestOptions({
                               headers: headers,
-                              body:    JSON.stringify({sign: sign})
+                              body:    JSON.stringify({sign: sign, deleteOauth: deleteOauth})
                            });
 
     return this.http

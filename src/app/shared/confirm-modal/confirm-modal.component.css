@@ -6,7 +6,27 @@
   max-height: 200px;
   z-index: 9999;
 
-  background-color: #5a5a5a;
+  /*background-color: #5a5a5a;*/
+  background-color: #676767;
   font-family: helvetica;
   color: white;
+}
+#modal-container {
+  max-width: 400px;
+}
+#title {
+  font-size: 1.5em;
+}
+.modal-content {
+  font-family: helvetica;
+  color: white;
+}
+#msg {
+  font-size: 1em;
+}
+#checkbox-container {
+  margin-bottom: 30px;
+}
+#modal-checkbox {
+  font-size: 1em;
 }

@@ -11,7 +11,12 @@ import { HelpersService } from '../helpers/helpers.service';
 
 export class ConfirmModalComponent {
   title: string;
-  msg: string;
+  msg:   string;
+
+  // Oauth deletion
+  showCheckbox: boolean;
+  checkboxMsg:  string;
+  checkboxVal:  boolean = true;
 
   constructor(public dialogRef: MdDialogRef<ConfirmModalComponent>,
               private helpers: HelpersService) {}
