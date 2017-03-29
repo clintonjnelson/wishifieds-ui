@@ -65,8 +65,8 @@ export class UserSettingsComponent implements OnInit {
         error => {
           console.log("ERROR IS: ", error);
           switch(error.msg) {
-            case('username'): return that.setUniquenessValidationError('username');
-            case('email'):    return that.setUniquenessValidationError('email');
+            case('username-taken'): return that.setUniquenessValidationError('username');
+            case('email-taken'):    return that.setUniquenessValidationError('email');
             case('email-format'): {
               that.displayedValidationErrors['email'] = 'Email does not appear valid. Please update and try again.'
               break;

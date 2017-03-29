@@ -62,7 +62,7 @@ export class LoginSignupFormComponent {
             err => {
               let body = err.json();
               console.log("ERROR TO HANDLE FINAL IS: ", body);
-              if(body.error === 'username') {
+              if(body.msg === 'email-taken') {
                 console.log("SHOWING FORM ERROR NOW...");
                 that.displayedValidationErrors['main'] += that.validationErrorMessages.email.taken;
               }
