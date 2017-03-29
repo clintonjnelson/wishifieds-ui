@@ -34,7 +34,7 @@ export class HttpIntercept extends Http {
       }
       // Continue as normal
       else {
-        return Observable.throw(res);
+        return observable; //Observable.throw(res)
       }
     });
   }

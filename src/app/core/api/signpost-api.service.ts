@@ -14,6 +14,8 @@ const ROUTES = {
   // Users
   createUser:  '/api/users',
   getUserById: '/api/users/:usernameOrId',
+  updateUser:  '/api/users/:id',
+  checkAvailability: '/api/users/available?username=:username&email=:email',
 
   // Signs
   getSignsByUsernameOrId: '/api/signs/:usernameOrId',

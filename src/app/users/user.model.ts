@@ -12,5 +12,6 @@ export class UserCreds {
 }
 
 export class UserSettings extends User {
-  email:  string;
+  userId:   string
+  email: string;
 }

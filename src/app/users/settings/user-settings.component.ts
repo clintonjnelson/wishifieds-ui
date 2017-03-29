@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm, FormControl } from '@angular/forms';
-import { UserSettings }        from "../user.model";
+import { User, UserSettings }        from "../user.model";
 import { HelpersService }      from '../../shared/helpers/helpers.service';
 import { AuthService }         from '../../core/auth/auth.service';
 import { ApiUsersService }     from '../../core/api/api-users.service';
@@ -33,6 +33,7 @@ export class UserSettingsComponent implements OnInit {
                           user => {
                             console.log("USER RETURNED FROM GET BY ID: ", user);
                             that.userSettings = {
+                              userId: user.userId,
                               username: user.username,
                               email: user.email,
                               picUrl: null,   // UPDATE THESE
@@ -41,8 +42,7 @@ export class UserSettingsComponent implements OnInit {
                             that.isProcessing = false;
                           },
                           error => {
-                            console.log("ERR RETURNED FROM GET BY ID: ", error);
-                            return error;
+                            console.log("ERROR GETTING USER SETTINGS: ", error);
                           }
                         );
     that.resetSettingsCopy();
@@ -50,17 +50,36 @@ export class UserSettingsComponent implements OnInit {
 
   // Save & Cancel Buttons
   save() {
-    var _this = this;
-    // RUN VALIDATIONS FIRST -- SHOW ERRORS IF ANY FOUND
-    // CHECK FOR INVALID USERNAME -- ALREADY TAKEN OR OTHERWISE
-    // IF NO ERRORS, ATTEMPT TO SAVE THE USER SETTINGS UPDATE
-    // SAVE
-        // If saves, update the original AND the copy
-        // If fails to save, DO NOT UPDATE ANYTHING. Allow user to fix.
-    // Finally, reset the form display (turns off buttons)
-    this.userSettings = Object.assign({}, _this.tempSettings);
-    this.resetFormDisplay();
+    var that = this;
+    this.tempSettings.userId = this.userSettings.userId;
+    console.log("TEMP SETTINGS IS: ", this.tempSettings);
+    console.log("USER SETTINGS IS: ", this.userSettings);
+
+    this.apiUsersService.updateUser(this.tempSettings)
+      .subscribe(
+        success => {
+          console.log("SUCCESS UPDATING THE USER IS: ", success);
+          this.userSettings = Object.assign({}, that.tempSettings);
+          this.resetFormDisplay();  // reset means turns off buttons
+        },
+        error => {
+          console.log("ERROR IS: ", error);
+          switch(error.msg) {
+            case('username'): return that.setUniquenessValidationError('username');
+            case('email'):    return that.setUniquenessValidationError('email');
+            case('email-format'): {
+              that.displayedValidationErrors['email'] = 'Email does not appear valid. Please update and try again.'
+              break;
+            }
+            default: {
+              that.displayedValidationErrors['main'] = that.validationErrorMessages.main.generic
+              break;
+            }
+          }
+          console.log("ERROR UPDATING THE USER IS: ", error);
+        });
   }
+
   cancel() {
     this.resetSettingsCopy();
     this.resetFormDisplay();
@@ -82,23 +101,31 @@ export class UserSettingsComponent implements OnInit {
   }
 
   // ********** CUSTOM VALIDATIONS HERE - MAYBE BREAK INTO LIBRARY CLASS *************
+  private setUniquenessValidationError(value) {
+    this.displayedValidationErrors[value] = this.validationErrorMessages[value]['unique'];
+  }
+
   displayedValidationErrors = {
     username: '',  // No message, when valid
-    email: ''      // No message, when valid
+    email: '',      // No message, when valid
+    main: ''
   };
 
   private validationErrorMessages = {
     username: {
       required: 'Username is required.',
-      minlength: 'Username must be at least 2 characters long',
-      maxlength: 'Username cannot be more than 20 characters long',
+      minlength: 'Username must be at least 2 characters long.',
+      maxlength: 'Username cannot be more than 20 characters long.',
       unique: 'Username has already been taken. Please try another username.'
     },
     email: {
       required: 'Email is required.',
-      minlength: 'Email must be at least 2 characters long',
-      structure: 'This did not pass our valid-email check. Please try another or contact us with the name that did not work',
+      minlength: 'Email must be at least 2 characters long.',
+      structure: 'This did not pass our valid-email check. Please try another or contact us with the name that did not work.',
       unique: 'Email has already been taken. Please try another email.'
+    },
+    main: {
+      generic: 'Settings could not be saved. Please try again.'
     }
   }
 
