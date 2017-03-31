@@ -1,7 +1,9 @@
 <div class="sign-content-component">
   <!-- Sign Info -->
   <div class="sign-content" *ngIf="!isEditing">
-    <h3 class="sign-content-title">{{ sign.knownAs }}</h3>
+    <h3 (click)="linkHref "class="sign-content-title">
+      <a href="{{sign.linkUrl}}" class="sign-content-title">{{ sign.knownAs }}</a>
+    </h3>
     <p class="sign-content-first-line"> {{ sign.description }} </p>
   </div>
 

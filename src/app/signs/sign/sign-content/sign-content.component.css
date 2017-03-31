@@ -46,6 +46,7 @@ h3, p {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-decoration: none;
 }
 
 /*Sign Content Edit Form*/
