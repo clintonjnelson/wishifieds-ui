@@ -30,7 +30,7 @@
     <ul>
       <li *ngFor="let sign of filteredSigns">
         <!-- THIS SHOULD LINK TO THE OWNER OF THE SIGN'S SIGNPOST PAGE -->
-        <a routerLink="/" class="search-results-signs">
+        <a routerLink="/{{sign.userId}}" class="search-results-signs">
           <sign [sign]="sign"></sign>
         </a>
       </li>
