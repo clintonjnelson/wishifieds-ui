@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SearchBoxComponent } from '../../search/search-box/search-box.component';
 
@@ -9,7 +9,7 @@ import { SearchBoxComponent } from '../../search/search-box/search-box.component
   styleUrls:  ['admin-user-management.component.css', '../../search/search-box/search-box.component.css']
 })
 
-export class AdminUserManagementComponent extends SearchBoxComponent {
+export class AdminUserManagementComponent extends SearchBoxComponent implements OnInit {
   // reference SearchBoxComponent TS file for logic that is extended to here
   isAdmin: boolean;
 

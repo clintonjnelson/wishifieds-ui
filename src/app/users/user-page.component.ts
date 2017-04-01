@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Sign } from '../signs/sign.model';
 import { AuthService, UserAuth } from '../core/auth/auth.service';
@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs/Subscription';
 })
 
 
-export class UserPageComponent {
+export class UserPageComponent implements OnInit {
   signs: Sign[];
   auth: UserAuth;
   authSubscription: Subscription;
@@ -34,6 +34,7 @@ export class UserPageComponent {
   }
 
   // TODO: GET THE USER'S SIGNS BASED ON THE USERNAME IN THE ROUTE
+  // HOW DOES THIS WORK - I NEVER IMPORTED OR IMPLEMENTED NG_ON_INIT
   ngOnInit(): void {
     const that = this;
     const usernameFromRoute = this.route.snapshot.params['username'];
