@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { SignContentComponent } from '../sign-content.component';
+import { HelpersService }        from '../../../../shared/helpers/helpers.service';
+import { AuthService, UserAuth } from '../../../../core/auth/auth.service';
+import { ApiSignsService }       from '../../../../core/api/api-signs.service';
+import { ModalService }          from '../../../../core/services/modal.service';
 
 @Component({
   moduleId: module.id,
@@ -13,4 +17,17 @@ export class OauthSignContentComponent extends SignContentComponent {
   validationErrorMessages = {
     description: {}
   };
+
+  constructor(private helpersInChild:         HelpersService,
+              private authServiceInChild:     AuthService,
+              private apiSignsServiceInChild: ApiSignsService,
+              private modalServiceInChild:    ModalService) {
+    super(helpersInChild, authServiceInChild, apiSignsServiceInChild, modalServiceInChild);
+  }
+
+  oauthRedirect() {
+    console.log("TRYING THE REFRESH CALL...");
+    this.apiSignsServiceInChild.oauthAutosignRedirect(this.sign.icon);
+    console.log("JUST CALLED THE API.");
+  }
 }

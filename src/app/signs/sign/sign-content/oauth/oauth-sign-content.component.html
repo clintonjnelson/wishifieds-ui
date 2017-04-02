@@ -42,6 +42,12 @@
         <i class="fa fa-times fa-1x" aria-hidden="true"></i>
       </a>
     </div>
+    <!-- Refresh Icon -->
+    <div *ngIf="auth.isLoggedIn && isOwner && !isEditing" class="sign-refresh-icon">
+      <div (click)="oauthRedirect()">
+        <i class="{{helpers.buildIconClass('refresh', 1)}}"></i>
+      </div>
+    </div>
     <!-- Edit Icon -->
     <div *ngIf="auth.isLoggedIn && isOwner && !isEditing" class="sign-edit-icon">
       <a (click)="toggleEditing()" class="edit-icon">

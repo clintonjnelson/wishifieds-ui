@@ -25,7 +25,19 @@ const ROUTES = {
   destroySign:            '/api/signs',
 
   // Search
-  search: '/api/search?searchStr=:searchStr'
+  search: '/api/search?searchStr=:searchStr',
+
+  // Oauth Sign Links
+  oauthAutoSign: {
+    facebook:         '/api/auto/facebook',
+    instagram:        '/api/auto/instagram',
+    linkedin:         '/api/auto/linkedin',
+    github:           '/api/auto/github',
+    twitter:          '/api/auto/twitter',
+    google:           '/api/auto/google',
+    wordpress:        '/api/auto/wordpress',
+    'stack-overflow': '/api/auto/stackexchange',
+  },
 };
 
 

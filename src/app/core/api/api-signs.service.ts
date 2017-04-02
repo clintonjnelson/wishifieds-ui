@@ -62,6 +62,41 @@ export class ApiSignsService {
                });
   }
 
+  oauthAutosignRedirect(oauthTypeIcon: string) {
+    let eatToken = this.signpostApi.getEatAuthCookie();
+    let oauthUrl = this.signpostApi.routes.oauthAutoSign[oauthTypeIcon];
+
+    // Oauth1 requires current eat token in cookie
+    // Oauth2 token requires eat token in query
+    switch (oauthTypeIcon) {
+      case 'twitter': {
+        console.log("CALLING OAUTH1 AUTOSIGN...")
+        let expDate = new Date();
+        expDate.setTime(expDate.getTime() + 8000);
+        document.cookie = 'oauth1eat=' + eatToken + '; expires=' + expDate.toUTCString() +'; path=/';
+        window.location.href = oauthUrl + '?signType=' + oauthTypeIcon;
+        break;
+      }
+      default: {
+        console.log("CALLING OAUTH2 AUTOSIGN...")
+        window.location.href = oauthUrl +
+                               '?eat='      + eatToken +
+                               '&signType=' + oauthTypeIcon;
+      }
+    }
+
+    // function readCookie(name) {
+    //   var nameEQ = name + "=";
+    //   var ca = document.cookie.split(';');
+    //   for(var i=0;i < ca.length;i++) {
+    //     var c = ca[i];
+    //     while (c.charAt(0)==' ') c = c.substring(1,c.length);
+    //     if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    //   }
+    //   return null;
+    // }
+  }
+
   updateSignOrder(orderedSignIds: string[]): Observable<any> {
     const updateSignOrderUrl = this.signpostApi.routes.updateSignOrder;
     const options            = this.signpostApi.getRequestOptionWithEatHeader();
