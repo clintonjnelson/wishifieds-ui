@@ -30,7 +30,17 @@ body {
 .bg-gray {
   background-color: #808080;
 }
-
+.signpost-icon-main {
+  background: url('/assets/signpost_icon.svg');
+  fill: red;
+  display: inherit;
+  margin-bottom: -20px;
+  text-indent: -9999px;
+  width: 43px;
+  height: 28px;
+  background-size: 43px 28px;
+  transform: translateY(20px);
+}
 
 /*COLORS*/
 .facebook-color {
