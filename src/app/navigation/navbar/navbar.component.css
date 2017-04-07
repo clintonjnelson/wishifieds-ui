@@ -38,7 +38,6 @@
 .navbar-login-links {
   margin: 0;
   list-style-type: none;
-  transform: translateY(-6px);
 }
 .navbar-login-links li {
   display: inline;
@@ -48,6 +47,9 @@
 }
 .navbar-login-links a {
   text-decoration: none;
+}
+.navbar-login-links-shift-up {
+  transform: translateY(-6px);
 }
 
 .login-link {}
