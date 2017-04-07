@@ -38,6 +38,7 @@
 .navbar-login-links {
   margin: 0;
   list-style-type: none;
+  transform: translateY(-6px);
 }
 .navbar-login-links li {
   display: inline;
@@ -50,8 +51,22 @@
 }
 
 .login-link {}
-.navbar-bottom-hr {}
 
+.signpost-li {
+  width: 35px;
+  height: 35px;
+}
+.signpost-icon-link {
+  /*background: url('/assets/signpost_icon.svg');*/
+  /*fill: red;*/
+  display: inline;
+  width: 35px;
+  height: 35px;
+  /*background-size: 40px 40px;*/
+  transform: translateY(7px);
+}
+
+.navbar-bottom-hr {}
 
 .user-navlinks-toggle:hover i, .user-navlinks-toggle:hover div {
   color: #88B04B;

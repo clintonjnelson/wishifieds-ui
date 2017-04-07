@@ -30,16 +30,13 @@ body {
 .bg-gray {
   background-color: #808080;
 }
+
 .signpost-icon-main {
-  background: url('/assets/signpost_icon.svg');
-  fill: red;
-  display: inherit;
-  margin-bottom: -20px;
-  text-indent: -9999px;
+  position: absolute;
+  left: 0px;
+  top: 8px;
   width: 43px;
-  height: 28px;
-  background-size: 43px 28px;
-  transform: translateY(20px);
+  height: 43px;
 }
 
 /*COLORS*/
@@ -173,6 +170,7 @@ md-checkbox.md-checked.sidenav-login-newaccount .md-icon {
 /*Top Navigation Bar*/
 .nav-links-oauth {
   list-style-type: none;
+  margin-bottom: 5px;
 }
 .nav-links-oauth li {
   display: inline;
