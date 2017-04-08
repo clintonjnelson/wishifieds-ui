@@ -1,0 +1,10 @@
+<div class='footer-container'>
+  <h2 class="share-heading">share</h2>
+  <div *ngFor="let link of socialSharingLinks" class="social-sharing-links">
+    <icon-link [url]="link.url"
+               [icon]="link.icon"
+               [bgColor]="link.bgColor"
+               [iconSize]="'2'" class="social-sharing-link">
+    </icon-link>
+  </div>
+</div>

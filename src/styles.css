@@ -19,11 +19,15 @@ f7cac9    Rose 2016 Pantone
 
 ff680b    Etsy
 */
+html {
+  height: 100vh;
+}
 
 body {
   background-color: #808080;
   height: auto;
-  min-height: 100% !important;
+  min-height: 100%;
+  margin-bottom: 40px;  /* Stops content above footer */
 }
 
 /*General Background Color*/

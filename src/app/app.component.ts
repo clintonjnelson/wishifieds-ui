@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
     <signpost-navbar></signpost-navbar>
 
     <router-outlet></router-outlet>
+
+    <signpost-footer></signpost-footer>
   `,
 })
 export class AppComponent  {}

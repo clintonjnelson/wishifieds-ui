@@ -18,6 +18,7 @@ import { IconLinkComponent }           from './shared/icon-links/icon-links.comp
 
 import { NavbarComponent }             from './navigation/navbar/navbar.component';
 import { NavLinkComponent }            from './navigation/navlink/navlink.component';
+import { FooterComponent }             from './footer/footer.component';
 
 import { AdminDashboardComponent }     from './admin/dashboard/admin-dashboard.component';
 import { AdminUserManagementComponent } from './admin/user-management/admin-user-management.component';
@@ -88,6 +89,7 @@ export function HttpFactory(backend: XHRBackend,
   declarations: [
                   AppComponent,
                   NavbarComponent,
+                  FooterComponent,
                   SearchBoxComponent,
                   SearchResultsComponent,
                   NavLinkComponent,
