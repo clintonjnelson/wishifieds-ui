@@ -7,6 +7,8 @@ const ROUTES = {
   // Auth
   login:  '/api/login',
   logout: '/api/logout',
+  passwordResetEmail: '/api/passwordresetrequest?email=:email',
+  passwordReset: '/api/resetpassword',
 
   // Admin
   adminGetUsers: '/api/users',

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component }      from '@angular/core';
 import { HelpersService } from '../shared/helpers/helpers.service';
+import { ApiAuthService } from '../core/api/api-auth.service';
 
 
 @Component({
@@ -11,26 +11,30 @@ import { HelpersService } from '../shared/helpers/helpers.service';
 })
 
 export class RequestPasswordResetComponent {
-  testing = true;  // DELETE THIS VAR ONCE API IS HOOKED UP!!!!!!
-
+  isProcessing = false;
   email: string;
   displayedValidationErrors = {email: ''};
-  constructor(private helpers: HelpersService, private router:  Router) {
+
+  constructor(private helpers:        HelpersService,
+              private apiAuthService: ApiAuthService) {
     this.displayedValidationErrors.email = '';
   }
 
 
   onSubmit() {
-    // TRY TO SEND EMAIL TO THE API SERVER
-    // SUCCESS, reroute the user to the email change page
-    if(!this.testing) {
-      this.router.navigate(['requestpasswordchange', 'change']);
-    }
-    // ERROR, Email not found
-    else {
-      this.testing = false;    // REMOVE THIS, JUST FOR TESTING TILL API IS UP
-      // Can set the error message to a pre-defined message or custom from the API
-      this.displayedValidationErrors.email = 'Email not found. Please try again.';
-    }
+    var that = this;
+    this.isProcessing = true;
+    this.apiAuthService.passwordResetEmail(that.email)
+      .subscribe(
+        success => {
+          console.log("SUCCESSFUL REQUEST, EMAIL SENT. SUCCESS IS: ", success);
+          that.displayedValidationErrors.email = 'Email sent! Please check your inbox for link to reset password. :-)';
+          // Never reset the isProcessing, as it was successful = done on this page!
+        },
+        error => {
+          console.log("ERROR DURING EMAIL REQUEST. ERROR IS: ", error);
+          that.displayedValidationErrors.email = 'Email could not be sent. Please check email & try again.';
+          that.isProcessing = false;
+        });
   }
 }
