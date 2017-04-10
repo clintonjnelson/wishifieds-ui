@@ -47,6 +47,20 @@ export class ApiUsersService {
                });
   }
 
+  confirmUser(token: string, email: string): Observable<any> {
+    let confirmUserUrl = this.signpostApi.buildUrl('confirmUser', [{':confirmationtoken': token}, {':email': email}]);
+    return this.http
+               .get(confirmUserUrl)
+               .map( success => {
+                 console.log("SUCCESS FROM CONFIRM USER IS: ", success);
+                 return success.json();
+               })
+               .catch( (error: Response | any) => {
+                 console.log("ERROR FROM CONFIRMING USER IS: ", error);
+                 return error;
+               });
+  }
+
   getUserById(usernameOrId: string): Observable<any> {
     let getUserUrl = this.signpostApi.buildUrl('getUserById', [ {':usernameOrId': usernameOrId} ] );
     const options  = this.signpostApi.getRequestOptionWithEatHeader();

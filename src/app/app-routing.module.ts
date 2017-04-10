@@ -1,5 +1,5 @@
 // Angular Imports
-import { NgModule } from '@angular/core';
+import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // Components for routing to
@@ -12,6 +12,7 @@ import { SearchBoxComponent }            from './search/search-box/search-box.co
 import { UserPageComponent }             from './users/user-page.component';
 import { UserSettingsComponent }         from './users/settings/user-settings.component';
 import { OauthRedirectComponent }        from './core/redirects/oauth-redirect.component';
+import { UserConfirmationRedirectComponent } from './core/redirects/user-confirmation-redirect.component';
 
 // Guards
 import { AdminGuard } from './core/auth/admin-guard.service';
@@ -21,6 +22,7 @@ import { OwnerGuard } from './core/auth/owner-guard.service';
 const rootRoutes: Routes = [
   { path: 'oauth/errors/:redirecttype',  component: OauthRedirectComponent, pathMatch: 'full'},
   { path: 'oauth/success/:redirecttype', component: OauthRedirectComponent, pathMatch: 'full'},
+  { path: 'user/confirmation', component: UserConfirmationRedirectComponent, pathMatch: 'full'},
 
   { path: 'requestpasswordchange', component: RequestPasswordResetComponent, pathMatch: 'full'},
   { path: 'requestpasswordchange/change', component: PasswordResetComponent, pathMatch: 'full' },
