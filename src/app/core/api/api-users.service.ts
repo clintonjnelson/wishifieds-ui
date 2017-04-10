@@ -31,7 +31,6 @@ export class ApiUsersService {
   // Create a new User Account
   createUser(creds: UserCreds): Observable<any> {
     let createUserUrl = this.signpostApi.routes.createUser;
-
     console.log("DATA TO SEND IS: ", JSON.stringify(creds));
     return this.http
                .post(createUserUrl, JSON.stringify(creds))
@@ -57,6 +56,21 @@ export class ApiUsersService {
                })
                .catch( (error: Response | any) => {
                  console.log("ERROR FROM CONFIRMING USER IS: ", error);
+                 return error;
+               });
+  }
+
+  resendUserConfirmation(userId: string): Observable<any> {
+    let confirmationResendUrl = this.signpostApi.buildUrl('resendUserConfirmation', [ {':userId': userId} ]);
+    const options = this.signpostApi.getRequestOptionWithEatHeader();
+    return this.http
+               .get(confirmationResendUrl, options)
+               .map( success => {
+                 console.log("SUCCESS FROM RESEND CONFIRMATION IS: ", success);
+                 return success.json();
+               })
+               .catch( (error: Response | any) => {
+                 console.log("ERROR RESENDING CONFIRMATION IS: ", error);
                  return error;
                });
   }

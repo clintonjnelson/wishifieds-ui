@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm, FormControl } from '@angular/forms';
-import { User, UserSettings }        from "../user.model";
+import { User, UserSettings }  from "../user.model";
 import { HelpersService }      from '../../shared/helpers/helpers.service';
 import { AuthService }         from '../../core/auth/auth.service';
 import { ApiUsersService }     from '../../core/api/api-users.service';
@@ -14,7 +14,9 @@ import { ApiUsersService }     from '../../core/api/api-users.service';
 })
 
 export class UserSettingsComponent implements OnInit {
-  isProcessing: boolean;
+  isConfirmed:      boolean;
+  isProcessing:     boolean;
+  emailWasResent: boolean = false;
   userSettingsForm: NgForm;
   @ViewChild('userSettingsForm') currentForm: NgForm;
   userSettings: UserSettings;
@@ -33,19 +35,38 @@ export class UserSettingsComponent implements OnInit {
                           user => {
                             console.log("USER RETURNED FROM GET BY ID: ", user);
                             that.userSettings = {
-                              userId: user.userId,
+                              userId:   user.userId,
                               username: user.username,
-                              email: user.email,
-                              picUrl: null,   // UPDATE THESE
-                              status: null};  // UPDATE THESE
+                              email:    user.email,
+                              picUrl:   null,   // UPDATE THESE
+                              status:   null};  // UPDATE THESE
                             that.resetSettingsCopy();  // Prep the editable form;
                             that.isProcessing = false;
+                            that.isConfirmed = that.setIsConfirmed(user.confirmed);
                           },
                           error => {
                             console.log("ERROR GETTING USER SETTINGS: ", error);
                           }
                         );
     that.resetSettingsCopy();
+  }
+
+  setIsConfirmed(value: string) {
+    return value === 'true';
+  }
+
+  resendConfirmationEmail() {
+    var that = this;
+
+    this.apiUsersService.resendUserConfirmation(this.userSettings.userId)
+      .subscribe(
+        success => {
+          console.log("SUCCESS IN USER SETTINGS FOR RESEND CONFIRMATION IS: ", success);
+          that.emailWasResent = true;
+        },
+        error => {
+          console.log("ERROR IN USER SETTINGS FOR RESEND CONFIRMATION IS: ", error);
+        });
   }
 
   // Save & Cancel Buttons
@@ -84,6 +105,8 @@ export class UserSettingsComponent implements OnInit {
     this.resetSettingsCopy();
     this.resetFormDisplay();
   }
+
+
 
 
   // ********** CONSIDER BREAKING OUT TO A SERVICE - SIMILIAR TO SIGNS *************

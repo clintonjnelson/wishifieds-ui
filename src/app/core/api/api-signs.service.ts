@@ -5,6 +5,8 @@ import { SignpostApi } from './signpost-api.service';
 import { AuthService } from '../auth/auth.service';
 import { Sign } from '../../signs/sign.model';
 
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 

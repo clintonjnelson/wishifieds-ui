@@ -2,6 +2,15 @@
 <div class="user-settings-container">
   <h2 class="settings-page-heading">settings</h2>
 
+  <div *ngIf="!isConfirmed" class="settings-confirmation-container">
+    <h3>You have not yet confirmed your email</h3>
+    <p>Please visit your email inbox, and click the link in the Syynpost Confirmation email.</p>
+    <p *ngIf="!emailWasResent" class="link-style" (click)="resendConfirmationEmail()">Click here to re-send the confirmation email</p>
+    <p *ngIf="emailWasResent">
+      <i class="{{helpers.buildIconClass('check', 3)}}"></i> Email Sent!
+    </p>
+  </div>
+
   <form *ngIf="!isProcessing" name="userSettingsForm" class="user-settings-form" #userSettingsForm="ngForm">
 
     <!-- Username -->

@@ -5,6 +5,9 @@ import { SignpostApi } from './signpost-api.service';
 import { Sign } from '../../signs/sign.model';
 import { User } from '../../users/user.model';
 
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+
 class SearchResults {
   signs: Sign[];
   users: User[];
@@ -18,6 +21,7 @@ export class ApiSearchService {
   constructor(private http:        Http,
               private signpostApi: SignpostApi) {}
 
+  // Search for signs or users
   search(searchStr: string): Observable<SearchResults> {
     console.log("IN FUNCTION iS: ", searchStr);
     let searchUrl = this.signpostApi.buildUrl('search', [{':searchStr': searchStr}]);

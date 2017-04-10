@@ -3,6 +3,9 @@ import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { SignpostApi } from '../api/signpost-api.service';
 
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+
 @Injectable()
 
 export class ApiAuthService {
