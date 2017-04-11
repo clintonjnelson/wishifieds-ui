@@ -27,11 +27,6 @@ h2.settings-page-heading {
   font-family: helvetica, sans-serif;
 }
 
-.link-style {
-  text-decoration: underline;
-  color: #0000EE;
-}
-
 .user-settings-form {
   display: flex;
   flex-direction: column;

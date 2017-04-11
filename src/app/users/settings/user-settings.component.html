@@ -5,7 +5,7 @@
   <div *ngIf="!isConfirmed" class="settings-confirmation-container">
     <h3>You have not yet confirmed your email</h3>
     <p>Please visit your email inbox, and click the link in the Syynpost Confirmation email.</p>
-    <a *ngIf="!emailWasResent"class="link-style" (click)="resendConfirmationEmail($event)" href="#">Click here to re-send the confirmation email</a>
+    <a *ngIf="!emailWasResent" (click)="resendConfirmationEmail($event)" href="#">Click here to re-send the confirmation email</a>
     <p *ngIf="emailWasResent">
       <i class="{{helpers.buildIconClass('check', 3)}}"></i>Email Sent!
     </p>
