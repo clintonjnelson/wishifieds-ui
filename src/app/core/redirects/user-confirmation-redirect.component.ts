@@ -20,13 +20,14 @@ export class UserConfirmationRedirectComponent implements OnInit {
       .subscribe(
         success => {
           console.log("SUCCESS IN CONFIRM CALL SAYS: ", success);
+          let username = success.username;
           that.notifications.notify('success', 'Your email has been confirmed. Welcome!', 10000);
-          that.router.navigate['/'];
+          that.router.navigate([username]);
         },
         error => {
           console.log("ERROR IN CONFIRM CALL IS: ", error);
           that.notifications.notify('error', 'Confirmation was unsuccessful. Please try again or have us send you another confirmation email (request that in your user settings).')
-          that.router.navigate['/'];
+          that.router.navigate(['/']);
         });
   }
 }
