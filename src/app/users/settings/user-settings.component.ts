@@ -55,7 +55,8 @@ export class UserSettingsComponent implements OnInit {
     return value === 'true';
   }
 
-  resendConfirmationEmail() {
+  resendConfirmationEmail(event: any) {
+    event.preventDefault();
     var that = this;
 
     this.apiUsersService.resendUserConfirmation(this.userSettings.userId)

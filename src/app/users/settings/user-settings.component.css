@@ -19,12 +19,12 @@ h2.settings-page-heading {
   padding: 10px 10px 10px 10px;
   border: 1px solid white;
   border-radius: 3px;
+  text-align: center;
 }
 
-.settings-confirmation-container h3, p, i{
+.settings-confirmation-container h3, p, a, i{
   color: white;
   font-family: helvetica, sans-serif;
-  text-align: center;
 }
 
 .link-style {
