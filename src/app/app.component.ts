@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'my-app',
+  selector: 'syynpost-main',
   template: `
     <notifications></notifications>
     <signpost-navbar></signpost-navbar>

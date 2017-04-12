@@ -19,15 +19,40 @@ f7cac9    Rose 2016 Pantone
 
 ff680b    Etsy
 */
+
+/**{ border: 1px solid red; }*/
 html {
-  height: 100vh;
+  display: flex;
+/*  flex: 1;
+  align-items: stretch;
+  flex-direction: column;*/
+  height: auto;
+  min-height: 100%;
 }
 
 body {
+  display: flex;
+  flex: 1;
+  align-items: stretch;
+  flex-direction: column;
+/*  height: auto;
+  min-height: 100%;*/
+  margin-bottom: 0px;
+
   background-color: #808080;
-  height: auto;
-  min-height: 100%;
-  margin-bottom: 40px;  /* Stops content above footer */
+}
+
+syynpost-main {
+  display: flex;
+  flex: 1;
+  align-items: stretch;
+  flex-direction: column;
+}
+
+signpost-footer {
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
 }
 
 /*General Background Color*/

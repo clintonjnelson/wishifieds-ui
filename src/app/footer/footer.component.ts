@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { HelpersService } from '../shared/helpers/helpers.service';
+import 'rxjs/add/operator/switchMap';
 
 export class NavLink {
   icon:    String;
@@ -20,6 +23,25 @@ const SOCIAL_LINKS: NavLink[] = [
   styleUrls: ['footer.component.css'],
 })
 
-export class FooterComponent {
+export class FooterComponent implements OnInit {
+  currentUser: String;
   socialSharingLinks = SOCIAL_LINKS;
+  showSharingLinks: boolean = false;
+
+  constructor(private helpers: HelpersService,
+              private route:   ActivatedRoute) {
+  }
+
+  ngOnInit() {
+    this.route.params
+        .switchMap( (params: Params) => this.currentUser = params['username']);
+          // ALSO GET THE OTHER USER INFO OFF OF HERE & USE TO BUILD SOCISL SHARING ROUTES
+  }
+
+  toggleShowSharingLinks(input: any = null): void {
+    if(typeof(input) === 'boolean') { this.showSharingLinks = input; }
+    else { this.showSharingLinks = !this.showSharingLinks; }
+    console.log("SHARING LINKS IS NOW: ", this.showSharingLinks);
+  }
 }
+

@@ -1,10 +1,18 @@
-<div class='footer-container'>
-  <h2 class="share-heading">share</h2>
-  <div *ngFor="let link of socialSharingLinks" class="social-sharing-links">
-    <icon-link [url]="link.url"
-               [icon]="link.icon"
-               [bgColor]="link.bgColor"
-               [iconSize]="'2'" class="social-sharing-link">
-    </icon-link>
+<div class="footer-container">
+  <div *ngIf="!showSharingLinks" class="sharing-links-container">
+    <i (click)="toggleShowSharingLinks()" class="{{helpers.buildIconClass('angle-double-up', 2)}} sp-hover link-toggle-icon"></i>
+  </div>
+
+  <div *ngIf="showSharingLinks" class="sharing-links-container">
+      <ul class="drop-up-links">
+        <li *ngFor="let link of socialSharingLinks" class="social-sharing-links">
+          <icon-link [url]="link.url"
+                     [icon]="link.icon"
+                     [bgColor]="link.bgColor"
+                     [iconSize]="'2'" class="social-sharing-link">
+          </icon-link>
+        </li>
+      </ul>
+    <i (click)="toggleShowSharingLinks()" class="{{helpers.buildIconClass('angle-double-down', 2)}} sp-hover link-toggle-icon"></i>
   </div>
 </div>
