@@ -42,6 +42,11 @@ const ROUTES = {
     wordpress:        '/api/auto/wordpress',
     'stack-overflow': '/api/auto/stackexchange',
   },
+
+  // social sharing
+  'social-twitter': 'http://twitter.com/share?text=:text&url=:url&hashtags=:hashtags',
+  'social-google': 'https://plus.google.com/share?url=:url',
+  'social-facebook-official': 'https://www.facebook.com/sharer/sharer.php?u=:url',
 };
 
 
@@ -49,6 +54,7 @@ const ROUTES = {
 
 export class SignpostApi {
   routes = ROUTES;
+
 
   // eat (encrypted authentication token) is required on some requests
   getEatAuthCookie() {

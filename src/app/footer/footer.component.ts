@@ -1,20 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { HelpersService } from '../shared/helpers/helpers.service';
+import { Observable } from 'rxjs/Observable';
+import { SignpostApi } from '../core/api/signpost-api.service';
+import { Http, Response, RequestOptions, Headers } from '@angular/http';
+
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/switchMap';
 
 export class NavLink {
-  icon:    String;
-  url:     String;
-  bgColor: String;
+  icon:    string;
+  url:     string;
+  bgColor: string;
 };
 
 const SOCIAL_LINKS: NavLink[] = [
-  {icon: 'facebook-official', url: '/some/link/to/facebook',  bgColor: '#3b5998'},
-  {icon: 'twitter',           url: '/some/link/to/twitter',   bgColor: '#007bb5'},
-  {icon: 'google',            url: '/some/link/to/google',    bgColor: '#007bb5'},
+  {icon: 'facebook-official', url: '',  bgColor: '#3b5998'},
+  {icon: 'twitter',           url: '',  bgColor: '#007bb5'},
+  {icon: 'google',            url: '',  bgColor: '#007bb5'},
 ];
-
 
 @Component({
   moduleId: module.id,
@@ -23,25 +28,78 @@ const SOCIAL_LINKS: NavLink[] = [
   styleUrls: ['footer.component.css'],
 })
 
-export class FooterComponent implements OnInit {
-  currentUser: String;
-  socialSharingLinks = SOCIAL_LINKS;
+export class FooterComponent {
+  currentUrl:       string;
+  currentUsername:  any;
+  urlSubscription:  any;
   showSharingLinks: boolean = false;
+  socialSharingLinks = SOCIAL_LINKS;
 
-  constructor(private helpers: HelpersService,
-              private route:   ActivatedRoute) {
-  }
+  constructor(private helpers:     HelpersService,
+              private router:      Router,
+              private signpostApi: SignpostApi,
+              private http:        Http) {
+    // Set Initial values
+    this.updaateCurrentUrl();
+    this.rebuildSocialSharingLinks();
 
-  ngOnInit() {
-    this.route.params
-        .switchMap( (params: Params) => this.currentUser = params['username']);
-          // ALSO GET THE OTHER USER INFO OFF OF HERE & USE TO BUILD SOCISL SHARING ROUTES
+    // HACKY, but currently the only way to get the username outside of a router-outlet
+    // Set currentUrl & try to get currentUsername
+    this.urlSubscription = this.router.events.subscribe( event => {
+
+      // Update links on change
+      this.updaateCurrentUrl();
+      this.rebuildSocialSharingLinks();
+
+      // Username? => set it if there is one
+      if(event instanceof NavigationEnd) {
+        let currentUrlTree = this.router.parseUrl(this.router.url);
+        console.log("CURRENT URL TREE IS: ", currentUrlTree);
+        try {
+          this.currentUsername = currentUrlTree.root.children['primary']['segments'][0]['path'];
+        }
+        catch (e) {
+          this.currentUsername = '';
+        }
+      }
+    });
   }
 
   toggleShowSharingLinks(input: any = null): void {
     if(typeof(input) === 'boolean') { this.showSharingLinks = input; }
     else { this.showSharingLinks = !this.showSharingLinks; }
     console.log("SHARING LINKS IS NOW: ", this.showSharingLinks);
+  }
+
+  private ngOnDestroy() {
+    this.urlSubscription.unsubscribe();
+  }
+
+  private buildUrl(icon: string): string {
+    let currentUrl = this.currentUrl;
+
+    // UNO urls take :url
+    switch(icon) {
+      case 'twitter': {  // takes :text, :url, :hashtags
+        return this.signpostApi.buildUrl(`social-${icon}`, [{':text': 'hello world'}, {':url': currentUrl}, {':hashtags':'syynpost'}]);
+      }
+      case 'facebook-official': return this.signpostApi.buildUrl(`social-${icon}`, [{':url': currentUrl}]);
+      case 'google':            return this.signpostApi.buildUrl(`social-${icon}`, [{':url': currentUrl}]);
+      default:                  return '';
+    }
+  }
+
+  // CALL HERE OR SHOULD I RETURN THE VALUE TO SET EXPLICITLY?
+  private updaateCurrentUrl() {
+    this.currentUrl = window.location.href;
+  }
+
+  // CALL HERE OR SHOULD I RETURN THE VALUE TO SET EXPLICITLY?
+  private rebuildSocialSharingLinks() {
+    this.socialSharingLinks = this.socialSharingLinks.map( (link: NavLink) => {
+      link.url = this.buildUrl(link.icon);
+      return link;
+    });
   }
 }
 
