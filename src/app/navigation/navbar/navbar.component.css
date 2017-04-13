@@ -1,24 +1,66 @@
 /*Flex with space-between will push one to the right and one to the left!*/
+/**{ border: 1px solid red; }*/
+
 .navbar {
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  /*justify-content: flex-end;*/
+  flex: 1;
 }
 .navbar-signpost-icon {
-  position: relative;
-  bottom: 10px;
+  display: flex;
+  -webkit-align-self: flex-start;
+  align-self: flex-start;
+  margin-top: auto;
+  width: auto;
+  height: auto;
 }
+.navbar-signpost-icon a {
+  max-height: 40px;
+}
+
+.signpost-icon-main {
+  /*position: absolute;*/
+  /*left: 0px;
+  top: 8px;*/
+  width: 40px;
+  height: 40px;
+  margin-left: 12px;
+}
+
 #image-navbar-signpost {
   width: 150%;
   height: 150%;
 }
 
+.login-signup-control {
+  display: flex;
+  -webkit-align-self: flex-end;
+  align-self: flex-end;
+  overflow: hidden;
+  display: inline-block;
+  margin-top: auto;
+  margin-left: auto;
+  font-size: 18px;
+}
+.login-signup-control span {
+  font-size: 0.6em;
+}
+
+/*Links Container*/
 .login-signup-area {
-  height: 32px;
+  text-align: right;
+  display: flex;
+  -webkit-align-self: flex-end;
+  align-self: flex-end;
+  height: auto;
+  min-height: 40px;
+  max-width: 70%;
 }
 .login-signup-link {
   overflow: hidden;
   display: inline-block;
-  right: 10px;
+  /*right: 10px;*/
 }
 
 /*This makes BOTH elements hover style at same time*/
@@ -36,6 +78,7 @@
 }
 
 .navbar-login-links {
+  padding-left: 0;
   margin: 0;
   list-style-type: none;
 }
@@ -68,7 +111,9 @@
   transform: translateY(7px);
 }
 
-.navbar-bottom-hr {}
+.navbar-bottom-hr {
+  margin-top: 0px;
+}
 
 .user-navlinks-toggle:hover i, .user-navlinks-toggle:hover div {
   color: #88B04B;

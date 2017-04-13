@@ -7,17 +7,20 @@
   </div>
 
   <!-- Icons When Logged OUT -->
+  <div *ngIf="!showLoginLinks" (click)="toggleShowLoginLinks()" class="login-signup-control">
+    <i class="{{helpers.buildIconClass('angle-double-left', 2)}} sp-hover">
+      <span class="login-text">Login | Signup</span>
+    </i>
+  </div>
+  <div *ngIf="showLoginLinks" (click)="toggleShowLoginLinks()" class="login-signup-control">
+    <i class="{{helpers.buildIconClass('angle-double-right', 2)}} sp-hover"></i>
+  </div>
   <div class="login-signup-area" *ngIf="auth.isLoggedOut">
-    <section (click)="toggleShowLoginLinks()" *ngIf="!showLoginLinks" class="login-signup-link">
-      <i class="{{helpers.buildIconClass('angle-double-left', 2)}} sp-hover">
-        <span class="login-text">Login | Signup</span>
-      </i>
-    </section>
     <section *ngIf="showLoginLinks">
       <ul class="navbar-login-links navbar-login-links-shift-up">
-        <li (click)="toggleShowLoginLinks()">
+        <!-- <li (click)="toggleShowLoginLinks()">
           <i class="{{helpers.buildIconClass('angle-double-right', 2)}} sp-hover"></i>
-        </li>
+        </li> -->
         <!-- UPDATE COLOR IF EVER WANT LINKS TO TURN THEIR PROPER COLOR WHEN HOVERED OVER -->
         <li class="nav-links-oauth" *ngFor="let link of oauthLinks">
           <icon-link [url]="link.url"

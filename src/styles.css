@@ -60,13 +60,14 @@ signpost-footer {
   background-color: #808080;
 }
 
-.signpost-icon-main {
+/*.signpost-icon-main {
   position: absolute;
   left: 0px;
   top: 8px;
   width: 43px;
   height: 43px;
-}
+  margin-left: 12px;
+}*/
 
 /*COLORS*/
 .facebook-color {
