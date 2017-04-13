@@ -18,7 +18,7 @@ export class NavLink {
 const SOCIAL_LINKS: NavLink[] = [
   {icon: 'facebook-official', url: '',  bgColor: '#3b5998'},
   {icon: 'twitter',           url: '',  bgColor: '#007bb5'},
-  {icon: 'google',            url: '',  bgColor: '#007bb5'},
+  {icon: 'google',            url: '',  bgColor: '#dd4b39'},
 ];
 
 @Component({
