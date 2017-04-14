@@ -1,8 +1,11 @@
+/**{ border: 1px solid red; }*/
+
 .login-signup-form {
   display: block;
   border: 1px white solid;
   border-radius: 2px;
   padding: 15px;
+  max-width: 90%;
 }
 
 .login-signup-input-error-container {}
@@ -22,10 +25,10 @@
   color: white;
   display: block;
   padding-top: 5px;
-  width: 290px;
+  max-width: 290px;
 }
 .login-input-container input {
-  font-size: 18px;
+  font-size: 1.5em;
 }
 .login-signup-checkbox {
   color: white;

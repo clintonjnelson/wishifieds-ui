@@ -28,6 +28,8 @@ html {
   flex-direction: column;*/
   height: auto;
   min-height: 100%;
+  -webkit-text-size-adjust: none;
+  max-width: 100%;  /*NEED TO LIMIT STUFF GOING OUTSIDE THE CURRENT VIEWPORT*/
 }
 
 body {

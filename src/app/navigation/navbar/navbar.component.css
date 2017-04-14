@@ -4,7 +4,6 @@
 .navbar {
   display: flex;
   flex-direction: row;
-  /*justify-content: flex-end;*/
   flex: 1;
 }
 .navbar-signpost-icon {
@@ -20,9 +19,6 @@
 }
 
 .signpost-icon-main {
-  /*position: absolute;*/
-  /*left: 0px;
-  top: 8px;*/
   width: 40px;
   height: 40px;
   margin-left: 12px;
