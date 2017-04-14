@@ -19,17 +19,12 @@
 }
 
 .signpost-icon-main {
-  width: 40px;
-  height: 40px;
-  margin-left: 12px;
+  width: 2.5em;
+  height: 2.5em;
+  margin-bottom: 5px;
 }
 
-#image-navbar-signpost {
-  width: 150%;
-  height: 150%;
-}
-
-.login-signup-control {
+.nav-toggle-control {
   display: flex;
   -webkit-align-self: flex-end;
   align-self: flex-end;
@@ -39,24 +34,8 @@
   margin-left: auto;
   font-size: 18px;
 }
-.login-signup-control span {
+.nav-toggle-control span {
   font-size: 0.6em;
-}
-
-/*Links Container*/
-.login-signup-area {
-  text-align: right;
-  display: flex;
-  -webkit-align-self: flex-end;
-  align-self: flex-end;
-  height: auto;
-  min-height: 40px;
-  max-width: 70%;
-}
-.login-signup-link {
-  overflow: hidden;
-  display: inline-block;
-  /*right: 10px;*/
 }
 
 /*This makes BOTH elements hover style at same time*/
@@ -73,38 +52,63 @@
   position: relative;
 }
 
+/*Links Container*/
+.nav-right-links-container {
+  display: -webkit-box;
+  display: flex;
+  -webkit-align-self: flex-end;
+  align-self: flex-end;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  min-height: 40px;
+  height: auto;
+  max-width: 70%;
+  width: auto;
+}
+.nav-right-links-container section {
+  margin-top: auto;
+}
+.login-signup-link {
+  overflow: hidden;
+  display: inline-block;
+}
+
 .navbar-login-links {
   padding-left: 0;
   margin: 0;
   list-style-type: none;
+  font-size: 0.9em;
+  max-height: 10em;
+  width: auto;
+  display: -webkit-box;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: flex-end;
+  align-self: flex-end;
+  -webkit-flex-wrap: wrap-reverse;
+  -webkit-justify-content: flex-end;
+  -webkit-align-self: flex-end;
 }
 .navbar-login-links li {
   display: inline;
+  padding: 0px;
   margin-left: 5px;
   margin-right: 5px;
-  padding: 0px;
+  margin-top: auto;
 }
 .navbar-login-links a {
   text-decoration: none;
 }
-.navbar-login-links-shift-up {
-  transform: translateY(-6px);
-}
 
 .login-link {}
 
-.signpost-li {
-  width: 35px;
-  height: 35px;
-}
 .signpost-icon-link {
-  /*background: url('/assets/signpost_icon.svg');*/
-  /*fill: red;*/
   display: inline;
-  width: 35px;
-  height: 35px;
-  /*background-size: 40px 40px;*/
-  transform: translateY(7px);
+  width: 2.2em;
+  height: 2.2em;
+  margin-right: -10px;
+  /*transform: translateY(7px);*/
+  /*Literally, the Signpost icon*/
 }
 
 .navbar-bottom-hr {
@@ -116,7 +120,6 @@
 }
 .user-signout-link {
   position: relative;
-  bottom: 3px;
 }
 .signout-text {
   color: white;
