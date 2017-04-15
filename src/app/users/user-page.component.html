@@ -1,4 +1,4 @@
-<div>
+<div id="user-page-main-container">
   <!-- Load Add Sign Area -->
   <add-sign *ngIf="auth.isLoggedIn && isOwner" [signs]="signs" (saveEE)="save($event)" (destroyEE)="destroy($event)"></add-sign>
 

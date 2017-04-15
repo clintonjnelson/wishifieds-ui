@@ -8,30 +8,26 @@
     <!-- Heading -->
     <p class="heading">add a sign</p>
 
-    <!-- Oauth Links -->
-    <section *ngIf="showAddSignIcons">
-      <div>
-        <ul>
-          <li *ngFor="let oLink of oauths" class="oauth-icons-list">
-            <oauth-link *ngIf="!isOauthAdded(oLink)"
-                       [url]="oLink.url"
-                       [icon]="oLink.icon"
-                       [bgColor]="oLink.bgColor"
-                       [iconSize]="2">
-            </oauth-link>
-          </li>
-        </ul>
-      </div>
-
+    <div *ngIf="showAddSignIcons">
+      <!-- Oauth Links -->
+      <ul>
+        <li *ngFor="let oLink of oauths" class="oauth-icons-list">
+          <oauth-link *ngIf="!isOauthAdded(oLink)"
+                     [url]="oLink.url"
+                     [icon]="oLink.icon"
+                     [bgColor]="oLink.bgColor"
+                     [iconSize]="2">
+          </oauth-link>
+        </li>
+      </ul>
+      <hr class="hr-quarter-width"/>
       <!-- Generic & Custom Links -->
-      <div>
-        <ul>
-          <li *ngFor="let custom of customs" class="oauth-icons-list">
-            <i [hoverColor]="custom.bgColor" class="{{helpers.buildIconClass(custom.icon, 2)}}" (click)="toggleShowForm(true); setSign(custom)"></i>
-          </li>
-        </ul>
-      </div>
-    </section>
+      <ul>
+        <li *ngFor="let custom of customs" class="oauth-icons-list">
+          <i [hoverColor]="custom.bgColor" class="{{helpers.buildIconClass(custom.icon, 2)}}" (click)="toggleShowForm(true); setSign(custom)"></i>
+        </li>
+      </ul>
+    </div>
 
     <!-- Preview New Sign Area -->
     <div *ngIf="showSignForm">

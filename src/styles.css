@@ -37,11 +37,9 @@ body {
   flex: 1;
   align-items: stretch;
   flex-direction: column;
-/*  height: auto;
-  min-height: 100%;*/
   margin-bottom: 0px;
-
   background-color: #808080;
+  max-width: 100%;  /*NEED TO LIMIT STUFF GOING OUTSIDE THE CURRENT VIEWPORT*/
 }
 
 syynpost-main {

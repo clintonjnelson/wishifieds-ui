@@ -4,7 +4,8 @@
 .navbar {
   display: flex;
   flex-direction: row;
-  flex: 1;
+  flex: 1 1 auto;
+
 }
 .navbar-signpost-icon {
   display: flex;

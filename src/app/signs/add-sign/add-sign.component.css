@@ -25,6 +25,10 @@ ul > li {
   margin-right: 5px;
 }
 
+hr.hr-quarter-width {
+  max-width: 25%;
+}
+
 .oauth-icons-list {
   list-style: none;
 }
