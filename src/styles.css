@@ -23,23 +23,21 @@ ff680b    Etsy
 /**{ border: 1px solid red; }*/
 html {
   display: flex;
-/*  flex: 1;
-  align-items: stretch;
-  flex-direction: column;*/
+  flex: 1 1 auto;
   height: auto;
   min-height: 100%;
   -webkit-text-size-adjust: none;
-  max-width: 100%;  /*NEED TO LIMIT STUFF GOING OUTSIDE THE CURRENT VIEWPORT*/
+  max-width: 100%;
 }
 
 body {
   display: flex;
-  flex: 1;
+  flex: 1 1 auto;
   align-items: stretch;
   flex-direction: column;
   margin-bottom: 0px;
   background-color: #808080;
-  max-width: 100%;  /*NEED TO LIMIT STUFF GOING OUTSIDE THE CURRENT VIEWPORT*/
+  max-width: calc(100% - 16px);  /* Full width without margins */
 }
 
 syynpost-main {

@@ -103,13 +103,12 @@
 
 .login-link {}
 
+/* Literally, the Signpost icon */
 .signpost-icon-link {
   display: inline;
   width: 2.2em;
   height: 2.2em;
   margin-right: -10px;
-  /*transform: translateY(7px);*/
-  /*Literally, the Signpost icon*/
 }
 
 .navbar-bottom-hr {

@@ -1,6 +1,14 @@
 .add-sign-icon-container {
   display: flex;
+  flex: 0 1 auto;
   flex-direction: row;
+  justify-content: center;
+}
+
+.icons-main-container {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
   justify-content: center;
 }
 
@@ -15,14 +23,21 @@ p.heading {
 }
 
 ul {
+  padding-left: 0;
+  height: auto;
+
   display: flex;
+  display: -webkit-box;
+  flex: 0 1 auto;
   flex-direction: row;
   justify-content: center;
-  padding-left: 0;
+  flex-wrap: wrap-reverse;
+  -webkit-flex-wrap: wrap-reverse;
 }
 
 ul > li {
   margin-right: 5px;
+  display: inline-block;  /* Required for wrapping functionalty */
 }
 
 hr.hr-quarter-width {
