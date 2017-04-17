@@ -5,7 +5,7 @@
   transform: rotate(15deg);
 
   color: white;
-  font-size: 52px;
+  font-size: 4em;
   font-family: helvetica, sans-serif;
   opacity: 0.2;
   white-space: nowrap;
@@ -15,8 +15,7 @@
 .sign-content-component {
   display: flex;
   flex-direction: row;
-  /*flex-grow: 2;*/
-  width: 100%;
+  flex: 1 0 auto;
   justify-content: space-between;
 }
 .sign-content {
@@ -25,7 +24,8 @@
   flex-grow: 2;
   width: 100%;
 }
-h3, p {
+h3, p , a {
+  text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -50,17 +50,33 @@ h3, p {
 }
 
 /*Sign Content Edit Form*/
+.sign-content-edit-form-container {
+  display: flex;
+  flex: 1 0 auto;
+}
+.sign-content-edit-form-container div {
+  display: flex;
+  flex: 1 0 auto;
+}
 .sign-form {
   display: flex;
+  flex: 1 0 auto;
   flex-direction: column;
 }
 md-input-container {
   color: white;
   margin-bottom: 10px;
   margin-top: 10px;
+  display: flex;
+  flex: 1 0 auto;
+}
+/* Keeps label from overlapping the icon */
+/deep/ label.mat-input-placeholder.mat-empty {
+  margin-left: 20px;
 }
 .sign-content-input-container {
-  display: inline-block;
+  display: flex;
+  flex: 1 0 auto;
 }
 .md-input-element {
   color: white;
@@ -72,7 +88,6 @@ md-input-container {
   display: inline-block;
   margin: 0 0 0 10px;
 }
-
 
 /* Sign Form Errors */
 .settings-input-error-container {
