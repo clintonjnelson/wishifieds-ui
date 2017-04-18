@@ -11,22 +11,15 @@ export class Link {
 
 // Move this to the DB?
 const OLINKS: Link[] = [
-  {url: '/api/auto/facebook',      icon: 'facebook',      bgColor: 'green',  linkName: 'facebook'},
-  {url: '/api/auto/instagram',     icon: 'instagram',     bgColor: 'blue',   linkName: 'instagram'},
-  {url: '/api/auto/linkedin',      icon: 'linkedin',      bgColor: 'red',    linkName: 'linkedin'},
-  {url: '/api/auto/github',        icon: 'github',        bgColor: 'orange', linkName: 'github'},
-  {url: '/api/auto/twitter',       icon: 'twitter',       bgColor: 'yellow', linkName: 'twitter'},
-  {url: '/api/auto/google',        icon: 'google',        bgColor: 'purple', linkName: 'google'},
-  {url: '/api/auto/wordpress',     icon: 'wordpress',     bgColor: 'black',  linkName: 'wordpress'},
-  {url: '/api/auto/stackexchange', icon: 'stack-overflow', bgColor: 'green',  linkName: 'stackoverflow'},
-
-  {url: '/api/auto/instagram',     icon: 'instagram',     bgColor: 'blue',   linkName: 'instagram'},
-  {url: '/api/auto/linkedin',      icon: 'linkedin',      bgColor: 'red',    linkName: 'linkedin'},
-  {url: '/api/auto/github',        icon: 'github',        bgColor: 'orange', linkName: 'github'},
-  {url: '/api/auto/twitter',       icon: 'twitter',       bgColor: 'yellow', linkName: 'twitter'},
-  {url: '/api/auto/google',        icon: 'google',        bgColor: 'purple', linkName: 'google'},
-  {url: '/api/auto/wordpress',     icon: 'wordpress',     bgColor: 'black',  linkName: 'wordpress'},
-  {url: '/api/auto/stackexchange', icon: 'stack-overflow', bgColor: 'green',  linkName: 'stackoverflow'},
+  {url: '/api/auto/facebook',      icon: 'facebook',       bgColor: '#3b5998', linkName: 'facebook'},
+  {url: '/api/auto/instagram',     icon: 'instagram',      bgColor: '#675144', linkName: 'instagram'},
+  {url: '/api/auto/linkedin',      icon: 'linkedin',       bgColor: '#4875B4', linkName: 'linkedin'},
+  {url: '/api/auto/github',        icon: 'github',         bgColor: '#333333', linkName: 'github'},
+  {url: '/api/auto/twitter',       icon: 'twitter',        bgColor: '#00aced', linkName: 'twitter'},
+  {url: '/api/auto/google',        icon: 'google',         bgColor: '#dd4b39', linkName: 'google'},
+  {url: '/api/auto/wordpress',     icon: 'wordpress',      bgColor: '#21759b', linkName: 'wordpress'},
+  {url: '/api/auto/stackexchange', icon: 'stack-overflow', bgColor: '#5184C1', linkName: 'stackoverflow'},
+  {url: '/api/auto/youtube',       icon: 'youtube',        bgColor: '#bb0000', linkName: 'youtube'},
 ];
 
 // Move this to the DB?

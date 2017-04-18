@@ -8,12 +8,12 @@
 
   <!-- Icons When Logged OUT -->
   <div *ngIf="!showLoginLinks && !auth.isLoggedIn" (click)="toggleShowLoginLinks()" class="nav-toggle-control">
-    <i class="{{helpers.buildIconClass('angle-double-left', 2)}} sp-hover">
+    <i class="{{helpers.buildIconClass('angle-double-left', 2)}}">
       <span class="login-text">Login | Signup</span>
     </i>
   </div>
   <div *ngIf="showLoginLinks && !auth.isLoggedIn" (click)="toggleShowLoginLinks()" class="nav-toggle-control">
-    <i class="{{helpers.buildIconClass('angle-double-right', 2)}} sp-hover"></i>
+    <i class="{{helpers.buildIconClass('angle-double-right', 2)}}"></i>
   </div>
   <div class="nav-right-links-container" *ngIf="auth.isLoggedOut">
     <ul *ngIf="showLoginLinks" class="navbar-login-links navbar-login-links-shift-up">

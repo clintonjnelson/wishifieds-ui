@@ -11,12 +11,15 @@ export class OauthLink {
 }
 
 const OAUTHS: OauthLink[] = [
-  {icon: 'facebook-official', url: '/api/login/facebook',  bgColor: '#3b5998'},
-  {icon: 'instagram',         url: '/api/login/instagram', bgColor: '#9b6954'},
-  {icon: 'linkedin',          url: '/api/login/linkedin',  bgColor: '#007bb5'},
-  {icon: 'twitter',           url: '/api/login/twitter',   bgColor: '#007bb5'},
-  {icon: 'google',            url: '/api/login/google',    bgColor: '#007bb5'},
-  {icon: 'wordpress',         url: '/api/login/wordpress', bgColor: '#007bb5'},
+  {icon: 'facebook-official', url: '/api/login/facebook',       bgColor: '#3b5998'},
+  {icon: 'instagram',         url: '/api/login/instagram',      bgColor: '#675144'},
+  {icon: 'linkedin',          url: '/api/login/linkedin',       bgColor: '#4875B4'},
+  {icon: 'twitter',           url: '/api/login/twitter',        bgColor: '#00aced'},
+  {icon: 'github',            url: '/api/login/github',         bgColor: '#333333'},
+  {icon: 'google',            url: '/api/login/google',         bgColor: '#dd4b39'},
+  {icon: 'stack-overflow',    url: '/api/login/stack-overflow', bgColor: '#5184C1'},
+  {icon: 'wordpress',         url: '/api/login/wordpress',      bgColor: '#21759b'},
+  {icon: 'youtube',           url: '/api/login/youtube',        bgColor: '#bb0000'},
 ]
 
 
