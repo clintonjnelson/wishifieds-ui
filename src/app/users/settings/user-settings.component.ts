@@ -4,7 +4,6 @@ import { User, UserSettings }  from "../user.model";
 import { HelpersService }      from '../../shared/helpers/helpers.service';
 import { AuthService }         from '../../core/auth/auth.service';
 import { ApiUsersService }     from '../../core/api/api-users.service';
-// import { UniqueValidatorDireceive } from '../../shared/validators/unique.directive';
 
 @Component({
   moduleId: module.id,
@@ -14,8 +13,8 @@ import { ApiUsersService }     from '../../core/api/api-users.service';
 })
 
 export class UserSettingsComponent implements OnInit {
-  isConfirmed:      boolean;
-  isProcessing:     boolean;
+  isConfirmed:    boolean;
+  isProcessing:   boolean;
   emailWasResent: boolean = false;
   userSettingsForm: NgForm;
   @ViewChild('userSettingsForm') currentForm: NgForm;
@@ -81,7 +80,14 @@ export class UserSettingsComponent implements OnInit {
       .subscribe(
         success => {
           console.log("SUCCESS UPDATING THE USER IS: ", success);
+          let user = success.user;
           this.userSettings = Object.assign({}, that.tempSettings);
+          that.authService.setAuthCookies(that.authService.getEatAuthCookie(),
+                                          user.username,
+                                          user.userId,
+                                          user.email,
+                                          user.role);
+          that.setIsConfirmed(user.confirmed);
           this.resetFormDisplay();  // reset means turns off buttons
         },
         error => {

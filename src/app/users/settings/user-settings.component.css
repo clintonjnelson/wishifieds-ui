@@ -22,7 +22,7 @@ h2.settings-page-heading {
   text-align: center;
 }
 
-.settings-confirmation-container h3, p, a, i{
+.settings-confirmation-container h3, p, a {
   color: white;
   font-family: helvetica, sans-serif;
 }
