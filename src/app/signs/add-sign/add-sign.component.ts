@@ -17,6 +17,7 @@ const OLINKS: Link[] = [
   {url: '/api/auto/github',        icon: 'github',         bgColor: '#333333', linkName: 'github'},
   {url: '/api/auto/twitter',       icon: 'twitter',        bgColor: '#00aced', linkName: 'twitter'},
   {url: '/api/auto/google',        icon: 'google',         bgColor: '#dd4b39', linkName: 'google'},
+  {url: '/api/auto/reddit',        icon: 'reddit',         bgColor: '#FF5700', linkName: 'reddit'},
   {url: '/api/auto/wordpress',     icon: 'wordpress',      bgColor: '#21759b', linkName: 'wordpress'},
   {url: '/api/auto/stackexchange', icon: 'stack-overflow', bgColor: '#5184C1', linkName: 'stackoverflow'},
   {url: '/api/auto/youtube',       icon: 'youtube',        bgColor: '#bb0000', linkName: 'youtube'},
