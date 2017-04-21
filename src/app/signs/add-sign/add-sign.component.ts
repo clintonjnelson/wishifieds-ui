@@ -108,10 +108,6 @@ export class AddSignComponent {
   // Functions for Bubbling Up
   destroy(event: any) {
     console.log("IN ADD-SIGN DESTROY FUNCTION; EVENT IS ", event);
-    // SHOULD NEVER NEED THIS ON AN ADD-SIGN AREA; ONLY ON NORMAL SIGN.
-    // if(!!event.sign && event.destroy === true) {
-    //   this.destroyEE.emit(event);
-    // }
     this.toggleShowForm(false);
   }
   save(event: any) {

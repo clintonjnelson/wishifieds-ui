@@ -34,13 +34,18 @@ const ROUTES = {
   // Oauth Sign Links
   oauthAutoSign: {
     facebook:         '/api/auto/facebook',
+    github:           '/api/auto/github',
+    google:           '/api/auto/google',
     instagram:        '/api/auto/instagram',
     linkedin:         '/api/auto/linkedin',
-    github:           '/api/auto/github',
-    twitter:          '/api/auto/twitter',
-    google:           '/api/auto/google',
-    wordpress:        '/api/auto/wordpress',
+    pinterest:        '/api/auto/pinterest',
+    reddit:           '/api/auto/reddit',
+    tumblr:           '/api/auto/tumblr',
     'stack-overflow': '/api/auto/stackexchange',
+    twitter:          '/api/auto/twitter',
+    wordpress:        '/api/auto/wordpress',
+    youtube:          '/api/auto/youtube',
+
   },
 
   // social sharing

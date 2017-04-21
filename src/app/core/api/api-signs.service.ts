@@ -71,20 +71,22 @@ export class ApiSignsService {
     // Oauth1 requires current eat token in cookie
     // Oauth2 token requires eat token in query
     switch (oauthTypeIcon) {
-      case 'twitter': {
-        console.log("CALLING OAUTH1 AUTOSIGN...")
-        let expDate = new Date();
-        expDate.setTime(expDate.getTime() + 8000);
-        document.cookie = 'oauth1eat=' + eatToken + '; expires=' + expDate.toUTCString() +'; path=/';
-        window.location.href = oauthUrl + '?signType=' + oauthTypeIcon;
-        break;
-      }
+      case 'twitter': { callOauth1(); break; }
+      case 'tumblr': { callOauth1(); break; }
       default: {
         console.log("CALLING OAUTH2 AUTOSIGN...")
         window.location.href = oauthUrl +
                                '?eat='      + eatToken +
                                '&signType=' + oauthTypeIcon;
       }
+    }
+
+    function callOauth1() {
+      console.log("CALLING OAUTH1 AUTOSIGN...");
+      let expDate = new Date();
+      expDate.setTime(expDate.getTime() + 8000);
+      document.cookie = 'oauth1eat=' + eatToken + '; expires=' + expDate.toUTCString() +'; path=/';
+      window.location.href = oauthUrl + '?signType=' + oauthTypeIcon;
     }
 
     // function readCookie(name) {
