@@ -12,13 +12,16 @@ export class Link {
 // Move this to the DB?
 const OLINKS: Link[] = [
   {url: '/api/auto/facebook',      icon: 'facebook',       bgColor: '#3b5998', linkName: 'facebook'},
+  {url: '/api/auto/foursquare',    icon: 'foursquare',     bgColor: '#0072b1', linkName: 'foursquare'},
   {url: '/api/auto/instagram',     icon: 'instagram',      bgColor: '#675144', linkName: 'instagram'},
   {url: '/api/auto/linkedin',      icon: 'linkedin',       bgColor: '#4875B4', linkName: 'linkedin'},
   {url: '/api/auto/github',        icon: 'github',         bgColor: '#333333', linkName: 'github'},
+  {url: '/api/auto/imgur',         icon: 'imgur',          bgColor: '#dd4b39', linkName: 'imgur'},
   {url: '/api/auto/twitter',       icon: 'twitter',        bgColor: '#00aced', linkName: 'twitter'},
   {url: '/api/auto/google',        icon: 'google',         bgColor: '#dd4b39', linkName: 'google'},
   {url: '/api/auto/pinterest',     icon: 'pinterest',      bgColor: '#cb2027', linkName: 'pinterest'},
   {url: '/api/auto/reddit',        icon: 'reddit',         bgColor: '#FF5700', linkName: 'reddit'},
+  {url: '/api/auto/spotify',       icon: 'spotify',        bgColor: '#00e461', linkName: 'spotify'},
   {url: '/api/auto/tumblr',        icon: 'tumblr',         bgColor: '#35465c', linkName: 'tumblr'},
   {url: '/api/auto/wordpress',     icon: 'wordpress',      bgColor: '#21759b', linkName: 'wordpress'},
   {url: '/api/auto/stackexchange', icon: 'stack-overflow', bgColor: '#5184C1', linkName: 'stackoverflow'},

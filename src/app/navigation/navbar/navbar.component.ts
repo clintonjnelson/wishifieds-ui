@@ -12,6 +12,8 @@ export class OauthLink {
 
 const OAUTHS: OauthLink[] = [
   {icon: 'facebook-official', url: '/api/login/facebook',       bgColor: '#3b5998'},
+  {icon: 'foursquare',        url: '/api/login/foursquare',     bgColor: '#0072b1'},
+  {icon: 'imgur',             url: '/api/login/imgur',          bgColor: '#dd4b39'},
   {icon: 'instagram',         url: '/api/login/instagram',      bgColor: '#675144'},
   {icon: 'linkedin',          url: '/api/login/linkedin',       bgColor: '#4875B4'},
   {icon: 'twitter',           url: '/api/login/twitter',        bgColor: '#00aced'},
@@ -19,6 +21,7 @@ const OAUTHS: OauthLink[] = [
   {icon: 'google',            url: '/api/login/google',         bgColor: '#dd4b39'},
   {icon: 'pinterest',         url: '/api/login/pinterest',      bgColor: '#cb2027'},
   {icon: 'reddit',            url: '/api/login/reddit',         bgColor: '#FF5700'},
+  {icon: 'spotify',           url: '/api/login/spotify',        bgColor: '#00e461'},
   {icon: 'stack-overflow',    url: '/api/login/stack-overflow', bgColor: '#5184C1'},
   {icon: 'tumblr',            url: '/api/login/tumblr',         bgColor: '#35465c'},
   {icon: 'wordpress',         url: '/api/login/wordpress',      bgColor: '#21759b'},

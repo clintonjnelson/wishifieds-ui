@@ -34,12 +34,15 @@ const ROUTES = {
   // Oauth Sign Links
   oauthAutoSign: {
     facebook:         '/api/auto/facebook',
+    foursquare:       '/api/auto/foursquare',
     github:           '/api/auto/github',
     google:           '/api/auto/google',
+    imgur:            '/api/auto/imgur',
     instagram:        '/api/auto/instagram',
     linkedin:         '/api/auto/linkedin',
     pinterest:        '/api/auto/pinterest',
     reddit:           '/api/auto/reddit',
+    spotify:          '/api/auto/spotify',
     tumblr:           '/api/auto/tumblr',
     'stack-overflow': '/api/auto/stackexchange',
     twitter:          '/api/auto/twitter',

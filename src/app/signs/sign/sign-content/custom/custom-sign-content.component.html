@@ -5,9 +5,12 @@
 <div class="sign-content-component">
   <!-- Sign Info -->
   <div class="sign-content" *ngIf="!isEditing">
-    <h3 class="sign-content-title">{{ sign.signName }}</h3>
+    <h3 class="sign-content-title">
+      <a href="{{sign.linkUrl}}" target="_blank" class="sign-content-title">{{ sign.signName }}</a>
+    </h3>
+    <!-- <h3 class="sign-content-title">{{ sign.signName }}</h3> -->
     <p class="sign-content-first-line"> <small>{{ sign.description }}</small></p>
-    <a href="{{sign.linkUrl}}" class="sign-content-second-line"> {{ sign.linkUrl }} </a>
+    <a href="{{sign.linkUrl}}" target="_blank" class="sign-content-second-line"> {{ sign.linkUrl }} </a>
   </div>
 
   <!-- Sign Edit Form -->
