@@ -54,7 +54,7 @@ export class FooterComponent {
       // Username? => set it if there is one
       if(event instanceof NavigationEnd) {
         let currentUrlTree = this.router.parseUrl(this.router.url);
-        console.log("CURRENT URL TREE IS: ", currentUrlTree);
+        // console.log("CURRENT URL TREE IS: ", currentUrlTree);
         try {
           this.currentUsername = currentUrlTree.root.children['primary']['segments'][0]['path'];
         }
@@ -75,6 +75,7 @@ export class FooterComponent {
     this.urlSubscription.unsubscribe();
   }
 
+  // CALLS THE BUILD URL A LLLLLLLOOOOOOOOOTTTTTTTT of times. INEFFICIENT.
   private buildUrl(icon: string): string {
     let currentUrl = this.currentUrl;
 

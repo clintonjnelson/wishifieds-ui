@@ -33,6 +33,9 @@ const ROUTES = {
 
   // Oauth Sign Links
   oauthAutoSign: {
+    deviantart:       '/api/auto/deviantart',
+    disqus:           '/api/auto/disqus',
+    etsy:             '/api/auto/etsy',
     facebook:         '/api/auto/facebook',
     foursquare:       '/api/auto/foursquare',
     github:           '/api/auto/github',
@@ -46,9 +49,10 @@ const ROUTES = {
     tumblr:           '/api/auto/tumblr',
     'stack-overflow': '/api/auto/stackexchange',
     twitter:          '/api/auto/twitter',
+    vimeo:            '/api/auto/vimeo',
+    vk:               '/api/auto/vkontakte',
     wordpress:        '/api/auto/wordpress',
     youtube:          '/api/auto/youtube',
-
   },
 
   // social sharing
@@ -77,8 +81,8 @@ export class SignpostApi {
 
   buildUrl(routeName: string, substitutions: Object[]): string {
     const baseUrl = this.routes[routeName];
-    console.log("BASE URL IS: ", baseUrl);
-    console.log("subs IS: ", substitutions);
+    // console.log("BASE URL IS: ", baseUrl);
+    // console.log("subs IS: ", substitutions);
     // Runs each of the substitutions, returning the final URL
     return substitutions.reduce( (priorResult, currentSubstitution) => {
         let sub = Object.keys(currentSubstitution)[0];

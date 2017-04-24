@@ -20,7 +20,6 @@
       <!-- <li (click)="toggleShowLoginLinks()">
         <i class="{{helpers.buildIconClass('angle-double-right', 2)}} sp-hover"></i>
       </li> -->
-      <!-- UPDATE COLOR IF EVER WANT LINKS TO TURN THEIR PROPER COLOR WHEN HOVERED OVER -->
       <li class="nav-links-oauth" *ngFor="let link of oauthLinks">
         <icon-link [url]="link.url"
                    [icon]="link.icon"
@@ -28,11 +27,11 @@
                    [iconSize]="'2'">
         </icon-link>
       </li>
-      <li class="login-signup-form-link">
+<!--  <li class="login-signup-form-link">  IMGUR ICON IS COLORED & NOT RIGHT FOR SITE
         <a href="/api/login/imgur" class="sidenav-link">
           <img src="/assets/imgur_icon.svg" alt="imgur icon" class="signpost-icon-link">
         </a>
-      </li>
+      </li> -->
       <li (click)="toggleShowSignpostLoginForm()" class="login-signup-form-link">
         <img src="/assets/signpost_icon.svg" alt="login/signup icon" class="signpost-icon-link">
       </li>

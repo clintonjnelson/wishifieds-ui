@@ -72,7 +72,8 @@ export class ApiSignsService {
     // Oauth2 token requires eat token in query
     switch (oauthTypeIcon) {
       case 'twitter': { callOauth1(); break; }
-      case 'tumblr': { callOauth1(); break; }
+      case 'tumblr':  { callOauth1(); break; }
+      case 'etsy':    { callOauth1(); break; }
       default: {
         console.log("CALLING OAUTH2 AUTOSIGN...")
         window.location.href = oauthUrl +

@@ -80,9 +80,15 @@ export class AuthService {
   setAuthCookies(eatAuthToken: string,
                  username:     string,
                  userId:       string,
-                 email:        string,
+                 email:        string = '',
                  role:         string = '') {
     // let encodedEat = encodeURIComponent(eatAuthToken);
+    // console.log("SETTING THE FOLLOWING COOKIE VALUES...");
+    // console.log("EAT: ", eatAuthToken);
+    // console.log("USERNAME: ", username);
+    // console.log("USERID: ", userId);
+    // console.log("EMAIL: ", email);
+    // console.log("ROLE: ", role);
     window.localStorage.setItem('eatAuthToken', eatAuthToken);
     window.localStorage.setItem('username',     username);
     window.localStorage.setItem('userId',       userId);
