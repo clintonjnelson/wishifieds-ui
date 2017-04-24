@@ -7,6 +7,7 @@ import { AppRouterModule } from './app-routing.module';
 import { FormsModule }     from '@angular/forms'
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { MaterialModule }  from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DragulaModule }   from 'ng2-dragula/ng2-dragula';
 import 'hammerjs';
 
@@ -86,6 +87,7 @@ export function HttpFactory(backend: XHRBackend,
                   HttpModule,
                   MaterialModule.forRoot(),
                   DragulaModule,
+                  NoopAnimationsModule,
                 ],
   declarations: [
                   AppComponent,
