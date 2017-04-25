@@ -17,4 +17,8 @@ export class IconLinkComponent {
   @Input() iconSize: string;
 
   constructor( private helpers: HelpersService ) {}
+
+  buildIconClass(icon: string, size: string = '2') {
+    return this.helpers.buildIconClass(icon, size);
+  }
 }

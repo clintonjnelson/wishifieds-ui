@@ -4,7 +4,7 @@
   <!-- Main Icon -->
   <div class="sign-image-container">
     <img *ngIf="user.picUrl" src="{{user.picUrl}}" alt="optional user image" height="70" width="70" class="centered-item">
-    <i class="{{helpers.buildIconClass('user', 4)}} underlay-icon centered-item"></i>
+    <i class="{{buildIconClass('user', '4')}} underlay-icon centered-item"></i>
   </div>
 
   <!-- Sign Content & Edit Form-->
@@ -18,7 +18,7 @@
   </div>
 
   <div *ngIf="isAdmin" class="user-management-container">
-    <i *ngIf="user.status === 'active'"   (click)="deactivateUser()" class="{{helpers.buildIconClass('times', 1)}}"></i>
-    <i *ngIf="user.status === 'inactive'" (click)="activateUser()"   class="{{helpers.buildIconClass('refresh', 1)}}"></i>
+    <i *ngIf="user.status === 'active'"   (click)="deactivateUser()" class="{{buildIconClass('times', '1')}}"></i>
+    <i *ngIf="user.status === 'inactive'" (click)="activateUser()"   class="{{buildIconClass('refresh', '1')}}"></i>
   </div>
 </div>

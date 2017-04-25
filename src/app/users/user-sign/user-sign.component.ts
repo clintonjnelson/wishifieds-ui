@@ -19,6 +19,10 @@ export class UserSignComponent implements OnInit {
     this.isAdmin = this.setIfAdmin();
   }
 
+  buildIconClass(icon: string, size: string = '2') {
+    return this.helpers.buildIconClass(icon, size);
+  }
+
   // ****************** ADMIN ONLY FUNCTIONALITY ******************
   setIfAdmin() {
     return true ? true : false;

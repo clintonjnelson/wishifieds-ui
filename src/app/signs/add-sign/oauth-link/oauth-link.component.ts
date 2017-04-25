@@ -26,4 +26,8 @@ export class OauthLinkComponent {
   submit() {
     this.apiSignsService.oauthAutosignRedirect(this.icon);
   }
+
+  buildIconClass(icon: string, size: string = '2') {
+    return this.helpers.buildIconClass(icon, size);
+  }
 }

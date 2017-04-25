@@ -20,4 +20,8 @@ export class ConfirmModalComponent {
 
   constructor(public dialogRef: MdDialogRef<ConfirmModalComponent>,
               private helpers: HelpersService) {}
+
+  buildIconClass(icon: string, size: string = '2') {
+    return this.helpers.buildIconClass(icon, size);
+  }
 }

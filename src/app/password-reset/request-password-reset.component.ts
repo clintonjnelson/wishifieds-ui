@@ -37,4 +37,8 @@ export class RequestPasswordResetComponent {
           that.isProcessing = false;
         });
   }
+
+  buildIconClass(icon: string, size: string = '2') {
+    return this.helpers.buildIconClass(icon, size);
+  }
 }
