@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
 export class Notification {
   type: string;
@@ -12,6 +13,7 @@ export class NotificationService {
   display: Notification;
   notifications: Notification[];
   currentlyDisplaying: boolean;
+  notifChangeEmit: Subject<Notification> = new Subject<Notification>();
 
   constructor() {
     this.display             = null;
@@ -43,6 +45,7 @@ export class NotificationService {
     function nextNotifOrEnd() {
       if(this.notifications.length > 0) {
         this.displayNotif(this.notifications.pop());  // pop off end
+        this.notifChangeEmit.next(this.display);
       }
       else {
         this.display = null;

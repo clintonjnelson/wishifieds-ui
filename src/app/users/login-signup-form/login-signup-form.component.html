@@ -1,9 +1,9 @@
 <!-- Signpost Login Form -->
 <div>
-  <form name="loginForm" (ngSubmit)="login()" class="login-signup-form" #loginForm="ngForm">
+  <form name="loginForm" (ngSubmit)="loginOrSignup($event)" class="login-signup-form" #loginForm="ngForm">
     <!-- Email Input -->
     <div class="login-signup-input-error-container">
-      <md-input-container  layout="row" class="login-input-container">
+      <md-input-container layout="row" class="login-input-container">
         <input mdInput type="text" [(ngModel)]="userCreds.email" placeholder="email" name="email" minlength="6" [pattern]="userCreds.newAccount ? emailRegex : ''" required>
       </md-input-container>
       <div *ngIf="displayedValidationErrors.email" class="input-errors error">
@@ -13,7 +13,7 @@
 
     <!-- Password Input -->
     <div class="login-signup-input-error-container">
-      <md-input-container mdNoFloat layout="row" class="login-input-container">
+      <md-input-container layout="row" class="login-input-container">
         <input mdInput type="password" [(ngModel)]="userCreds.password" placeholder="password" minlength="6" name="password" required>
       </md-input-container>
       <div *ngIf="displayedValidationErrors.password" class="input-errors error">

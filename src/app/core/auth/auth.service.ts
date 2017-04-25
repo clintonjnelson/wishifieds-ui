@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router     } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+// import { Observable } from 'rxjs/Observable';
 import { Subject    } from 'rxjs/Subject';
 
 // Observable libaraies
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/catch';
+// import 'rxjs/add/observable/of';
+// import 'rxjs/add/operator/catch';
 
 export class UserAuth {
   isLoggedIn:  boolean;

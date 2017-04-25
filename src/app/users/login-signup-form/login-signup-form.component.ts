@@ -6,7 +6,7 @@ import { ApiUsersService } from '../../core/api/api-users.service';
 import { ApiAuthService } from '../../core/api/api-auth.service';
 import { UserCreds } from '../../users/user.model';
 import { NotificationService } from '../../core/services/notification.service';
-
+import { MdInputModule } from '@angular/material';
 
 
 const EMAIL_REGEX = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
