@@ -37,6 +37,7 @@ export class NotificationService {
 
   private displayNotif(notif: Notification) {
     this.display = notif;
+    this.notifChangeEmit.next(this.display);
     this.currentlyDisplaying = true;
 
     var dispTime = (notif.displayTime ? notif.displayTime : 6000);  // may not need eventually
@@ -45,11 +46,11 @@ export class NotificationService {
     function nextNotifOrEnd() {
       if(this.notifications.length > 0) {
         this.displayNotif(this.notifications.pop());  // pop off end
-        this.notifChangeEmit.next(this.display);
       }
       else {
         this.display = null;
         this.currentlyDisplaying = false;
+        this.notifChangeEmit.next(null);
       }
     }
   }

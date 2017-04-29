@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router }              from '@angular/router';
 import { NgForm, FormControl } from '@angular/forms';
 import { User, UserSettings }  from "../user.model";
 import { HelpersService }      from '../../shared/helpers/helpers.service';
 import { AuthService }         from '../../core/auth/auth.service';
 import { ApiUsersService }     from '../../core/api/api-users.service';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
   moduleId: module.id,
@@ -23,7 +25,9 @@ export class UserSettingsComponent implements OnInit {
 
   constructor(private helpers:         HelpersService,
               private authService:     AuthService,
-              private apiUsersService: ApiUsersService) {}
+              private apiUsersService: ApiUsersService,
+              private router:          Router,
+              private notifService:    NotificationService) {}
 
   ngOnInit() {
     const that = this;
@@ -81,14 +85,17 @@ export class UserSettingsComponent implements OnInit {
         success => {
           console.log("SUCCESS UPDATING THE USER IS: ", success);
           let user = success.user;
-          this.userSettings = Object.assign({}, that.tempSettings);
+          var shouldReloadUser = (that.authService.auth.username !== user.username);
+          that.userSettings = Object.assign({}, that.tempSettings);
           that.authService.setAuthCookies(that.authService.getEatAuthCookie(),
                                           user.username,
                                           user.userId,
                                           user.email,
                                           user.role);
+          that.notifService.notify('success', 'Settings updates saved.', 8000);
+          if(shouldReloadUser) { that.router.navigate([user.username]); }
           that.setIsConfirmed(user.confirmed);
-          this.resetFormDisplay();  // reset means turns off buttons
+          that.resetFormDisplay();  // reset means turns off buttons
         },
         error => {
           console.log("ERROR IS: ", error);

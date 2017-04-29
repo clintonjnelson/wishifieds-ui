@@ -20,7 +20,10 @@ export class NotificationsComponent {
 
   constructor(private notifService: NotificationService) {
     this.notification  = notifService.display;
-    this._subscription = notifService.notifChangeEmit.subscribe((newNotif: Notification) => { this.notification = newNotif });
+    this._subscription = notifService.notifChangeEmit.subscribe((newNotif: Notification) => {
+      console.log("NOTIFICATION CHANGED. RECEIVED: ", newNotif);
+      this.notification = newNotif;
+    });
   }
 
   ngOnDestroy() {
