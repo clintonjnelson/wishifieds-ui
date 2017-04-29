@@ -24,9 +24,8 @@ export class ApiSignsService {
                  // RETURN A CUSTOM TYPE HERE IF ALSO NEED THE USERNAME OR REMOVE USERNAME RESPONSE
                  return res.json().signs as Sign[];
                })
-               .catch( (error: Response | any) => {
-                 console.log("ERROR FROM GET SIGNS BY USER/ID IS: ", error);
-                 return error.json();
+               .catch( (error: Response) => {
+                 return Observable.throw(error);
                  // show error message to user
                  // Maybe use remote logging infrastructure
                });
@@ -42,9 +41,8 @@ export class ApiSignsService {
                  console.log("SUCCESS RESPONSE RETURNED FOR SIGN CREATION WITH: ", res);
                  return res.json().sign as Sign;  // hmmmm...
                })
-               .catch( error => {
-                 console.log("ERROR CREATING SIGN: ", error);
-                 return error.json();
+               .catch( (error: Response) => {
+                 return Observable.throw(error);
                });
   }
 
@@ -58,9 +56,8 @@ export class ApiSignsService {
                  console.log("SUCCESS RESPONSE RETURNED FOR SIGN UPDATE: ", res);
                  return res.json().sign as Sign;
                })
-               .catch( error => {
-                 console.log("ERROR WHEN UPDATING SIGN: ", error);
-                 return error.json();
+               .catch( (error: Response) => {
+                 return Observable.throw(error);
                });
   }
 
@@ -113,9 +110,8 @@ export class ApiSignsService {
                  console.log("SUCCESS ORDERING RESPONSE: ", res);
                  return res.json();  // DONT NEED, SUCCESS IS ENOUGH VERIFICATION
                })
-               .catch( err => {
-                 console.log("FAILED ORDERING RESPONSE: ", err);
-                 return err.json();  // FAILURE INDICATES NOTIFY USER
+               .catch( (error: Response) => {
+                 return Observable.throw(error);
                });
   }
 
@@ -134,9 +130,8 @@ export class ApiSignsService {
                  console.log("SUCCESSFUL DELETION OF SIGN. Response is: ", res);
                  return res.json() as boolean;
                })
-               .catch( error => {
-                 console.log("ERROR DELETING SIGN. Error is: ", error);
-                 return error.json();
+               .catch( (error: Response) => {
+                 return Observable.throw(error);
                });
   }
 }

@@ -53,8 +53,8 @@ export class UserPageComponent implements OnInit {
           that.isProcessing = false;
         },
         error => {
-          console.log("ERR RETURNED FROM GET BY ID: ", error);
-          return error;
+          console.log("ERR RETURNED FROM GET BY ID: ", error.json());
+          return error.json();
         }
       );
   }

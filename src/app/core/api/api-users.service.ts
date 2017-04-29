@@ -38,8 +38,7 @@ export class ApiUsersService {
                  console.log("RESPONSE FROM USER CREATION IS: ", user.json());
                  return user.json();
                })
-               .catch( (error: Response | any) => {
-                 console.log("ERROR JSON IS: ", error.json());
+               .catch( (error: Response) => {
                  return Observable.throw(error);
                  // show error message to user
                  // Maybe use remote logging infrastructure
@@ -54,9 +53,8 @@ export class ApiUsersService {
                  console.log("SUCCESS FROM CONFIRM USER IS: ", success);
                  return success.json();
                })
-               .catch( (error: Response | any) => {
-                 console.log("ERROR FROM CONFIRMING USER IS: ", error);
-                 return error;
+               .catch( (error: Response) => {
+                 return Observable.throw(error);
                });
   }
 
@@ -69,9 +67,8 @@ export class ApiUsersService {
                  console.log("SUCCESS FROM RESEND CONFIRMATION IS: ", success);
                  return success.json();
                })
-               .catch( (error: Response | any) => {
-                 console.log("ERROR RESENDING CONFIRMATION IS: ", error);
-                 return error;
+               .catch( (error: Response) => {
+                 return Observable.throw(error);
                });
   }
 
@@ -86,11 +83,8 @@ export class ApiUsersService {
                  console.log("RESPONSE FROM GET USER BY ID IS: ", user.json());
                  return user.json() as UserByIdResponse;
                })
-               .catch( (error: Response | any) => {
-                 console.log("ERROR FROM GET USER BY ID IS: ", error);
-                 return error;
-                 // show error message to user
-                 // Maybe use remote logging infrastructure
+               .catch( (error: Response) => {
+                 return Observable.throw(error);
                });
   }
 
@@ -107,8 +101,7 @@ export class ApiUsersService {
                  return success.json();
                })
                .catch( (error: Response) => {
-                 console.log("ERROR UPDATING USER IS: ", error.json());
-                 return Observable.throw(error.json());
+                 return Observable.throw(error);
                });
   }
 
@@ -123,9 +116,8 @@ export class ApiUsersService {
                  console.log("RESPONSE FROM GET AVAILABILITY IS: ", availability);
                  return availability.json();
                })
-               .catch( (error: Response | any) => {
-                 console.log("ERROR FROM GET AVAILIABILITY IS: ", error);
-                 return error;
+               .catch( (error: Response) => {
+                 return Observable.throw(error);
                });
   }
 }

@@ -1,6 +1,6 @@
-/deep/ md-dialog-container.md-dialog-container {
+/deep/ div.cdk-overlay-container {
   position: absolute;
-  left: 20%;
+  left: 10%;
   top: 10%;
   max-width: 400px;
   max-height: 200px;
