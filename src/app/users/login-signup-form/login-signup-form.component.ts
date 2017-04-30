@@ -92,6 +92,7 @@ export class LoginSignupFormComponent {
             success.email,
             success.role);
           that.close.emit(null);
+          that.router.navigate(['/', success.username]);
         },
         err => {
           that.displayedValidationErrors['main'] += that.validationErrorMessages.login.user;

@@ -21,9 +21,8 @@ export class ApiAdminService {
                  console.log("SUCCESS ADMIN GET USERS: ", res);
                  return res.json().users as User[];
                })
-               .catch( (error: Response | any) => {
-                 console.log("ERROR FROM ADMIN GET USERS: ", error);
-                 return error.json();
+               .catch( (error: Response) => {
+                 return Observable.throw(error);
                });
   }
 }

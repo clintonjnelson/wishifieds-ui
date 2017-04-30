@@ -63,6 +63,11 @@ export class SignContentComponent implements OnInit {
     this.isOwner = (this.forSignCreation ? true : this.authService.isOwner(this.sign.userId) );
   }
 
+  urlWithoutPrototol(url: string) {
+    console.log("URL WITHOUT PROTOCOL FUNCTION NOW STARTING...");
+    return this.helpers.urlWithoutProtocol(url);
+  }
+
   // ************* Form Methods *************
   cancel() {
     this.toggleEditing();

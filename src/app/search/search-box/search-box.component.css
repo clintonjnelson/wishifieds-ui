@@ -15,6 +15,15 @@
   flex-direction: row;
 }
 
+.search-btn-icon {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  order: 2;
+  padding: 0px;
+}
+
 .no-results-message {
   color: white;
   font-family: helvetica, sans-serif;

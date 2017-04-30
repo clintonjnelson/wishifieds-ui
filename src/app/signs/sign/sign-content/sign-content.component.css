@@ -70,6 +70,10 @@ md-input-container {
   display: flex;
   flex: 1 0 auto;
 }
+input {
+  display: flex;
+  flex: 1 0 auto;
+}
 /* Keeps label from overlapping the icon */
 /deep/ label.mat-input-placeholder.mat-empty {
   margin-left: 20px;

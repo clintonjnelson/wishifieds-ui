@@ -10,7 +10,7 @@
     </h3>
     <!-- <h3 class="sign-content-title">{{ sign.signName }}</h3> -->
     <p class="sign-content-first-line"> <small>{{ sign.description }}</small></p>
-    <a href="{{sign.linkUrl}}" target="_blank" class="sign-content-second-line"> {{ sign.linkUrl }} </a>
+    <a href="{{sign.linkUrl}}" target="_blank" class="sign-content-second-line"> {{ urlWithoutPrototol(sign.linkUrl) }} </a>
   </div>
 
   <!-- Sign Edit Form -->

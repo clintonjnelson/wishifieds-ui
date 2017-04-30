@@ -24,9 +24,8 @@ export class ApiAuthService {
                  console.log("GOT AN API RESPONSE: ", res);
                  return res.json();
                })
-               .catch( err => {
-                 console.log("ERROR FROM THE API: ", err);
-                 return err.json();
+               .catch( (error: Response) => {
+                 return Observable.throw(error);
                });
   }
 
@@ -40,9 +39,8 @@ export class ApiAuthService {
                  console.log("GOT AN API RESPONSE: ", res);
                  return res.json();
                })
-               .catch( err => {
-                 console.log("ERROR FROM THE API: ", err);
-                 return err.json();
+               .catch( (error: Response) => {
+                 return Observable.throw(error);
                });
   }
 
@@ -56,9 +54,8 @@ export class ApiAuthService {
                  console.log("GOT AN API RESPONSE: ", res);
                  return res.json();
                })
-               .catch( err => {
-                 console.log("ERROR FROM THE API: ", err);
-                 return err.json();
+               .catch( (error: Response) => {
+                 return Observable.throw(error);
                });
   }
 }

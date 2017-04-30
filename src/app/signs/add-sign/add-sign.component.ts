@@ -40,7 +40,7 @@ const CUSTOM_SIGNS: Sign[] = [
   { signName: 'podcast', signType: 'custom', bgColor: '#9C27B0', icon: 'podcast',
     _id: '', description: '', knownAs: '', linkUrl: 'www......', picUrl: '', userId: '' },
   { signName: 'quora', signType: 'custom', bgColor: '#AA2200', icon: 'quora',
-    _id: '', description: '', knownAs: '', linkUrl: 'https://www.quora.com/profile/<YOUR-PROFILE-NAME>', picUrl: '', userId: '' },
+    _id: '', description: '', knownAs: '', linkUrl: 'www.quora.com/profile/<YOUR-PROFILE-NAME>', picUrl: '', userId: '' },
   { signName: 'meetup', signType: 'custom', bgColor: '#E51937', icon: 'meetup',
     _id: '', description: '', knownAs: '', linkUrl: 'https://www.meetup.com/<YOUR-MEETUP-NAME>', picUrl: '', userId: '' },
   { signName: 'rss', signType: 'custom', bgColor: '#ff7900', icon: 'rss',
@@ -140,6 +140,11 @@ export class AddSignComponent {
     console.log("SIGN AT THE ADDSIGN LEVEL IS: ", newSign);
     // Reset the area to closed. Triggered by event emitters from inner save/close
     this.closeForms();
+
+    // Format the linkUrl as needed:
+    newSign.linkUrl = this.helpers.verifyOrAddProtocolToUrl(newSign.linkUrl);
+    console.log("VERIFY URL FORMATTING OCCURED: ", newSign.linkUrl);
+
     this.saveEE.emit(newSign);    // keep passing the sign up
   }
 

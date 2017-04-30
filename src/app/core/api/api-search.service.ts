@@ -31,9 +31,8 @@ export class ApiSearchService {
                  console.log("SUCCESS SEARCH: ", res);
                  return res.json() as SearchResults;
                })
-               .catch( error => {
-                 console.log("ERROR DURING SEARCH: ", error);
-                 return error.json();
+               .catch( (error: Response) => {
+                 return Observable.throw(error);
                });
   }
 }
