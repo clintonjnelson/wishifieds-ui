@@ -58,15 +58,6 @@ signpost-footer {
   background-color: #808080;
 }
 
-/*.signpost-icon-main {
-  position: absolute;
-  left: 0px;
-  top: 8px;
-  width: 43px;
-  height: 43px;
-  margin-left: 12px;
-}*/
-
 /*COLORS*/
 .facebook-color {
   fill: #3b5998 !important;
@@ -86,116 +77,15 @@ i.sp-hover:hover {
 }
 
 
-
-/*General In-Page Title Formatting*/
+/*
+General In-Page Title Formatting
 .view-h2 {
   color: #a6a6a6;
   text-align: center;
 }
 
-/*Sidenav Hamburger Menu*/
-.sidenav-menu {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-.sidenav-menu svg:hover {
-  fill: #955251 !important;
-}
-/*Sidenav Menu (open)*/
-.md-sidenav-left {
-  background-color: #c9c9c9;
-}
 
-/*Sidenav Content*/
-.sidenav-search {
-  margin-top: 15px;
-}
-.sidenav-search md-input-container {
-  padding-bottom: 5px;
-}
-.sidenav-search input {
-  border-color: white;
-  color: white;
-  order: 1;
-  padding-bottom: 10px;
-}
-.sidenav-search ng-md-icon {
-
-}
-.sidenav-search svg {
-  position: relative;
-  top: 20px;
-}
-.sidenav-search-btn-icon {
-  background: transparent;
-  border-color: transparent;
-  box-shadow: none;
-  border-radius: 0;
-  order: 2;
-  padding: 0px;
-}
-.sidenav-search-icon:focus:hover {
-  outline: 0 none !important;
-}
-
-.md-sidenav-left, md-sidenav {
-  width: 250px;
-  min-width: 250px;
-}
-.sidenav-main-title {
-  color: #955251;
-}
-
-md-checkbox.md-checked.sidenav-login-termscond .md-icon {
-  background-color: #955251;
-}
-md-checkbox.md-checked.sidenav-login-newaccount .md-icon {
-  background-color: #955251;
-}
-.sidenav-login {
-  margin-top: 20px;
-}
-.sidenav-login-top {
-  background-color: #ffffff;
-}
-.sidenav-login-content {
-  background-color: #e4e4e4;
-}
-.sidenav-login-content .login-input-container {
-  padding-bottom: 10px
-}
-.sidenav-login-title {
-  color: #5a5a5a;
-  margin: 10px auto 10px auto;
-  text-align: center;
-}
-
-.sidenav-oauth-login-title {
-  color: #5a5a5a;
-  margin: 10px auto 0px auto;
-  text-align: center;
-}
-.sidenav-link a{
-  box-sizing: content-box;
-  color: white;
-  margin-bottom: 10px;
-  margin-top: 10px;
-  text-decoration: none;
-}
-.sidenav-link:hover {
-  color: #955251;
-}
-.sidenav-link-icon {
-  display: inline-block;
-  fill: #ffffff !important;
-  vertical-align: middle;
-}
-.sidenav-link-icon:hover {
-  fill: #955251 !important;
-}
-
-/*Top Navigation Bar*/
+Top Navigation Bar
 .nav-links-oauth {
   list-style-type: none;
   margin-bottom: 5px;
@@ -211,7 +101,7 @@ md-checkbox.md-checked.sidenav-login-newaccount .md-icon {
 }
 
 
-/*New Sign Fab*/
+New Sign Fab
 .fab-plus svg {
   fill: #808080 !important;
   height: 30px;
@@ -228,14 +118,14 @@ md-checkbox.md-checked.sidenav-login-newaccount .md-icon {
 }
 
 
-/*Sign Form*/
+Sign Form
 .sign-form-types-container {
   display: inline-block;
 }
 .sign-form-type {
   float: left;
 }
-/*Create Sign Button*/
+Create Sign Button
 .md-button.md-fab.fab-color-grey {
   background-color: #676767;
   color: white;
@@ -244,9 +134,9 @@ md-checkbox.md-checked.sidenav-login-newaccount .md-icon {
   background-color: #955251;
 }
 
-/*Sign Listitem*/
+Sign Listitem
 .sign-listitem {
-  /*EXPAND CONTAINER TO FIT CONTENTS - INCLUDING ICONS*/
+  EXPAND CONTAINER TO FIT CONTENTS - INCLUDING ICONS
 }
 .sign-listitem-icon {
   position: relative;
@@ -283,3 +173,4 @@ md-checkbox.md-checked.sidenav-login-newaccount .md-icon {
   position: relative;
 }
 
+*/

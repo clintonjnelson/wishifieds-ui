@@ -16,7 +16,7 @@
   height: auto;
 }
 .navbar-signpost-icon a {
-  max-height: 40px;
+  max-height: 2.5em;
 }
 
 .signpost-icon-main {
@@ -33,7 +33,7 @@
   display: inline-block;
   margin-top: auto;
   margin-left: auto;
-  font-size: 18px;
+  font-size: 1.1em;
 }
 .nav-toggle-control span {
   font-size: 0.6em;
@@ -48,7 +48,7 @@
   bottom: 5px;
   color: white;
   font-family: helvetica;
-  font-size: 18px;
+  font-size: 1.1em;
   font-weight: bold;
   position: relative;
 }

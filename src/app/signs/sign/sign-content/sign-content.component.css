@@ -37,10 +37,10 @@ h3, p , a {
 }
 .sign-content-first-line {}
 .sign-content-second-line {
-  font-size: 16px;
+  font-size: 1em;
 }
 .sign-content-title {
-  font-size: 20px;
+  font-size: 1.25em;
   font-weight: normal;
   /*Next Part is for Truncating Long String... not sure if it works or not*/
   white-space: nowrap;
