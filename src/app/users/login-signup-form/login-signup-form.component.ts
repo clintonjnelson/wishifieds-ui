@@ -57,7 +57,7 @@ export class LoginSignupFormComponent {
               that.authService.setAuthCookies(res.eat, res.username, res.userid, res.email, res.role);
               that.notification.notify('success', 'Welcome! We\'ve staked you a new post so you can hang some signs.');
               this.close.emit(null);
-              that.router.navigate(['/', res.username]);
+              that.router.navigate([res.username]);
             },
             err => {
               let body = err.json();

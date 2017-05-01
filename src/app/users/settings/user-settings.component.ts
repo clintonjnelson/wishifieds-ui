@@ -120,7 +120,7 @@ export class UserSettingsComponent implements OnInit {
                         'they will no longer work until you update them to the new syynpost address.';
             that.notifService.notify('warning', msg, 12000);
           }
-          if(shouldReloadUser) { that.router.navigate([user.username]); }
+          if(shouldReloadUser) { that.router.navigate([user.username, 'settings']); }
           that.setIsConfirmed(user.confirmed);
           that.resetFormDisplay();  // reset means turns off buttons
         },

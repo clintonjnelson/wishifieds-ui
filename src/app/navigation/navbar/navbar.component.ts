@@ -16,7 +16,7 @@ const OAUTHS: OauthLink[] = [
   {icon: 'etsy',              url: '/api/login/etsy',           bgColor: '#d15600'},
   {icon: 'facebook-official', url: '/api/login/facebook',       bgColor: '#3b5998'},
   {icon: 'foursquare',        url: '/api/login/foursquare',     bgColor: '#0072b1'},
-  {icon: 'info',             url: '/api/login/imgur',          bgColor: '#dd4b39'},   // DOESNT HAVE THIS ONE!!!
+  {icon: 'info',              url: '/api/login/imgur',          bgColor: '#dd4b39'},   // DOESNT HAVE THIS ONE!!!
   {icon: 'instagram',         url: '/api/login/instagram',      bgColor: '#675144'},
   {icon: 'linkedin',          url: '/api/login/linkedin',       bgColor: '#4875B4'},
   {icon: 'twitter',           url: '/api/login/twitter',        bgColor: '#00aced'},
@@ -25,7 +25,7 @@ const OAUTHS: OauthLink[] = [
   {icon: 'pinterest',         url: '/api/login/pinterest',      bgColor: '#cb2027'},
   {icon: 'reddit',            url: '/api/login/reddit',         bgColor: '#FF5700'},
   {icon: 'spotify',           url: '/api/login/spotify',        bgColor: '#00e461'},
-  {icon: 'stack-overflow',    url: '/api/login/stack-overflow', bgColor: '#5184C1'},
+  {icon: 'stack-overflow',    url: '/api/login/stackexchange',  bgColor: '#5184C1'},
   {icon: 'tumblr',            url: '/api/login/tumblr',         bgColor: '#35465c'},
   {icon: 'vimeo',             url: '/api/login/vimeo',          bgColor: '#00bf8f'},
   {icon: 'vk',                url: '/api/login/vkontakte',      bgColor: '#45668e'},
