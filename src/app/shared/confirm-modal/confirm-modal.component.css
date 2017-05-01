@@ -2,8 +2,9 @@
   position: absolute;
   left: 10%;
   top: 10%;
-  max-width: 400px;
-  max-height: 200px;
+  height: auto;
+  max-height: 400px;
+  /*max-width: 400px;*/
   z-index: 9999;
 
   /*background-color: #5a5a5a;*/

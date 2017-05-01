@@ -6,6 +6,7 @@ import { HelpersService }      from '../../shared/helpers/helpers.service';
 import { AuthService }         from '../../core/auth/auth.service';
 import { ApiUsersService }     from '../../core/api/api-users.service';
 import { NotificationService } from '../../core/services/notification.service';
+import { ModalService }        from '../../core/services/modal.service';
 
 @Component({
   moduleId: module.id,
@@ -27,7 +28,8 @@ export class UserSettingsComponent implements OnInit {
               private authService:     AuthService,
               private apiUsersService: ApiUsersService,
               private router:          Router,
-              private notifService:    NotificationService) {}
+              private notifService:    NotificationService,
+              private modalService:    ModalService) {}
 
   ngOnInit() {
     const that = this;
@@ -80,7 +82,26 @@ export class UserSettingsComponent implements OnInit {
     console.log("TEMP SETTINGS IS: ", this.tempSettings);
     console.log("USER SETTINGS IS: ", this.userSettings);
 
-    this.apiUsersService.updateUser(this.tempSettings)
+    if(this.userSettings.username !== this.tempSettings.username) {
+      const warningTitle = 'Username & Syynpost URL Address Change';
+      const warningMsg   = 'Changing your username changes the address to your syynpost. ' +
+                           'Links using the old username will no longer work. ' +
+                           'Are you sure you want to change your username?';
+      console.log("STARTING MODAL NOW...");
+      that.modalService
+        .confirm(warningTitle, warningMsg)
+        .subscribe((submit) => {
+          if(submit.response === true) { updateUser(true); }
+        });
+    }
+    else {
+      console.log("UPDATING WITHOUT USERNAME CHANGE...");
+      updateUser(false);
+    }
+
+
+    function updateUser(usernameChange: boolean = false) {
+      that.apiUsersService.updateUser(that.tempSettings)
       .subscribe(
         success => {
           console.log("SUCCESS UPDATING THE USER IS: ", success);
@@ -92,7 +113,13 @@ export class UserSettingsComponent implements OnInit {
                                           user.userId,
                                           user.email,
                                           user.role);
-          that.notifService.notify('success', 'Settings updates saved.', 8000);
+          that.notifService.notify('success', 'Settings updates saved.');
+          if(usernameChange) {
+            const msg = 'Your username changed. Please remember, this has changed the address of your syynpost. ' +
+                        'If you have any existing links to your syynpost account around the interwebs, ' +
+                        'they will no longer work until you update them to the new syynpost address.';
+            that.notifService.notify('warning', msg, 12000);
+          }
           if(shouldReloadUser) { that.router.navigate([user.username]); }
           that.setIsConfirmed(user.confirmed);
           that.resetFormDisplay();  // reset means turns off buttons
@@ -113,6 +140,7 @@ export class UserSettingsComponent implements OnInit {
           }
           console.log("ERROR UPDATING THE USER IS: ", error);
         });
+    }
   }
 
   cancel() {
