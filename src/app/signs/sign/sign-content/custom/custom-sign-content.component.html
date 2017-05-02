@@ -18,26 +18,25 @@
   <div *ngIf="isEditing" class="sign-content-edit-form-container">
     <form #signForm="ngForm" name="signForm" class="sign-form">
       <!-- sign Title -->
-      <div class="sign-content-input-container">
-        <md-input-container>
-          <i class="{{helpers.buildIconClass('star', 1)}}"></i>
-          <input mdInput type="text" name="title" [(ngModel)]="tempSign.signName" placeholder="Sign Title" md-maxlength="30" required/>
-        </md-input-container>
-        <div *ngIf="displayedValidationErrors.title" class="input-errors error">
-          {{ displayedValidationErrors.title }}
-        </div>
+      <md-input-container>
+        <i class="{{helpers.buildIconClass('star', 1)}}"></i>
+        <input mdInput type="text" name="title" [(ngModel)]="tempSign.signName" placeholder="Sign Title" md-maxlength="30" required/>
+      </md-input-container>
+      <div *ngIf="displayedValidationErrors.title" class="input-errors error">
+        {{ displayedValidationErrors.title }}
       </div>
 
+
       <!-- url -->
-      <div class="sign-content-input-container">
-        <md-input-container>
-          <i class="{{helpers.buildIconClass('link', 1)}}"></i>
-          <input mdInput type="url" name="url" [(ngModel)]="tempSign.linkUrl" placeholder="http://www.somewebsite.com/..." required/>
-        </md-input-container>
-        <div *ngIf="displayedValidationErrors.url" class="input-errors error">
-          {{ displayedValidationErrors.url }}
-        </div>
+
+      <md-input-container>
+        <i class="{{helpers.buildIconClass('link', 1)}}"></i>
+        <input mdInput type="url" name="url" [(ngModel)]="tempSign.linkUrl" placeholder="http://www.somewebsite.com/..." required/>
+      </md-input-container>
+      <div *ngIf="displayedValidationErrors.url" class="input-errors error">
+        {{ displayedValidationErrors.url }}
       </div>
+
 
       <!-- knownAs/username -->
       <md-input-container>

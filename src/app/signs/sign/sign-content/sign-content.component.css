@@ -78,10 +78,13 @@ input {
 /deep/ label.mat-input-placeholder.mat-empty {
   margin-left: 20px;
 }
-.sign-content-input-container {
-  display: flex;
-  flex: 1 0 auto;
+/deep/ .mat-input-wrapper {
+  width: 100%;
 }
+/deep/ div.mat-input-infix {
+  display: flex !important;
+}
+
 .md-input-element {
   color: white;
 }

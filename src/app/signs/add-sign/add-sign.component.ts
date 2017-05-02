@@ -36,51 +36,51 @@ const OLINKS: Link[] = [
 // Move this to the DB?
 const CUSTOM_SIGNS: Sign[] = [
   { signName: 'website', signType: 'custom', bgColor: 'green', icon: 'globe',
-    _id: '', description: '', knownAs: '', linkUrl: 'www.......', picUrl: '', userId: '' },
+    _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'podcast', signType: 'custom', bgColor: '#9C27B0', icon: 'podcast',
-    _id: '', description: '', knownAs: '', linkUrl: 'www......', picUrl: '', userId: '' },
+    _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'quora', signType: 'custom', bgColor: '#AA2200', icon: 'quora',
     _id: '', description: '', knownAs: '', linkUrl: 'www.quora.com/profile/<YOUR-PROFILE-NAME>', picUrl: '', userId: '' },
   { signName: 'meetup', signType: 'custom', bgColor: '#E51937', icon: 'meetup',
     _id: '', description: '', knownAs: '', linkUrl: 'https://www.meetup.com/<YOUR-MEETUP-NAME>', picUrl: '', userId: '' },
   { signName: 'rss', signType: 'custom', bgColor: '#ff7900', icon: 'rss',
-    _id: '', description: '', knownAs: '', linkUrl: 'www.....', picUrl: '', userId: '' },
+    _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'flickr', signType: 'custom', bgColor: '#ff0084', icon: 'flickr',
-    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
+    _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'houzz', signType: 'custom', bgColor: '#7ac142', icon: 'houzz',
-    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
+    _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'vine', signType: 'custom', bgColor: '#00b488', icon: 'vine',
-  _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
+  _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'ebay', signType: 'custom', bgColor: '#f5af02', icon: 'ebay',
-  _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
+  _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'snapchat', signType: 'custom', bgColor: '#fffc00', icon: 'snapchat',
-  _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
+  _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'medium', signType: 'custom', bgColor: '#00ab6c', icon: 'medium',
-  _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
+  _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'qq', signType: 'custom', bgColor: 'purple', icon: 'qq',
-  _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
+  _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'behance', signType: 'custom', bgColor: '#1769ff', icon: 'behance',
-  _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
+  _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'steam', signType: 'custom', bgColor: '#00adee', icon: 'steam',
-  _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
+  _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'stumbleupon', signType: 'custom', bgColor: '#eb4924', icon: 'stumbleupon',
-  _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
+  _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'twitch', signType: 'custom', bgColor: '#6441a5', icon: 'twitch',
-  _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
+  _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'wechat', signType: 'custom', bgColor: '#7bb32e', icon: 'wechat',
-  _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
+  _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'whatsapp', signType: 'custom', bgColor: '#075e54', icon: 'whatsapp',
-  _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
+  _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'yelp', signType: 'custom', bgColor: '#af0606', icon: 'yelp',
-  _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '', userId: '' },
+  _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
 ]
 
 // HOW SHOW THE PHONE & EMAIL SIGNS?????
 const GENERIC_SIGNS: Sign[] = [
   { signName: 'phone', signType: 'generic', bgColor: 'purple', icon: 'phone',
-    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '#', userId: '' },
+    _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'email', signType: 'generic', bgColor: 'black', icon: 'envelope',
-    _id: '', description: '', knownAs: '', linkUrl: '#', picUrl: '#', userId: '' },
+    _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
 ];
 
 
@@ -96,6 +96,7 @@ const GENERIC_SIGNS: Sign[] = [
 export class AddSignComponent {
   oauths: Link[] = OLINKS;
   customs: Sign[] = CUSTOM_SIGNS;
+  generics: Sign[] = GENERIC_SIGNS;
   selectedSign: Sign;
 
   showAddSignIcons: boolean = false;
