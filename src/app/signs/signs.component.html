@@ -13,7 +13,7 @@
   <section *ngIf="isOwner">
     <ul [dragula]="'bag-one'" [dragulaModel]="signs">
       <li *ngFor="let sign of signs">
-        <sign [sign]="sign" (saveEE)="save($event)" (destroyEE)="destroy($event)"></sign>
+        <sign [sign]="sign" (saveEE)="save($event)" (destroyEE)="destroy($event)" delayDragLift></sign>
       </li>
     </ul>
   </section>
