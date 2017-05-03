@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { HelpersService }           from '../../shared/helpers/helpers.service';
 import { Sign }                     from '../../signs/sign.model';
 import { User }                     from '../../users/user.model';
@@ -29,21 +29,25 @@ export class SearchResultsComponent implements OnInit {
 
   filteredUsers: User[];
   filteredSigns: Sign[];
-  filterIcons: FilterIcon[];
-  filters: Object = {};      // Object of icon names. Values: false(show), true(hide)
-  filtersCount: number = 0;  // start with no filters
+  filters:       Object;      // Object of icon names. Values: false(show), true(hide)
+  filterIcons:   FilterIcon[];
+  filtersCount:  number;  // start with no filters
 
 
   constructor(private helpers: HelpersService) {}
 
   // Set no initial filters, show all (not exclusive)
   ngOnInit() {
-    this.filterIcons = [];
-    this.generateFiltersAndIcons();
-    this.resetSigns();
+    this.resetFilters();
     console.log("Filters init is: ", this.filters);
     console.log("Filtered Signs init is: ", this.filteredSigns);
     console.log("FilterIcons at init is: ", this.filterIcons);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.signs = changes.signs.currentValue;
+    this.users = changes.users.currentValue;
+    this.resetFilters();
   }
 
   filter(filterIcon: FilterIcon) {
@@ -91,6 +95,14 @@ export class SearchResultsComponent implements OnInit {
       // If compare sign icon to filter list to see if allow or not
       this.filteredSigns = this.signs.filter((sign) => { return that.filters[sign.icon]; });  // true will keep
     }
+  }
+
+  private resetFilters() {
+    this.filters      = {};
+    this.filterIcons  = [];
+    this.filtersCount = 0;
+    this.generateFiltersAndIcons();
+    this.resetSigns();
   }
 
   private resetSigns() {

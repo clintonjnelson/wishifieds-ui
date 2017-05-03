@@ -16,7 +16,7 @@
 #search-filters > ul > li {
   display: inline-block;
   padding-right: 5px;
-
+  font-size: 1.3em;
 }
 #search-filters {
   position: relative;
