@@ -23,28 +23,27 @@
 
     <!-- New User Checkbox class="sidenav-login-newaccount" -->
     <div class="checkbox-link-shared-line">
-      <md-checkbox [(ngModel)]="userCreds.newAccount" color="primary" name="new account" class="login-signup-checkbox shared-line">
-        new here?
-      </md-checkbox>
-      <a [routerLink]="['requestpasswordchange']" class="forgot-password-link">forgot password?</a>
+      <input type="checkbox" [(ngModel)]="userCreds.newAccount" color="primary" name="new account" class="login-signup-checkbox shared-line"> new here?
+      <a *ngIf="!userCreds.newAccount" [routerLink]="['requestpasswordchange']" class="forgot-password-link">forgot password?</a>
     </div>
 
 
     <!-- Terms & Conditions Checkbox -->
     <!-- THIS WAS WORKING BUT NOW IT"S NOT WORKING SINCE I UPDATED THE FORM CONTROL TO WORK... LAME -->
-    <md-checkbox *ngIf="userCreds.newAccount" [(ngModel)]="userCreds.termsCond" class="login-signup-checkbox" name="terms and conditions" [required]="userCreds.newAccount">
+    <div *ngIf="userCreds.newAccount" class="checkbox-link-shared-line">
+      <input type="checkbox" [(ngModel)]="userCreds.termsCond" class="login-signup-checkbox" name="terms and conditions" [required]="userCreds.newAccount">
       I agree to the
-      <a href="/#/termsandconditions">terms and conditions</a>
-    </md-checkbox>
+      <a class="terms-cond-link" href="/termsandconditions">terms and conditions</a>
+    </div>
 
     <div class="buttons-container">
       <!-- Submit Form Button -->
-      <button md-button type="submit" (click)="loginOrSignup($event)" class="login-signup-button submit" [disabled]="loginForm.invalid">
+      <button type="submit" (click)="loginOrSignup($event)" class="login-signup-button submit" [disabled]="loginForm.invalid">
         <i class="fa fa-sign-in fa-3x"></i>
       </button>
 
       <!-- Cancel Form Button -->
-      <button md-button type="cancel" (click)="cancel()" class="login-signup-button cancel">
+      <button type="cancel" (click)="cancel()" class="login-signup-button cancel">
         <i class="fa fa-times fa-3x"></i>
       </button>
     </div>

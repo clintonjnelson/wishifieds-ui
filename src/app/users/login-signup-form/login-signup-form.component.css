@@ -38,21 +38,27 @@
 .checkbox-link-shared-line {
   display: flex;
   flex-direction: row;
-  /*justify-content: space-between;*/
+  color: white;
+  font-family: helvetica, sans-serif;
+  font-size: 1em;
 }
 .forgot-password-link {
+  color: white;
   font-family: helvetica, sans-serif;
-  margin-left: 20px;
-  transform: translateY(3px);
+  font-size: 1em;
+  margin-left: 1em;
+}
+.terms-cond-link {
+  color: white;
+  font-family: helvetica, sans-serif;
+  font-size: 1em;
+  margin-left: 0.2em;
 }
 .login-signup-button {
   text-align: left;
   background: none;
   border: none;
 }
-button[disabled].submit i, i:hover {
+button[disabled].submit i {
   color: #ff9999 !important;
-}
-.cancel i:hover {
-  color:red;
 }
