@@ -117,7 +117,7 @@ export class UserSettingsComponent implements OnInit {
           if(usernameChange) {
             const msg = 'Your username changed. Please remember, this has changed the address of your syynpost. ' +
                         'If you have any existing links to your syynpost account around the interwebs, ' +
-                        'they will no longer work until you update them to the new syynpost address.';
+                        'they will no longer work until you update them to your new syynpost address.';
             that.notifService.notify('warning', msg, 12000);
           }
           if(shouldReloadUser) { that.router.navigate([user.username, 'settings']); }
