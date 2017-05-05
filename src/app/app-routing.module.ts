@@ -13,6 +13,7 @@ import { UserPageComponent }             from './users/user-page.component';
 import { UserSettingsComponent }         from './users/settings/user-settings.component';
 import { OauthRedirectComponent }        from './core/redirects/oauth-redirect.component';
 import { UserConfirmationRedirectComponent } from './core/redirects/user-confirmation-redirect.component';
+import { TermsConditionsComponent }      from './static-pages/terms-conditions/terms-conditions.component';
 
 // Guards
 import { AdminGuard } from './core/auth/admin-guard.service';
@@ -30,8 +31,11 @@ const rootRoutes: Routes = [
   { path: 'admin/users', component: AdminUserManagementComponent, canActivate: [AdminGuard], pathMatch: 'full' },
   { path: 'admin', component: AdminDashboardComponent, canActivate: [AdminGuard], pathMatch: 'full' },
 
-  { path: 'styleguide', component: LivingStyleGuideComponent, pathMatch: 'full' },
+  { path: 'termsandconditions', component: TermsConditionsComponent, pathMatch: 'full' },
+  // { path: '/faq', component: FaqComponent, pathMatch: 'full' },
+  // { path: 'styleguide', component: LivingStyleGuideComponent, pathMatch: 'full' },
 
+  // These have to come last to avoid username confusion
   { path: ':username/settings', component: UserSettingsComponent, canActivate: [OwnerGuard], pathMatch: 'full'},
   { path: ':username', component: UserPageComponent, pathMatch: 'full' },
 

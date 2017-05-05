@@ -1,0 +1,284 @@
+<% provide(:title, 'Frequently Asked Questions') %>
+<% provide(:description, "Providing answers to the most commonly asked questions about Unlist.it.") %>
+<!--/Code for the Unlist FAQ's
+-->
+<div class="row col-xs-11 col-md-8 col-xs-offset-1 well" id="faq">
+  <h2>Unlist - Frequently Asked Questions</h2>
+  <ul>
+    <li>
+      <%= link_to 'Unlister? Unlisting? What?', faq_path(anchor: 'q1') %>
+    </li>
+    <li>
+      <%= link_to 'How do I get started?', faq_path(anchor: 'q2') %>
+    </li>
+    <li>
+      <%= link_to 'What is an unlist good for?', faq_path(anchor: 'q3') %>
+    </li>
+    <li>
+      <%= link_to "What is \"Community Reuse\"?", faq_path(anchor: 'q4') %>
+    </li>
+    <li>
+      <%= link_to 'What info is required to sign up?', faq_path(anchor: 'q5') %>
+    </li>
+    <li>
+      <%= link_to 'Can I login with other social media accounts?', faq_path(anchor: 'q6') %>
+    </li>
+    <li>
+      <%= link_to 'Do I need to signup to browse or search Unlist postings & contact interested buyers?', faq_path(anchor: 'q7') %>
+    </li>
+    <li>
+      <%= link_to "Using Unlist - Levels of Use", faq_path(anchor: 'q8') %>
+    </li>
+    <li>
+      <%= link_to "Can I make unlistings to SELL things on Unlist.it?", faq_path(anchor: 'q9') %>
+    </li>
+    <li>
+      <%= link_to "Can people see my email address? How do they contact me on unlistings?", faq_path(anchor: 'q10') %>
+    </li>
+    <li>
+      <%= link_to "Don't see your question answered here? Contact us & well try to help.", contact_path %>
+    </li>
+  </ul>
+  <br/>
+  <br/>
+  <br/>
+  <!--/ FAQ #1
+  -->
+  <h3 id="q1">
+    "Unlister? Unlisting? What?
+  </h3>
+  <ul>
+    <li class="list-no-bullet">
+      <h5>Unlister</h5>
+    </li>
+    <ul>
+      <li class="list-no-bullet">Simply, a BUYER looking for stuff.</li>
+      <br/>
+    </ul>
+  </ul>
+  <ul>
+    <li class="list-no-bullet">
+      <h5>Unlisting</h5>
+    </li>
+    <ul>
+      <li class="list-no-bullet">A wanted ad for something an unlister(buyer) is looking for. These form the Unlister's unlist(wishlist).</li>
+      <br/>
+    </ul>
+  </ul>
+  <hr/>
+  <br/>
+  <!--/ FAQ #2
+  -->
+  <h3 id="q2">
+    How do I get started?
+  </h3>
+  <ul>
+    <li class="list-no-bullet">
+      <h5>
+        Check out the
+        <%= link_to 'Getting Started', gettingstarted_path %>
+        page
+      </h5>
+    </li>
+  </ul>
+  <hr/>
+  <br/>
+  <!--/ FAQ #3
+  -->
+  <h3 id="q3">
+    What is an Unlist good for?
+  </h3>
+  <ul>
+    <li class="list-no-bullet">
+      <h5>Announcing to the world that you want something.</h5>
+    </li>
+    <ul>
+      <li class="list-no-bullet">
+        This enables others to sell their stuff to you.
+      </li>
+    </ul>
+    <li class="list-no-bullet">
+      <h5>Helping friends & family have an easier time knowing what you want.</h5>
+    </li>
+    <ul>
+      <li class="list-no-bullet">
+        This simplifies & de-stresses the process of getting you a gift, since others can quickly & confidently find a perfect gift idea for you.
+      </li>
+    </ul>
+    <li class="list-no-bullet">
+      <h5>Promoting a more sustainable world by community sharing.</h5>
+    </li>
+    <ul>
+      <li class="list-no-bullet">
+        This helps community reuser's find you & pass on their stuff, or vice-versa.
+      </li>
+      <li class="list-no-bullet">
+        Cheap items in the past has not been worth the hassle to post & manage, so we've thrown lots of stuff away. Sad. Search the unlistings to see instantly if anyone is interested in your stuff & can contact them immediately. Win.
+        (See also
+        <%= link_to ' Community Reuse', faq_path(anchor: 'q4') %>
+        )
+      </li>
+    </ul>
+    <li class="list-no-bullet">
+      <h5>Finding rare or specific items</h5>
+    </li>
+    <ul>
+      <li class="list-no-bullet">If you want rare, hard-to-find, or odd things, your unlistings will work to help your interest-to-buy be known. When someone with that item is thinking about selling, they can find you.</li>
+      <li class="list-no-bullet">The hassle of sellers maintaining an ad for a rarely sought-after item is too much work, so Unlist lets the buyers put their interest out for sellers to search for. Less work for sellers & a higher chance of unlisters(buyers) finding that item.</li>
+    </ul>
+  </ul>
+  <hr/>
+  <br/>
+  <!--/ FAQ #4
+  -->
+  <h3 id="q4">
+    What is "Community Reuse" (aka: "ReUse")?
+  </h3>
+  <ul>
+    <li class="list-no-bullet">Community Reuse is a way of helping others & the environment by giving away things you no longer want or need.</li>
+    <br/>
+    <li class="list-no-bullet">This promotes community and sustainability at a local and global level. You can find more information on the global movement by searching online for "Community Reuse". The "Buy Nothing" or "Trash Backwards" project is a great example of this movement that was started on Bainbridge Island, WA (a ferry ride from Seattle).</li>
+    <br/>
+    <li class="list-no-bullet">Unlist.it also hopes to help foster this type of movement in local communities. You can create a Community Reuse unlisting by putting a zero in for the price. So, before you throw away usable items (yes, even paper bags, wine bottles, fruit tree produce, the list goes on...), do a quick local search and see if you can help a neighbor and reduce the load on our landfills.</li>
+  </ul>
+  <hr/>
+  <br/>
+  <!--/ FAQ #5
+  -->
+  <h3 id="q5">
+    What information is required to sign up?
+  </h3>
+  <ul>
+    <li class="list-no-bullet">
+      <h5>You just need:</h5>
+    </li>
+    <ul>
+      <li class="list-no-bullet">A valid email address (this will be your signin email)</li>
+      <li class="list-no-bullet">A password (to secure your unlist.it account)</li>
+    </ul>
+    <li class="list-no-bullet">
+      <h5>That's it.</h5>
+    </li>
+    <ul>
+      <li class="list-no-bullet">We don't want your personal info. That wouldn't benefit you. Plus, we sleep better at night without it.</li>
+    </ul>
+    <br/>
+    <li class="list-no-bullet">
+      "You can also use
+      <%= link_to 'social media logins', %>
+      faq_path(anchor: 'q4')
+      , if you'd prefer to avoid having another password to remember."
+      <p class="text-muted">[FUTURE FEATURE]</p>
+    </li>
+  </ul>
+  <hr/>
+  <br/>
+  <!--/ FAQ #6
+  -->
+  <h3 id="q6">
+    Can I login to Unlist with other social media accounts (such as Facebook or Twitter)?
+  </h3>
+  <ul>
+    <li class="list-no-bullet">
+      <p>We are planning on adding this feature eventually. We're constantly working on new features, so let us know if you'd this one to be moved up on the priority list.</p>
+    </li>
+  </ul>
+  <hr/>
+  <br/>
+  <!--/ FAQ #7
+  -->
+  <h3 id="q7">
+    Do I need an account to use Unlist?
+  </h3>
+  <ul>
+    <li class="list-no-bullet">
+      <h5>Nope.</h5>
+      <ul>
+        <li class="list-no-bullet">You can search the unlistings(wanted ads) all day if you'd like.</li>
+        <li class="list-no-bullet">
+          If you find an unlister(buyer) looking for something you have, you'll need to either be a SafeGuest or an Unlister to contact them. See below for more info on
+          <%= link_to "levels of use.", faq_path(anchor: 'q8') %>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <hr/>
+  <br/>
+  <!--/ FAQ #8
+  -->
+  <h3 id="q8">
+    Using Unlist - Levels of Use
+  </h3>
+  <ul>
+    <h5>Unlist.it has 3 levels of use:</h5>
+    <ol>
+      <li>OUTSIDERS:  You can browse & search to your heart's content without an account!</li>
+      <li>
+        SAFEGUESTS: Register your email to verify you're not a spammer/bot and we'll let you contact unlisters(buyers).
+        <small>(note: we do allow our unlisters(users) to choose whether or not to allow contact from SafeGuests or to limit contact to full-unlisters only.)</small>
+      </li>
+      <li>UNLISTERS: Full access to make unlistings(wanted ads), to make unlists(wishlists), and contact other unlisters through Unlist.it.</li>
+    </ol>
+    <br/>
+    <li class="list-no-bullet">
+      <%= link_to 'Sign up here', signup_path, target: '_blank' %>
+      or see our
+      <%= link_to 'getting started', gettingstarted_path, target: '_blank' %>
+      page for more information.
+    </li>
+  </ul>
+  <hr/>
+  <br/>
+  <!--/ FAQ #9
+  -->
+  <h3 id="q9">
+    Can I make unlistings to SELL things on Unlist.it?
+  </h3>
+  <ul>
+    <li class="list-no-bullet">
+      <h5>No.</h5>
+      <ul>
+        <li class="list-no-bullet">
+          Sorry, Unlist.it unlistings are BUY ads ONLY. If you'd like to make ads to sell things, there are already lots of sites for that. Such as:
+          <span>
+            <%= link_to 'Craigslist', 'http://www.craigslist.org', target: '_blank' %>
+            and
+            <%= link_to 'eBay', 'http://www.ebay.com', target: '_blank' %>
+          </span>
+        </li>
+        <br/>
+        <li class="list-no-bullet"></li>
+        Here is how SELLERS should use this website: Search for items that you HAVE & want to sell. If you (the SELLER) search & find an unlisting precisely describing the item you are selling, you can contact the unlister who made the unlisting & offer to sell them the item.
+      </ul>
+    </li>
+  </ul>
+  <hr/>
+  <br/>
+  <!--/ FAQ #10
+  -->
+  <h3 id="q10">
+    Can people see my email address when contacting me on unlistings? How do they contact me?
+  </h3>
+  <ul>
+    <li class="list-no-bullet">
+      <h5>Full User Accounts</h5>
+      <ul>
+        <li class="list-no-bullet">
+          No, we keep your email address internal to our systems. You receive unlist messages when people contact you, and we will send you a notification of this new message to your email. This way, the person who contacts you doesn't need to know your email. When you contact other users, it just sends them an unlist message from you.
+        </li>
+        <br/>
+      </ul>
+      <h5>Safeguest Accounts</h5>
+      <ul>
+        <li class="list-no-bullet">
+          Yes, your email is sent to the user you contact. It shows up in their messages inbox, and they can then use it to contact you from their email.
+        </li>
+        <br/>
+        <li class="list-no-bullet">
+          If you prefer to keep your email anonymous when contacting users, you can sign up for a full Unlist account and then we won't need to send your email address for contact.
+        </li>
+        <br/>
+      </ul>
+    </li>
+  </ul>
+</div>

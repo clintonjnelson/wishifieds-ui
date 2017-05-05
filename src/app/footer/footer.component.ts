@@ -66,6 +66,10 @@ export class FooterComponent {
     });
   }
 
+  buildIconClass(icon: string, size: string = '2') {
+    return this.helpers.buildIconClass(icon, size);
+  }
+
   toggleShowSharingLinks(input: any = null): void {
     if(typeof(input) === 'boolean') { this.showSharingLinks = input; }
     else { this.showSharingLinks = !this.showSharingLinks; }
