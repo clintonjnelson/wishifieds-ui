@@ -1,6 +1,6 @@
 <!-- Navigation Header Bar -->
 <div class="navbar">
-  <div class="navbar-signpost-icon">
+  <div mdTooltip="syynpost.com" mdTooltipPosition="right" class="navbar-signpost-icon">
     <a routerLink="/">
       <img src="/assets/signpost_icon.svg" alt="login/signup icon" class="signpost-icon-main">
     </a>
@@ -12,14 +12,11 @@
       <span class="login-text">Login | Signup</span>
     </i>
   </div>
-  <div *ngIf="showLoginLinks && !auth.isLoggedIn" (click)="toggleShowLoginLinks()" class="nav-toggle-control">
+  <div *ngIf="showLoginLinks && !auth.isLoggedIn" (click)="toggleShowLoginLinks()" mdTooltip="[click to hide]" mdTooltipPosition="above"  class="nav-toggle-control">
     <i class="{{helpers.buildIconClass('angle-double-right', 2)}}"></i>
   </div>
   <div class="nav-right-links-container" *ngIf="auth.isLoggedOut">
     <ul *ngIf="showLoginLinks" class="navbar-login-links navbar-login-links-shift-up">
-      <!-- <li (click)="toggleShowLoginLinks()">
-        <i class="{{helpers.buildIconClass('angle-double-right', 2)}} sp-hover"></i>
-      </li> -->
       <li class="nav-links-oauth" *ngFor="let link of oauthLinks">
         <icon-link [url]="link.url"
                    [icon]="link.icon"
@@ -32,7 +29,7 @@
           <img src="/assets/imgur_icon.svg" alt="imgur icon" class="signpost-icon-link">
         </a>
       </li> -->
-      <li (click)="toggleShowSignpostLoginForm()" class="login-signup-form-link">
+      <li (click)="toggleShowSignpostLoginForm()" mdTooltip="syynpost" mdTooltipPosition="above"  class="login-signup-form-link">
         <img src="/assets/signpost_icon.svg" alt="login/signup icon" class="signpost-icon-link">
       </li>
     </ul>
@@ -42,13 +39,13 @@
   <!-- Toggle to OPEN nav links -->
   <section (click)="toggleShowUserNavLinks()" *ngIf="auth.isLoggedIn" class="nav-toggle-control">
     <!-- Open Nav Links Button -->
-    <div *ngIf="!showUserNavLinks" class="user-navlinks-toggle">
+    <div *ngIf="!showUserNavLinks" mdTooltip="[click to show]" mdTooltipPosition="above" class="user-navlinks-toggle">
       <i class="{{helpers.buildIconClass('angle-double-left', 2)}}"></i>
       <i class="{{helpers.buildIconClass('user', 2)}}"></i>
     </div>
 
     <!-- Close Button -->
-    <div *ngIf="showUserNavLinks" class="user-navlinks-toggle"> <!-- (click)="toggleShowUserNavLinks()" -->
+    <div *ngIf="showUserNavLinks" mdTooltip="[click to hide]" mdTooltipPosition="above" class="user-navlinks-toggle"> <!-- (click)="toggleShowUserNavLinks()" -->
       <i class="{{helpers.buildIconClass('angle-double-right', 2)}}"></i>
     </div>
   </section>
@@ -59,17 +56,17 @@
     <ul *ngIf="showUserNavLinks" class="navbar-login-links">
       <!-- Signout Button -->
       <li (click)="logout()" class="user-signout-link">
-        <p class="signout-text">Signout</p>
+        <p mdTooltip="logout" mdTooltipPosition="above" class="signout-text">Signout</p>
       </li>
       <!-- Settings Button -->
-      <li>
-        <a [routerLink]="[auth.username, 'settings']" (click)="toggleShowUserNavLinks()">
+      <li mdTooltip="settings" mdTooltipPosition="above" >
+        <a [routerLink]="[auth.username, 'settings']" (click)="toggleShowUserNavLinks()" mdTooltip="settings" mdTooltipPosition="above" >
           <i class="{{helpers.buildIconClass('cog', 2)}}"></i>
         </a>
       </li>
       <!-- Profile/Home Button -->
-      <li>
-        <a [routerLink]="[auth.username]" (click)="toggleShowUserNavLinks()">
+      <li mdTooltip="my syynpost" mdTooltipPosition="above" >
+        <a [routerLink]="[auth.username]" (click)="toggleShowUserNavLinks()" mdTooltip="my syynpost" mdTooltipPosition="above" >
           <i class="{{helpers.buildIconClass('user', 2)}}"></i>
         </a>
       </li>

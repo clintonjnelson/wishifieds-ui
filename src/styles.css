@@ -1,4 +1,5 @@
-  /*CREATE DYNAMIC HOVER COLORS BY mAKING THE HOVER COLOR CLASS BUILT FROM ICON NAME*/
+
+/*CREATE DYNAMIC HOVER COLORS BY mAKING THE HOVER COLOR CLASS BUILT FROM ICON NAME*/
 /*
 http://www.color-hex.com/color/a6a6a6
 525252
@@ -19,6 +20,7 @@ f7cac9    Rose 2016 Pantone
 
 ff680b    Etsy
 */
+
 
 /**{ border: 1px solid red; }*/
 html {

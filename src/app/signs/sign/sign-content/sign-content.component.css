@@ -95,6 +95,9 @@ input {
   display: inline-block;
   margin: 0 0 0 10px;
 }
+.sign-saveicon {
+  margin-right: 1.5em;
+}
 
 /* Sign Form Errors */
 .settings-input-error-container {

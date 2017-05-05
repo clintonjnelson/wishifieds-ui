@@ -49,12 +49,12 @@
       <!-- form buttons -->
       <div>
         <!-- ok button -->
-        <a (click)="save(tempSign)" type="submit" class="sign-saveicon" [attr.disabled]="!signForm.form.valid">
+        <a (click)="save(tempSign)" type="submit" mdTooltip="save" mdTooltipPosition="above" class="sign-saveicon" [attr.disabled]="!signForm.form.valid">
           <i class="{{helpers.buildIconClass('check', 2)}}"></i>
         </a>
         <!-- cancel button -->
         <a (click)="cancel()" class="sign-cancelicon">
-          <i *ngIf="!showPreviewLabel" class="{{helpers.buildIconClass('times', 2)}}"></i>
+          <i *ngIf="!showPreviewLabel" mdTooltip="cancel" mdTooltipPosition="above" class="{{helpers.buildIconClass('times', 2)}}"></i>
           <p *ngIf="showPreviewLabel"  class="preview-button-label">Preview</p>
         </a>
       </div>
@@ -65,13 +65,13 @@
   <div [style.background]="sign.bgColor" class="sign-management-icons-container">
     <!-- Delete Icon -->
     <div *ngIf="auth.isLoggedIn && isOwner && (!isEditing || forSignCreation)" class="sign-delete-icon">
-      <a (click)="destroy()" class="sign-delete-icon">
+      <a (click)="destroy()" mdTooltip="delete" mdTooltipPosition="above" class="sign-delete-icon">
         <i class="fa fa-times fa-1x" aria-hidden="true"></i>
       </a>
     </div>
     <!-- Edit Icon -->
     <div *ngIf="auth.isLoggedIn && isOwner && !isEditing" class="sign-edit-icon">
-      <a (click)="toggleEditing()" class="edit-icon">
+      <a (click)="toggleEditing()" mdTooltip="edit" mdTooltipPosition="above" class="edit-icon">
         <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
       </a>
     </div>

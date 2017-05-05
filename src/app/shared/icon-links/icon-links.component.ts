@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { HelpersService } from '../helpers/helpers.service';
+import { MdTooltipModule } from '@angular/material';
 import { HoverColorDirective } from '../hover-color/hover-color.directive';
 
 

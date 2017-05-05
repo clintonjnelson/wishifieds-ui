@@ -40,9 +40,9 @@
 }
 
 /*This makes BOTH elements hover style at same time*/
-.login-signup-link:hover i, .login-signup-link:hover span {
+/*.login-signup-link:hover i, .login-signup-link:hover span {
   color: #88B04B;
-}
+}*/
 
 .login-text {
   bottom: 5px;

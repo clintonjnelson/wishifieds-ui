@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { MdTooltipModule } from '@angular/material';
 import { HelpersService } from '../shared/helpers/helpers.service';
 import { Observable } from 'rxjs/Observable';
 import { SignpostApi } from '../core/api/signpost-api.service';
@@ -16,9 +17,9 @@ export class NavLink {
 };
 
 const SOCIAL_LINKS: NavLink[] = [
-  {icon: 'facebook-official', url: '',  bgColor: '#3b5998'},
-  {icon: 'twitter',           url: '',  bgColor: '#007bb5'},
-  {icon: 'google',            url: '',  bgColor: '#dd4b39'},
+  {icon: 'facebook', url: '',  bgColor: '#3b5998'},
+  {icon: 'twitter',  url: '',  bgColor: '#007bb5'},
+  {icon: 'google',   url: '',  bgColor: '#dd4b39'},
 ];
 
 @Component({

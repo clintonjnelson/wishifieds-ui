@@ -6,7 +6,7 @@ import { RouterModule }    from '@angular/router';
 import { AppRouterModule } from './app-routing.module';
 import { FormsModule }     from '@angular/forms'
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
-import { MaterialModule }  from '@angular/material';
+import { MdDialogModule, MdInputModule, MdTooltipModule }  from '@angular/material';  // MaterialModule
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DragulaModule }   from 'ng2-dragula/ng2-dragula';
 import 'hammerjs';
@@ -18,7 +18,6 @@ import { LivingStyleGuideComponent }   from './styleguide/livingstyleguide.compo
 import { IconLinkComponent }           from './shared/icon-links/icon-links.component';
 
 import { NavbarComponent }             from './navigation/navbar/navbar.component';
-import { NavLinkComponent }            from './navigation/navlink/navlink.component';
 import { FooterComponent }             from './footer/footer.component';
 
 import { AdminDashboardComponent }     from './admin/dashboard/admin-dashboard.component';
@@ -86,7 +85,10 @@ export function HttpFactory(backend: XHRBackend,
                   AppRouterModule,
                   FormsModule,
                   HttpModule,
-                  MaterialModule.forRoot(),
+                  // MaterialModule.forRoot(),
+                  MdDialogModule,
+                  MdInputModule,
+                  MdTooltipModule,
                   DragulaModule,
                   NoopAnimationsModule,
                 ],
@@ -96,7 +98,6 @@ export function HttpFactory(backend: XHRBackend,
                   FooterComponent,
                   SearchBoxComponent,
                   SearchResultsComponent,
-                  NavLinkComponent,
                   AdminDashboardComponent,
                   AdminUserManagementComponent,
                   LoginSignupFormComponent,

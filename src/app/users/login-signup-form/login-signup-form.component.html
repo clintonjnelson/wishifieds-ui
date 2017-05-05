@@ -38,12 +38,12 @@
 
     <div class="buttons-container">
       <!-- Submit Form Button -->
-      <button type="submit" (click)="loginOrSignup($event)" class="login-signup-button submit" [disabled]="loginForm.invalid">
+      <button type="submit" (click)="loginOrSignup($event)" mdTooltip="submit" mdTooltipPosition="above" class="login-signup-button submit" [disabled]="loginForm.invalid">
         <i class="fa fa-sign-in fa-3x"></i>
       </button>
 
       <!-- Cancel Form Button -->
-      <button type="cancel" (click)="cancel()" class="login-signup-button cancel">
+      <button type="cancel" (click)="cancel()" mdTooltip="cancel" mdTooltipPosition="above" class="login-signup-button cancel">
         <i class="fa fa-times fa-3x"></i>
       </button>
     </div>

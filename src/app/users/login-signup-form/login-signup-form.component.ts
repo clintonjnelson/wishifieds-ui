@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
 import { NgForm, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MdTooltipModule } from '@angular/material';
 import { AuthService } from '../../core/auth/auth.service';
 import { ApiUsersService } from '../../core/api/api-users.service';
 import { ApiAuthService } from '../../core/api/api-auth.service';

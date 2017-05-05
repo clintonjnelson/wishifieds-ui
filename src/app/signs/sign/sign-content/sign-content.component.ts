@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm, FormControl }   from '@angular/forms';   // Remove if no validation logic
+import { MdTooltipModule }       from '@angular/material';
 import { HelpersService }        from '../../../shared/helpers/helpers.service';
 import { AuthService, UserAuth } from '../../../core/auth/auth.service';
 import { ApiSignsService }       from '../../../core/api/api-signs.service';

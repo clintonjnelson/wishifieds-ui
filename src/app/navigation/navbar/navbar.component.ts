@@ -1,4 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
+import { MdTooltipModule } from '@angular/material';
 // import { trigger, state, style, animate, transition } from '@angular/animations';
 import { HelpersService } from '../../shared/helpers/helpers.service';
 import { AuthService, UserAuth } from '../../core/auth/auth.service';
@@ -14,7 +15,7 @@ const OAUTHS: OauthLink[] = [
   {icon: 'deviantart',        url: '/api/login/deviantart',     bgColor: '#b3c432'},
   {icon: 'times',             url: '/api/login/disqus',         bgColor: '#2e9fff'},   // DOESNT HAVE THIS ONE!!!
   {icon: 'etsy',              url: '/api/login/etsy',           bgColor: '#d15600'},
-  {icon: 'facebook-official', url: '/api/login/facebook',       bgColor: '#3b5998'},
+  {icon: 'facebook',          url: '/api/login/facebook',       bgColor: '#3b5998'},
   {icon: 'foursquare',        url: '/api/login/foursquare',     bgColor: '#0072b1'},
   {icon: 'info',              url: '/api/login/imgur',          bgColor: '#dd4b39'},   // DOESNT HAVE THIS ONE!!!
   {icon: 'instagram',         url: '/api/login/instagram',      bgColor: '#675144'},

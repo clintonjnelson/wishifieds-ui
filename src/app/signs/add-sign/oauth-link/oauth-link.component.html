@@ -1,4 +1,4 @@
 <!-- Icon Link -->
-<div (click)="submit()">
+<div (click)="submit()" [mdTooltip]="icon + ' (auto)'" mdTooltipPosition="above">
   <i [hoverColor]="bgColor" class="{{buildIconClass(icon, iconSize)}}"></i>
 </div>

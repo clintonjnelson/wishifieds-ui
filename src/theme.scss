@@ -1,0 +1,67 @@
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue.
+// $black-87-opacity: rgba(black, 0.87);
+// $white-87-opacity: rgba(white, 0.87);
+// $black-12-opacity: rgba(black, 0.12);
+// $white-12-opacity: rgba(white, 0.12);
+// $black-6-opacity: rgba(black, 0.06);
+// $white-6-opacity: rgba(white, 0.06);
+
+$mat-syynpost-white: (
+  50:   #ffffff,
+  100:  #ffffff,
+  200:  #ffffff,
+  300:  #ffffff,
+  400:  #ffffff,
+  500:  #ffffff,
+  600:  #ffffff,
+  700:  #ffffff,
+  800:  #ffffff,
+  900:  #ffffff,
+  A100: #ffffff,
+  A200: #ffffff,
+  A400: #ffffff,
+  A700: #ffffff,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: white,
+    600: white,
+    700: white,
+    800: $white-87-opacity,
+    900: $white-87-opacity,
+    A100: $black-87-opacity,
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+
+$mat-font-family: helvetica, 'Helvetica Neue', sans-serif !default;
+$syynpost-primary: mat-palette($mat-syynpost-white);
+$syynpost-accent:  mat-palette($mat-syynpost-white, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$syynpost-warn:    mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$syynpost-theme: mat-light-theme($mat-syynpost-white, $mat-syynpost-white, $syynpost-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat-tooltip-theme($syynpost-theme);
+// @include mat-input-theme($syynpost-theme);
+// @include angular-material-theme($mat-light-theme);

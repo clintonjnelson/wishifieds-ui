@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { MdTooltipModule } from '@angular/material';
 import { HelpersService } from '../../shared/helpers/helpers.service';
 import { Sign } from '../sign.model';
 
