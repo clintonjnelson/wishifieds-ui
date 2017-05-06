@@ -33,7 +33,7 @@
     <div *ngIf="userCreds.newAccount" class="checkbox-link-shared-line">
       <input type="checkbox" [(ngModel)]="userCreds.termsCond" class="login-signup-checkbox" name="terms and conditions" [required]="userCreds.newAccount">
       I agree to the
-      <a class="terms-cond-link" href="/termsandconditions">terms and conditions</a>
+      <a class="terms-cond-link" routerLink="/termsandconditions">terms and conditions</a>
     </div>
 
     <div class="buttons-container">

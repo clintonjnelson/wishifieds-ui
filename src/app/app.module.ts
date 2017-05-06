@@ -14,6 +14,7 @@ import 'hammerjs';
 // Components
 import { AppComponent }                from './app.component';
 import { TermsConditionsComponent }    from './static-pages/terms-conditions/terms-conditions.component';
+import { FaqComponent }                from './static-pages/faq/faq.component';
 // import { LivingStyleGuideComponent }   from './styleguide/livingstyleguide.component';
 
 import { IconLinkComponent }           from './shared/icon-links/icon-links.component';
@@ -96,6 +97,7 @@ export function HttpFactory(backend: XHRBackend,
   declarations: [
                   AppComponent,
                   TermsConditionsComponent,
+                  FaqComponent,
 
                   NavbarComponent,
                   FooterComponent,
