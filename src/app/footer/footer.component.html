@@ -8,7 +8,7 @@
 
   <!-- Social Sharing Links -->
   <div *ngIf="!showSharingLinks" class="sharing-links-container">
-    <i (click)="toggleShowSharingLinks()" mdTooltip="[show social sharing]" mdTooltipPosition="above" class="{{helpers.buildIconClass('angle-double-up', 2)}} sp-hover link-toggle-icon"></i>
+    <i (click)="toggleShowSharingLinks()" mdTooltip="[show social sharing]" mdTooltipPosition="above" class="{{helpers.buildIconClass('angle-double-up', 2)}} link-toggle-icon"></i>
   </div>
 
   <div *ngIf="showSharingLinks" class="sharing-links-container">
@@ -21,6 +21,6 @@
           </icon-link>
         </li>
       </ul>
-    <i (click)="toggleShowSharingLinks()" mdTooltip="[hide social sharing]" mdTooltipPosition="above" class="{{buildIconClass('angle-double-down', '2')}} sp-hover link-toggle-icon"></i>
+    <i (click)="toggleShowSharingLinks()" mdTooltip="[hide social sharing]" mdTooltipPosition="above" class="{{buildIconClass('angle-double-down', '2')}} link-toggle-icon"></i>
   </div>
 </div>

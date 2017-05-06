@@ -117,9 +117,9 @@
   margin-top: 0px;
 }
 
-.user-navlinks-toggle:hover i, .user-navlinks-toggle:hover div {
+/*.user-navlinks-toggle:hover i, .user-navlinks-toggle:hover div {
   color: #88B04B;
-}
+}*/
 .user-signout-link {
   position: relative;
 }

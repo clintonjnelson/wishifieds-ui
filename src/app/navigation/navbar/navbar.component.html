@@ -39,7 +39,7 @@
   <!-- Toggle to OPEN nav links -->
   <section (click)="toggleShowUserNavLinks()" *ngIf="auth.isLoggedIn" class="nav-toggle-control">
     <!-- Open Nav Links Button -->
-    <div *ngIf="!showUserNavLinks" mdTooltip="[click to show]" mdTooltipPosition="above" class="user-navlinks-toggle">
+    <div *ngIf="!showUserNavLinks" mdTooltip="[click to show]" mdTooltipPosition="left" class="user-navlinks-toggle">
       <i class="{{helpers.buildIconClass('angle-double-left', 2)}}"></i>
       <i class="{{helpers.buildIconClass('user', 2)}}"></i>
     </div>
