@@ -87,7 +87,7 @@ export class FooterComponent {
     // UNO urls take :url
     switch(icon) {
       case 'twitter': {  // takes :text, :url, :hashtags
-        return this.signpostApi.buildUrl(`social-${icon}`, [{':text': 'hello world'}, {':url': currentUrl}, {':hashtags':'syynpost'}]);
+        return this.signpostApi.buildUrl(`social-${icon}`, [{':text': 'Check out my syynpost online directory.'}, {':url': currentUrl}, {':hashtags':'syynpost'}]);
       }
       case 'facebook-official': return this.signpostApi.buildUrl(`social-${icon}`, [{':url': currentUrl}]);
       case 'google':            return this.signpostApi.buildUrl(`social-${icon}`, [{':url': currentUrl}]);

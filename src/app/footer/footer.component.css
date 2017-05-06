@@ -12,7 +12,7 @@
   align-self: flex-start;
 }
 .sharing-links-container {
-  /*position: relative;*/
+  position: relative;
   display: flex;
   flex: 1 0 auto;
   align-self: flex-end;
@@ -29,9 +29,9 @@
 }
 
 ul.drop-up-links {
+  position: absolute;
   bottom: 100%;
   right: 0px;
-  position: absolute;
   padding-left: 0px;
 }
 
