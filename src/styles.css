@@ -1,4 +1,4 @@
-
+@import url('icons.css');
 /*CREATE DYNAMIC HOVER COLORS BY mAKING THE HOVER COLOR CLASS BUILT FROM ICON NAME*/
 /*
 http://www.color-hex.com/color/a6a6a6
@@ -78,6 +78,24 @@ i.sp-hover:hover {
   color: #964F4C;
 }
 
+.custom-icon-size-1x {
+  font-size: 1em;
+}
+.custom-icon-size-2x {
+  font-size: 2em;
+}
+.custom-icon-size-3x {
+  font-size: 3em;
+}
+.custom-icon-size-4x {
+  font-size: 4em;
+}
+.custom-icon-size-5x {
+  font-size: 5em;
+}
+.custom-icon-size-6x {
+  font-size: 6em;
+}
 
 /*
 General In-Page Title Formatting

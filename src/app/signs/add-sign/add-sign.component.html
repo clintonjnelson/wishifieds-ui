@@ -1,7 +1,7 @@
 <div class="add-sign-comtainer">
   <!-- Add-Sign Icon -->
   <div *ngIf="!showAddSignIcons && !showSignForm" class="add-sign-icon-container">
-    <i (click)="toggleShowAddSignIcons()" mdTooltip="[show sign creation options]" mdTooltipPosition="above" class="{{helpers.buildIconClass('plus', 2)}}"></i>
+    <i (click)="toggleShowAddSignIcons()" mdTooltip="[show sign creation options]" mdTooltipPosition="above" class="{{buildIconClass('plus', '2')}}"></i>
   </div>
 
   <div *ngIf="showAddSignIcons || showSignForm">
@@ -19,15 +19,25 @@
                      [iconSize]="2">
           </oauth-link>
         </li>
+        <li class="nav-links-oauth" *ngFor="let customOLink of customIconOauths">
+          <custom-icon-link [url]="customOLink.url"
+                            [icon]="customOLink.icon"
+                            [bgColor]="customOLink.bgColor"
+                            [iconSize]="'2'">
+          </custom-icon-link>
+        </li>
       </ul>
       <hr class="hr-quarter-width"/>
       <!-- Generic & Custom Links -->
       <ul>
         <li *ngFor="let custom of customs" class="oauth-icons-list">
-          <i (click)="toggleShowForm(true); setSign(custom)" [hoverColor]="custom.bgColor" [mdTooltip]="(custom.icon === 'globe' ? custom.signName : custom.icon)" mdTooltipPosition="above" class="{{helpers.buildIconClass(custom.icon, 2)}}"></i>
+          <i (click)="toggleShowForm(true); setSign(custom)" [hoverColor]="custom.bgColor" [mdTooltip]="(custom.icon === 'globe' ? custom.signName : custom.icon)" mdTooltipPosition="above" class="{{buildIconClass(custom.icon, '2')}}"></i>
+        </li>
+        <li *ngFor="let customIcon of customIconSigns" class="oauth-icons-list">
+          <i (click)="toggleShowForm(true); setSign(customIcon)" [hoverColor]="customIcon.bgColor" [mdTooltip]="customIcon.icon" mdTooltipPosition="above" class="{{buildCustomIconClass(customIcon.icon, '1')}}"></i>
         </li>
         <li *ngFor="let generic of generics" class="oauth-icons-list">
-          <i (click)="toggleShowForm(true); setSign(generic)" [hoverColor]="generic.bgColor" [mdTooltip]="generic.signName" mdTooltipPosition="above" class="{{helpers.buildIconClass(generic.icon, 2)}}"></i>
+          <i (click)="toggleShowForm(true); setSign(generic)" [hoverColor]="generic.bgColor" [mdTooltip]="generic.signName" mdTooltipPosition="above" class="{{buildIconClass(generic.icon, '2')}}"></i>
         </li>
       </ul>
     </div>

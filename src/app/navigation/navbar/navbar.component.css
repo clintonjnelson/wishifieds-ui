@@ -98,19 +98,43 @@
   margin-right: 5px;
   margin-top: auto;
 }
+.nav-links-oauth {
+  display: inline;
+  padding: 0px;
+  padding-top: 5px;
+  margin-left: 3px;
+  margin-right: 3px;
+  margin-top: auto;
+  width: 2em;
+  text-align: center;
+}
 .navbar-login-links a {
   text-decoration: none;
 }
 
 .login-link {}
 
+.custom-icon {
+  font-size: 20px;
+  color: white;
+}
+/deep/ .icon-ebay {   /* THIS COULD BE AN ISSUE SOMEDAY */
+  margin-left: -5px;
+}
+
+.login-signup-form-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
 /* Literally, the Signpost icon */
 .signpost-icon-link {
   display: inline;
-  width: 2.2em;
-  height: 2.2em;
-  margin-right: -10px;
-  margin-bottom: -6px;
+  width: 2em;
+  height: 2em;
+  margin-left: 5px;
+  transform: translateY(5px);
+  text-align: center;
 }
 
 .navbar-bottom-hr {

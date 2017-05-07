@@ -8,6 +8,10 @@ export class HelpersService {
   buildIconClass(iconName: string, size: string = '2'): string {
     return (`fa fa-${iconName} fa-${size}x`);
   }
+  // Build Custom Icon Class styling syntax from icon name
+  buildCustomIconClass(iconName: string, size: string = '2'): string {
+    return (`icon-${iconName} custom-icon-size-${size}x`);
+  }
 
   urlWithoutProtocol(url) {
     let checkFormatUrl = url.toLowerCase();

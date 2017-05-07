@@ -18,6 +18,7 @@ import { FaqComponent }                from './static-pages/faq/faq.component';
 // import { LivingStyleGuideComponent }   from './styleguide/livingstyleguide.component';
 
 import { IconLinkComponent }           from './shared/icon-links/icon-links.component';
+import { CustomIconLinkComponent }     from './shared/custom-icon-link/custom-icon-link.component';
 
 import { NavbarComponent }             from './navigation/navbar/navbar.component';
 import { FooterComponent }             from './footer/footer.component';
@@ -107,6 +108,7 @@ export function HttpFactory(backend: XHRBackend,
                   AdminUserManagementComponent,
                   LoginSignupFormComponent,
                   IconLinkComponent,
+                  CustomIconLinkComponent,
                   // LivingStyleGuideComponent,
                   SignComponent,
                   SignsComponent,

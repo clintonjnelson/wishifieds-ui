@@ -34,6 +34,12 @@ const OLINKS: Link[] = [
   {url: '/api/auto/youtube',       icon: 'youtube',        bgColor: '#bb0000', linkName: 'youtube'},
 ];
 
+const CUSTOM_OLINKS: Link[] = [
+  {url: '/api/login/disqus',       icon: 'disqus',         bgColor: '#2e9fff', linkName: 'disqus'},
+  {url: '/api/login/imgur',        icon: 'imgur',          bgColor: '#85bf25', linkName: 'imgur'},
+  {url: '/api/login/patreon',      icon: 'patreon',        bgColor: '#e6461a', linkName: 'patreon'},
+];
+
 // Move this to the DB?
 const CUSTOM_SIGNS: Sign[] = [
   { signName: 'website', signType: 'custom', bgColor: 'green', icon: 'globe',
@@ -70,10 +76,15 @@ const CUSTOM_SIGNS: Sign[] = [
   _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'wechat', signType: 'custom', bgColor: '#7bb32e', icon: 'wechat',
   _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
-  { signName: 'whatsapp', signType: 'custom', bgColor: '#075e54', icon: 'whatsapp',
+  { signName: 'whatsapp', signType: 'custom', bgColor: '#25d366', icon: 'whatsapp',
   _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'yelp', signType: 'custom', bgColor: '#af0606', icon: 'yelp',
   _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
+]
+
+const CUSTOM_ICON_SIGNS: Sign[] = [
+  { signName: 'ebay', signType: 'custom', bgColor: '#f5af02', icon: 'ebay',
+  _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: ''},
 ]
 
 // HOW SHOW THE PHONE & EMAIL SIGNS?????
@@ -95,8 +106,10 @@ const GENERIC_SIGNS: Sign[] = [
 })
 
 export class AddSignComponent {
-  oauths: Link[] = OLINKS;
-  customs: Sign[] = CUSTOM_SIGNS;
+  oauths: Link[] = OLINKS;                      // Oauth for fontawesome icons
+  customIconOauths: Link[] = CUSTOM_OLINKS;         // Oauth for custom icons
+  customs: Sign[] = CUSTOM_SIGNS;               // Custom Sign with fontawesome icons
+  customIconSigns: Sign[] = CUSTOM_ICON_SIGNS;  // Custom sign with custom icons
   generics: Sign[] = GENERIC_SIGNS;
   selectedSign: Sign;
 
@@ -113,6 +126,14 @@ export class AddSignComponent {
   // WHEN ANOTHER TYPE IS CHANGED.
 
   constructor(private helpers: HelpersService) {}
+
+  buildIconClass(icon: string, size: string = '2') {
+    return this.helpers.buildIconClass(icon, size);
+  }
+
+  buildCustomIconClass(icon: string, size: string = '2') {
+    return this.helpers.buildCustomIconClass(icon, size);
+  }
 
   isOauthAdded(checkLink: Link): boolean {
     var returnVal = false;

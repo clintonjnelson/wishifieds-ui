@@ -24,11 +24,13 @@
                    [iconSize]="'2'">
         </icon-link>
       </li>
-<!--  <li class="login-signup-form-link">  IMGUR ICON IS COLORED & NOT RIGHT FOR SITE
-        <a href="/api/login/imgur" class="sidenav-link">
-          <img src="/assets/imgur_icon.svg" alt="imgur icon" class="signpost-icon-link">
-        </a>
-      </li> -->
+      <li class="nav-links-oauth" *ngFor="let customLink of customOauthLinks">
+        <custom-icon-link [url]="customLink.url"
+                          [icon]="customLink.icon"
+                          [bgColor]="customLink.bgColor"
+                          [iconSize]="customLink.iconSize">
+        </custom-icon-link>
+      </li>
       <li (click)="toggleShowSignpostLoginForm()" mdTooltip="syynpost" mdTooltipPosition="above"  class="login-signup-form-link">
         <img src="/assets/signpost_icon.svg" alt="login/signup icon" class="signpost-icon-link">
       </li>
