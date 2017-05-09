@@ -60,6 +60,10 @@ export class UserSettingsComponent implements OnInit {
     return value === 'true';
   }
 
+  buildIconClass(icon: string, size: string = '2') {
+    return this.icons.buildIconClass(icon, size);
+  }
+
   resendConfirmationEmail(event: any) {
     event.preventDefault();
     var that = this;
