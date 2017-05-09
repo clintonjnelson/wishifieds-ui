@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { HelpersService } from '../../shared/helpers/helpers.service';
-import { User } from '../user.model';
+import { IconService } from '../../core/services/icon.service';
+import { User }        from '../user.model';
 
 @Component({
   moduleId: module.id,
@@ -13,14 +13,14 @@ export class UserSignComponent implements OnInit {
   @Input() user: User;
   isAdmin: boolean;
 
-  constructor( private helpers: HelpersService) {}
+  constructor( private icons: IconService) {}
 
   ngOnInit() {
     this.isAdmin = this.setIfAdmin();
   }
 
   buildIconClass(icon: string, size: string = '2') {
-    return this.helpers.buildIconClass(icon, size);
+    return this.icons.buildIconClass(icon, size);
   }
 
   // ****************** ADMIN ONLY FUNCTIONALITY ******************

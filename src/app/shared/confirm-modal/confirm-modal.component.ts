@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MdDialogRef } from '@angular/material';
-import { HelpersService } from '../helpers/helpers.service';
+import { IconService } from '../../core/services/icon.service';
 
 @Component({
   moduleId: module.id,
@@ -19,9 +19,9 @@ export class ConfirmModalComponent {
   checkboxVal:  boolean = true;
 
   constructor(public dialogRef: MdDialogRef<ConfirmModalComponent>,
-              private helpers: HelpersService) {}
+              private icons: IconService) {}
 
   buildIconClass(icon: string, size: string = '2') {
-    return this.helpers.buildIconClass(icon, size);
+    return this.icons.buildIconClass(icon, size);
   }
 }

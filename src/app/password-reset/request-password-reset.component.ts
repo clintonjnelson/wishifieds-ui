@@ -1,5 +1,5 @@
 import { Component }      from '@angular/core';
-import { HelpersService } from '../shared/helpers/helpers.service';
+import { IconService }    from '../core/services/icon.service';
 import { ApiAuthService } from '../core/api/api-auth.service';
 
 
@@ -15,7 +15,7 @@ export class RequestPasswordResetComponent {
   email: string;
   displayedValidationErrors = {email: ''};
 
-  constructor(private helpers:        HelpersService,
+  constructor(private icons:          IconService,
               private apiAuthService: ApiAuthService) {
     this.displayedValidationErrors.email = '';
   }
@@ -39,6 +39,6 @@ export class RequestPasswordResetComponent {
   }
 
   buildIconClass(icon: string, size: string = '2') {
-    return this.helpers.buildIconClass(icon, size);
+    return this.icons.buildIconClass(icon, size);
   }
 }

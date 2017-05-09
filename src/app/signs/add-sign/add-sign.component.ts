@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MdTooltipModule } from '@angular/material';
-import { HelpersService } from '../../shared/helpers/helpers.service';
-import { Sign } from '../sign.model';
+import { HelpersService }  from '../../shared/helpers/helpers.service';
+import { IconService }     from '../../core/services/icon.service';
+import { Sign }            from '../sign.model';
 
 export class Link {
   url:      string;
@@ -12,6 +13,7 @@ export class Link {
 
 // Move this to the DB?
 const OLINKS: Link[] = [
+  // {url: '/api/auto/amazon',        icon: 'amazon',         bgColor: '#ff9900', linkName: 'amazon'},
   {url: '/api/auto/deviantart',    icon: 'deviantart',     bgColor: '#b3c432', linkName: 'deviantart'},
   {url: '/api/auto/disqus',        icon: 'disqus',         bgColor: '#2e9fff', linkName: 'disqus'},
   {url: '/api/auto/etsy',          icon: 'etsy',           bgColor: '#d15600', linkName: 'etsy'},
@@ -32,9 +34,6 @@ const OLINKS: Link[] = [
   {url: '/api/auto/wordpress',     icon: 'wordpress',      bgColor: '#21759b', linkName: 'wordpress'},
   {url: '/api/auto/stackexchange', icon: 'stack-overflow', bgColor: '#5184C1', linkName: 'stackoverflow'},
   {url: '/api/auto/youtube',       icon: 'youtube',        bgColor: '#bb0000', linkName: 'youtube'},
-];
-
-const CUSTOM_OLINKS: Link[] = [
   {url: '/api/login/disqus',       icon: 'disqus',         bgColor: '#2e9fff', linkName: 'disqus'},
   {url: '/api/login/imgur',        icon: 'imgur',          bgColor: '#85bf25', linkName: 'imgur'},
   {url: '/api/login/patreon',      icon: 'patreon',        bgColor: '#e6461a', linkName: 'patreon'},
@@ -46,6 +45,8 @@ const CUSTOM_SIGNS: Sign[] = [
     _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'podcast', signType: 'custom', bgColor: '#9C27B0', icon: 'podcast',
     _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
+  { signName: 'amazon', signType: 'custom', bgColor: '#ff9900', icon: 'amazon',
+  _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'quora', signType: 'custom', bgColor: '#AA2200', icon: 'quora',
     _id: '', description: '', knownAs: '', linkUrl: 'www.quora.com/profile/<YOUR-PROFILE-NAME>', picUrl: '', userId: '' },
   { signName: 'meetup', signType: 'custom', bgColor: '#E51937', icon: 'meetup',
@@ -80,9 +81,6 @@ const CUSTOM_SIGNS: Sign[] = [
   _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'yelp', signType: 'custom', bgColor: '#af0606', icon: 'yelp',
   _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
-]
-
-const CUSTOM_ICON_SIGNS: Sign[] = [
   { signName: 'ebay', signType: 'custom', bgColor: '#f5af02', icon: 'ebay',
   _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: ''},
 ]
@@ -107,9 +105,7 @@ const GENERIC_SIGNS: Sign[] = [
 
 export class AddSignComponent {
   oauths: Link[] = OLINKS;                      // Oauth for fontawesome icons
-  customIconOauths: Link[] = CUSTOM_OLINKS;         // Oauth for custom icons
   customs: Sign[] = CUSTOM_SIGNS;               // Custom Sign with fontawesome icons
-  customIconSigns: Sign[] = CUSTOM_ICON_SIGNS;  // Custom sign with custom icons
   generics: Sign[] = GENERIC_SIGNS;
   selectedSign: Sign;
 
@@ -125,14 +121,11 @@ export class AddSignComponent {
   // WOULD HAVE ONE SELECTED_SIGN THAT GETS UPDATES WITH ONLY TYPE & COLOR & ICON
   // WHEN ANOTHER TYPE IS CHANGED.
 
-  constructor(private helpers: HelpersService) {}
+  constructor(private helpers: HelpersService,
+              private icons:   IconService) {}
 
   buildIconClass(icon: string, size: string = '2') {
-    return this.helpers.buildIconClass(icon, size);
-  }
-
-  buildCustomIconClass(icon: string, size: string = '2') {
-    return this.helpers.buildCustomIconClass(icon, size);
+    return this.icons.buildIconClass(icon, size);
   }
 
   isOauthAdded(checkLink: Link): boolean {

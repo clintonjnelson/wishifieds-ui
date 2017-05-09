@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { HelpersService } from '../helpers/helpers.service';
+import { IconService } from '../../core/services/icon.service';
 import { MdTooltipModule } from '@angular/material';
 import { HoverColorDirective } from '../hover-color/hover-color.directive';
 
@@ -17,9 +17,9 @@ export class IconLinkComponent {
   @Input() bgColor:  string;
   @Input() iconSize: string;
 
-  constructor( private helpers: HelpersService ) {}
+  constructor( private icons: IconService ) {}
 
   buildIconClass(icon: string, size: string = '2') {
-    return this.helpers.buildIconClass(icon, size);
+    return this.icons.buildIconClass(icon, size);
   }
 }

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { HelpersService }           from '../../shared/helpers/helpers.service';
-import { Sign }                     from '../../signs/sign.model';
-import { User }                     from '../../users/user.model';
+import { IconService } from '../../core/services/icon.service';
+import { Sign }        from '../../signs/sign.model';
+import { User }        from '../../users/user.model';
 
 export class FilterIcon {
   icon:    string;
@@ -34,7 +34,7 @@ export class SearchResultsComponent implements OnInit {
   filtersCount:  number;  // start with no filters
 
 
-  constructor(private helpers: HelpersService) {}
+  constructor(private icons: IconService) {}
 
   // Set no initial filters, show all (not exclusive)
   ngOnInit() {
@@ -76,6 +76,10 @@ export class SearchResultsComponent implements OnInit {
     function addDisplayIcon(sign: Sign) {
       that.filterIcons.push({icon: sign.icon, bgColor: sign.bgColor});
     }
+  }
+
+  buildIconClass(icon: string, size: string = '2') {
+    return this.icons.buildIconClass(icon, size);
   }
 
   private toggleFilterByIcon(icon: string) {

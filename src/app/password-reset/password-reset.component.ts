@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component }      from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HelpersService } from '../shared/helpers/helpers.service';
-import { AuthService } from '../core/auth/auth.service';
+import { IconService }    from '../core/services/icon.service';
+import { AuthService }    from '../core/auth/auth.service';
 import { ApiAuthService } from '../core/api/api-auth.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class PasswordResetComponent {
   password: string;
   displayedValidationErrors = {password: ''};
   constructor(
-               private helpers:        HelpersService,
+               private icons:          IconService,
                private route:          ActivatedRoute,
                private router:         Router,
                private authService:    AuthService,
@@ -49,6 +49,6 @@ export class PasswordResetComponent {
   }
 
   buildIconClass(icon: string, size: string = '2') {
-    return this.helpers.buildIconClass(icon, size);
+    return this.icons.buildIconClass(icon, size);
   }
  }

@@ -13,7 +13,7 @@
 
       <!-- Description -->
       <md-input-container layout="row">
-        <i class="{{helpers.buildIconClass('info-circle', 1)}} centered-item"></i>
+        <i class="{{buildIconClass('info-circle', 1)}} centered-item"></i>
         <input mdInput type="text" name="desc" ngControl="desc" [(ngModel)]="tempSign.description" placeholder="short description" md-maxlength="30">
       </md-input-container>
 
@@ -22,11 +22,11 @@
       <div>
         <!-- ok button -->
         <a (click)="save(tempSign)" type="submit" mdTooltip="save" mdTooltipPosition="above" class="sign-saveicon" >
-          <i class="{{helpers.buildIconClass('check', 2)}}"></i>
+          <i class="{{buildIconClass('check', 2)}}"></i>
         </a>
         <!-- cancel button -->
         <a (click)="cancel()" class="sign-cancelicon">
-          <i *ngIf="!showPreviewLabel" class="{{helpers.buildIconClass('times', 2)}}" mdTooltip="cancel" mdTooltipPosition="above" ></i>
+          <i *ngIf="!showPreviewLabel" class="{{buildIconClass('times', 2)}}" mdTooltip="cancel" mdTooltipPosition="above" ></i>
           <!-- I THINK THIS NEXT HTML TAG SHOULD NOT BE HERE, BUT VERIFY BEFORE REMOVE -->
           <p *ngIf="showPreviewLabel"  class="preview-button-label">Preview</p>
         </a>
@@ -45,7 +45,7 @@
     <!-- Refresh Icon -->
     <div *ngIf="auth.isLoggedIn && isOwner && !isEditing" class="sign-refresh-icon">
       <div (click)="oauthRedirect()" mdTooltip="refresh" mdTooltipPosition="above">
-        <i class="{{helpers.buildIconClass('refresh', 1)}}"></i>
+        <i class="{{buildIconClass('refresh', 1)}}"></i>
       </div>
     </div>
     <!-- Edit Icon -->

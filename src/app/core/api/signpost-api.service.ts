@@ -33,6 +33,7 @@ const ROUTES = {
 
   // Oauth Sign Links
   oauthAutoSign: {
+    amazon:           '/api/auto/amazon',
     deviantart:       '/api/auto/deviantart',
     disqus:           '/api/auto/disqus',
     etsy:             '/api/auto/etsy',
@@ -43,6 +44,7 @@ const ROUTES = {
     imgur:            '/api/auto/imgur',
     instagram:        '/api/auto/instagram',
     linkedin:         '/api/auto/linkedin',
+    patreon:          '/api/auto/patreon',
     pinterest:        '/api/auto/pinterest',
     reddit:           '/api/auto/reddit',
     spotify:          '/api/auto/spotify',

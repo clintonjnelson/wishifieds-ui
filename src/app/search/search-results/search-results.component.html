@@ -2,7 +2,7 @@
   <div id="search-filters">
     <ul>
       <li *ngFor="let icon of filterIcons">
-        <i class="{{helpers.buildIconClass(icon.icon, 1)}}"
+        <i class="{{buildIconClass(icon.icon, 1)}}"
            (click)="filter(icon)"
            [style.color]="filters[icon.icon] ? icon.bgColor : 'white'">
         </i>

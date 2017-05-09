@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Sign } from '../sign.model';
-import { HelpersService } from '../../shared/helpers/helpers.service';
+import { Sign }        from '../sign.model';
+import { IconService } from '../../core/services/icon.service';
 
 @Component({
   moduleId: module.id,
@@ -15,7 +15,11 @@ export class SignComponent {
   @Output() saveEE    = new EventEmitter<any>();
   @Output() destroyEE = new EventEmitter<any>();
 
-  constructor( private helpers: HelpersService ) {}
+  constructor( private icons: IconService ) {}
+
+  buildIconClass(icon: string, size: string = '2') {
+    return this.icons.buildIconClass(icon, size);
+  }
 
   getFormType(signType: string): string {
     switch (signType) {

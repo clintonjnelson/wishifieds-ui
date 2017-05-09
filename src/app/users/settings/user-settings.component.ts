@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router }              from '@angular/router';
 import { NgForm, FormControl } from '@angular/forms';
 import { User, UserSettings }  from "../user.model";
-import { HelpersService }      from '../../shared/helpers/helpers.service';
+import { IconService }         from '../../core/services/icon.service';
 import { AuthService }         from '../../core/auth/auth.service';
 import { ApiUsersService }     from '../../core/api/api-users.service';
 import { NotificationService } from '../../core/services/notification.service';
@@ -24,7 +24,7 @@ export class UserSettingsComponent implements OnInit {
   userSettings: UserSettings;
   tempSettings: UserSettings;
 
-  constructor(private helpers:         HelpersService,
+  constructor(private icons:           IconService,
               private authService:     AuthService,
               private apiUsersService: ApiUsersService,
               private router:          Router,

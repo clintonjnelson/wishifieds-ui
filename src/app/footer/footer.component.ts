@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { MdTooltipModule } from '@angular/material';
-import { HelpersService } from '../shared/helpers/helpers.service';
+import { IconService } from '../core/services/icon.service';
 import { Observable } from 'rxjs/Observable';
 import { SignpostApi } from '../core/api/signpost-api.service';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
@@ -36,7 +36,7 @@ export class FooterComponent {
   showSharingLinks: boolean = false;
   socialSharingLinks = SOCIAL_LINKS;
 
-  constructor(private helpers:     HelpersService,
+  constructor(private icons:       IconService,
               private router:      Router,
               private signpostApi: SignpostApi,
               private http:        Http) {
@@ -67,7 +67,7 @@ export class FooterComponent {
   }
 
   buildIconClass(icon: string, size: string = '2') {
-    return this.helpers.buildIconClass(icon, size);
+    return this.icons.buildIconClass(icon, size);
   }
 
   toggleShowSharingLinks(input: any = null): void {

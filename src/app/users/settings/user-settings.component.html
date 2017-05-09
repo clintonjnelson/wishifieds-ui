@@ -7,7 +7,7 @@
     <p>Please visit your email inbox, and click the link in the Syynpost Confirmation email.</p>
     <a *ngIf="!emailWasResent" (click)="resendConfirmationEmail($event)" href="#">Click here to re-send the confirmation email</a>
     <p *ngIf="emailWasResent">
-      <i class="{{helpers.buildIconClass('check', 3)}}"></i>Email Sent!
+      <i class="{{buildIconClass('check', 3)}}"></i>Email Sent!
     </p>
   </div>
 
@@ -16,7 +16,7 @@
     <!-- Username -->
     <div class="settings-input-error-container">
       <md-input-container class="user-settings-input">
-        <i class="{{helpers.buildIconClass('user', 1)}}"></i>
+        <i class="{{buildIconClass('user', 1)}}"></i>
         <input mdInput type="text" name="username" [(ngModel)]="tempSettings.username" placeholder="your signpost username" minlength="1" maxlength="20" required/>
       </md-input-container>
       <!-- Show errors only if exist and input has been modified -->
@@ -28,7 +28,7 @@
     <!-- Contact & Login Email -->
     <div class="settings-input-error-container">
       <md-input-container class="user-settings-input">
-        <i class="{{helpers.buildIconClass('envelope', 1)}}"></i>
+        <i class="{{buildIconClass('envelope', 1)}}"></i>
         <input mdInput type="email" name="email" [(ngModel)]="tempSettings.email" placeholder="your login/contact email" minlength="5" required/>
       </md-input-container>
       <div *ngIf="displayedValidationErrors.email" class="input-errors error">
@@ -40,11 +40,11 @@
     <div class="save-cancel-buttons">
       <!-- Save button - show only if for modified & dirty; hide if any part is not valid -->
       <a (click)="save()" type="submit" class="user-settings-saveicon" [hidden]="!userSettingsForm.form.valid || !userSettingsForm.form.dirty" [attr.disabled]="!userSettingsForm.form.valid">
-        <i class="{{helpers.buildIconClass('check', 2)}}"></i>
+        <i class="{{buildIconClass('check', 2)}}"></i>
       </a>
       <!-- Cancel button -->
       <a (click)="cancel()" class="user-settings-cancelicon" [hidden]="!userSettingsForm.form.dirty">
-        <i class="{{helpers.buildIconClass('times', 2)}}"></i>
+        <i class="{{buildIconClass('times', 2)}}"></i>
       </a>
     </div>
     <div *ngIf="displayedValidationErrors.main" class="input-errors error">

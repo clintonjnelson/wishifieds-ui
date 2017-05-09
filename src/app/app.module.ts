@@ -18,8 +18,6 @@ import { FaqComponent }                from './static-pages/faq/faq.component';
 // import { LivingStyleGuideComponent }   from './styleguide/livingstyleguide.component';
 
 import { IconLinkComponent }           from './shared/icon-links/icon-links.component';
-import { CustomIconLinkComponent }     from './shared/custom-icon-link/custom-icon-link.component';
-
 import { NavbarComponent }             from './navigation/navbar/navbar.component';
 import { FooterComponent }             from './footer/footer.component';
 
@@ -68,6 +66,7 @@ import { ApiUsersService }     from './core/api/api-users.service';
 import { ApiSignsService }     from './core/api/api-signs.service';
 import { ApiSearchService }    from './core/api/api-search.service';
 import { HelpersService }      from './shared/helpers/helpers.service';
+import { IconService }         from './core/services/icon.service';
 import { OauthRedirectComponent } from './core/redirects/oauth-redirect.component';  // really a component
 import { UserConfirmationRedirectComponent } from './core/redirects/user-confirmation-redirect.component';
 
@@ -108,7 +107,6 @@ export function HttpFactory(backend: XHRBackend,
                   AdminUserManagementComponent,
                   LoginSignupFormComponent,
                   IconLinkComponent,
-                  CustomIconLinkComponent,
                   // LivingStyleGuideComponent,
                   SignComponent,
                   SignsComponent,
@@ -145,6 +143,7 @@ export function HttpFactory(backend: XHRBackend,
                   OwnerGuard,
                   AuthService,
                   HelpersService,
+                  IconService,
                   NotificationService,
                   ModalService,
                   SignpostApi,

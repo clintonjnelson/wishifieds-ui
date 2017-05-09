@@ -7,13 +7,13 @@
       <a target="_blank" href="{{sign.linkUrl}}" class="centered-item">
         <img src="{{sign.picUrl}}" height="70" width="70" class="sign-image">
       </a>
-      <i class="{{helpers.buildIconClass(sign.icon, 5)}} underlay-icon"></i>
+      <i class="{{buildIconClass(sign.icon, 5)}} underlay-icon"></i>
     </div>
 
     <!-- IF NO PIC URL THEN JUST SHOW ICON AS LINK -->
     <div *ngIf="!sign.picUrl" class="sign-image-container">
       <a href="{{sign.linkUrl}}" class="centered-item">
-        <i class="{{helpers.buildIconClass(sign.icon, 5)}} underlay-icon"></i>
+        <i class="{{buildIconClass(sign.icon, 5)}} underlay-icon"></i>
       </a>
     </div>
 

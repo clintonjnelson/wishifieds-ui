@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm, FormControl }   from '@angular/forms';   // Remove if no validation logic
 import { MdTooltipModule }       from '@angular/material';
+import { IconService }           from '../../../core/services/icon.service';
 import { HelpersService }        from '../../../shared/helpers/helpers.service';
 import { AuthService, UserAuth } from '../../../core/auth/auth.service';
 import { ApiSignsService }       from '../../../core/api/api-signs.service';
@@ -41,7 +42,8 @@ export class SignContentComponent implements OnInit {
   }
 
   // ************** Auth Methods **************
-  constructor( private helpers:         HelpersService,
+  constructor( private icons:           IconService,
+               private helpers:         HelpersService,
                private authService:     AuthService,
                private apiSignsService: ApiSignsService,
                private modalService:    ModalService) {
@@ -62,6 +64,10 @@ export class SignContentComponent implements OnInit {
 
   resetIsOwner() {
     this.isOwner = (this.forSignCreation ? true : this.authService.isOwner(this.sign.userId) );
+  }
+
+  buildIconClass(icon: string, size: string = '2') {
+    return this.icons.buildIconClass(icon, size);
   }
 
   urlWithoutPrototol(url: string) {

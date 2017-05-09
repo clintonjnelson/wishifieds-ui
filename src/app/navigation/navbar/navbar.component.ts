@@ -1,7 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { MdTooltipModule } from '@angular/material';
-// import { trigger, state, style, animate, transition } from '@angular/animations';
-import { HelpersService } from '../../shared/helpers/helpers.service';
+import { IconService } from '../../core/services/icon.service';
 import { AuthService, UserAuth } from '../../core/auth/auth.service';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -15,6 +14,7 @@ export class CustomOauthLink extends OauthLink{
 }
 
 const OAUTHS: OauthLink[] = [
+  // {icon: 'amazon',            url: '/api/login/amazon',         bgColor: '#ff9900'},  // NO SITE TO LINK TO...
   {icon: 'deviantart',        url: '/api/login/deviantart',     bgColor: '#b3c432'},
   {icon: 'etsy',              url: '/api/login/etsy',           bgColor: '#d15600'},
   {icon: 'facebook',          url: '/api/login/facebook',       bgColor: '#3b5998'},
@@ -33,12 +33,10 @@ const OAUTHS: OauthLink[] = [
   {icon: 'vk',                url: '/api/login/vkontakte',      bgColor: '#45668e'},
   {icon: 'wordpress',         url: '/api/login/wordpress',      bgColor: '#21759b'},
   {icon: 'youtube',           url: '/api/login/youtube',        bgColor: '#bb0000'},
+  {icon: 'disqus',             url: '/api/login/disqus',        bgColor: '#2e9fff'},
+  {icon: 'imgur',              url: '/api/login/imgur',         bgColor: '#85bf25'},
+  {icon: 'patreon',            url: '/api/login/patreon',       bgColor: '#e6461a'},
 ]
-const CUSTOM_OAUTHS: CustomOauthLink[] = [
-  {icon: 'disqus',             url: '/api/login/disqus',        bgColor: '#2e9fff', iconSize: '2'},
-  {icon: 'imgur',              url: '/api/login/imgur',         bgColor: '#85bf25', iconSize: '2'},
-  {icon: 'patreon',            url: '/api/login/patreon',       bgColor: '#e6461a', iconSize: '2'},
-  ];
 
 
 @Component({
@@ -57,7 +55,6 @@ const CUSTOM_OAUTHS: CustomOauthLink[] = [
 
 export class NavbarComponent {
   oauthLinks = OAUTHS;
-  customOauthLinks = CUSTOM_OAUTHS;
   showLoginLinks:        boolean = false;
   showSignpostLoginForm: boolean = false;
   showUserNavLinks:      boolean = false;
@@ -68,14 +65,18 @@ export class NavbarComponent {
   _subscription: Subscription;
 
   constructor(
-    private helpers: HelpersService,
-    public  authService:    AuthService ) {
+    private icons:       IconService,
+    public  authService: AuthService ) {
     this.auth          = authService.auth;
     this._subscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => { this.auth = newVal });
   }
 
   ngOnDestroy() {
     this._subscription.unsubscribe();
+  }
+
+  buildIconClass(icon: string, size: string = '2') {
+    return this.icons.buildIconClass(icon, size);
   }
 
   //Logged OUT Helpers
