@@ -15,7 +15,6 @@ import 'hammerjs';
 import { AppComponent }                from './app.component';
 import { TermsConditionsComponent }    from './static-pages/terms-conditions/terms-conditions.component';
 import { FaqComponent }                from './static-pages/faq/faq.component';
-// import { LivingStyleGuideComponent }   from './styleguide/livingstyleguide.component';
 
 import { IconLinkComponent }           from './shared/icon-links/icon-links.component';
 import { NavbarComponent }             from './navigation/navbar/navbar.component';

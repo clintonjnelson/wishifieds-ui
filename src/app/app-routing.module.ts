@@ -7,7 +7,6 @@ import { RequestPasswordResetComponent } from './password-reset/request-password
 import { PasswordResetComponent }        from './password-reset/password-reset.component';
 import { AdminDashboardComponent }       from './admin/dashboard/admin-dashboard.component';
 import { AdminUserManagementComponent }  from './admin/user-management/admin-user-management.component';
-import { LivingStyleGuideComponent }     from './styleguide/livingstyleguide.component';
 import { SearchBoxComponent }            from './search/search-box/search-box.component';
 import { UserPageComponent }             from './users/user-page.component';
 import { UserSettingsComponent }         from './users/settings/user-settings.component';
@@ -33,7 +32,6 @@ const rootRoutes: Routes = [
 
   { path: 'termsandconditions', component: TermsConditionsComponent, pathMatch: 'full' },
   { path: 'faq', component: FaqComponent, pathMatch: 'full' },
-  // { path: 'styleguide', component: LivingStyleGuideComponent, pathMatch: 'full' },
 
   // These have to come last to avoid username confusion
   { path: ':username/settings', component: UserSettingsComponent, canActivate: [OwnerGuard], pathMatch: 'full'},
