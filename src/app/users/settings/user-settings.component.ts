@@ -68,15 +68,21 @@ export class UserSettingsComponent implements OnInit {
     event.preventDefault();
     var that = this;
 
-    this.apiUsersService.resendUserConfirmation(this.userSettings.userId)
-      .subscribe(
-        success => {
-          console.log("SUCCESS IN USER SETTINGS FOR RESEND CONFIRMATION IS: ", success);
-          that.emailWasResent = true;
-        },
-        error => {
-          console.log("ERROR IN USER SETTINGS FOR RESEND CONFIRMATION IS: ", error);
-        });
+    // Ensure there is an email before attempting to send
+    if(!this.userSettings.email) {
+      that.displayedValidationErrors['confirmation'] = that.validationErrorMessages.confirmation.email;
+    }
+    else {
+      this.apiUsersService.resendUserConfirmation(this.userSettings.userId)
+        .subscribe(
+          success => {
+            console.log("SUCCESS IN USER SETTINGS FOR RESEND CONFIRMATION IS: ", success);
+            that.emailWasResent = true;
+          },
+          error => {
+            console.log("ERROR IN USER SETTINGS FOR RESEND CONFIRMATION IS: ", error);
+          });
+    }
   }
 
   // Save & Cancel Buttons
@@ -133,12 +139,15 @@ export class UserSettingsComponent implements OnInit {
           switch(error.msg) {
             case('username-taken'): return that.setUniquenessValidationError('username');
             case('email-taken'):    return that.setUniquenessValidationError('email');
+            case('username-invalid'): {
+              that.displayedValidationErrors['username'] = 'Sorry, this username is invalid. Please try another.'
+            }
             case('email-format'): {
-              that.displayedValidationErrors['email'] = 'Email does not appear valid. Please update and try again.'
+              that.displayedValidationErrors['email'] = 'Email does not appear valid. Please update and try again.';
               break;
             }
             default: {
-              that.displayedValidationErrors['main'] = that.validationErrorMessages.main.generic
+              that.displayedValidationErrors['main'] = that.validationErrorMessages.main.generic;
               break;
             }
           }
@@ -177,7 +186,8 @@ export class UserSettingsComponent implements OnInit {
   displayedValidationErrors = {
     username: '',  // No message, when valid
     email: '',      // No message, when valid
-    main: ''
+    main: '',
+    confirmation: '',
   };
 
   private validationErrorMessages = {
@@ -195,6 +205,9 @@ export class UserSettingsComponent implements OnInit {
     },
     main: {
       generic: 'Settings could not be saved. Please try again.'
+    },
+    confirmation: {
+      email: 'A valid email is required. Please update your email below before attempting to send.'
     }
   }
 

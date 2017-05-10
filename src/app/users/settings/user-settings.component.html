@@ -9,6 +9,9 @@
     <p *ngIf="emailWasResent">
       <i class="{{buildIconClass('check', 3)}}"></i>Email Sent!
     </p>
+    <p *ngIf="displayedValidationErrors.confirmation" class="error">
+      {{ displayedValidationErrors.confirmation }}
+    </p>
   </div>
 
   <form *ngIf="!isProcessing" name="userSettingsForm" class="user-settings-form" #userSettingsForm="ngForm">
@@ -36,6 +39,10 @@
       </div>
     </div>
 
+    <!-- General Errors -->
+    <div *ngIf="displayedValidationErrors.main" class="input-errors error">
+      {{ displayedValidationErrors.main }}
+    </div>
     <!-- Save/Cancel Buttons -->
     <div class="save-cancel-buttons">
       <!-- Save button - show only if for modified & dirty; hide if any part is not valid -->
@@ -46,9 +53,6 @@
       <a (click)="cancel()" class="user-settings-cancelicon" [hidden]="!userSettingsForm.form.dirty">
         <i class="{{buildIconClass('times', 2)}}"></i>
       </a>
-    </div>
-    <div *ngIf="displayedValidationErrors.main" class="input-errors error">
-      {{ displayedValidationErrors.main }}
     </div>
   </form>
 </div>

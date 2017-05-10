@@ -1,16 +1,15 @@
-/deep/ div.cdk-overlay-container {
+/deep/ md-dialog-container.mat-dialog-container {
   position: absolute;
   left: 10%;
   top: 10%;
   height: auto;
+  max-width: 400px;
   max-height: 400px;
-  /*max-width: 400px;*/
   z-index: 9999;
-
-  /*background-color: #5a5a5a;*/
   background-color: #676767;
   font-family: helvetica;
   color: white;
+  opacity: 1;
 }
 #modal-container {
   max-width: 400px;
