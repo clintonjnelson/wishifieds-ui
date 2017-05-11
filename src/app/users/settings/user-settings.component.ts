@@ -136,7 +136,7 @@ export class UserSettingsComponent implements OnInit {
         },
         error => {
           console.log("ERROR IS: ", error);
-          switch(error.msg) {
+          switch(error.json().msg) {
             case('username-taken'): return that.setUniquenessValidationError('username');
             case('email-taken'):    return that.setUniquenessValidationError('email');
             case('username-invalid'): {
@@ -151,7 +151,6 @@ export class UserSettingsComponent implements OnInit {
               break;
             }
           }
-          console.log("ERROR UPDATING THE USER IS: ", error);
         });
     }
   }
