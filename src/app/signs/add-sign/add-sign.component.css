@@ -10,6 +10,7 @@
   flex: 1 1 auto;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 /deep/ label.md-input-placeholder.md-empty:not(.md-focused) {
@@ -33,10 +34,12 @@ ul {
   justify-content: center;
   flex-wrap: wrap-reverse;
   -webkit-flex-wrap: wrap-reverse;
+  max-width: 80%;
 }
 
 ul > li {
-  margin-right: 5px;
+  margin-left: 6px;
+  margin-right: 6px;
   display: inline-block;  /* Required for wrapping functionalty */
 }
 
