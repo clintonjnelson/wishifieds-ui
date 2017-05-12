@@ -14,7 +14,7 @@ export class HelpersService {
 
   verifyOrAddProtocolToUrl(url: string) {
     const checkFormatUrl = url.toLowerCase().trim();
-    if(checkFormatUrl.includes('http://') || checkFormatUrl.includes('http://')) {
+    if(checkFormatUrl.includes('http://') || checkFormatUrl.includes('https://')) {
       return url.trim();
     }
     else {
