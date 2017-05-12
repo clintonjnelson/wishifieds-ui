@@ -14,7 +14,6 @@ export class HoverColorDirective {
 
   constructor(private el: ElementRef) {}
 
-
   @HostListener('mouseenter') onMouseEnter() {
     this.changeColor(this.hoverColor);
   }

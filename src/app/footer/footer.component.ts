@@ -76,7 +76,7 @@ export class FooterComponent implements OnDestroy {
     console.log("SHARING LINKS IS NOW: ", this.showSharingLinks);
   }
 
-  private ngOnDestroy() {
+  ngOnDestroy() {
     this.urlSubscription.unsubscribe();
   }
 

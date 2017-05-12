@@ -19,7 +19,7 @@
     <form #signForm="ngForm" name="signForm" class="sign-form">
       <!-- sign Title -->
       <md-input-container>
-        <i class="{{helpers.buildIconClass('star', 1)}}"></i>
+        <i class="{{buildIconClass('star', '1')}}"></i>
         <input mdInput type="text" name="title" [(ngModel)]="tempSign.signName" placeholder="Sign Title" md-maxlength="30" required/>
       </md-input-container>
       <div *ngIf="displayedValidationErrors.title" class="input-errors error">
@@ -30,7 +30,7 @@
       <!-- url -->
 
       <md-input-container>
-        <i class="{{helpers.buildIconClass('link', 1)}}"></i>
+        <i class="{{buildIconClass('link', '1')}}"></i>
         <input mdInput type="url" name="url" [(ngModel)]="tempSign.linkUrl" placeholder="http://www.somewebsite.com/..." required/>
       </md-input-container>
       <div *ngIf="displayedValidationErrors.url" class="input-errors error">
@@ -40,13 +40,13 @@
 
       <!-- knownAs/username -->
       <md-input-container>
-        <i class="{{helpers.buildIconClass('user-o', 1)}}"></i>
+        <i class="{{buildIconClass('user-o', '1')}}"></i>
         <input mdInput type="text" name="username" [(ngModel)]="tempSign.knownAs" placeholder="@myusername" md-maxlength="30">
       </md-input-container>
 
       <!-- description -->
       <md-input-container>
-        <i class="{{helpers.buildIconClass('info-circle', 1)}}"></i>
+        <i class="{{buildIconClass('info-circle', '1')}}"></i>
         <input mdInput type="text" name="desc" [(ngModel)]="tempSign.description" placeholder="short description">
       </md-input-container>
 
@@ -54,11 +54,11 @@
       <div>
         <!-- ok button -->
         <a (click)="save(tempSign)" type="submit" class="sign-saveicon" mdTooltip="save" mdTooltipPosition="above" [attr.disabled]="!signForm.form.valid">
-          <i class="{{helpers.buildIconClass('check', 2)}}"></i>
+          <i class="{{buildIconClass('check', '2')}}"></i>
         </a>
         <!-- cancel button -->
         <a (click)="(showPreviewLabel ? preview() : cancel())" class="sign-cancelicon">
-          <i *ngIf="!showPreviewLabel" class="{{helpers.buildIconClass('times', 2)}}" mdTooltip="cancel" mdTooltipPosition="above" ></i>
+          <i *ngIf="!showPreviewLabel" class="{{buildIconClass('times', '2')}}" mdTooltip="cancel" mdTooltipPosition="above" ></i>
           <p *ngIf="showPreviewLabel"  class="preview-button-label">Preview</p>
         </a>
       </div>
