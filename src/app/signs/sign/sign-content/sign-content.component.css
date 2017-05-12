@@ -1,8 +1,8 @@
 .preview-watermark {
   position: absolute;
-  left: 20%;
+  left: 0;
   top: 10%;
-  transform: rotate(15deg);
+  transform: rotate(-15deg);
 
   color: white;
   font-size: 4em;
