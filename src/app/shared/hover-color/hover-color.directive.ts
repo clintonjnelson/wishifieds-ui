@@ -9,18 +9,18 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 })
 
 export class HoverColorDirective {
-  constructor(private el: ElementRef) {
-  }
+  @Input('hoverColor') hoverColor: string;
+  defaultColor = 'white';
 
-  @Input('hoverColor') iconColor: string;
-  defaultColor: string = 'white';
+  constructor(private el: ElementRef) {}
+
 
   @HostListener('mouseenter') onMouseEnter() {
-    this.changeColor(this.iconColor);
+    this.changeColor(this.hoverColor);
   }
 
   @HostListener('mouseleave') onMouseLeave() {
-    this.changeColor(this.defaultColor)
+    this.changeColor(this.defaultColor);
   }
 
   private changeColor(color: string) {

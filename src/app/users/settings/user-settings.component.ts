@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
 import { Router }              from '@angular/router';
 import { NgForm, FormControl } from '@angular/forms';
 import { User, UserSettings }  from "../user.model";
@@ -15,10 +15,10 @@ import { ModalService }        from '../../core/services/modal.service';
   styleUrls:  ['user-settings.component.css']
 })
 
-export class UserSettingsComponent implements OnInit {
+export class UserSettingsComponent implements OnInit, AfterViewChecked {
   isConfirmed:    boolean;
   isProcessing:   boolean;
-  emailWasResent: boolean = false;
+  emailWasResent = false;
   userSettingsForm: NgForm;
   @ViewChild('userSettingsForm') currentForm: NgForm;
   userSettings: UserSettings;
@@ -66,7 +66,7 @@ export class UserSettingsComponent implements OnInit {
 
   resendConfirmationEmail(event: any) {
     event.preventDefault();
-    var that = this;
+    const that = this;
 
     // Ensure there is an email before attempting to send
     if(!this.userSettings.email) {
@@ -81,13 +81,14 @@ export class UserSettingsComponent implements OnInit {
           },
           error => {
             console.log("ERROR IN USER SETTINGS FOR RESEND CONFIRMATION IS: ", error);
+            that.notifService.notify('error', 'Email could not be sent.', 8000);
           });
     }
   }
 
   // Save & Cancel Buttons
   save() {
-    var that = this;
+    const that = this;
     this.tempSettings.userId = this.userSettings.userId;
     console.log("TEMP SETTINGS IS: ", this.tempSettings);
     console.log("USER SETTINGS IS: ", this.userSettings);
@@ -115,8 +116,8 @@ export class UserSettingsComponent implements OnInit {
       .subscribe(
         success => {
           console.log("SUCCESS UPDATING THE USER IS: ", success);
-          let user = success.user;
-          var shouldReloadUser = (that.authService.auth.username !== user.username);
+          const user = success.user;
+          const shouldReloadUser = (that.authService.auth.username !== user.username);
           that.userSettings = Object.assign({}, that.tempSettings);
           that.authService.setAuthCookies(that.authService.getEatAuthCookie(),
                                           user.username,
@@ -140,7 +141,7 @@ export class UserSettingsComponent implements OnInit {
             case('username-taken'): return that.setUniquenessValidationError('username');
             case('email-taken'):    return that.setUniquenessValidationError('email');
             case('username-invalid'): {
-              that.displayedValidationErrors['username'] = 'Sorry, this username is invalid. Please try another.'
+              that.displayedValidationErrors['username'] = 'Sorry, this username is invalid. Please try another.';
             }
             case('email-format'): {
               that.displayedValidationErrors['email'] = 'Email does not appear valid. Please update and try again.';
@@ -160,13 +161,15 @@ export class UserSettingsComponent implements OnInit {
     this.resetFormDisplay();
   }
 
-
+  ngAfterViewChecked() {
+    this.formChanged();
+  }
 
 
   // ********** CONSIDER BREAKING OUT TO A SERVICE - SIMILIAR TO SIGNS *************
   // Resets the buttons that are triggered by changes
   private resetFormDisplay() {
-    var controls = this.userSettingsForm.controls;
+    const controls = this.userSettingsForm.controls;
     Object.keys(controls).forEach(control => {
       controls[control].markAsPristine();
       controls[control].markAsUntouched();
@@ -208,11 +211,7 @@ export class UserSettingsComponent implements OnInit {
     confirmation: {
       email: 'A valid email is required. Please update your email below before attempting to send.'
     }
-  }
-
-  ngAfterViewChecked() {
-    this.formChanged();
-  }
+  };
 
   private formChanged() {
     if(this.currentForm === this.userSettingsForm) { return; }  // No changes? Stop here.

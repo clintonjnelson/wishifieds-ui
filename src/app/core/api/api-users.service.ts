@@ -11,7 +11,7 @@ import 'rxjs/add/operator/catch';
 class CreateUserResponse {
   eat: string;
   username: string;
-  role: string
+  role: string;
 }
 
 class UserByIdResponse {
@@ -30,7 +30,7 @@ export class ApiUsersService {
 
   // Create a new User Account
   createUser(creds: UserCreds): Observable<any> {
-    let createUserUrl = this.signpostApi.routes.createUser;
+    const createUserUrl = this.signpostApi.routes.createUser;
     console.log("DATA TO SEND IS: ", JSON.stringify(creds));
     return this.http
                .post(createUserUrl, JSON.stringify(creds))
@@ -46,7 +46,7 @@ export class ApiUsersService {
   }
 
   confirmUser(token: string, email: string): Observable<any> {
-    let confirmUserUrl = this.signpostApi.buildUrl('confirmUser', [{':confirmationtoken': token}, {':email': email}]);
+    const confirmUserUrl = this.signpostApi.buildUrl('confirmUser', [{':confirmationtoken': token}, {':email': email}]);
     return this.http
                .get(confirmUserUrl)
                .map( success => {
@@ -59,7 +59,7 @@ export class ApiUsersService {
   }
 
   resendUserConfirmation(userId: string): Observable<any> {
-    let confirmationResendUrl = this.signpostApi.buildUrl('resendUserConfirmation', [ {':userId': userId} ]);
+    const confirmationResendUrl = this.signpostApi.buildUrl('resendUserConfirmation', [ {':userId': userId} ]);
     const options = this.signpostApi.getRequestOptionWithEatHeader();
     return this.http
                .get(confirmationResendUrl, options)
@@ -73,7 +73,7 @@ export class ApiUsersService {
   }
 
   getUserById(usernameOrId: string): Observable<any> {
-    let getUserUrl = this.signpostApi.buildUrl('getUserById', [ {':usernameOrId': usernameOrId} ] );
+    const getUserUrl = this.signpostApi.buildUrl('getUserById', [ {':usernameOrId': usernameOrId} ] );
     const options  = this.signpostApi.getRequestOptionWithEatHeader();
 
     console.log("HEADERS IS: ", options);
@@ -90,7 +90,7 @@ export class ApiUsersService {
 
   // UPDATE THIS TO RETURN THE NEW USER????
   updateUser(userSettings: UserSettings): Observable<any> {
-    let userUpdateUrl = this.signpostApi.buildUrl('updateUser', [{':id': userSettings.userId}]);
+    const userUpdateUrl = this.signpostApi.buildUrl('updateUser', [{':id': userSettings.userId}]);
     const options = this.signpostApi.getRequestOptionWithEatHeader();
 
     console.log("USER UPDATE URL IS: ", userUpdateUrl);
@@ -106,7 +106,7 @@ export class ApiUsersService {
   }
 
   checkAvailableValues(username: string = '', email: string = '') {
-    let getAvailabilityUrl = this.signpostApi.buildUrl('checkAvailability', [{':username': username}, {':email': email}]);
+    const getAvailabilityUrl = this.signpostApi.buildUrl('checkAvailability', [{':username': username}, {':email': email}]);
     const options = this.signpostApi.getRequestOptionWithEatHeader();
 
     console.log("URL FOR CHECKING AVAILABILITY IS: ", getAvailabilityUrl);

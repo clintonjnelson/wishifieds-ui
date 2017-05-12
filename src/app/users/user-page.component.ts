@@ -13,11 +13,11 @@ import { Subscription } from 'rxjs/Subscription';
 })
 
 
-export class UserPageComponent implements OnInit {
+export class UserPageComponent implements OnInit, OnDestroy {
   signs: Sign[];
   auth: UserAuth;
   authSubscription: Subscription;
-  isOwner: boolean = false;
+  isOwner = false;
   isProcessing: boolean;
 
   constructor( private authService:    AuthService,
@@ -61,7 +61,7 @@ export class UserPageComponent implements OnInit {
 
   destroy(event: any) {
     console.log("MADE IT TO USER-PAGE DESTROY. SIGN IS: ", event);
-    var theseSigns = this.signs;
+    const theseSigns = this.signs;
     if(!!event.sign && event.destroy === true) {
       this.signs.splice(theseSigns.indexOf(event.sign), 1);
       console.log("TRIED TO SPLICE OUT THE SIGN...");
@@ -72,11 +72,11 @@ export class UserPageComponent implements OnInit {
     // INSTEAD OF MANUALLY PUSHING, MIGHT WANT TO JUST RELOAD FROM SERVER!
     console.log("MADE IT TO USER-PAGE SAVE. SIGN IS: ", event);
     // Update Existing Sign or Create New
-    let foundSign = this.signs.find(sign => { return (sign._id === event._id); });
+    const foundSign = this.signs.find(sign => { return (sign._id === event._id); });
 
     if(foundSign) {
       // update the sign
-      let foundSignIndex = this.signs.indexOf(foundSign);
+      const foundSignIndex = this.signs.indexOf(foundSign);
       this.signs.splice(foundSignIndex, 1, event);
     } else {
       this.signs.push(event);     // bubbles sign up, so add it to the list

@@ -16,7 +16,7 @@ import { Sign } from './sign.model';
 
 export class SignsComponent {
   @Input() signs: Sign[];
-  @Output() saveEE    = new EventEmitter<any>()
+  @Output() saveEE    = new EventEmitter<any>();
   @Output() destroyEE = new EventEmitter<any>();
   isOwner: boolean;
 
@@ -25,11 +25,11 @@ export class SignsComponent {
               private route:           ActivatedRoute,
               private apiSignsService: ApiSignsService) {
 
-    let signOwnerUsername = route.snapshot.params['username'];
+    const signOwnerUsername = route.snapshot.params['username'];
     this.isOwner = authService.isOwner(signOwnerUsername);
 
     dragulaService.drop.subscribe((val: any) => {
-      let orderedSignIds = this.signs.map( sign => { return sign._id; } );
+      const orderedSignIds = this.signs.map( sign => { return sign._id; } );
       console.log("ABOUT TO HIT API TO CHANGE ORDER...");
 
       this.apiSignsService.updateSignOrder(orderedSignIds)

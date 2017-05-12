@@ -17,7 +17,7 @@ export class ApiAuthService {
     const loginUrl   = this.signpostApi.routes.login;
     const authHeader = new Headers( { Authorization: 'Basic '+encodedCreds } );
 
-    console.log("HAVE URL & HEADERS AND NOW ABOUT TO SEND")
+    console.log("HAVE URL & HEADERS AND NOW ABOUT TO SEND");
     return this.http
                .get(loginUrl, {headers: authHeader})
                .map( res => {

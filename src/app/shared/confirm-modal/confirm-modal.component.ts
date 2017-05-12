@@ -16,7 +16,7 @@ export class ConfirmModalComponent {
   // Oauth deletion
   showCheckbox: boolean;
   checkboxMsg:  string;
-  checkboxVal:  boolean = true;
+  checkboxVal = true;
 
   constructor(public dialogRef: MdDialogRef<ConfirmModalComponent>,
               private icons: IconService) {}

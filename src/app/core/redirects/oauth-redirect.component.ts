@@ -18,20 +18,20 @@ export class OauthRedirectComponent implements OnInit {
               private authService: AuthService) {}
 
   ngOnInit() {
-    let redirectType = this.route.snapshot.params['redirecttype'];  // get the error type
+    const redirectType = this.route.snapshot.params['redirecttype'];  // get the error type
 
     console.log("REDIRECT TYPE PARAM IS: ", redirectType);
 
     switch (redirectType) {
       // Success case
       case 'oauthsuccess': {
-        let queryParams = this.route.snapshot.queryParams;
+        const queryParams = this.route.snapshot.queryParams;
         console.log("PARAMS IS: ", queryParams);
-        let eatToken = queryParams['token'];
-        let username = queryParams['username'];
-        let role =     queryParams['role'];
-        let email =    queryParams['email'];
-        let userId =   queryParams['userId'];
+        const eatToken = queryParams['token'];
+        const username = queryParams['username'];
+        const role =     queryParams['role'];
+        const email =    queryParams['email'];
+        const userId =   queryParams['userId'];
         console.log('EAT TOKEN QUERY PARAM IS: ', eatToken);
         console.log('username QUERY PARAM IS: ', username);
         console.log('role QUERY PARAM IS: ', role);
@@ -44,17 +44,17 @@ export class OauthRedirectComponent implements OnInit {
 
       // Error cases
       case 'oauthsignerror': {
-        this.notification.notify('error', 'Oops, that sign broke during creation... please try again.')
+        this.notification.notify('error', 'Oops, that sign broke during creation... please try again.');
         this.router.navigate(['/', this.authService.auth.username]);
         break;
       }
       case 'oauthloginerror': {
-        this.notification.notify('warning', 'That didn\'t quite work - please try again!')
+        this.notification.notify('warning', 'That didn\'t quite work - please try again!');
         this.router.navigate(['/']);
         break;
       }
       case 'oautherror': {
-        this.notification.notify('warning', 'That didn\'t quite work - please try again!')
+        this.notification.notify('warning', 'That didn\'t quite work - please try again!');
         this.router.navigate(['/']);
         break;
       }

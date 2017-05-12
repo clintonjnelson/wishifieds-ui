@@ -11,9 +11,9 @@ export class OwnerGuard implements CanActivate {
                private notification: NotificationService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    let url: string = state.url;
+    const url: string = state.url;
     // MUST have the username param to use Owner auth guard
-    let username: string = route.params['username'];
+    const username: string = route.params['username'];
     console.log("THE ROUTE IS: ", route);
 
     return this.checkOwnerLogin(username, url);

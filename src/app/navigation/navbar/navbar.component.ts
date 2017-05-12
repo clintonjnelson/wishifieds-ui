@@ -36,7 +36,7 @@ const OAUTHS: OauthLink[] = [
   {icon: 'disqus',             url: '/api/login/disqus',        bgColor: '#2e9fff'},
   {icon: 'imgur',              url: '/api/login/imgur',         bgColor: '#85bf25'},
   {icon: 'patreon',            url: '/api/login/patreon',       bgColor: '#e6461a'},
-]
+];
 
 
 @Component({
@@ -45,30 +45,30 @@ const OAUTHS: OauthLink[] = [
   templateUrl: 'navbar.component.html',  // trigger: [@visibilityChanged]='showLoginLinks'
   styleUrls:  ['navbar.component.css'],
   // animations: [trigger('visibilityChanged', [
-  //               state('false', style({opacity: 0, transform: 'translateX(0)'})),
-  //               state('true',  style({opacity: 1, transform: 'translateX(0)'})),
-  //               transition('false => true', [style({opacity: 0, transform: 'translateX(100px)' }), animate('2000ms')]),  // between wildcard states
-  //               transition('true => false', [animate('2000ms', style({opacity: 0, transform: 'translateX(-100px)'}))])  // between wildcard states
-  //               ])
+  // state('false', style({opacity: 0, transform: 'translateX(0)'})),
+  // state('true',  style({opacity: 1, transform: 'translateX(0)'})),
+  // transition('false => true', [style({opacity: 0, transform: 'translateX(100px)' }), animate('2000ms')]),  // between wildcard states
+  // transition('true => false', [animate('2000ms', style({opacity: 0, transform: 'translateX(-100px)'}))])  // between wildcard states
+  // ])
   // ]
 })
 
-export class NavbarComponent {
+export class NavbarComponent implements OnDestroy {
   oauthLinks = OAUTHS;
-  showLoginLinks:        boolean = false;
-  showSignpostLoginForm: boolean = false;
-  showUserNavLinks:      boolean = false;
+  showLoginLinks        = false;
+  showSignpostLoginForm = false;
+  showUserNavLinks      = false;
   auth: UserAuth;
-  isLoggedIn: boolean = false;
-  isLoggedOut: boolean = true;
-  username: string = '';
+  isLoggedIn            = false;
+  isLoggedOut           = true;
+  username              = '';
   _subscription: Subscription;
 
   constructor(
     private icons:       IconService,
     public  authService: AuthService ) {
     this.auth          = authService.auth;
-    this._subscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => { this.auth = newVal });
+    this._subscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => { this.auth = newVal; });
   }
 
   ngOnDestroy() {
@@ -79,7 +79,7 @@ export class NavbarComponent {
     return this.icons.buildIconClass(icon, size);
   }
 
-  //Logged OUT Helpers
+  // Logged OUT Helpers
   toggleShowSignpostLoginForm(input: any = null): void {
     // If setting value directly, do that.
     if(typeof(input) === 'boolean') {
@@ -117,7 +117,7 @@ export class NavbarComponent {
     }
     // Else, just toggle the value
     else {
-    this.showUserNavLinks = !this.showUserNavLinks
+      this.showUserNavLinks = !this.showUserNavLinks;
     }
   }
 

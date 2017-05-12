@@ -4,7 +4,7 @@ import { NgModule }        from '@angular/core';
 import { BrowserModule }   from '@angular/platform-browser';
 import { RouterModule }    from '@angular/router';
 import { AppRouterModule } from './app-routing.module';
-import { FormsModule }     from '@angular/forms'
+import { FormsModule }     from '@angular/forms';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { MdDialogModule, MdInputModule, MdTooltipModule }  from '@angular/material';  // MaterialModule
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';

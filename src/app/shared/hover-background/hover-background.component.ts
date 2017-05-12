@@ -12,15 +12,15 @@ export class HoverBackgroundDirective {
   constructor(private el: ElementRef) {
   }
 
-  @Input('hoverBkgd') iconColor: string;
-  defaultColor: string = 'none';
+  @Input('hoverBkgd') hoverBkgd: string;
+  defaultColor = 'none';
 
   @HostListener('mouseenter') onMouseEnter() {
-    this.changeColor(this.iconColor);
+    this.changeColor(this.hoverBkgd);
   }
 
   @HostListener('mouseleave') onMouseLeave() {
-    this.changeColor(this.defaultColor)
+    this.changeColor(this.defaultColor);
   }
 
   private changeColor(color: string) {

@@ -24,7 +24,7 @@ export class ApiSearchService {
   // Search for signs or users
   search(searchStr: string): Observable<SearchResults> {
     console.log("IN FUNCTION iS: ", searchStr);
-    let searchUrl = this.signpostApi.buildUrl('search', [{':searchStr': searchStr}]);
+    const searchUrl = this.signpostApi.buildUrl('search', [{':searchStr': searchStr}]);
     return this.http
                .get(searchUrl)
                .map( res => {

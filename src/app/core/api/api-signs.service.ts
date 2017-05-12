@@ -16,7 +16,7 @@ export class ApiSignsService {
               private signpostApi: SignpostApi) {}
 
   getSignsByUsernameOrId(usernameOrId: string): Observable<Sign[]> {
-    let getSignsUrl = this.signpostApi.buildUrl('getSignsByUsernameOrId', [{':usernameOrId': usernameOrId}]);
+    const getSignsUrl = this.signpostApi.buildUrl('getSignsByUsernameOrId', [{':usernameOrId': usernameOrId}]);
     return this.http
                .get(getSignsUrl)
                .map( res => {
@@ -62,8 +62,8 @@ export class ApiSignsService {
   }
 
   oauthAutosignRedirect(oauthTypeIcon: string) {
-    let eatToken = this.signpostApi.getEatAuthCookie();
-    let oauthUrl = this.signpostApi.routes.oauthAutoSign[oauthTypeIcon];
+    const eatToken = this.signpostApi.getEatAuthCookie();
+    const oauthUrl = this.signpostApi.routes.oauthAutoSign[oauthTypeIcon];
 
     // Oauth1 requires current eat token in cookie
     // Oauth2 token requires eat token in query
@@ -72,7 +72,7 @@ export class ApiSignsService {
       case 'tumblr':  { callOauth1(); break; }
       case 'etsy':    { callOauth1(); break; }
       default: {
-        console.log("CALLING OAUTH2 AUTOSIGN...")
+        console.log("CALLING OAUTH2 AUTOSIGN...");
         window.location.href = oauthUrl +
                                '?eat='      + eatToken +
                                '&signType=' + oauthTypeIcon;
@@ -81,7 +81,7 @@ export class ApiSignsService {
 
     function callOauth1() {
       console.log("CALLING OAUTH1 AUTOSIGN...");
-      let expDate = new Date();
+      const expDate = new Date();
       expDate.setTime(expDate.getTime() + 8000);
       document.cookie = 'oauth1eat=' + eatToken + '; expires=' + expDate.toUTCString() +'; path=/';
       window.location.href = oauthUrl + '?signType=' + oauthTypeIcon;
@@ -118,7 +118,7 @@ export class ApiSignsService {
   destroySign(sign: Sign, deleteOauth: boolean): Observable<boolean> {
     console.log("IN THE DESTROY_SIGN METHOD...");
     const destroySignUrl = this.signpostApi.routes.destroySign;
-    let headers          = this.signpostApi.getHeaderWithEat();
+    const headers        = this.signpostApi.getHeaderWithEat();
     const options        = new RequestOptions({
                               headers: headers,
                               body:    JSON.stringify({sign: sign, deleteOauth: deleteOauth})

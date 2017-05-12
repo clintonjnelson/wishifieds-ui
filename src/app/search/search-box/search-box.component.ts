@@ -18,7 +18,7 @@ export class SearchBoxComponent implements OnInit {
   searchStr: string;
   foundUsers: User[];     // users found by search
   foundSigns: Sign[];     // signs found by search
-  hasSearched: boolean = false;    // dont show "0 results" before a search
+  hasSearched = false;    // dont show "0 results" before a search
 
   constructor(private   apiSearchService: ApiSearchService,
               private   signpostApi:      SignpostApi,
@@ -28,7 +28,7 @@ export class SearchBoxComponent implements OnInit {
   ngOnInit() {
     // Set searchQuery to our search, if exists (user clicked 'back'), or set empty
     this.searchStr = this.route.snapshot.queryParams['searchQuery'] || '';
-    if(this.searchStr) { this.search(null) }
+    if(this.searchStr) { this.search(null); }
                          // .queryParams
                          // .map(params => params['searchQuery'] || '');
                          // MAY NEED THIS IF GOING BACK WON"T RE-HIT NG-INIT
@@ -55,10 +55,10 @@ export class SearchBoxComponent implements OnInit {
         });
 
     function updateExistingUrl(searchStr: string) {
-      var updatedSearchUrl = window.location.protocol + '//' +  // https://
-                             window.location.host +             // www.syynpost.com
-                             window.location.pathname +         // /
-                             '?searchQuery=' + searchStr;  // ?searchQuery=Superman
+      const updatedSearchUrl = window.location.protocol + '//' +  // https://
+                               window.location.host +             // www.syynpost.com
+                               window.location.pathname +         // /
+                               '?searchQuery=' + searchStr;  // ?searchQuery=Superman
       // Update the existing history
       window.history.pushState({path: updatedSearchUrl}, '', updatedSearchUrl);
     }

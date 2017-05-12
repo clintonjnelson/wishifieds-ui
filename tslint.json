@@ -13,7 +13,7 @@
     "eofline": true,
     "forin": true,
     "import-blacklist": [true, "rxjs"],
-    "import-spacing": true,
+    "import-spacing": false,
     "indent": [
       true,
       "spaces"
@@ -60,7 +60,6 @@
       true,
       "check-open-brace",
       "check-catch",
-      "check-else",
       "check-whitespace"
     ],
     "prefer-const": true,
@@ -91,15 +90,14 @@
     "variable-name": false,
     "whitespace": [
       true,
-      "check-branch",
       "check-decl",
       "check-operator",
       "check-separator",
       "check-type"
     ],
 
-    "directive-selector": [true, "attribute", "app", "camelCase"],
-    "component-selector": [true, "element", "app", "kebab-case"],
+    "directive-selector": [false, "attribute", "camelCase"],
+    "component-selector": [false, "element", "kebab-case"],
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
     "use-host-property-decorator": true,

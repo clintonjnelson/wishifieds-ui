@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, ViewChild, OnDestroy, AfterViewChecked } from '@angular/core';
 import { NgForm, FormControl }   from '@angular/forms';   // Remove if no validation logic
 import { MdTooltipModule }       from '@angular/material';
 import { IconService }           from '../../../core/services/icon.service';
@@ -17,21 +17,21 @@ import { Sign }                  from '../../sign.model';
   styleUrls:  ['sign-content.component.css']
 })
 
-export class SignContentComponent implements OnInit {
+export class SignContentComponent implements OnInit, OnDestroy, AfterViewChecked {
   signForm: NgForm;
   @ViewChild('signForm') currentForm: NgForm;
   @Input()  sign: Sign;
   @Output() saveEE    = new EventEmitter<any>();
   @Output() destroyEE = new EventEmitter<any>();
   tempSign: Sign;
-  isOwner:  boolean = false;
+  isOwner = false;
   auth:     UserAuth;
   _subscription: Subscription;
 
   // For a new sign? If so, tailor the sign form accordingly.
-  isEditing:           boolean = false;
-  forSignCreation:     boolean = false;
-  showPreviewLabel:    boolean = false;
+  isEditing        = false;
+  forSignCreation  = false;
+  showPreviewLabel = false;
   private _forNewSign: void;  // IS THIS REALLY NEEDED????
   @Input('forNewSign') set forNewSign(val: boolean) {
     if(val === true) {
@@ -82,23 +82,22 @@ export class SignContentComponent implements OnInit {
   }
   preview() {
     this.toggleEditing();
-    this.saveEE.emit({preview: true, sign: this.tempSign})
+    this.saveEE.emit({preview: true, sign: this.tempSign});
   }
 
   destroy() {
     console.log("INSIDE DELETE...");
-    var that = this;
-    var confirmResponse: boolean;
-    var delSign = this.sign;
+    const that = this;
+    const delSign = this.sign;
     console.log("DEL SIGN IS: ", delSign);
     if(this.forSignCreation) {
       console.log("FOR NEW SIGN CREATION, SO PASSING CLOSE ONLY");
       this.destroyEE.emit({sign: null, destroy: false, close: true});
     }
     else {
-      var signDeleteMsg = 'Are you sure you want to delete this '+ delSign.signType +' sign?'
-      var showOauthDeleteCheckbox = (delSign.signType !== 'custom');
-      var checkboxMsg = 'Also remove ' + delSign.signType + ' login support?'
+      const signDeleteMsg = 'Are you sure you want to delete this '+ delSign.signType +' sign?';
+      const showOauthDeleteCheckbox = (delSign.signType !== 'custom');
+      const checkboxMsg = 'Also remove ' + delSign.signType + ' login support?';
       // Open modal via service for confirmation
       this.modalService
         .confirm('Sign Deletion', signDeleteMsg, showOauthDeleteCheckbox, checkboxMsg)
@@ -113,7 +112,7 @@ export class SignContentComponent implements OnInit {
                 },
                 error => {
                   console.log("ERROR DELETING SIGN. Error is: ", error);
-                })
+                });
           }
         });
     }
@@ -167,7 +166,7 @@ export class SignContentComponent implements OnInit {
   // ********** CONSIDER BREAKING OUT TO A SERVICE - SIMILIAR TO SIGNS *************
   // Resets the buttons that are triggered by changes
   private resetFormDisplay() {
-    var controls = this.signForm.controls;
+    const controls = this.signForm.controls;
     Object.keys(controls).forEach(control => {
       controls[control].markAsPristine();
       controls[control].markAsUntouched();
@@ -191,7 +190,7 @@ export class SignContentComponent implements OnInit {
     url: '',
     email: '',
     phone: ''
-  }
+  };
 
   ngAfterViewChecked() {
     this.formChangedCheck();

@@ -23,7 +23,7 @@ export class FilterIcon {
    The count tracks whether there is filtering (count > 0) or NO filtering (count = 0)
    Filtering is done based on the icon name, as icons act as an identifier
  */
-export class SearchResultsComponent implements OnInit {
+export class SearchResultsComponent implements OnInit, OnChanges {
   @Input() users: User[];
   @Input() signs: Sign[];
 
@@ -60,7 +60,7 @@ export class SearchResultsComponent implements OnInit {
 
   // *********** HELPERS *************
   private generateFiltersAndIcons() {
-    var that = this;
+    const that = this;
     this.signs.forEach((sign) => {
       // If already added, break. Else add to filters & displayIcons
       if(that.filters.hasOwnProperty(sign.icon)) { return; }
@@ -95,7 +95,7 @@ export class SearchResultsComponent implements OnInit {
       this.resetSigns();
     }
     else {
-      var that = this;
+      const that = this;
       // If compare sign icon to filter list to see if allow or not
       this.filteredSigns = this.signs.filter((sign) => { return that.filters[sign.icon]; });  // true will keep
     }

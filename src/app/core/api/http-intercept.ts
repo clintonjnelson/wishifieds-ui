@@ -22,7 +22,7 @@ export class HttpIntercept extends Http {
     return observable.catch( res => {
       // Check for trigger to reset EAT
       console.log("RES BEFORE IS: ", res);
-      var body = res.json();
+      const body = res.json();
       console.log("ERROR STATUS IS: ", res.status, " AND TYPE IS: ", typeof res.status);
       console.log("BODY IS: ", body);
       console.log("ORIG RES IS: ", res);
@@ -34,7 +34,7 @@ export class HttpIntercept extends Http {
       }
       // Continue as normal
       else {
-        return observable; //Observable.throw(res)
+        return observable; // Observable.throw(res)
       }
     });
   }

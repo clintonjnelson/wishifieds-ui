@@ -10,7 +10,7 @@ import { IconService } from '../../core/services/icon.service';
 })
 
 export class SignComponent {
-  @Input()  forNewSign: boolean = false;  // default to existing sign
+  @Input()  forNewSign = false;  // default to existing sign
   @Input()  sign: Sign;
   @Output() saveEE    = new EventEmitter<any>();
   @Output() destroyEE = new EventEmitter<any>();

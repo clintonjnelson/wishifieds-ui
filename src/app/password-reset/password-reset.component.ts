@@ -26,15 +26,15 @@ export class PasswordResetComponent {
 
 
   onSubmit() {
-    let email      = this.route.snapshot.queryParams['email'];
-    let resetToken = this.route.snapshot.queryParams['resettoken'];
+    const email      = this.route.snapshot.queryParams['email'];
+    const resetToken = this.route.snapshot.queryParams['resettoken'];
     console.log("RESET TOKEN FOUND IS: ", resetToken);
 
     this.apiAuthService.passwordReset(email, this.password, resetToken)
         .subscribe(
           success => {
             console.log("SUCCESS ON RESET IS: ", success);
-            let user = success.user;
+            const user = success.user;
             this.authService.setAuthCookies(user.eat, user.username, user.userId, user.email, user.role);
             this.router.navigate([user.username]);
           },

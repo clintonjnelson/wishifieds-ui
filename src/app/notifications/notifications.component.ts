@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { NotificationService, Notification } from '../core/services/notification.service';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs/Subscription';
 // Use by calling notificationService.notify('error', 'my error message!', 6000);
 // Error types are: error, warning, info, success
 
-export class NotificationsComponent {
+export class NotificationsComponent implements OnDestroy {
   // notifs: Notification[];
   notification: Notification;
   _subscription: Subscription;  // Current notification subscription

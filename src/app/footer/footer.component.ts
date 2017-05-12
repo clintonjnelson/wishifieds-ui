@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { MdTooltipModule } from '@angular/material';
 import { IconService } from '../core/services/icon.service';
@@ -29,11 +29,11 @@ const SOCIAL_LINKS: NavLink[] = [
   styleUrls: ['footer.component.css'],
 })
 
-export class FooterComponent {
+export class FooterComponent implements OnDestroy {
   currentUrl:       string;
   currentUsername:  any;
   urlSubscription:  any;
-  showSharingLinks: boolean = false;
+  showSharingLinks   = false;
   socialSharingLinks = SOCIAL_LINKS;
 
   constructor(private icons:       IconService,
@@ -54,7 +54,7 @@ export class FooterComponent {
 
       // Username? => set it if there is one
       if(event instanceof NavigationEnd) {
-        let currentUrlTree = this.router.parseUrl(this.router.url);
+        const currentUrlTree = this.router.parseUrl(this.router.url);
         // console.log("CURRENT URL TREE IS: ", currentUrlTree);
         try {
           this.currentUsername = currentUrlTree.root.children['primary']['segments'][0]['path'];
@@ -82,7 +82,7 @@ export class FooterComponent {
 
   // CALLS THE BUILD URL A LLLLLLLOOOOOOOOOTTTTTTTT of times. INEFFICIENT.
   private buildUrl(icon: string): string {
-    let currentUrl = this.currentUrl;
+    const currentUrl = this.currentUrl;
 
     // UNO urls take :url
     switch(icon) {

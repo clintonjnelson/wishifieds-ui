@@ -13,20 +13,23 @@ export class UserConfirmationRedirectComponent implements OnInit {
 
   ngOnInit() {
     const that = this;
-    let token  = this.route.snapshot.queryParams['confirmationtoken'];
-    let email  = this.route.snapshot.queryParams['email'];
+    const token  = this.route.snapshot.queryParams['confirmationtoken'];
+    const email  = this.route.snapshot.queryParams['email'];
 
     this.apiUsersService.confirmUser(token, email)
       .subscribe(
         success => {
           console.log("SUCCESS IN CONFIRM CALL SAYS: ", success);
-          let username = success.username;
+          const username = success.username;
           that.notifications.notify('success', 'Your email has been confirmed. Welcome!', 10000);
           that.router.navigate([username]);
         },
         error => {
           console.log("ERROR IN CONFIRM CALL IS: ", error);
-          that.notifications.notify('error', 'Confirmation was unsuccessful. Please try again or have us send you another confirmation email (request that in your user settings).')
+          that.notifications.notify('error',
+            'Confirmation was unsuccessful. ' +
+            'Please try again or have us send you another confirmation email (request that in your user settings).'
+          );
           that.router.navigate(['/']);
         });
   }

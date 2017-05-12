@@ -22,7 +22,7 @@ export class RequestPasswordResetComponent {
 
 
   onSubmit() {
-    var that = this;
+    const that = this;
     this.isProcessing = true;
     this.apiAuthService.passwordResetEmail(that.email)
       .subscribe(

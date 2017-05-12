@@ -12,7 +12,7 @@ export class AdminGuard implements CanActivate {
 
   // Apparently the route passes route & state to canActivate
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    let url: string = state.url;
+    const url: string = state.url;
 
     return this.checkAdminLogin(url);
   }

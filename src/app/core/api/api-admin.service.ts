@@ -12,8 +12,8 @@ export class ApiAdminService {
               private signpostApi: SignpostApi) {}
 
   getUsers(): Observable<User[]> {
-    let getUsersUrl = this.signpostApi.routes.adminGetUsers;
-    let options     = this.signpostApi.getRequestOptionWithEatHeader();
+    const getUsersUrl = this.signpostApi.routes.adminGetUsers;
+    const options     = this.signpostApi.getRequestOptionWithEatHeader();
 
     return this.http
                .get(getUsersUrl, options)

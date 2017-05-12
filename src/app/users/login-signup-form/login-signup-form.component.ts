@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, AfterViewChecked } from '@angular/core';
 import { NgForm, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MdTooltipModule } from '@angular/material';
@@ -20,7 +20,7 @@ const EMAIL_REGEX = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"
 })
 
 
-export class LoginSignupFormComponent {
+export class LoginSignupFormComponent implements AfterViewChecked {
   emailRegex: RegExp = EMAIL_REGEX;
   loginForm: NgForm;
   @ViewChild('loginForm') currentForm: NgForm;
@@ -61,7 +61,7 @@ export class LoginSignupFormComponent {
               that.router.navigate([res.username]);
             },
             err => {
-              let body = err.json();
+              const body = err.json();
               console.log("ERROR TO HANDLE FINAL IS: ", body);
               if(body.msg === 'email-taken') {
                 console.log("SHOWING FORM ERROR NOW...");
@@ -80,8 +80,8 @@ export class LoginSignupFormComponent {
 
   login(email: string, password: string) {
     const that = this;
-    var encodedCreds = window.btoa(email + ':' + password);
-    console.log("ABOUT TO TRY TO LOGIN")
+    const encodedCreds = window.btoa(email + ':' + password);
+    console.log("ABOUT TO TRY TO LOGIN");
     this.apiAuthService.apiLoginBasicAuth(encodedCreds)
       .subscribe(
         success => {
@@ -133,7 +133,7 @@ export class LoginSignupFormComponent {
     login: {
       user: "Invalid email/password combination. Please try again."
     }
-  }
+  };
 
   ngAfterViewChecked() {
     this.formChanged();

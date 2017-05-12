@@ -39,7 +39,7 @@ export class UniqueValidatorDirective implements Validator, OnChanges {
       const isUnique = this.checkApi(type, checkUniqueVal);  // HERE WE NEED TO HIT THE API TO VERIFY UNIQUENESS; DO BASED ON TYPE PASSED IN
       return isUnique ? null : {unique: {checkUniqueVal}};   // Unique, then stand down, else pass error object
       // Not possible to return a value from a callback, soooooo......
-    }
+    };
   }
 
   checkApi(type: string, checkVal: string): boolean {

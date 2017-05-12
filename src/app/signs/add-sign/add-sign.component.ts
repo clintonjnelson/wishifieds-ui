@@ -83,7 +83,7 @@ const CUSTOM_SIGNS: Sign[] = [
   _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: '' },
   { signName: 'ebay', signType: 'custom', bgColor: '#f5af02', icon: 'ebay',
   _id: '', description: '', knownAs: '', linkUrl: '', picUrl: '', userId: ''},
-]
+];
 
 // HOW SHOW THE PHONE & EMAIL SIGNS?????
 const GENERIC_SIGNS: Sign[] = [
@@ -109,10 +109,10 @@ export class AddSignComponent {
   generics: Sign[] = GENERIC_SIGNS;
   selectedSign: Sign;
 
-  showAddSignIcons: boolean = false;
-  showSignForm: boolean = false;
+  showAddSignIcons = false;
+  showSignForm     = false;
   @Input()  signs: Sign[];
-  @Output() saveEE  = new EventEmitter<any>()
+  @Output() saveEE  = new EventEmitter<any>();
   @Output() destroyEE = new EventEmitter<any>();
   // MAYBE: TO ENABLE DYNAMIC SIGN TYPE UPDATE, LISTEN VIA NEW @OUTPUT FOR CHANGES,
   // WOULD PROBABLY HAVE TO BE SENT UPON EACH KEYSTROKE OR SOMETHING LIKE THAT.
@@ -129,7 +129,7 @@ export class AddSignComponent {
   }
 
   isOauthAdded(checkLink: Link): boolean {
-    var returnVal = false;
+    let returnVal = false;
     this.signs.forEach(function(elem: Sign, ind: Number, orig: Sign[]) {
       if(elem.signName === checkLink.linkName) {
         returnVal = true;
@@ -151,7 +151,7 @@ export class AddSignComponent {
     this.toggleShowForm(false);
   }
   save(event: any) {
-    var newSign = event;
+    let newSign = event;
     if(!event._id) { newSign._id = this.signs.length; }
     console.log("SIGN AT THE ADDSIGN LEVEL IS: ", newSign);
     // Reset the area to closed. Triggered by event emitters from inner save/close

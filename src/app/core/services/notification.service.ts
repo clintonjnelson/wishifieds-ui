@@ -40,7 +40,7 @@ export class NotificationService {
     this.notifChangeEmit.next(this.display);
     this.currentlyDisplaying = true;
 
-    var dispTime = (notif.displayTime ? notif.displayTime : 6000);  // may not need eventually
+    const dispTime = (notif.displayTime ? notif.displayTime : 6000);  // may not need eventually
     setTimeout(nextNotifOrEnd.bind(this), dispTime);
 
     function nextNotifOrEnd() {

@@ -87,8 +87,8 @@ export class SignpostApi {
     // console.log("subs IS: ", substitutions);
     // Runs each of the substitutions, returning the final URL
     return substitutions.reduce( (priorResult, currentSubstitution) => {
-        let sub = Object.keys(currentSubstitution)[0];
-        let val = currentSubstitution[sub];
+        const sub = Object.keys(currentSubstitution)[0];
+        const val = currentSubstitution[sub];
         return priorResult.replace(sub, val);
       },
       baseUrl  // Initial value of string

@@ -15,7 +15,7 @@ import { User } from '../../users/user.model';
 export class AdminDashboardComponent implements OnInit {
   isAdmin: boolean;
   users: User[];
-  isProcessing: boolean = false;
+  isProcessing = false;
 
   constructor(private authService:     AuthService,
               private apiAdminService: ApiAdminService,
