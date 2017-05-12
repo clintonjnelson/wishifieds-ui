@@ -4,9 +4,8 @@
   <p id="msg" class="modal-content">{{msg}}</p>
 
   <div *ngIf="showCheckbox" id="checkbox-container">
-    <md-checkbox [(ngModel)]="checkboxVal" color="primary" name="modal checkbox" id="modal-checkbox" class="modal-content">
-      {{checkboxMsg}}
-    </md-checkbox>
+    <input type="checkbox" [(ngModel)]="checkboxVal" name="modal checkbox" id="modal-checkbox" class="modal-content"/>
+    {{checkboxMsg}}
   </div>
 
   <!-- OK/Close Buttons - also return checkbox value -->
