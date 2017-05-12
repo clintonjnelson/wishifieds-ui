@@ -37,7 +37,8 @@ h3, p , a {
 }
 .sign-content-first-line {}
 .sign-content-second-line {
-  font-size: 1em;
+  margin-top: auto;   /* align on bottom */
+  font-size: 0.8em;
 }
 .sign-content-title {
   font-size: 1.25em;
