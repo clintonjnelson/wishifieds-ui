@@ -64,8 +64,10 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
     return this.icons.buildIconClass(icon, size);
   }
 
-  resendConfirmationEmail(event: any) {
-    event.preventDefault();
+
+
+  resendConfirmationEmail(event: any = null) {
+    if(event) { event.preventDefault(); }
     const that = this;
 
     // Ensure there is an email before attempting to send
@@ -81,7 +83,7 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
           },
           error => {
             console.log("ERROR IN USER SETTINGS FOR RESEND CONFIRMATION IS: ", error);
-            that.notifService.notify('error', 'Email could not be sent.', 8000);
+            that.notifService.notify('error', 'Confirmation email could not be sent. Please try again.', 8000);
           });
     }
   }
@@ -117,13 +119,19 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
         success => {
           console.log("SUCCESS UPDATING THE USER IS: ", success);
           const user = success.user;
+          const origEmail = that.userSettings.email;  // preserve orig email value
           const shouldReloadUser = (that.authService.auth.username !== user.username);
+          // Reset userSettings to new values
           that.userSettings = Object.assign({}, that.tempSettings);
+          // Reset auth cookies
           that.authService.setAuthCookies(that.authService.getEatAuthCookie(),
                                           user.username,
                                           user.userId,
                                           user.email,
                                           user.role);
+          // Send confirmation email, if necessary
+          if(that.didUpdateUnconfirmedEmail(origEmail, user.email)) { that.resendConfirmationEmail(); }
+          // Updates notifications
           that.notifService.notify('success', 'Settings updates saved.');
           if(usernameChange) {
             const msg = 'Your username changed. Please remember, this has changed the address of your syynpost. ' +
@@ -131,7 +139,9 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
                         'they will no longer work until you update them to your new syynpost address.';
             that.notifService.notify('warning', msg, 12000);
           }
+          // Redirect to new URL, if username changed (ie: url also changed)
           if(shouldReloadUser) { that.router.navigate([user.username, 'settings']); }
+          // Check/update values otherwise
           that.setIsConfirmed(user.confirmed);
           that.resetFormDisplay();  // reset means turns off buttons
         },
@@ -178,6 +188,11 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
 
   private resetSettingsCopy() {
     this.tempSettings = Object.assign({}, this.userSettings);  // Make a copy
+  }
+
+  private didUpdateUnconfirmedEmail(origEmail: string, newEmail: string) {
+    // not confirmed & just updated email
+    return (!this.isConfirmed && (origEmail !== newEmail) );
   }
 
   // ********** CUSTOM VALIDATIONS HERE - MAYBE BREAK INTO LIBRARY CLASS *************

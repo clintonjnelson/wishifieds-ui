@@ -2,7 +2,8 @@
 <div class="user-settings-container">
   <h2 class="settings-page-heading">settings</h2>
 
-  <div *ngIf="!isConfirmed" class="settings-confirmation-container">
+  <!-- Email but NOT confirmed -->
+  <div *ngIf="!isConfirmed && userSettings && userSettings.email" class="settings-confirmation-container">
     <h3>You have not yet confirmed your email</h3>
     <p>Please visit your email inbox, and click the link in the Syynpost Confirmation email.</p>
     <a *ngIf="!emailWasResent" (click)="resendConfirmationEmail($event)" href="#">Click here to re-send the confirmation email</a>
@@ -12,6 +13,12 @@
     <p *ngIf="displayedValidationErrors.confirmation" class="error">
       {{ displayedValidationErrors.confirmation }}
     </p>
+  </div>
+
+  <!-- NO Email + NO confirmation -->
+  <div *ngIf="!isConfirmed && userSettings && !userSettings.email" class="settings-confirmation-container">
+    <h3>You have not yet entered your email</h3>
+    <p>Please update your email address below.</p>
   </div>
 
   <form *ngIf="!isProcessing" name="userSettingsForm" class="user-settings-form" #userSettingsForm="ngForm">
