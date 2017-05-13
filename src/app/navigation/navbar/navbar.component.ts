@@ -18,7 +18,7 @@ const OAUTHS: OauthLink[] = [
   {icon: 'deviantart',        url: '/api/login/deviantart',     bgColor: '#b3c432'},
   {icon: 'etsy',              url: '/api/login/etsy',           bgColor: '#d15600'},
   {icon: 'facebook',          url: '/api/login/facebook',       bgColor: '#3b5998'},
-  {icon: 'foursquare',        url: '/api/login/foursquare',     bgColor: '#0072b1'},
+  {icon: 'foursquare',        url: '/api/login/foursquare',     bgColor: '#f94877'},
   {icon: 'instagram',         url: '/api/login/instagram',      bgColor: '#675144'},
   {icon: 'linkedin',          url: '/api/login/linkedin',       bgColor: '#4875B4'},
   {icon: 'twitter',           url: '/api/login/twitter',        bgColor: '#00aced'},

@@ -18,7 +18,7 @@ const OLINKS: Link[] = [
   {url: '/api/auto/disqus',        icon: 'disqus',         bgColor: '#2e9fff', linkName: 'disqus'},
   {url: '/api/auto/etsy',          icon: 'etsy',           bgColor: '#d15600', linkName: 'etsy'},
   {url: '/api/auto/facebook',      icon: 'facebook',       bgColor: '#3b5998', linkName: 'facebook'},
-  {url: '/api/auto/foursquare',    icon: 'foursquare',     bgColor: '#0072b1', linkName: 'foursquare'},
+  {url: '/api/auto/foursquare',    icon: 'foursquare',     bgColor: '#f94877', linkName: 'foursquare'},
   {url: '/api/auto/instagram',     icon: 'instagram',      bgColor: '#675144', linkName: 'instagram'},
   {url: '/api/auto/linkedin',      icon: 'linkedin',       bgColor: '#4875B4', linkName: 'linkedin'},
   {url: '/api/auto/github',        icon: 'github',         bgColor: '#333333', linkName: 'github'},
