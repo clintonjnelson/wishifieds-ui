@@ -3,7 +3,7 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 @Directive({ selector: '[delayDragLift]' })
 
 export class DragulaDelayLiftDirective {
-  dragDelay = 700;
+  dragDelay = 500;
   draggable = false;
   touchTimeout: any;
 

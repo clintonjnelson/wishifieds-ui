@@ -30,8 +30,10 @@ const rootRoutes: Routes = [
   { path: 'admin/users', component: AdminUserManagementComponent, canActivate: [AdminGuard], pathMatch: 'full' },
   { path: 'admin', component: AdminDashboardComponent, canActivate: [AdminGuard], pathMatch: 'full' },
 
-  { path: 'termsandconditions', component: TermsConditionsComponent, pathMatch: 'full' },
   { path: 'faq', component: FaqComponent, pathMatch: 'full' },
+
+  { path: 'termsandconditions', component: TermsConditionsComponent, pathMatch: 'full' },
+  { path: 'api/auto/:oauth', redirectTo: '/oauth/errors/reset', pathMatch: 'full' },
 
   // These have to come last to avoid username confusion
   { path: ':username/settings', component: UserSettingsComponent, canActivate: [OwnerGuard], pathMatch: 'full'},

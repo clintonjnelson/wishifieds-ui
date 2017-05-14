@@ -58,6 +58,10 @@ export class OauthRedirectComponent implements OnInit {
         this.router.navigate(['/']);
         break;
       }
+      case 'reset': {
+        this.notification.notify('warning', 'Sorry, your session expired. Please login and try again!', 8000);
+        this.authService.logout();   // deletes cookies, reset auth values, redirect home
+      }
       default: this.router.navigate(['/']);
     }
   }

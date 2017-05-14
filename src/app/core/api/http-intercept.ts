@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, ConnectionBackend, Headers, RequestOptions, RequestOptionsArgs, Request, Response } from '@angular/http';
-import { Router } from '@angular/router';
+// import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../auth/auth.service';
 import 'rxjs/add/operator/catch';
@@ -9,9 +9,9 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 
 export class HttpIntercept extends Http {
-  constructor(backend:             ConnectionBackend,
-              defaultOptions:      RequestOptions,
-              private authService: AuthService) {
+  constructor(backend:               ConnectionBackend,
+              defaultOptions:        RequestOptions,
+              private authService:   AuthService) {
     super(backend, defaultOptions);
   }
 
