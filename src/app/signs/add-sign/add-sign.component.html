@@ -1,7 +1,7 @@
 <div class="add-sign-comtainer">
   <!-- Add-Sign Icon -->
   <div *ngIf="!showAddSignIcons && !showSignForm" class="add-sign-icon-container">
-    <i (click)="toggleShowAddSignIcons()" mdTooltip="[show sign creation options]" mdTooltipPosition="above" class="{{buildIconClass('plus', '2')}}"></i>
+    <i (click)="toggleShowAddSignIcons()" mdTooltip="[add a sign]" mdTooltipPosition="above" class="{{buildIconClass('plus', '2')}}"></i>
   </div>
 
   <div *ngIf="showAddSignIcons || showSignForm">
