@@ -124,6 +124,9 @@ export class SignContentComponent implements OnInit, OnDestroy, AfterViewChecked
     const that = this;
     // Create New Sign?
     if(this.forSignCreation) {
+
+      if(!tempSign.signName || !tempSign.linkUrl) { return this.triggerEmptyInputValidations(); }
+
       console.log("CALLING THE CREATE SIGN ROUTE for this sign: ", tempSign);
       this.apiSignsService.createSign(tempSign)
         .subscribe(
@@ -168,6 +171,7 @@ export class SignContentComponent implements OnInit, OnDestroy, AfterViewChecked
   private resetFormDisplay() {
     const controls = this.signForm.controls;
     Object.keys(controls).forEach(control => {
+      console.log("CONTROL IS: ", control);
       controls[control].markAsPristine();
       controls[control].markAsUntouched();
     });
@@ -194,6 +198,12 @@ export class SignContentComponent implements OnInit, OnDestroy, AfterViewChecked
 
   ngAfterViewChecked() {
     this.formChangedCheck();
+  }
+
+  private triggerEmptyInputValidations() {
+    this.signForm.form.get('title').markAsDirty();
+    this.signForm.form.get('url').markAsDirty();
+    this.onValueChanged(null);
   }
 
   private formChangedCheck() {

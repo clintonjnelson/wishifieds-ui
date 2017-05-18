@@ -14,8 +14,8 @@
 
   <div *ngIf="showSharingLinks" class="sharing-links-container">
       <ul class="drop-up-links">
-        <li>
-          <i class="{{buildIconClass('share', '2')}} social-sharing-links" (click)="copyMyUrlToClipboard()" mdTooltip="copy my URL" mdTooltipPosition="left"></i>
+        <li *ngIf="auth.isLoggedIn">
+          <i class="{{buildIconClass('share', '2')}} social-sharing-links" (click)="copyMyUrlToClipboard()" mdTooltip="copy my URL" mdTooltipPosition="above"></i>
         </li>
         <li *ngFor="let link of socialSharingLinks" class="social-sharing-links">
           <icon-link [url]="link.url"
