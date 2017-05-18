@@ -1,7 +1,11 @@
-import { Component, OnDestroy } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { NavigationEnd, Router, UrlSerializer } from '@angular/router';
+import { Location } from '@angular/common';
+import { AuthService, UserAuth } from '../core/auth/auth.service';
+import { NotificationService } from '../core/services/notification.service';
 import { MdTooltipModule } from '@angular/material';
 import { IconService } from '../core/services/icon.service';
+import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { SignpostApi } from '../core/api/signpost-api.service';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
@@ -30,23 +34,42 @@ const SOCIAL_LINKS: NavLink[] = [
 })
 
 export class FooterComponent implements OnDestroy {
+  @ViewChild('clipboardUrlEl') clipboardUrlEl: ElementRef;
+  auth: UserAuth;
+  userHomeUrl: string;
+  authSubscription: Subscription;
+  urlSubscription:  Subscription;
   currentUrl:       string;
   currentUsername:  any;
-  urlSubscription:  any;
   showSharingLinks   = false;
   socialSharingLinks = SOCIAL_LINKS;
 
-  constructor(private icons:       IconService,
-              private router:      Router,
-              private signpostApi: SignpostApi,
-              private http:        Http) {
-    // Set Initial values
+  constructor(private icons:         IconService,
+              private router:        Router,
+              private location:      Location,
+              private urlSerializer: UrlSerializer,
+              private authService:   AuthService,
+              private notifications: NotificationService,
+              private signpostApi:   SignpostApi,
+              private http:          Http) {
+
+    // Initialize user's clipboard copy link
+    this.auth = authService.auth;
+    this.updateUserHomeUrl();
+
+    // Maintain user's home clipboard copy link
+    this.authSubscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => {
+      this.auth = newVal;
+      this.updateUserHomeUrl();
+    });
+
+    // Set Initial values for social sharing
     this.updaateCurrentUrl();
     this.rebuildSocialSharingLinks();
 
     // HACKY, but currently the only way to get the username outside of a router-outlet
     // Set currentUrl & try to get currentUsername
-    this.urlSubscription = this.router.events.subscribe( event => {
+    this.urlSubscription = router.events.subscribe( event => {
 
       // Update links on change
       this.updaateCurrentUrl();
@@ -78,6 +101,28 @@ export class FooterComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.urlSubscription.unsubscribe();
+  }
+
+  copyMyUrlToClipboard() {
+    if(this.auth.isLoggedIn) {
+      console.log("LOGGED IN. Time to select...");
+      this.clipboardUrlEl.nativeElement.select(); // select it as current
+      try {
+        document.execCommand('copy');  // copy selected text
+        this.notifications.notify('success', 'Your syynpost link URL has been copied to your clipboard! You can now paste it wherever you\'d like.');
+        window.scrollTo(0, 0);
+      }
+      catch (e) {
+        console.log('Error copying user home link url. Error: ', e);
+      }
+    }
+  }
+
+  private updateUserHomeUrl() {
+    let urlTree = this.router.createUrlTree([this.auth.username]);
+    let serializedTreeUrl = this.router.serializeUrl(urlTree);
+    this.userHomeUrl = window.location.origin + this.location.prepareExternalUrl(serializedTreeUrl);
+    console.log("URL TO USE FOR COPY FUNCTION IS: ", this.userHomeUrl);
   }
 
   // CALLS THE BUILD URL A LLLLLLLOOOOOOOOOTTTTTTTT of times. INEFFICIENT.

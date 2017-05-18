@@ -1,6 +1,5 @@
 <!-- Navigation Header Bar -->
 <div class="navbar">
-  <input name="clipboardUrlEl" #clipboardUrlEl id="clipboardUrlEl" [(ngModel)]="userHomeUrl"/>
   <div mdTooltip="home" mdTooltipPosition="right" class="navbar-signpost-icon">
     <!-- Logged Out => Landing Page + Search -->
     <a *ngIf="!auth.isLoggedIn" routerLink="/">
@@ -65,9 +64,6 @@
         <a routerLink="/" (click)="toggleShowUserNavLinks()" mdTooltip="search" mdTooltipPosition="above">
           <i class="{{buildIconClass('search', '2')}}"></i>
         </a>
-      </li>
-      <li>
-        <i class="{{buildIconClass('share', '2')}}" (click)="copyMyUrlToClipboard()" mdTooltip="copy my URL" mdTooltipPosition="left"></i>
       </li>
       <!-- Signout Button -->
       <li (click)="logout()" class="user-signout-link">

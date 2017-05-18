@@ -8,11 +8,6 @@
 
 }
 
-#clipboardUrlEl {
-  visibility: hidden;
-  display: none;
-}
-
 .navbar-signpost-icon {
   display: flex;
   -webkit-align-self: flex-start;

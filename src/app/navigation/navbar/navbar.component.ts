@@ -1,6 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router, UrlSerializer } from '@angular/router';
+import { Component, OnDestroy } from '@angular/core';
 import { MdTooltipModule } from '@angular/material';
 import { IconService } from '../../core/services/icon.service';
 import { AuthService, UserAuth } from '../../core/auth/auth.service';
@@ -57,7 +55,6 @@ const OAUTHS: OauthLink[] = [
 })
 
 export class NavbarComponent implements OnDestroy {
-  @ViewChild('clipboardUrlEl') clipboardUrlEl: ElementRef;
   oauthLinks = OAUTHS;
   showLoginLinks        = false;
   showSignpostLoginForm = false;
@@ -65,22 +62,16 @@ export class NavbarComponent implements OnDestroy {
   auth: UserAuth;
   isLoggedIn            = false;
   isLoggedOut           = true;
-  userHomeUrl: string;
   _subscription: Subscription;
 
-  constructor(private router:        Router,
-              private location:      Location,
-              private urlSerializer: UrlSerializer,
+  constructor(
               private icons:         IconService,
               private authService:   AuthService,
               private notifications: NotificationService ) {
     this.auth          = authService.auth;
     this._subscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => {
-      // Track & Update these
-      this.auth = newVal;
-      this.updateUserHomeUrl();
+      this.auth = newVal;  // Track & Update these
     });
-    this.updateUserHomeUrl();
   }
 
   ngOnDestroy() {
@@ -89,27 +80,6 @@ export class NavbarComponent implements OnDestroy {
 
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);
-  }
-
-  updateUserHomeUrl() {
-    let urlTree = this.router.createUrlTree([this.auth.username]);
-    let serializedTreeUrl = this.router.serializeUrl(urlTree);
-    this.userHomeUrl = window.location.origin + this.location.prepareExternalUrl(serializedTreeUrl);
-    console.log("URL TO USE FOR COPY FUNCTION IS: ", this.userHomeUrl);
-  }
-
-  copyMyUrlToClipboard() {
-    if(this.auth.isLoggedIn) {
-      console.log("LOGGED IN. Time to select...");
-      this.clipboardUrlEl.nativeElement.select(); // select it as current
-      try {
-        document.execCommand('copy');  // copy selected text
-        this.notifications.notify('success', 'Your syynpost link URL has been copied to your clipboard!');
-      }
-      catch (e) {
-        console.log('Error copying user home link url. Error: ', e);
-      }
-    }
   }
 
   // Logged OUT Helpers

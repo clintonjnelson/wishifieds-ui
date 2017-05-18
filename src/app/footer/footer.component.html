@@ -5,6 +5,7 @@
       <i class="{{buildIconClass('question', '2')}}"></i>
     </a>
   </div>
+  <input name="clipboardUrlEl" #clipboardUrlEl id="clipboardUrlEl" [(ngModel)]="userHomeUrl"/>
 
   <!-- Social Sharing Links -->
   <div *ngIf="!showSharingLinks" class="sharing-links-container">
@@ -13,6 +14,9 @@
 
   <div *ngIf="showSharingLinks" class="sharing-links-container">
       <ul class="drop-up-links">
+        <li>
+          <i class="{{buildIconClass('share', '2')}} social-sharing-links" (click)="copyMyUrlToClipboard()" mdTooltip="copy my URL" mdTooltipPosition="left"></i>
+        </li>
         <li *ngFor="let link of socialSharingLinks" class="social-sharing-links">
           <icon-link [url]="link.url"
                      [icon]="link.icon"

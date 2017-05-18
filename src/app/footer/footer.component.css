@@ -16,7 +16,12 @@
   display: flex;
   flex: 1 0 auto;
   align-self: flex-end;
-  text-align: right;
+  text-align: center;
+}
+
+#clipboardUrlEl {
+  visibility: hidden;
+  display: none;
 }
 
 .faq-icon {
@@ -33,6 +38,7 @@ ul.drop-up-links {
   bottom: 100%;
   right: 0px;
   padding-left: 0px;
+  list-style: none;
 }
 
 .share-heading {
@@ -45,6 +51,7 @@ ul.drop-up-links {
 .social-sharing-links {
   bottom: 100%;
   display: block;
+  margin-top: 7px;
   padding-left: 5px;
   padding-right: 5px;
   bottom: 100%;
