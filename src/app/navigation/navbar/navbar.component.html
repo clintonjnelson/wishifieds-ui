@@ -24,7 +24,7 @@
     <i class="{{buildIconClass('angle-double-right', '2')}}"></i>
   </div>
   <div class="nav-right-links-container" *ngIf="auth.isLoggedOut">
-    <ul *ngIf="showLoginLinks" class="navbar-login-links navbar-login-links-shift-up">
+    <ul *ngIf="showLoginLinks" class="navbar-login-links">
       <li class="nav-links-oauth" *ngFor="let link of oauthLinks">
         <icon-link [url]="link.url"
                    [icon]="link.icon"
