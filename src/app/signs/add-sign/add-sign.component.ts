@@ -74,21 +74,6 @@ const GENERIC_SIGNS: SignAddType[] = [
   { icon: 'envelope', bgColor: 'black',  signType: 'generic', signName: 'email' },
 ];
 
-function buildSigns(signAddTypes: SignAddType[] ): Sign[] {
-  return signAddTypes.map(function(sign) {
-    return { icon:        sign.icon,
-             bgColor:     sign.bgColor,
-             signName:    sign.signName,
-             signType:    sign.signType,
-             _id:         '',
-             description: '',
-             knownAs:     '',
-             linkUrl:     '',
-             picUrl:      '',
-             userId:      '',
-           };
-  });
-}
 
 
 @Component({
@@ -100,8 +85,8 @@ function buildSigns(signAddTypes: SignAddType[] ): Sign[] {
 
 export class AddSignComponent {
   oauths: Link[]   = OLINKS;                      // Oauth for fontawesome icons
-  customs: Sign[]  = buildSigns(CUSTOM_SIGNS);               // Custom Sign with fontawesome icons
-  generics: Sign[] = buildSigns(GENERIC_SIGNS);
+  customs: Sign[]  = this.buildSigns(CUSTOM_SIGNS);               // Custom Sign with fontawesome icons
+  generics: Sign[] = this.buildSigns(GENERIC_SIGNS);
   selectedSign: Sign;
 
   showAddSignIcons = false;
@@ -115,6 +100,22 @@ export class AddSignComponent {
   // UDPATED IN THIS SIGN. THEN WONT HAVE TO TURN OFF TYPES AFTER SELECTION.
   // WOULD HAVE ONE SELECTED_SIGN THAT GETS UPDATES WITH ONLY TYPE & COLOR & ICON
   // WHEN ANOTHER TYPE IS CHANGED.
+
+  buildSigns(signAddTypes: SignAddType[] ): Sign[] {
+    return signAddTypes.map(function(sign) {
+      return { icon:        sign.icon,
+               bgColor:     sign.bgColor,
+               signName:    sign.signName,
+               signType:    sign.signType,
+               _id:         '',
+               description: '',
+               knownAs:     '',
+               linkUrl:     '',
+               picUrl:      '',
+               userId:      '',
+             };
+    });
+  }
 
   constructor(private helpers: HelpersService,
               private icons:   IconService) {}
