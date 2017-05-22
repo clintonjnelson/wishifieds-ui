@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Sign }        from '../sign.model';
 import { IconService } from '../../core/services/icon.service';
+import { ApiInteractionLoggerService } from '../../core/api/api-interaction-logger.service';
 
 @Component({
   moduleId: module.id,
@@ -15,7 +16,8 @@ export class SignComponent {
   @Output() saveEE    = new EventEmitter<any>();
   @Output() destroyEE = new EventEmitter<any>();
 
-  constructor( private icons: IconService ) {}
+  constructor( private icons:        IconService,
+               private interactions: ApiInteractionLoggerService ) {}
 
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);
@@ -46,5 +48,11 @@ export class SignComponent {
       console.log("SIGN AT THE SIGN_COMPONENT LEVEL IS: ", event);
       this.saveEE.emit(event);    // keep passing the sign up
     }
+  }
+
+  logInteraction() {
+    console.log("INTERACTION CLICKED");
+    const userId = window.localStorage.getItem('userId') || 'null';
+    this.interactions.logSignLinkOffClick(this.sign._id, userId);
   }
 }

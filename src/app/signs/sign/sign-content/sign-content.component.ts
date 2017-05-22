@@ -8,6 +8,7 @@ import { ApiSignsService }       from '../../../core/api/api-signs.service';
 import { ModalService }          from '../../../core/services/modal.service';
 import { Subscription }          from 'rxjs/Subscription';
 import { Sign }                  from '../../sign.model';
+import { ApiInteractionLoggerService } from '../../../core/api/api-interaction-logger.service';
 
 
 @Component({
@@ -46,7 +47,8 @@ export class SignContentComponent implements OnInit, OnDestroy, AfterViewChecked
                private helpers:         HelpersService,
                private authService:     AuthService,
                private apiSignsService: ApiSignsService,
-               private modalService:    ModalService) {
+               private modalService:    ModalService,
+               private interactions:    ApiInteractionLoggerService) {
     this.auth = authService.auth;
     this._subscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => {
       this.auth = newVal;
@@ -165,6 +167,14 @@ export class SignContentComponent implements OnInit, OnDestroy, AfterViewChecked
     else { this.isEditing = !this.isEditing; }
     console.log("EDITING TOGGLED & IS NOW: ", this.isEditing);
   }
+
+  logInteraction() {
+    console.log("INTERACTION CLICKED");
+    const userId = window.localStorage.getItem('userId');
+    this.interactions.logSignLinkOffClick(this.sign._id, userId);
+  }
+
+
 
   // ********** CONSIDER BREAKING OUT TO A SERVICE - SIMILIAR TO SIGNS *************
   // Resets the buttons that are triggered by changes

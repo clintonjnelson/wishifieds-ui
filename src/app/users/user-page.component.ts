@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute }               from '@angular/router';
+import { AuthService, UserAuth }        from '../core/auth/auth.service';
+import { ApiSignsService }              from '../core/api/api-signs.service';
+import { ApiInteractionLoggerService }  from '../core/api/api-interaction-logger.service';
 import { Sign } from '../signs/sign.model';
-import { AuthService, UserAuth } from '../core/auth/auth.service';
-import { ApiSignsService } from '../core/api/api-signs.service';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -20,9 +21,10 @@ export class UserPageComponent implements OnInit, OnDestroy {
   isOwner = false;
   isProcessing: boolean;
 
-  constructor( private authService:    AuthService,
+  constructor( private authService:     AuthService,
                private apiSignsService: ApiSignsService,
-               private route:          ActivatedRoute ) {
+               private route:           ActivatedRoute,
+               private interactions:    ApiInteractionLoggerService ) {
     this.auth = authService.auth;
     this.authSubscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => {
       this.auth = newVal;
@@ -57,6 +59,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
           return error.json();
         }
       );
+    this.logInteraction(usernameFromRoute);
   }
 
   destroy(event: any) {
@@ -81,5 +84,11 @@ export class UserPageComponent implements OnInit, OnDestroy {
     } else {
       this.signs.push(event);     // bubbles sign up, so add it to the list
     }
+  }
+
+  logInteraction(username) {
+    console.log("INTERACTION CLICKED");
+    const userId = window.localStorage.getItem('userId');
+    this.interactions.logUserPageVisit(username, userId);
   }
 }

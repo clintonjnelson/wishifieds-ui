@@ -2,7 +2,7 @@
   <!-- Sign Info -->
   <div class="sign-content" *ngIf="!isEditing">
     <h3 class="sign-content-title">
-      <a href="{{sign.linkUrl}}" target="_blank" class="sign-content-title">{{ sign.knownAs }}</a>
+      <a href="{{sign.linkUrl}}" (click)="logInteraction()" target="_blank" class="sign-content-title">{{ sign.knownAs }}</a>
     </h3>
     <p class="sign-content-first-line"> {{ sign.description }} </p>
   </div>

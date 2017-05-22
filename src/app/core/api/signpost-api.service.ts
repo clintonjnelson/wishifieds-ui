@@ -57,6 +57,10 @@ const ROUTES = {
     youtube:          '/api/auto/youtube',
   },
 
+  // Interactions
+  userPageVisit:  '/api/interactions/userpagevisit?guid=:guid&pageusername=:pageusername&userid=:userid',
+  signLinkOff:      '/api/interactions/signlinkoff?guid=:guid&signid=:signid&userid=:userid',
+
   // social sharing
   'social-twitter': 'http://twitter.com/share?text=:text&url=:url&hashtags=:hashtags',
   'social-google': 'https://plus.google.com/share?url=:url',
