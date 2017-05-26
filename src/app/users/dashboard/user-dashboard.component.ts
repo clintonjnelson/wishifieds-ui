@@ -129,11 +129,10 @@ export class UserDashboardComponent implements OnInit {
 
   resetDateCounts(apiInteractions) {
     const startDateStr = new Date(apiInteractions[0].createdAt).toISOString().substring(0, 10);
-    const endDate      = new Date(apiInteractions[apiInteractions.length - 1]['createdAt']);
-    const stopStr      = new Date(endDate.setDate(endDate.getDate() + 1)).toISOString().substring(0, 10); // include end date in while loop
+    const stopStr      = new Date().toISOString().substring(0, 10);  // through now
 
     let currDateStr = startDateStr;  // initial value is first date
-    while(currDateStr < stopStr) {
+    while(currDateStr <= stopStr) {
       console.log("DATE IS NOW: ", currDateStr);
       this.dateCounts[currDateStr] = 0;                                      // set object of all counts
       this.chartData.labels.push(currDateStr);                               // push in each date for x-axis
