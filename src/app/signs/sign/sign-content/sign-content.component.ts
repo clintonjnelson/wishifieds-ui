@@ -171,7 +171,7 @@ export class SignContentComponent implements OnInit, OnDestroy, AfterViewChecked
   logInteraction() {
     console.log("INTERACTION CLICKED");
     const userId = window.localStorage.getItem('userId');
-    this.interactions.logSignLinkOffClick(this.sign._id, userId);
+    this.interactions.logSignLinkOffClick(this.sign._id, this.sign.icon, userId);
   }
 
 

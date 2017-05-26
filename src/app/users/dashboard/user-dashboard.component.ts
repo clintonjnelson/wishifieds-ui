@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ApiDashboardService } from '../../core/api/api-dashboard.service';
 
 
+// PUT THIS INTO A SYYNPOST HELPER OR UTIL OR ENUM!!!
+const CHART_COLORS = {
+  foursquare: '#f94877'
+}
+
+
 @Component({
   moduleId: module.id,
   selector: 'sign-time-chart',
@@ -15,6 +21,8 @@ export class UserDashboardComponent implements OnInit {
   chartData:  any;
   dateCounts: any;
   isProcessing: any;
+  signInteractions: any;
+  signTypesToDisplay: any;
 
   constructor(private apiDashboardService: ApiDashboardService) {
     if((<any>window).Chart) {
@@ -25,6 +33,8 @@ export class UserDashboardComponent implements OnInit {
     this.chartData  = {};
     this.isProcessing = {};
     this.isProcessing['userPageViewsChart'] = true;
+    this.isProcessing['signsCharts'] = true;
+    this.signInteractions = {};   // !!!!MAYBE PUT ALL INTERACTIONS INTO AN OBJECT???? BOTH SIGN & USER FOR LATER USE IF NEEDED?
   }
 
   ngOnInit() {
@@ -33,16 +43,61 @@ export class UserDashboardComponent implements OnInit {
     console.log("CALLING API...");
     this.apiDashboardService.getInteractions('getUserPageInteractions')
         .subscribe( interactions => {
-          this.chartData.userPageViewsChart  = this.buildChart('Visitors to Your Syynpost', '#ffffff');
-          this.dateCounts.userPageViewsChart = this.resetDateCountsAndPopulateChartXAxisLabels(interactions, this.chartData.userPageViewsChart);
-          this.buildLine(interactions, this.dateCounts.userPageViewsChart, this.chartData.userPageViewsChart);
-          this.isProcessing.userPageViewsChart = false;
+          console.log("INTERACTIONS FOR USER PAGE RETURNED ARE: ", interactions);
+          if(interactions && interactions.length) {
+            this.chartData.userPageViewsChart  = this.buildChart('Visitors to Your Syynpost', '#ffffff');
+            this.dateCounts.userPageViewsChart = this.resetDateCountsAndPopulateChartXAxisLabels(interactions, this.chartData.userPageViewsChart);
+            this.buildLine(interactions, this.dateCounts.userPageViewsChart, this.chartData.userPageViewsChart);
+            this.isProcessing.userPageViewsChart = false;
+          }
         },
         error => {
-          console.log("ERROR RETURNED FROM INTERACTIONS: ", error.toJson());
+          console.log("ERROR RETURNED FROM USER_PAGE_VIEW INTERACTIONS: ", error.toJson());
         });
 
-    this.apiDashboardService.getInteractions('')
+    this.apiDashboardService.getInteractions('getSignLinkOffInteractions')
+        .subscribe( apiSignInteractions => {
+          console.log("SIGN INTERACTIONS FOUND ARE: ", apiSignInteractions);
+          if(apiSignInteractions && apiSignInteractions.length) {
+            // Set base objects
+            that.signTypesToDisplay = [];
+            that.signInteractions.signTypes = {};
+
+            // Categorize interactions by interaction type
+            apiSignInteractions.forEach(function(interaction) {
+              if(that.signInteractions.signTypes[interaction.targetType]) {
+                that.signInteractions.signTypes[interaction.targetType].push(interaction);
+              }
+              else {
+                that.signInteractions.signTypes[interaction.targetType] = [interaction];
+              }
+              console.log("INTERACTION IS: ", interaction);
+            });
+
+            // For each sign type found, build the chart
+            Object.keys(that.signInteractions.signTypes).forEach(function(signType) {
+              // Record each sign type
+              that.signTypesToDisplay.push(signType);
+
+              // Set blank objects for use
+              that.dateCounts[signType] = {};
+              that.isProcessing[signType] = true;
+
+              // Populate chart objects
+              that.chartData[signType] = that.buildChart(signType, CHART_COLORS[signType]);  // populate this sign's base chart config
+              that.dateCounts[signType] = that.resetDateCountsAndPopulateChartXAxisLabels(that.signInteractions.signTypes[signType], that.chartData[signType]);
+              that.buildLine(that.signInteractions.signTypes[signType], that.dateCounts[signType], that.chartData[signType]);
+            });
+
+            console.log("BUILT SIGN INTERACTIONS OBJECT IS: ", that.signInteractions);
+            console.log("FINAL CHART DATA OBJECT AFTER SIGNS IS: ", that.chartData);
+            console.log("FINAL DATE COUNTS OBJECT AFTER SIGNS IS: ", that.dateCounts);
+            this.isProcessing.signsCharts = false;
+          }
+        },
+        error => {
+          console.log("ERROR RETURNED FROM SIGN INTERACTIONS: ", error.toJson());
+        });
   }
 
   buildChart(lineLabel: string, lineColor: string) {
@@ -99,7 +154,7 @@ export class UserDashboardComponent implements OnInit {
     return chartData;
   }
 
-  buildLine(apiInteractions: any, dateCounts: any, chartData: any) {
+  buildLine(apiInteractions: any[], dateCounts: any, chartData: any) {
     // Build count object
     apiInteractions.forEach(function(dataPoint) {
       const date = dataPoint.createdAt.substring(0, 10);
@@ -113,7 +168,7 @@ export class UserDashboardComponent implements OnInit {
   }
 
   // chartDataRef is a passed reference object to modify within here
-  resetDateCountsAndPopulateChartXAxisLabels(apiInteractions: any, chartDataRef: any) {
+  resetDateCountsAndPopulateChartXAxisLabels(apiInteractions: any[], chartDataRef: any) {
     let dateCounts = {};
     const startDateStr = new Date(apiInteractions[0].createdAt).toISOString().substring(0, 10);
     const stopStr      = new Date().toISOString().substring(0, 10);  // through now

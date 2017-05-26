@@ -23,12 +23,12 @@ export class ApiInteractionLoggerService {
     this.http.get(url).subscribe();
   }
 
-  logSignLinkOffClick(signId: string, interactUserId: string = null) {
+  logSignLinkOffClick(signId: string, signIcon: string, interactUserId: string = null) {
     if(!this.guid || !signId) {
       console.log("MISSING VALUES FOR SIGNLINKOFFCLICK INTERACTION LOGGING. signId: ", signId, "; GUID: ", this.guid);
       return;
     }
-    const url = this.signpostApi.buildUrl('signLinkOff', [{':guid': this.guid}, {':signid': signId }, {':userid': interactUserId}]);
+    const url = this.signpostApi.buildUrl('signLinkOff', [{':guid': this.guid}, {':signid': signId }, {':signicon': signIcon}, {':userid': interactUserId}]);
     console.log("URL TO SEND TO IS: ", url);
     this.http.get(url).subscribe();
   }

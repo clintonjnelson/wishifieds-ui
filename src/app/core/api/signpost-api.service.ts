@@ -59,7 +59,7 @@ const ROUTES = {
 
   // Log Interactions
   userPageVisit:    '/api/interactions/log/userpagevisit?guid=:guid&pageusername=:pageusername&userid=:userid',
-  signLinkOff:      '/api/interactions/log/signlinkoff?guid=:guid&signid=:signid&userid=:userid',
+  signLinkOff:      '/api/interactions/log/signlinkoff?guid=:guid&signid=:signid&signicon=:signicon&userid=:userid',
 
   // Interactions Data
   getUserPageInteractions:    '/api/interactions/dashboards/userpagevisit',

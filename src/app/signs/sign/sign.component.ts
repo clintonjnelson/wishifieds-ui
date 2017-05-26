@@ -53,6 +53,6 @@ export class SignComponent {
   logInteraction() {
     console.log("INTERACTION CLICKED");
     const userId = window.localStorage.getItem('userId') || 'null';
-    this.interactions.logSignLinkOffClick(this.sign._id, userId);
+    this.interactions.logSignLinkOffClick(this.sign._id, this.sign.icon, userId);
   }
 }

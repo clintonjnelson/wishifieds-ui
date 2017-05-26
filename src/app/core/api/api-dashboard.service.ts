@@ -11,7 +11,7 @@ export class ApiDashboardService {
   constructor( private http:        Http,
                private signpostApi: SignpostApi) {}
 
-  // Types: signLinkOffInteractions, userPageInteractions
+  // Types: getSignLinkOffInteractions, getUserPageInteractions
   getInteractions(type: string) {
     const url     = this.signpostApi.routes[type];
     const options = this.signpostApi.getRequestOptionWithEatHeader();
