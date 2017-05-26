@@ -57,9 +57,13 @@ const ROUTES = {
     youtube:          '/api/auto/youtube',
   },
 
-  // Interactions
-  userPageVisit:  '/api/interactions/userpagevisit?guid=:guid&pageusername=:pageusername&userid=:userid',
-  signLinkOff:      '/api/interactions/signlinkoff?guid=:guid&signid=:signid&userid=:userid',
+  // Log Interactions
+  userPageVisit:    '/api/interactions/log/userpagevisit?guid=:guid&pageusername=:pageusername&userid=:userid',
+  signLinkOff:      '/api/interactions/log/signlinkoff?guid=:guid&signid=:signid&userid=:userid',
+
+  // Interactions Data
+  getUserPageInteractions:    '/api/interactions/dashboards/userpagevisit',
+  getSignLinkOffInteractions: '/api/interactions/dashboards/signlinkoff',
 
   // social sharing
   'social-twitter': 'http://twitter.com/share?text=:text&url=:url&hashtags=:hashtags',

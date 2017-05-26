@@ -9,6 +9,7 @@ import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { MdDialogModule, MdInputModule, MdTooltipModule }  from '@angular/material';  // MaterialModule
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DragulaModule }   from 'ng2-dragula/ng2-dragula';
+import { ChartsModule }    from 'ng2-charts/ng2-charts';
 import 'hammerjs';
 
 // Components
@@ -40,6 +41,7 @@ import { LoginSignupFormComponent }      from './users/login-signup-form/login-s
 import { UserSignComponent }             from './users/user-sign/user-sign.component';
 import { UserPageComponent }             from './users/user-page.component';
 import { UserSettingsComponent }         from './users/settings/user-settings.component';
+import { UserDashboardComponent }        from './users/dashboard/user-dashboard.component';
 
 import { RequestPasswordResetComponent } from './password-reset/request-password-reset.component';
 import { PasswordResetComponent }        from './password-reset/password-reset.component';
@@ -66,6 +68,7 @@ import { ApiAdminService }               from './core/api/api-admin.service';
 import { ApiUsersService }               from './core/api/api-users.service';
 import { ApiSignsService }               from './core/api/api-signs.service';
 import { ApiSearchService }              from './core/api/api-search.service';
+import { ApiDashboardService }           from './core/api/api-dashboard.service';
 import { HelpersService }                from './shared/helpers/helpers.service';
 import { IconService }                   from './core/services/icon.service';
 import { OauthRedirectComponent }        from './core/redirects/oauth-redirect.component';  // really a component
@@ -89,11 +92,12 @@ export function HttpFactory(backend: XHRBackend,
                   FormsModule,
                   HttpModule,
                   // MaterialModule.forRoot(),
+                  NoopAnimationsModule,
                   MdDialogModule,
                   MdInputModule,
                   MdTooltipModule,
                   DragulaModule,
-                  NoopAnimationsModule,
+                  ChartsModule,    // move to child module for dashboard
                 ],
   declarations: [
                   AppComponent,
@@ -104,8 +108,8 @@ export function HttpFactory(backend: XHRBackend,
                   FooterComponent,
                   SearchBoxComponent,
                   SearchResultsComponent,
-                  AdminDashboardComponent,
-                  AdminUserManagementComponent,
+                  AdminDashboardComponent,        // move to child module for dashboard
+                  AdminUserManagementComponent,   // move to child module for dashboard
                   LoginSignupFormComponent,
                   IconLinkComponent,
                   // LivingStyleGuideComponent,
@@ -120,7 +124,8 @@ export function HttpFactory(backend: XHRBackend,
 
                   UserSignComponent,
                   UserPageComponent,
-                  UserSettingsComponent,
+                  UserSettingsComponent,         // move to child module for dashboard?
+                  UserDashboardComponent,
 
                   RequestPasswordResetComponent,
                   PasswordResetComponent,
@@ -155,6 +160,7 @@ export function HttpFactory(backend: XHRBackend,
                   ApiUsersService,
                   ApiSignsService,
                   ApiSearchService,
+                  ApiDashboardService,
                   {provide: Http,
                     useFactory: HttpFactory,
                     deps: [XHRBackend, RequestOptions, AuthService]
