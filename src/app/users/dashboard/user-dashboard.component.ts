@@ -11,9 +11,10 @@ import { ApiDashboardService } from '../../core/api/api-dashboard.service';
 
 
 export class UserDashboardComponent implements OnInit {
+  // These objects are expanded with a sub-object for each chart & are populated via functions
   chartData:  any;
   dateCounts: any;
-  isProcessing: boolean = true;
+  isProcessing: any;
 
   constructor(private apiDashboardService: ApiDashboardService) {
     if((<any>window).Chart) {
@@ -22,6 +23,8 @@ export class UserDashboardComponent implements OnInit {
     }
     this.dateCounts = {};
     this.chartData  = {};
+    this.isProcessing = {};
+    this.isProcessing['userPageViewsChart'] = true;
   }
 
   ngOnInit() {
@@ -30,27 +33,27 @@ export class UserDashboardComponent implements OnInit {
     console.log("CALLING API...");
     this.apiDashboardService.getInteractions('getUserPageInteractions')
         .subscribe( interactions => {
-          console.log("INTERACTIONS RETURNED: ", interactions);
-          this.setChart();
-          this.resetDateCounts(interactions);
-          console.log("COUNTS ARE: ", this.dateCounts);
-          this.buildLine(interactions);
-          this.isProcessing = false;
-          console.log("CHART DATA AFTER FORMATTING IS: ", that.chartData);
+          this.chartData.userPageViewsChart  = this.buildChart('Visitors to Your Syynpost', '#ffffff');
+          this.dateCounts.userPageViewsChart = this.resetDateCountsAndPopulateChartXAxisLabels(interactions, this.chartData.userPageViewsChart);
+          this.buildLine(interactions, this.dateCounts.userPageViewsChart, this.chartData.userPageViewsChart);
+          this.isProcessing.userPageViewsChart = false;
         },
         error => {
           console.log("ERROR RETURNED FROM INTERACTIONS: ", error.toJson());
         });
+
+    this.apiDashboardService.getInteractions('')
   }
 
-  setChart() {
-    // Global Configuration
-    this.chartData.line    = [{ data: [], label: 'User Views' }]; // {[data: <y-points>, label: 'labelname']
-    this.chartData.labels  = [];
-    this.chartData.options = {  responsive: true,
+  buildChart(lineLabel: string, lineColor: string) {
+    let chartData = {};
+    // configure & build chart
+    chartData['line']    = [{ data: [], label: lineLabel }]; // {[data: <y-points>, label: 'labelname']
+    chartData['labels']  = [];
+    chartData['options'] = {  responsive: true,
                                 legend: {
                                   labels: {
-                                    fontColor: '#ffffff'
+                                    fontColor: lineColor
                                   }
                                 },
                                 scales: {
@@ -83,9 +86,9 @@ export class UserDashboardComponent implements OnInit {
                                   }],
                                 }
                               };
-    this.chartData.type    = 'line';
-    this.chartData.legend  = true;
-    this.chartData.colors  = [{
+    chartData['type']    = 'line';
+    chartData['legend']  = true;
+    chartData['colors']  = [{
       backgroundColor: '#d3d3d3',
       borderColor: 'rgba(255,255,255,0)',
       pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -93,54 +96,39 @@ export class UserDashboardComponent implements OnInit {
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: 'rgba(148,159,177,0.8)'
     }];
+    return chartData;
   }
 
-  buildLine(apiInteractions) {
-    var that = this;
-    // let prevDate = '';
-    // apiInteractions.forEach(function(dataPoint) {
-    //   const date = dataPoint.createdAt.substring(0, 10);
-    //   // If exists, increment count by one
-    //   if(date === prevDate) {
-    //     const countIndex = that.chartData.line[0].data.length - 1;
-    //     that.chartData.line[0].data[countIndex]++;  //verify increments
-    //   }
-    //   else {
-    //     that.chartData.labels.push(date);     // add newest label
-    //     that.chartData.line[0].data.push(1);  // add newest count
-    //     prevDate = date;
-    //   }
-    // });
-
+  buildLine(apiInteractions: any, dateCounts: any, chartData: any) {
     // Build count object
     apiInteractions.forEach(function(dataPoint) {
       const date = dataPoint.createdAt.substring(0, 10);
-      that.dateCounts[date]++;
-      // dateCounts[date] = (currCount ? currCount++ : 1);
+      dateCounts[date]++;
     });
-    // set labels in order
-    // this.chartData.labels = Object.keys(dateCounts).sort();
     // set point counts in same order as labels
-    this.chartData.labels.forEach(function(date) {
-      that.chartData.line[0].data.push(that.dateCounts[date]);
+    chartData.labels.forEach(function(date) {
+      chartData.line[0].data.push(dateCounts[date]);
     });
 
   }
 
-  resetDateCounts(apiInteractions) {
+  // chartDataRef is a passed reference object to modify within here
+  resetDateCountsAndPopulateChartXAxisLabels(apiInteractions: any, chartDataRef: any) {
+    let dateCounts = {};
     const startDateStr = new Date(apiInteractions[0].createdAt).toISOString().substring(0, 10);
     const stopStr      = new Date().toISOString().substring(0, 10);  // through now
 
     let currDateStr = startDateStr;  // initial value is first date
     while(currDateStr <= stopStr) {
       console.log("DATE IS NOW: ", currDateStr);
-      this.dateCounts[currDateStr] = 0;                                      // set object of all counts
-      this.chartData.labels.push(currDateStr);                               // push in each date for x-axis
+      dateCounts[currDateStr] = 0;                                      // set object of all counts
+      chartDataRef.labels.push(currDateStr);                               // push in each date for x-axis
 
-      let date = new Date(currDateStr);
+      let date    = new Date(currDateStr);
       currDateStr = new Date(date.setDate(date.getDate() + 1)).toISOString().substring(0, 10);  // increment
     }
-    console.log("BLANK DATE COUNT BUILT: ", this.dateCounts);
+    console.log("BLANK DATE COUNT BUILT: ", dateCounts);
+    return dateCounts;
   }
 
 

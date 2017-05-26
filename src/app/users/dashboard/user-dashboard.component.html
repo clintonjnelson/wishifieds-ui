@@ -1,12 +1,12 @@
-<div class="dashboard-container" *ngIf="!isProcessing">
-  <div class="userpageviews-container">
+<div class="dashboard-container" *ngIf="!isProcessing.userPageViewsChart">
+  <div class="chart-container">
     <canvas baseChart
-            [datasets]="chartData.line"
-            [labels]="chartData.labels"
-            [options]="chartData.options"
-            [colors]="chartData.colors"
-            [legend]="chartData.legend"
-            [chartType]="chartData.type"
+            [datasets]="chartData.userPageViewsChart.line"
+            [labels]="chartData.userPageViewsChart.labels"
+            [options]="chartData.userPageViewsChart.options"
+            [colors]="chartData.userPageViewsChart.colors"
+            [legend]="chartData.userPageViewsChart.legend"
+            [chartType]="chartData.userPageViewsChart.type"
             (chartHover)="hovered($event)"
             (chartClick)="clicked($event)">
     </canvas>
