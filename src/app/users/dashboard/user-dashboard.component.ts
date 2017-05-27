@@ -5,7 +5,52 @@ import { ApiDashboardService } from '../../core/api/api-dashboard.service';
 
 // PUT THIS INTO A SYYNPOST HELPER OR UTIL OR ENUM!!!
 const CHART_COLORS = {
-  foursquare: '#f94877'
+  // Oauth Sign Icons
+  deviantart:       '#b3c432',
+  disqus:           '#2e9fff',
+  etsy:             '#d15600',
+  facebook:         '#3b5998',
+  foursquare:       '#f94877',
+  instagram:        '#675144',
+  linkedin:         '#4875B4',
+  github:           '#333333',
+  twitter:          '#00aced',
+  google:           '#dd4b39',
+  pinterest:        '#cb2027',
+  reddit:           '#FF5700',
+  spotify:          '#00e461',
+  tumblr:           '#35465c',
+  vimeo:            '#00bf8f',
+  vk:               '#45668e',
+  wordpress:        '#21759b',
+  'stack-overflow': '#5184C1',
+  youtube:          '#bb0000',
+  imgur:            '#85bf25',
+  patreon:          '#e6461a',
+  // Custom Sign Icons
+  globe:            'green',
+  podcast:          '#9C27B0',
+  amazon:           '#ff9900',
+  quora:            '#AA2200',
+  meetup:           '#E51937',
+  rss:              '#ff7900',
+  flickr:           '#ff0084',
+  houzz:            '#7ac142',
+  vine:             '#00b488',
+  snapchat:         '#fffc00',
+  medium:           '#00ab6c',
+  qq:               '#009BD9',
+  behance:          '#1769ff',
+  steam:            '#00adee',
+  stumbleupon:      '#eb4924',
+  twitch:           '#6441a5',
+  wechat:           '#7bb32e',
+  whatsapp:         '#25d366',
+  yelp:             '#af0606',
+  ebay:             '#f5af02',
+  // Generic Sign Icons
+  phone:            'purple',
+  envelope:         'black',
 }
 
 
@@ -109,7 +154,7 @@ export class UserDashboardComponent implements OnInit {
     chartData['options'] = {  responsive: true,
                                 legend: {
                                   labels: {
-                                    fontColor: lineColor
+                                    fontColor: "#ffffff"
                                   }
                                 },
                                 scales: {
@@ -145,7 +190,7 @@ export class UserDashboardComponent implements OnInit {
     chartData['type']    = 'line';
     chartData['legend']  = true;
     chartData['colors']  = [{
-      backgroundColor: '#d3d3d3',
+      backgroundColor: lineColor,
       borderColor: 'rgba(255,255,255,0)',
       pointBackgroundColor: 'rgba(148,159,177,1)',
       pointBorderColor: '#fff',
