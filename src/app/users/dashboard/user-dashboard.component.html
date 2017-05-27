@@ -16,7 +16,7 @@
 
 <!-- Signs Charts (Dynamically Built) -->
 <div class="dashboard-signs-container" *ngIf="!isProcessing.signsCharts">
-  <ul *ngFor="let signType of signTypesToDisplay" class="chart-container">
+  <div *ngFor="let signType of signTypesToDisplay" class="chart-container">
     <canvas baseChart
             [datasets]="chartData[signType]['line']"
             [labels]="chartData[signType]['labels']"
@@ -27,5 +27,5 @@
             (chartHover)="hovered($event)"
             (chartClick)="clicked($event)">
     </canvas>
-  </ul>
+  </div>
 </div>

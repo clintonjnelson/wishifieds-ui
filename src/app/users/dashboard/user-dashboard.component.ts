@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiDashboardService } from '../../core/api/api-dashboard.service';
 
+// THIS IS REALLY A SHARED COMPONENT< SO IT SHOULD BE IN THE SHARED FOLDER PROBABLY
 
 // PUT THIS INTO A SYYNPOST HELPER OR UTIL OR ENUM!!!
 const CHART_COLORS = {
@@ -10,7 +11,7 @@ const CHART_COLORS = {
 
 @Component({
   moduleId: module.id,
-  selector: 'sign-time-chart',
+  selector: 'syynpost-dashboard',
   templateUrl: 'user-dashboard.component.html',
   styleUrls:  ['user-dashboard.component.css']
 })
@@ -118,7 +119,7 @@ export class UserDashboardComponent implements OnInit {
                                       unit: 'day',
                                       displayFormats: {
                                         day: 'YYYY-MM-DD',
-                                        max: new Date().toISOString().substring(0,10),
+                                        max: new Date().toLocaleDateString(),
                                       }
                                     },
                                     gridLines: {
@@ -157,7 +158,7 @@ export class UserDashboardComponent implements OnInit {
   buildLine(apiInteractions: any[], dateCounts: any, chartData: any) {
     // Build count object
     apiInteractions.forEach(function(dataPoint) {
-      const date = dataPoint.createdAt.substring(0, 10);
+      const date = new Date(dataPoint.createdAt).toLocaleDateString();
       dateCounts[date]++;
     });
     // set point counts in same order as labels
@@ -170,8 +171,8 @@ export class UserDashboardComponent implements OnInit {
   // chartDataRef is a passed reference object to modify within here
   resetDateCountsAndPopulateChartXAxisLabels(apiInteractions: any[], chartDataRef: any) {
     let dateCounts = {};
-    const startDateStr = new Date(apiInteractions[0].createdAt).toISOString().substring(0, 10);
-    const stopStr      = new Date().toISOString().substring(0, 10);  // through now
+    const startDateStr = new Date(apiInteractions[0].createdAt).toLocaleDateString();
+    const stopStr      = new Date().toLocaleDateString();  // through now
 
     let currDateStr = startDateStr;  // initial value is first date
     while(currDateStr <= stopStr) {
@@ -180,7 +181,7 @@ export class UserDashboardComponent implements OnInit {
       chartDataRef.labels.push(currDateStr);                               // push in each date for x-axis
 
       let date    = new Date(currDateStr);
-      currDateStr = new Date(date.setDate(date.getDate() + 1)).toISOString().substring(0, 10);  // increment
+      currDateStr = new Date(date.setDate(date.getDate() + 1)).toLocaleDateString();  // increment
     }
     console.log("BLANK DATE COUNT BUILT: ", dateCounts);
     return dateCounts;

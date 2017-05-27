@@ -1,8 +1,17 @@
+<!-- Admin Dashboard Charts -->
+<syynpost-dashboard></syynpost-dashboard>
+
+
+<!-- Admin User Information -->
 <div class="dashboard-container" *ngIf="!isProcessing && isAdmin">
+
+  <!-- Info on total users -->
   <section class="info-container">
     <dl>total users</dl>
     <dt>{{users.length}}</dt>
   </section>
+
+  <!-- List of Users as Links -->
   <section class="users-list-container">
     <ul>
       <li *ngFor="let user of users">
