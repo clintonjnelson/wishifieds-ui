@@ -18,6 +18,7 @@ const ROUTES = {
   confirmUser: '/api/auth/emailconfirmation?confirmationtoken=:confirmationtoken&email=:email',
   resendUserConfirmation: '/api/auth/resendconfirmation?id=:userId',
   getUserById: '/api/users/:usernameOrId',
+  getUsernameByUserId: '/api/users/:id/username',
   updateUser:  '/api/users/:id',
   checkAvailability: '/api/users/available?username=:username&email=:email',
 

@@ -74,7 +74,7 @@ export class ApiUsersService {
 
   getUserById(usernameOrId: string): Observable<any> {
     const getUserUrl = this.signpostApi.buildUrl('getUserById', [ {':usernameOrId': usernameOrId} ] );
-    const options  = this.signpostApi.getRequestOptionWithEatHeader();
+    const options    = this.signpostApi.getRequestOptionWithEatHeader();
 
     console.log("HEADERS IS: ", options);
     return this.http
@@ -82,6 +82,19 @@ export class ApiUsersService {
                .map( user => {
                  console.log("RESPONSE FROM GET USER BY ID IS: ", user.json());
                  return user.json() as UserByIdResponse;
+               })
+               .catch( (error: Response) => {
+                 return Observable.throw(error);
+               });
+  }
+
+  getUsernameByUserId(userId: string): Observable<any> {
+    const getUsernameUrl = this.signpostApi.buildUrl('getUsernameByUserId', [ {':id': userId} ] );
+    return this.http
+               .get(getUsernameUrl)
+               .map( username => {
+                 console.log("RESPONSE FROM GET USERNAME IS: ", username.json());
+                 return username.json();
                })
                .catch( (error: Response) => {
                  return Observable.throw(error);

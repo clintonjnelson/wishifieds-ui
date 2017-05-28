@@ -1,7 +1,9 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { IconService } from '../../core/services/icon.service';
-import { Sign }        from '../../signs/sign.model';
-import { User }        from '../../users/user.model';
+import { Router }          from '@angular/router';
+import { IconService }     from '../../core/services/icon.service';
+import { ApiUsersService } from '../../core/api/api-users.service';
+import { Sign }            from '../../signs/sign.model';
+import { User }            from '../../users/user.model';
 
 export class FilterIcon {
   icon:    string;
@@ -34,7 +36,9 @@ export class SearchResultsComponent implements OnInit, OnChanges {
   filtersCount:  number;  // start with no filters
 
 
-  constructor(private icons: IconService) {}
+  constructor(private icons:           IconService,
+              private apiUsersService: ApiUsersService,
+              private router:          Router) {}
 
   // Set no initial filters, show all (not exclusive)
   ngOnInit() {
@@ -80,6 +84,19 @@ export class SearchResultsComponent implements OnInit, OnChanges {
 
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);
+  }
+
+  goToUserPage(userId: string, event: any) {
+    event.preventDefault();
+    this.apiUsersService.getUsernameByUserId(userId)
+        .subscribe(
+          res => {
+            console.log("RESPONSE FROM GETUSERNAMEBYUSERID IS: ", res);
+            this.router.navigate(['/', res.username]);
+          },
+          error => {
+
+          });
   }
 
   private toggleFilterByIcon(icon: string) {
