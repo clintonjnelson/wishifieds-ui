@@ -20,8 +20,10 @@
 }
 
 #clipboardUrlEl {
-  visibility: hidden;
-  display: none;
+  width: 10px;
+  color: #808080;
+  background-color: #808080;
+  border: none;
 }
 
 .faq-icon {

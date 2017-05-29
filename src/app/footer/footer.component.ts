@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { NavigationEnd, Router, UrlSerializer } from '@angular/router';
 import { Location } from '@angular/common';
 import { AuthService, UserAuth } from '../core/auth/auth.service';
@@ -6,9 +6,7 @@ import { NotificationService } from '../core/services/notification.service';
 import { MdTooltipModule } from '@angular/material';
 import { IconService } from '../core/services/icon.service';
 import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
 import { SignpostApi } from '../core/api/signpost-api.service';
-import { Http, Response, RequestOptions, Headers } from '@angular/http';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -33,7 +31,7 @@ const SOCIAL_LINKS: NavLink[] = [
   styleUrls: ['footer.component.css'],
 })
 
-export class FooterComponent implements OnDestroy, OnInit {
+export class FooterComponent implements OnDestroy {
   @ViewChild('clipboardUrlEl') clipboardUrlEl: ElementRef;
   auth: UserAuth;
   userHomeUrl: string;
@@ -50,48 +48,43 @@ export class FooterComponent implements OnDestroy, OnInit {
               private urlSerializer: UrlSerializer,
               private authService:   AuthService,
               private notifications: NotificationService,
-              private signpostApi:   SignpostApi,
-              private http:          Http) {}
-
-  ngOnInit() {
-    const that = this;
+              private signpostApi:   SignpostApi) {
 
     // Initialize user's clipboard copy link
-    this.auth = this.authService.auth;
+    this.auth = authService.auth;
+    this.updateUserHomeUrl();
 
     // Maintain user's home clipboard copy link
-    this.authSubscription = this.authService.userAuthEmit.subscribe((newVal: UserAuth) => {
+    this.authSubscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => {
       this.auth = newVal;
       this.updateUserHomeUrl();
     });
 
     // Set Initial values for social sharing
-    this.updaateCurrentUrl();
+    this.updateCurrentUrl();
     this.rebuildSocialSharingLinks();
 
     // HACKY, but currently the only way to get the username outside of a router-outlet
     // Set currentUrl & try to get currentUsername
-    this.urlSubscription = this.router.events.subscribe( event => {
+    this.urlSubscription = router.events.subscribe( event => {
 
       // Update links on change
-      that.updaateCurrentUrl();
-      that.rebuildSocialSharingLinks();
+      this.updateCurrentUrl();
+      this.rebuildSocialSharingLinks();
 
       // Username? => set it if there is one
       if(event instanceof NavigationEnd) {
         const currentUrlTree = this.router.parseUrl(this.router.url);
         // console.log("CURRENT URL TREE IS: ", currentUrlTree);
         try {
-          that.currentUsername = currentUrlTree.root.children['primary']['segments'][0]['path'];
+          this.currentUsername = currentUrlTree.root.children['primary']['segments'][0]['path'];
         }
         catch (e) {
-          that.currentUsername = '';
+          this.currentUsername = '';
         }
       }
     });
   }
-
-
 
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);
@@ -145,7 +138,7 @@ export class FooterComponent implements OnDestroy, OnInit {
   }
 
   // CALL HERE OR SHOULD I RETURN THE VALUE TO SET EXPLICITLY?
-  private updaateCurrentUrl() {
+  private updateCurrentUrl() {
     this.currentUrl = window.location.href;
   }
 
