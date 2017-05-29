@@ -15,6 +15,7 @@ import 'hammerjs';
 // Components
 import { AppComponent }                  from './app.component';
 import { TermsConditionsComponent }      from './static-pages/terms-conditions/terms-conditions.component';
+import { PrivacyNoticeComponent }        from './static-pages/privacy-notice/privacy-notice.component';
 import { FaqComponent }                  from './static-pages/faq/faq.component';
 
 import { IconLinkComponent }             from './shared/icon-links/icon-links.component';
@@ -102,6 +103,7 @@ export function HttpFactory(backend: XHRBackend,
   declarations: [
                   AppComponent,
                   TermsConditionsComponent,
+                  PrivacyNoticeComponent,
                   FaqComponent,
 
                   NavbarComponent,

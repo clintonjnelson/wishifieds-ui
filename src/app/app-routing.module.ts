@@ -13,8 +13,9 @@ import { UserSettingsComponent }         from './users/settings/user-settings.co
 import { UserDashboardComponent }        from './users/dashboard/user-dashboard.component';
 import { OauthRedirectComponent }        from './core/redirects/oauth-redirect.component';
 import { UserConfirmationRedirectComponent } from './core/redirects/user-confirmation-redirect.component';
-import { TermsConditionsComponent }      from './static-pages/terms-conditions/terms-conditions.component';
-import { FaqComponent }                  from './static-pages/faq/faq.component';
+import { TermsConditionsComponent }          from './static-pages/terms-conditions/terms-conditions.component';
+import { PrivacyNoticeComponent }            from './static-pages/privacy-notice/privacy-notice.component';
+import { FaqComponent }                      from './static-pages/faq/faq.component';
 // Guards
 import { AdminGuard } from './core/auth/admin-guard.service';
 import { OwnerGuard } from './core/auth/owner-guard.service';
@@ -34,6 +35,7 @@ const rootRoutes: Routes = [
   { path: 'search', component: SearchBoxComponent, pathMatch: 'full' },
   { path: 'faq', component: FaqComponent, pathMatch: 'full' },
   { path: 'termsandconditions', component: TermsConditionsComponent, pathMatch: 'full' },
+  { path: 'privacynotice', component: PrivacyNoticeComponent, pathMatch: 'full' },
   { path: 'api/auto/:oauth', redirectTo: '/oauth/errors/reset', pathMatch: 'full' },
 
   // These have to come last to avoid username confusion
