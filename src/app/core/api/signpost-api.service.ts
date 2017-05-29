@@ -69,7 +69,7 @@ const ROUTES = {
   // social sharing
   'social-twitter': 'http://twitter.com/share?text=:text&url=:url&hashtags=:hashtags',
   'social-google': 'https://plus.google.com/share?url=:url',
-  'social-facebook-official': 'https://www.facebook.com/sharer/sharer.php?u=:url',
+  'social-facebook': 'https://www.facebook.com/sharer/sharer.php?u=:url',
 };
 
 

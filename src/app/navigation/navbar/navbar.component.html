@@ -15,7 +15,7 @@
   <!-- Icons When Logged OUT -->
 
   <!-- Toggle to OPEN nav links -->
-  <div *ngIf="!showLoginLinks && !auth.isLoggedIn" (click)="toggleShowLoginLinks()" class="nav-toggle-control">
+  <div *ngIf="!showLoginLinks && !auth.isLoggedIn" (click)="toggleShowLoginLinks(); toggleShowSignpostLoginForm()" class="nav-toggle-control">
     <i class="{{buildIconClass('angle-double-left', '2')}}">
       <span class="login-text">Login | Signup</span>
     </i>
@@ -32,9 +32,9 @@
                    [iconSize]="'2'">
         </icon-link>
       </li>
-      <li (click)="toggleShowSignpostLoginForm()" mdTooltip="syynpost" mdTooltipPosition="above"  class="login-signup-form-link">
+      <!-- <li (click)="toggleShowSignpostLoginForm()" mdTooltip="syynpost" mdTooltipPosition="above"  class="login-signup-form-link">
         <img src="/assets/signpost_icon.svg" alt="login/signup icon" class="signpost-icon-link">
-      </li>
+      </li> -->
     </ul>
   </div>
 

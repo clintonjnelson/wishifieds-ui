@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { NavigationEnd, Router, UrlSerializer } from '@angular/router';
 import { Location } from '@angular/common';
 import { AuthService, UserAuth } from '../core/auth/auth.service';
@@ -33,7 +33,7 @@ const SOCIAL_LINKS: NavLink[] = [
   styleUrls: ['footer.component.css'],
 })
 
-export class FooterComponent implements OnDestroy {
+export class FooterComponent implements OnDestroy, OnInit {
   @ViewChild('clipboardUrlEl') clipboardUrlEl: ElementRef;
   auth: UserAuth;
   userHomeUrl: string;
@@ -51,14 +51,16 @@ export class FooterComponent implements OnDestroy {
               private authService:   AuthService,
               private notifications: NotificationService,
               private signpostApi:   SignpostApi,
-              private http:          Http) {
+              private http:          Http) {}
+
+  ngOnInit() {
+    const that = this;
 
     // Initialize user's clipboard copy link
-    this.auth = authService.auth;
-    this.updateUserHomeUrl();
+    this.auth = this.authService.auth;
 
     // Maintain user's home clipboard copy link
-    this.authSubscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => {
+    this.authSubscription = this.authService.userAuthEmit.subscribe((newVal: UserAuth) => {
       this.auth = newVal;
       this.updateUserHomeUrl();
     });
@@ -69,25 +71,27 @@ export class FooterComponent implements OnDestroy {
 
     // HACKY, but currently the only way to get the username outside of a router-outlet
     // Set currentUrl & try to get currentUsername
-    this.urlSubscription = router.events.subscribe( event => {
+    this.urlSubscription = this.router.events.subscribe( event => {
 
       // Update links on change
-      this.updaateCurrentUrl();
-      this.rebuildSocialSharingLinks();
+      that.updaateCurrentUrl();
+      that.rebuildSocialSharingLinks();
 
       // Username? => set it if there is one
       if(event instanceof NavigationEnd) {
         const currentUrlTree = this.router.parseUrl(this.router.url);
         // console.log("CURRENT URL TREE IS: ", currentUrlTree);
         try {
-          this.currentUsername = currentUrlTree.root.children['primary']['segments'][0]['path'];
+          that.currentUsername = currentUrlTree.root.children['primary']['segments'][0]['path'];
         }
         catch (e) {
-          this.currentUsername = '';
+          that.currentUsername = '';
         }
       }
     });
   }
+
+
 
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);
@@ -134,9 +138,9 @@ export class FooterComponent implements OnDestroy {
       case 'twitter': {  // takes :text, :url, :hashtags
         return this.signpostApi.buildUrl(`social-${icon}`, [{':text': 'Check out my syynpost online directory.'}, {':url': currentUrl}, {':hashtags':'syynpost'}]);
       }
-      case 'facebook-official': return this.signpostApi.buildUrl(`social-${icon}`, [{':url': currentUrl}]);
-      case 'google':            return this.signpostApi.buildUrl(`social-${icon}`, [{':url': currentUrl}]);
-      default:                  return '';
+      case 'facebook': return this.signpostApi.buildUrl(`social-${icon}`, [{':url': currentUrl}]);
+      case 'google':   return this.signpostApi.buildUrl(`social-${icon}`, [{':url': currentUrl}]);
+      default:         return '';
     }
   }
 
@@ -148,6 +152,7 @@ export class FooterComponent implements OnDestroy {
   // CALL HERE OR SHOULD I RETURN THE VALUE TO SET EXPLICITLY?
   private rebuildSocialSharingLinks() {
     this.socialSharingLinks = this.socialSharingLinks.map( (link: NavLink) => {
+      console.log("LINK ICON IS: ", link.icon);
       link.url = this.buildUrl(link.icon);
       return link;
     });

@@ -8,6 +8,13 @@
   max-width: 90%;
 }
 
+.login-signup-instructions {
+  color: white;
+  font-family: helvetica, sans-serif;
+  margin: 0px;
+  font-size: 0.8em;
+}
+
 .login-signup-input-error-container {}
 
 .input-errors {
