@@ -16,7 +16,8 @@
                      [url]="oLink.url"
                      [icon]="oLink.icon"
                      [bgColor]="oLink.bgColor"
-                     [iconSize]="2">
+                     [iconSize]="2"
+                     (click)="gaClick('addoauthsign', oLink.icon)">
           </oauth-link>
         </li>
       </ul>

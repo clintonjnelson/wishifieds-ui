@@ -5,6 +5,7 @@ import { Sign } from '../../signs/sign.model';
 import { AuthService } from '../../core/auth/auth.service';
 import { SignpostApi } from '../../core/api/signpost-api.service';
 import { ApiSearchService } from '../../core/api/api-search.service';
+import { GAEventService } from '../../core/services/ga-event.service';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class SearchBoxComponent implements OnInit {
   constructor(private   apiSearchService: ApiSearchService,
               private   signpostApi:      SignpostApi,
               protected authService:      AuthService,
-              private   route:            ActivatedRoute) {} // auth used when admin extends Component
+              private   route:            ActivatedRoute,
+              private   gaEvent:          GAEventService) {} // auth used when admin extends Component
 
   ngOnInit() {
     // Set searchQuery to our search, if exists (user clicked 'back'), or set empty
@@ -35,7 +37,13 @@ export class SearchBoxComponent implements OnInit {
                          // IF USE THIS, WILL ALSO NEED TO DESTROY THE SUBSCRIPTION WATCH WITH METHOD CALL
   }
 
+  gaClick(label: string) {
+    this.gaEvent.emitEvent('search', 'click', label);
+  }
+
   search(event: any) {
+    this.gaClick('searchsubmit');
+
     if(event) { event.preventDefault(); }  // if get here with form submit
     if(this.searchStr && history.pushState) { updateExistingUrl(this.searchStr); }
     const that = this;

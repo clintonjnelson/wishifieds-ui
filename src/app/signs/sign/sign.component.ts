@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Sign }        from '../sign.model';
 import { IconService } from '../../core/services/icon.service';
 import { ApiInteractionLoggerService } from '../../core/api/api-interaction-logger.service';
+import { GAEventService } from '../../core/services/ga-event.service';
 
 @Component({
   moduleId: module.id,
@@ -17,7 +18,8 @@ export class SignComponent {
   @Output() destroyEE = new EventEmitter<any>();
 
   constructor( private icons:        IconService,
-               private interactions: ApiInteractionLoggerService ) {}
+               private interactions: ApiInteractionLoggerService,
+               private gaEvent:     GAEventService ) {}
 
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);
@@ -52,6 +54,7 @@ export class SignComponent {
 
   logInteraction() {
     console.log("INTERACTION CLICKED");
+    this.gaEvent.emitEvent('signlinkoff', 'click', this.sign.icon);
     const userId = window.localStorage.getItem('userId') || 'null';
     this.interactions.logSignLinkOffClick(this.sign._id, this.sign.icon, userId);
   }

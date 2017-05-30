@@ -3,7 +3,6 @@ import { IconService }         from '../../../core/services/icon.service';
 import { HoverColorDirective } from '../../../shared/hover-color/hover-color.directive';
 import { SignpostApi }         from '../../../core/api/signpost-api.service';
 import { ApiSignsService }     from '../../../core/api/api-signs.service';
-// import { OauthRequestService } from '../../../core/redirects/oauth-request.service';
 
 
 @Component({

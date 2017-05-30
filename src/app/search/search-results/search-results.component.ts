@@ -4,6 +4,7 @@ import { IconService }     from '../../core/services/icon.service';
 import { ApiUsersService } from '../../core/api/api-users.service';
 import { Sign }            from '../../signs/sign.model';
 import { User }            from '../../users/user.model';
+import { GAEventService }  from '../../core/services/ga-event.service';
 
 export class FilterIcon {
   icon:    string;
@@ -38,7 +39,8 @@ export class SearchResultsComponent implements OnInit, OnChanges {
 
   constructor(private icons:           IconService,
               private apiUsersService: ApiUsersService,
-              private router:          Router) {}
+              private router:          Router,
+              private gaEvent:         GAEventService) {}
 
   // Set no initial filters, show all (not exclusive)
   ngOnInit() {
@@ -55,12 +57,35 @@ export class SearchResultsComponent implements OnInit, OnChanges {
   }
 
   filter(filterIcon: FilterIcon) {
+    this.gaEvent.emitEvent('searchresultsfilter', 'click', filterIcon.icon);
     this.toggleFilterByIcon(filterIcon.icon);
     this.updateResults();  // this should update the signs shown
     console.log("Filters final is: ", this.filters);
     console.log("Filtered Signs after update is: ", this.filteredSigns);
   }
 
+  gaClick(label: string) {
+    this.gaEvent.emitEvent('searchresults', 'click', label);
+  }
+
+
+  buildIconClass(icon: string, size: string = '2') {
+    return this.icons.buildIconClass(icon, size);
+  }
+
+  goToUserPage(userId: string, event: any) {
+    event.preventDefault();
+    this.gaClick('userpagelink');
+    this.apiUsersService.getUsernameByUserId(userId)
+        .subscribe(
+          res => {
+            console.log("RESPONSE FROM GETUSERNAMEBYUSERID IS: ", res);
+            this.router.navigate(['/', res.username]);
+          },
+          error => {
+
+          });
+  }
 
   // *********** HELPERS *************
   private generateFiltersAndIcons() {
@@ -80,23 +105,6 @@ export class SearchResultsComponent implements OnInit, OnChanges {
     function addDisplayIcon(sign: Sign) {
       that.filterIcons.push({icon: sign.icon, bgColor: sign.bgColor});
     }
-  }
-
-  buildIconClass(icon: string, size: string = '2') {
-    return this.icons.buildIconClass(icon, size);
-  }
-
-  goToUserPage(userId: string, event: any) {
-    event.preventDefault();
-    this.apiUsersService.getUsernameByUserId(userId)
-        .subscribe(
-          res => {
-            console.log("RESPONSE FROM GETUSERNAMEBYUSERID IS: ", res);
-            this.router.navigate(['/', res.username]);
-          },
-          error => {
-
-          });
   }
 
   private toggleFilterByIcon(icon: string) {

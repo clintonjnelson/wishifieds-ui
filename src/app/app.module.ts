@@ -60,6 +60,7 @@ import { DragulaDelayLiftDirective }     from './shared/dragula-delay-lift/dragu
 import { HttpIntercept }                 from './core/api/http-intercept';
 import { AuthService }                   from './core/auth/auth.service';
 import { GuestService }                  from './core/services/guest.service';
+import { GAEventService }                from './core/services/ga-event.service';
 import { NotificationService }           from './core/services/notification.service';
 import { ModalService }                  from './core/services/modal.service';
 import { SignpostApi }                   from './core/api/signpost-api.service';
@@ -150,6 +151,7 @@ export function HttpFactory(backend: XHRBackend,
                   AdminGuard,
                   OwnerGuard,
                   GuestService,
+                  GAEventService,
                   AuthService,
                   HelpersService,
                   IconService,

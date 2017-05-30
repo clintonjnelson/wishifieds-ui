@@ -21,7 +21,8 @@
           <icon-link [url]="link.url"
                      [icon]="link.icon"
                      [bgColor]="link.bgColor"
-                     [iconSize]="'2'" class="social-sharing-link">
+                     [iconSize]="'2'" class="social-sharing-link"
+                     (click)="gaClick(link.icon)">
           </icon-link>
         </li>
       </ul>

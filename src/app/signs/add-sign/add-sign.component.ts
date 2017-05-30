@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MdTooltipModule } from '@angular/material';
 import { HelpersService }  from '../../shared/helpers/helpers.service';
 import { IconService }     from '../../core/services/icon.service';
+import { GAEventService }  from '../../core/services/ga-event.service';
 import { Sign }            from '../sign.model';
 
 export class Link {
@@ -118,7 +119,8 @@ export class AddSignComponent {
   }
 
   constructor(private helpers: HelpersService,
-              private icons:   IconService) {}
+              private icons:   IconService,
+              private gaEvent: GAEventService) {}
 
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);
@@ -138,6 +140,7 @@ export class AddSignComponent {
   setSign(sign: Sign) {
     this.selectedSign = sign;
     this.toggleShowAddSignIcons(false);
+    this.gaClick('addcustomsign', sign.icon);
     console.log("SETTING SIGN TO: ", sign);
   }
 
@@ -160,11 +163,6 @@ export class AddSignComponent {
     this.saveEE.emit(newSign);    // keep passing the sign up
   }
 
-  // Toggle Control Functions
-  private closeForms() {
-    this.toggleShowAddSignIcons(false);
-    this.toggleShowForm(false);
-  }
   toggleShowAddSignIcons(input: any = null): void {
     // If setting value directly, do that. Else, just toggle the value
     if(typeof(input) === 'boolean') { this.showAddSignIcons = input; }
@@ -174,6 +172,16 @@ export class AddSignComponent {
     // If setting value directly, do that. Else, just toggle the value
     if(typeof(input) === 'boolean') { this.showSignForm = input; }
     else { this.showSignForm = !this.showSignForm; }
+  }
+
+  gaClick(category: string, label: string) {
+    this.gaEvent.emitEvent(category, 'click', label);
+  }
+
+  // Toggle Control Functions
+  private closeForms() {
+    this.toggleShowAddSignIcons(false);
+    this.toggleShowForm(false);
   }
 }
 

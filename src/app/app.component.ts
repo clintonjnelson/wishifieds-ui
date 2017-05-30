@@ -12,6 +12,8 @@ import { GuestService } from './core/services/guest.service';
     <signpost-footer></signpost-footer>
   `,
 })
+
+
 export class AppComponent  {
   constructor(private guestService: GuestService) {
     // Ensure guid is set on each visitor for generic metrics info

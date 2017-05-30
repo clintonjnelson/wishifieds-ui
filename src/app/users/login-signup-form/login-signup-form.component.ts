@@ -8,6 +8,7 @@ import { ApiAuthService } from '../../core/api/api-auth.service';
 import { UserCreds } from '../../users/user.model';
 import { NotificationService } from '../../core/services/notification.service';
 import { MdInputModule } from '@angular/material';
+import { GAEventService } from '../../core/services/ga-event.service';
 
 
 const EMAIL_REGEX = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
@@ -31,7 +32,8 @@ export class LoginSignupFormComponent implements AfterViewChecked {
                private apiUsersService: ApiUsersService,
                private apiAuthService:  ApiAuthService,
                private router:          Router,
-               private notification:    NotificationService) {
+               private notification:    NotificationService,
+               private gaEvent:         GAEventService) {
     this.userCreds = {
       email:      '',
       password:   '',
@@ -47,10 +49,14 @@ export class LoginSignupFormComponent implements AfterViewChecked {
     console.log("LOGIN FORM IS: ", this.loginForm);
     console.log("USER CREDS IS: ", this.userCreds);
     console.log("CALLING LOGIN ON AUTHSERVICE WITH EMAIL, PASSWORD...");
-    if(!this.loginForm.form.valid) { return; } // Invalid, do nothing
+    if(!this.loginForm.form.valid) {
+      this.gaEvent.emitEvent('loginsignupform', 'click', 'error');
+      return;
+    } // Invalid, do nothing
 
     if(this.userCreds.newAccount) {
       if(this.userCreds.termsCond) {
+        this.gaEvent.emitEvent('loginsignupform', 'click', 'signupsubmit');
         this.apiUsersService.createUser(this.userCreds)
           .subscribe(
             res => {
@@ -73,6 +79,7 @@ export class LoginSignupFormComponent implements AfterViewChecked {
       }
     }
     else {
+      this.gaEvent.emitEvent('loginsignupform', 'click', 'loginsubmit');
       this.login(this.userCreds.email, this.userCreds.password);
     }
     return false;

@@ -7,10 +7,12 @@ import { MdTooltipModule } from '@angular/material';
 import { IconService } from '../core/services/icon.service';
 import { Subscription } from 'rxjs/Subscription';
 import { SignpostApi } from '../core/api/signpost-api.service';
+import { GAEventService } from '../core/services/ga-event.service';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/switchMap';
+declare let ga: Function;
 
 export class NavLink {
   icon:    string;
@@ -48,7 +50,8 @@ export class FooterComponent implements OnDestroy {
               private urlSerializer: UrlSerializer,
               private authService:   AuthService,
               private notifications: NotificationService,
-              private signpostApi:   SignpostApi) {
+              private signpostApi:   SignpostApi,
+              private gaEvent:       GAEventService) {
 
     // Initialize user's clipboard copy link
     this.auth = authService.auth;
@@ -74,6 +77,11 @@ export class FooterComponent implements OnDestroy {
 
       // Username? => set it if there is one
       if(event instanceof NavigationEnd) {
+        // Set GoogleAnalytics Tracking for page-changes
+        ga('set', 'page', event.urlAfterRedirects);
+        ga('send', 'pageview');
+
+        console.log("URL AFTER REDIRECTS VALUE IS: ", event.urlAfterRedirects);
         const currentUrlTree = this.router.parseUrl(this.router.url);
         // console.log("CURRENT URL TREE IS: ", currentUrlTree);
         try {
@@ -86,6 +94,11 @@ export class FooterComponent implements OnDestroy {
     });
   }
 
+  ngOnDestroy() {
+    this.urlSubscription.unsubscribe();
+    this.authSubscription.unsubscribe();
+  }
+
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);
   }
@@ -96,11 +109,13 @@ export class FooterComponent implements OnDestroy {
     console.log("SHARING LINKS IS NOW: ", this.showSharingLinks);
   }
 
-  ngOnDestroy() {
-    this.urlSubscription.unsubscribe();
+  gaClick(label: string) {
+    this.gaEvent.emitEvent('footersocialsharing', 'click', label);
   }
 
   copyMyUrlToClipboard() {
+    this.gaClick('copy');
+
     if(this.auth.isLoggedIn) {
       console.log("LOGGED IN. Time to select...");
       this.clipboardUrlEl.nativeElement.select(); // select it as current

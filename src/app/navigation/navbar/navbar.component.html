@@ -29,7 +29,8 @@
         <icon-link [url]="link.url"
                    [icon]="link.icon"
                    [bgColor]="link.bgColor"
-                   [iconSize]="'2'">
+                   [iconSize]="'2'"
+                   (click)="gaClick(link.icon)">
         </icon-link>
       </li>
       <!-- <li (click)="toggleShowSignpostLoginForm()" mdTooltip="syynpost" mdTooltipPosition="above"  class="login-signup-form-link">
@@ -77,7 +78,7 @@
       </li>
       <!-- Dashboard Button -->
       <li>
-        <a [routerLink]="[auth.username, 'dashboard']" (click)="toggleShowUserNavLinks()" mdTooltip="dashboard" mdTooltipPosition="above">
+        <a [routerLink]="[auth.username, 'dashboard']" (click)="toggleShowUserNavLinks(); gaClick('dashboard')" mdTooltip="dashboard" mdTooltipPosition="above">
           <i class="{{buildIconClass('line-chart', '2')}}"></i>
         </a>
       </li>

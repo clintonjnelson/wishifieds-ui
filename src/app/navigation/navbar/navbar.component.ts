@@ -4,6 +4,7 @@ import { IconService } from '../../core/services/icon.service';
 import { AuthService, UserAuth } from '../../core/auth/auth.service';
 import { Subscription } from 'rxjs/Subscription';
 import { NotificationService } from '../../core/services/notification.service';
+import { GAEventService } from '../../core/services/ga-event.service';
 
 export class OauthLink {
   icon: string;
@@ -67,7 +68,8 @@ export class NavbarComponent implements OnDestroy {
   constructor(
               private icons:         IconService,
               private authService:   AuthService,
-              private notifications: NotificationService ) {
+              private notifications: NotificationService,
+              public  gaEvent:       GAEventService) {
     this.auth          = authService.auth;
     this._subscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => {
       this.auth = newVal;  // Track & Update these
@@ -78,12 +80,19 @@ export class NavbarComponent implements OnDestroy {
     this._subscription.unsubscribe();
   }
 
+  gaClick(label: string) {
+    this.gaEvent.emitEvent('navbar', 'click', label);
+  }
+
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);
   }
 
   // Logged OUT Helpers
   toggleShowSignpostLoginForm(input: any = null): void {
+    // Trigger GA tracking
+    this.gaClick('loginsignupexpand');
+
     // If setting value directly, do that.
     if(typeof(input) === 'boolean') {
       this.showSignpostLoginForm = input;
