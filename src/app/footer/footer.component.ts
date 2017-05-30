@@ -131,10 +131,15 @@ export class FooterComponent implements OnDestroy {
   }
 
   private updateUserHomeUrl() {
-    let urlTree = this.router.createUrlTree([this.auth.username]);
-    let serializedTreeUrl = this.router.serializeUrl(urlTree);
-    this.userHomeUrl = window.location.origin + this.location.prepareExternalUrl(serializedTreeUrl);
-    console.log("URL TO USE FOR COPY FUNCTION IS: ", this.userHomeUrl);
+    try {
+      let urlTree           = this.router.createUrlTree([this.auth.username]);
+      let serializedTreeUrl = this.router.serializeUrl(urlTree);
+      this.userHomeUrl      = window.location.origin + this.location.prepareExternalUrl(serializedTreeUrl);
+      console.log("URL TO USE FOR COPY FUNCTION IS: ", this.userHomeUrl);
+    }
+    catch (e) {
+      this.userHomeUrl = window.location.origin;
+    }
   }
 
   // CALLS THE BUILD URL A LLLLLLLOOOOOOOOOTTTTTTTT of times. INEFFICIENT.
