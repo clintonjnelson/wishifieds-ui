@@ -121,6 +121,7 @@ export class FooterComponent implements OnDestroy {
       this.clipboardUrlEl.nativeElement.select(); // select it as current
       try {
         document.execCommand('copy');  // copy selected text
+        this.clipboardUrlEl.nativeElement.blur();
         this.notifications.notify('success', 'Your syynpost link URL has been copied to your clipboard! You can now paste it wherever you\'d like.');
         window.scrollTo(0, 0);
       }
