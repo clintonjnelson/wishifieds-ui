@@ -206,11 +206,18 @@ export class UserDashboardComponent implements OnInit {
       const date = new Date(dataPoint.createdAt).toLocaleDateString();
       dateCounts[date]++;
     });
-    // set point counts in same order as labels
+    // set point counts in same order as labels; only one line per chart
     chartData.labels.forEach(function(date) {
       chartData.line[0].data.push(dateCounts[date]);
     });
 
+    // if only one date, add one before
+    if(chartData.labels.length === 1) {
+      const firstDate = new Date(chartData.labels[0]);
+      const datePrior = new Date(firstDate.setDate(firstDate.getDate() - 1)).toLocaleDateString();
+      chartData.labels.unshift(datePrior);   // add day before
+      chartData.line[0].data.unshift(0);    // count of 0
+    }
   }
 
   // chartDataRef is a passed reference object to modify within here
