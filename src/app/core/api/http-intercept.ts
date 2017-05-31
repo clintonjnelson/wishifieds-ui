@@ -21,20 +21,32 @@ export class HttpIntercept extends Http {
     // Intercept observable before returning it to caller
     return observable.catch( res => {
       // Check for trigger to reset EAT
-      console.log("RES BEFORE IS: ", res);
-      const body = res.json();
-      console.log("ERROR STATUS IS: ", res.status, " AND TYPE IS: ", typeof res.status);
-      console.log("BODY IS: ", body);
-      console.log("ORIG RES IS: ", res);
+      try {
+        console.log("RES BEFORE IS: ", res);
+        const body = res.json();
+        console.log("ERROR STATUS IS: ", res.status, " AND TYPE IS: ", typeof res.status);
+        console.log("BODY IS: ", body);
+        console.log("ORIG RES IS: ", res);
 
-      if(res.status === 401 && body.reset) {
-        console.log("RESETTING...");
-        that.authService.logout();   // deletes cookies, reset auth values, redirect home
-        return Observable.empty();
+        // Direct server commanded reset
+        if(res.status === 401 && body.reset) {
+          console.log("RESETTING...");
+          that.authService.logout();   // deletes cookies, reset auth values, redirect home
+          return Observable.empty();
+        }
+        // Continue as normal
+        else {
+          return observable;
+        }
       }
-      // Continue as normal
-      else {
-        return observable; // Observable.throw(res)
+      catch (e) {
+        // If Error, may be because body is index file for graceful oauth errors
+        // In such case, look for SyntaxError & 401 Status => reset intended
+        if(e instanceof SyntaxError && res.status === 401) {
+          that.authService.logout();
+          return Observable.empty();
+        }
+        else { return observable; }
       }
     });
   }
