@@ -5,3 +5,9 @@
   flex: 1 1 auto;
   text-align: center;
 }
+
+p.heading {
+  color: white;
+  font-family: helvetica, sans-serif;
+  text-align: center;
+}
