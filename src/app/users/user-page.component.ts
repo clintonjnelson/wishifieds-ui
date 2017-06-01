@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute }               from '@angular/router';
+import { ActivatedRoute, Params }               from '@angular/router';
 import { AuthService, UserAuth }        from '../core/auth/auth.service';
 import { ApiSignsService }              from '../core/api/api-signs.service';
 import { ApiInteractionLoggerService }  from '../core/api/api-interaction-logger.service';
 import { Sign } from '../signs/sign.model';
 import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   moduleId: module.id,
@@ -18,8 +19,10 @@ export class UserPageComponent implements OnInit, OnDestroy {
   signs: Sign[];
   auth: UserAuth;
   authSubscription: Subscription;
+  pageSubscription: Subscription;
   isOwner = false;
   isProcessing: boolean;
+  usernameFromRoute: string;
 
   constructor( private authService:     AuthService,
                private apiSignsService: ApiSignsService,
@@ -33,33 +36,16 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.authSubscription.unsubscribe();
+    this.pageSubscription.unsubscribe();
   }
 
-  // TODO: GET THE USER'S SIGNS BASED ON THE USERNAME IN THE ROUTE
-  // HOW DOES THIS WORK - I NEVER IMPORTED OR IMPLEMENTED NG_ON_INIT
   ngOnInit(): void {
     const that = this;
-    const usernameFromRoute = this.route.snapshot.params['username'];
-
-    // Not dynamic. Must reload component each time. MAY NEED TO CHANGE TO OBSREVABLE AT SOME POINT
-    console.log("Username from route is: ", usernameFromRoute);
-    this.isOwner = this.authService.isOwner(usernameFromRoute);
-    console.log("ISOWNER IS: ", this.isOwner);
-
-    this.isProcessing = true;
-    this.apiSignsService.getSignsByUsernameOrId(usernameFromRoute)
-      .subscribe(
-        signs => {
-          console.log("SIGNS RETURNED TO USER PAGE IS: ", signs);
-          that.signs = signs;  // data is structured at level above
-          that.isProcessing = false;
-        },
-        error => {
-          console.log("ERR RETURNED FROM GET BY ID: ", error.json());
-          return error.json();
-        }
-      );
-    this.logInteraction(usernameFromRoute);
+    this.pageSubscription = this.route.params.subscribe( (params: Params) => {
+      const username = params['username'];
+      console.log("TRIGGERED SUBSCRIPTION THAT WATCHES PARAMS: ", params);
+      that.updateUsernameBasedData(username)
+    });
   }
 
   destroy(event: any) {
@@ -90,5 +76,34 @@ export class UserPageComponent implements OnInit, OnDestroy {
     console.log("INTERACTION CLICKED");
     const userId = window.localStorage.getItem('userId');
     this.interactions.logUserPageVisit(username, userId);
+  }
+
+  private updateUsernameBasedData(username: string) {
+    this.usernameFromRoute = username;
+    console.log("Username from route is: ", this.usernameFromRoute);
+
+    this.isOwner = this.authService.isOwner(this.usernameFromRoute);
+    console.log("ISOWNER IS: ", this.isOwner);
+
+    this.updateSignsFromUsername(username);
+    this.logInteraction(this.usernameFromRoute);
+  }
+
+  private updateSignsFromUsername(username: string) {
+    const that = this;
+
+    this.isProcessing = true;
+    this.apiSignsService.getSignsByUsernameOrId(username)
+        .subscribe(
+          signs => {
+            console.log("SIGNS RETURNED TO USER PAGE IS: ", signs);
+            that.signs = signs;  // data is structured at level above
+            that.isProcessing = false;
+          },
+          error => {
+            console.log("ERR RETURNED FROM GET BY ID: ", error.json());
+            return error.json();
+          }
+        );
   }
 }
