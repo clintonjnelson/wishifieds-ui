@@ -17,7 +17,7 @@ export class GenericSignContentComponent extends SignContentComponent {
     switch(sign.signName) {
       case 'email':   return sign.knownAs;
       case 'phone':   return sign.knownAs;
-      case 'website': return sign.linkUrl;
+      // case 'website': return sign.linkUrl;
     }
   }
 
@@ -25,7 +25,7 @@ export class GenericSignContentComponent extends SignContentComponent {
     switch(sign.signName) {
       case 'email':   return sign.description;
       case 'phone':   return sign.description;
-      case 'website': return sign.description;
+      // case 'website': return sign.description;
     }
   }
 
@@ -36,9 +36,9 @@ export class GenericSignContentComponent extends SignContentComponent {
     phone: {
       required: 'A phone number is required.',
     },
-    website: {
-      required: 'A web address is required.',
-    },
+    // website: {
+    //   required: 'A web address is required.',
+    // },
     description: {}
   };
 }

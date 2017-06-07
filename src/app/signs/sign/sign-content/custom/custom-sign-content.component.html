@@ -14,9 +14,9 @@
   </div>
 
   <!-- Sign Edit Form -->
-
   <div *ngIf="isEditing" class="sign-content-edit-form-container">
     <form #signForm="ngForm" name="signForm" class="sign-form">
+
       <!-- sign Title -->
       <md-input-container>
         <i class="{{buildIconClass('star', '1')}}"></i>
@@ -28,7 +28,6 @@
 
 
       <!-- url -->
-
       <md-input-container>
         <i class="{{buildIconClass('link', '1')}}"></i>
         <input mdInput type="url" name="url" [(ngModel)]="tempSign.linkUrl" placeholder="http://www.somewebsite.com/..." required/>

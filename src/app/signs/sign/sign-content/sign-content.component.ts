@@ -98,15 +98,16 @@ export class SignContentComponent implements OnInit, OnDestroy, AfterViewChecked
     }
     else {
       const signDeleteMsg = 'Are you sure you want to delete this '+ delSign.signType +' sign?';
-      const showOauthDeleteCheckbox = (delSign.signType !== 'custom');
+      const showOauthDeleteCheckbox = isOauthSign(delSign.signType);
       const checkboxMsg = 'Also remove ' + delSign.signType + ' login support?';
       // Open modal via service for confirmation
       this.modalService
         .confirm('Sign Deletion', signDeleteMsg, showOauthDeleteCheckbox, checkboxMsg)
         .subscribe((submit) => {
           if(submit.response === true) {
+            const delAuthLogin = showOauthDeleteCheckbox ? submit.checkbox : false;
             console.log("ABOUT TO CALL DELETE METHOD SERVICE. RESPONSE WAS: ", submit);
-            this.apiSignsService.destroySign(that.sign, submit.checkbox)
+            this.apiSignsService.destroySign(that.sign, delAuthLogin)
               .subscribe(
                 success => {
                   console.log("SIGN SUCCESSFULLY DELETED. Success is: ", success);
@@ -119,6 +120,10 @@ export class SignContentComponent implements OnInit, OnDestroy, AfterViewChecked
         });
     }
     this.toggleEditing(false);  // Close editing window
+
+    function isOauthSign(signType) {
+      return ( (signType !== 'custom') && (signType !== 'generic') );
+    }
   }
 
   // HAVE TEMP SIGN SO DONT NEED TO PASS INTO THE METHOD.... BEST PRACTICES HERE?
@@ -127,7 +132,8 @@ export class SignContentComponent implements OnInit, OnDestroy, AfterViewChecked
     // Create New Sign?
     if(this.forSignCreation) {
 
-      if(!tempSign.signName || !tempSign.linkUrl) { return this.triggerEmptyInputValidations(); }
+      if(!tempSign.signName ) {                                 return this.triggerEmptyInputValidations(); }
+      if(tempSign.signName === 'custom' && !tempSign.linkUrl) { return this.triggerEmptyInputValidations(); }
 
       console.log("CALLING THE CREATE SIGN ROUTE for this sign: ", tempSign);
       this.apiSignsService.createSign(tempSign)
@@ -211,8 +217,13 @@ export class SignContentComponent implements OnInit, OnDestroy, AfterViewChecked
   }
 
   private triggerEmptyInputValidations() {
-    this.signForm.form.get('title').markAsDirty();
-    this.signForm.form.get('url').markAsDirty();
+    const form = this.signForm.form;
+    const inputChecks = ['url', 'title', 'email', 'phone'];
+    inputChecks.forEach(function(input) {
+      if(form.get(input) !== null) {
+        form.get(input).markAsDirty();
+      }
+    });
     this.onValueChanged(null);
   }
 

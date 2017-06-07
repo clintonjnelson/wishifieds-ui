@@ -40,14 +40,13 @@ const OLINKS: Link[] = [
   {url: '/api/auto/wordpress',     icon: 'wordpress',      bgColor: '#21759b', linkName: 'wordpress'},
   {url: '/api/auto/stackexchange', icon: 'stack-overflow', bgColor: '#5184C1', linkName: 'stackoverflow'},
   {url: '/api/auto/youtube',       icon: 'youtube',        bgColor: '#bb0000', linkName: 'youtube'},
-  {url: '/api/login/disqus',       icon: 'disqus',         bgColor: '#2e9fff', linkName: 'disqus'},
   {url: '/api/login/imgur',        icon: 'imgur',          bgColor: '#85bf25', linkName: 'imgur'},
   {url: '/api/login/patreon',      icon: 'patreon',        bgColor: '#e6461a', linkName: 'patreon'},
 ];
 
 // Move this to the DB?
 const CUSTOM_SIGNS: SignAddType[] = [
-  { icon: 'globe',       bgColor: 'green',   signType: 'custom', signName: '' },
+  { icon: 'globe',       bgColor: 'black',   signType: 'custom', signName: '' },
   { icon: 'podcast',     bgColor: '#9C27B0', signType: 'custom', signName: '' },
   { icon: 'amazon',      bgColor: '#ff9900', signType: 'custom', signName: '' },
   { icon: 'quora',       bgColor: '#AA2200', signType: 'custom', signName: '' },
@@ -71,8 +70,8 @@ const CUSTOM_SIGNS: SignAddType[] = [
 
 // HOW SHOW THE PHONE & EMAIL SIGNS?????
 const GENERIC_SIGNS: SignAddType[] = [
-  { icon: 'phone',    bgColor: 'purple', signType: 'generic', signName: 'phone' },
-  { icon: 'envelope', bgColor: 'black',  signType: 'generic', signName: 'email' },
+  { icon: 'phone',    bgColor: 'green',   signType: 'generic', signName: 'phone' },
+  { icon: 'envelope', bgColor: '#644117', signType: 'generic', signName: 'email' },
 ];
 
 
