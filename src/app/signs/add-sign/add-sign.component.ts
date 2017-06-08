@@ -47,6 +47,7 @@ const OLINKS: Link[] = [
 // Move this to the DB?
 const CUSTOM_SIGNS: SignAddType[] = [
   { icon: 'globe',       bgColor: 'black',   signType: 'custom', signName: '' },
+  { icon: 'newspaper-o', bgColor: '#D19E50', signType: 'custom', signName: '' },
   { icon: 'podcast',     bgColor: '#9C27B0', signType: 'custom', signName: '' },
   { icon: 'amazon',      bgColor: '#ff9900', signType: 'custom', signName: '' },
   { icon: 'quora',       bgColor: '#AA2200', signType: 'custom', signName: '' },
