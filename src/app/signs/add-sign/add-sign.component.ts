@@ -71,7 +71,7 @@ const CUSTOM_SIGNS: SignAddType[] = [
 
 // HOW SHOW THE PHONE & EMAIL SIGNS?????
 const GENERIC_SIGNS: SignAddType[] = [
-  { icon: 'phone',    bgColor: 'green',   signType: 'generic', signName: 'phone' },
+  { icon: 'phone',    bgColor: 'purple',  signType: 'generic', signName: 'phone' },
   { icon: 'envelope', bgColor: '#644117', signType: 'generic', signName: 'email' },
 ];
 

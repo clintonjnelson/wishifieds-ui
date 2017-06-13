@@ -43,11 +43,11 @@
       </a>
     </div>
     <!-- Refresh Icon -->
-    <div *ngIf="auth.isLoggedIn && isOwner && !isEditing" class="sign-refresh-icon">
+    <!-- <div *ngIf="auth.isLoggedIn && isOwner && !isEditing" class="sign-refresh-icon">
       <div (click)="oauthRedirect()" mdTooltip="refresh" mdTooltipPosition="above">
         <i class="{{buildIconClass('refresh', 1)}}"></i>
       </div>
-    </div>
+    </div> -->
     <!-- Edit Icon -->
     <div *ngIf="auth.isLoggedIn && isOwner && !isEditing" class="sign-edit-icon">
       <a (click)="toggleEditing()" mdTooltip="edit" mdTooltipPosition="above" class="edit-icon">
