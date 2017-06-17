@@ -223,19 +223,23 @@ export class UserDashboardComponent implements OnInit {
   // chartDataRef is a passed reference object to modify within here
   resetDateCountsAndPopulateChartXAxisLabels(apiInteractions: any[], chartDataRef: any) {
     let dateCounts = {};
-    const startDateStr = new Date(apiInteractions[0].createdAt).toLocaleDateString();
-    const stopStr      = new Date().toLocaleDateString();  // through now
+    const startDateStr  = new Date(apiInteractions[0].createdAt).toLocaleDateString();
+    const stopMillis    = Date.now();  // through now
+    console.log("STOP DATE SHOULD BE NOW: ", stopMillis);
 
-    let currDateStr = startDateStr;  // initial value is first date
-    while(currDateStr <= stopStr) {
+    let currDateStr = startDateStr;                       // initial value is first date
+    let currDateMillis = new Date(currDateStr).getTime(); // initial value is first date
+    while(currDateMillis <= stopMillis) {
       console.log("DATE IS NOW: ", currDateStr);
-      dateCounts[currDateStr] = 0;                                      // set object of all counts
-      chartDataRef.labels.push(currDateStr);                               // push in each date for x-axis
+      dateCounts[currDateStr] = 0;                        // set object of all counts
+      chartDataRef.labels.push(currDateStr);              // push in each date for x-axis
 
-      let date    = new Date(currDateStr);
-      currDateStr = new Date(date.setDate(date.getDate() + 1)).toLocaleDateString();  // increment
+      let date       = new Date(currDateStr);
+      currDateStr    = new Date(date.setDate(date.getDate() + 1)).toLocaleDateString();  // increment
+      currDateMillis = date.getTime();
     }
     console.log("BLANK DATE COUNT BUILT: ", dateCounts);
+
     return dateCounts;
   }
 
