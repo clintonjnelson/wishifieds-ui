@@ -3,11 +3,11 @@
   <div mdTooltip="home" mdTooltipPosition="right" class="navbar-signpost-icon">
     <!-- Logged Out => Landing Page + Search -->
     <a *ngIf="!auth.isLoggedIn" routerLink="/">
-      <img src="/assets/signpost_icon.svg" alt="login/signup icon" class="signpost-icon-main">
+      <img src="/assets/syynpost_icon.svg" alt="login/signup icon" class="signpost-icon-main">
     </a>
     <!-- Logged In => User Home Page -->
     <a *ngIf="auth.isLoggedIn" [routerLink]="[auth.username]">
-      <img src="/assets/signpost_icon.svg" alt="login/signup icon" class="signpost-icon-main">
+      <img src="/assets/syynpost_icon.svg" alt="login/signup icon" class="signpost-icon-main">
     </a>
   </div>
 
@@ -34,7 +34,7 @@
         </icon-link>
       </li>
       <!-- <li (click)="toggleShowSignpostLoginForm()" mdTooltip="syynpost" mdTooltipPosition="above"  class="login-signup-form-link">
-        <img src="/assets/signpost_icon.svg" alt="login/signup icon" class="signpost-icon-link">
+        <img src="/assets/syynpost_icon.svg" alt="login/signup icon" class="signpost-icon-link">
       </li> -->
     </ul>
   </div>
