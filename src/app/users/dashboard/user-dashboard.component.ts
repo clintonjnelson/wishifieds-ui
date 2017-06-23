@@ -160,6 +160,10 @@ export class UserDashboardComponent implements OnInit {
                                 scales: {
                                   xAxes: [{
                                     type: 'time',
+                                    ticks: {
+                                      maxTicksLimit: 5,
+                                      autoSkip: true,
+                                    },
                                     time: {
                                       unit: 'day',
                                       displayFormats: {
