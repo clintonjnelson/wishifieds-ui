@@ -1,5 +1,4 @@
 User-agent: *
-Disallow: /admin
 Disallow: /termsandconditions
 Disallow: /privacynotice
 Crawl-delay: 10
