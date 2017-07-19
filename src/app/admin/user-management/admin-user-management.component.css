@@ -1,0 +1,24 @@
+/* Sitemap Update Section */
+#sitemap-update-container {
+  padding: 15px;
+  border: 1px bold white;
+  border-radius: 0px;
+}
+
+#sitemap-heading {
+  font-weight: normal;
+}
+
+#sitemap-update-button {
+  text-align: center;
+}
+
+/* Search Section */
+.icon-button {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  order: 2;
+  padding: 0px;
+}

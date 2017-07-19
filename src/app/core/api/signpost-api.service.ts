@@ -12,6 +12,7 @@ const ROUTES = {
 
   // Admin
   adminGetUsers: '/api/users',
+  adminUpdateSitemap: '/api/tasks/sitemap',
 
   // Users
   createUser:  '/api/users',

@@ -1,12 +1,19 @@
 <!-- User Management Search -->
 <div class="search-container" *ngIf="isAdmin">
+  <div id="sitemap-update-container">
+    <h2 class="syynpost-white-text sitemap-heading"> Update Sitemap </h2>
+    <button id="sitemap-update-button" (click)="updateSitemap()" class="icon-button">
+      <i class="fa fa-refresh fa-2x sp-hover"></i>
+    </button>
+  </div>
+
   <div class="search-box">
     <form #searchForm="ngForm" name="searchForm" (ngSubmit)="search($event)" class="search-box-form">
       <md-input-container md-float [ngStyle]="{'color': 'white'}" layout="row" class="search-box-input-container">
         <input mdInput type="text" [(ngModel)]="searchStr" placeholder="find someone" name="search">
       </md-input-container>
 
-      <button (click)="search($event)" type="submit" class="sidenav-search-btn-icon">
+      <button (click)="search($event)" type="submit" class="icon-button">
           <i class="fa fa-search fa-2x sp-hover"></i>
         </button>
     </form>
@@ -24,7 +31,7 @@
 
   <!-- NO Results -->
   <div class="search-results-container" *ngIf="hasSearched && foundUsers?.length === 0 && foundSigns?.length === 0">
-    <p class="no-results-message">0 results found for "{{searchStr}}"</p>
+    <p class="no-results-message"> 0 results found for "{{searchStr}}" </p>
   </div>
 </div>
 

@@ -60,6 +60,11 @@ signpost-footer {
   align-items: flex-end;
 }
 
+.syynpost-white-text {
+  font-family: helvetica;
+  color: white;
+}
+
 /*General Background Color*/
 .bg-gray {
   background-color: #808080;
