@@ -44,9 +44,10 @@
       </button>
 
       <!-- Cancel Form Button -->
-      <button type="cancel" (click)="cancel()" mdTooltip="cancel" mdTooltipPosition="above" class="login-signup-button cancel">
+      <!-- REMOVED FOR NOW BECAUSE CANNOT REOPEN THE FORM -->
+      <!-- <button type="cancel" (click)="cancel()" mdTooltip="cancel" mdTooltipPosition="above" class="login-signup-button cancel">
         <i class="fa fa-times fa-3x"></i>
-      </button>
+      </button> -->
     </div>
     <div *ngIf="displayedValidationErrors.main" class="input-errors error">
       {{ displayedValidationErrors.main }}

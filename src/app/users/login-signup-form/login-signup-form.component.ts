@@ -71,7 +71,7 @@ export class LoginSignupFormComponent implements AfterViewChecked {
               console.log("ERROR TO HANDLE FINAL IS: ", body);
               if(body.msg === 'email-taken') {
                 console.log("SHOWING FORM ERROR NOW...");
-                that.displayedValidationErrors['main'] += that.validationErrorMessages.email.taken;
+                that.displayedValidationErrors['main'] = that.validationErrorMessages.email.taken;
               }
               console.log("ERROR RESPONSE TO SIGNUP FORM IS: ", body);
             }
@@ -103,7 +103,7 @@ export class LoginSignupFormComponent implements AfterViewChecked {
           that.router.navigate(['/', success.username]);
         },
         err => {
-          that.displayedValidationErrors['main'] += that.validationErrorMessages.login.user;
+          that.displayedValidationErrors['main'] = that.validationErrorMessages.login.user;
         }
       );
   }
@@ -157,13 +157,14 @@ export class LoginSignupFormComponent implements AfterViewChecked {
   }
 
   private onValueChanged(data?: any) {
+    const that = this;
     if(!this.loginForm) { return; }    // if no form object, exit.
     const form = this.loginForm.form;  // get the form
 
     for(const inputName in this.displayedValidationErrors) {
       // clear previous error messages
       console.log("INPUT NAME LOOKS LIKE: ", typeof inputName);
-      this.displayedValidationErrors[inputName] = '';  // each error unser each inputName, clear it
+      that.displayedValidationErrors[inputName] = '';  // each error unser each inputName, clear it
       const control = form.get(inputName);             // get value from form input
 
       // If control inputName is dirtied & not valid & new user, show all applicable form errors
@@ -171,7 +172,7 @@ export class LoginSignupFormComponent implements AfterViewChecked {
         const msgs = this.validationErrorMessages[inputName];  // get all messages for inputName
         for(const error in control.errors) {
           console.log("TYPEOF CONTROL.ERRORS IS: ", typeof control.errors);
-          this.displayedValidationErrors[inputName] += msgs[error] + ' ';
+          that.displayedValidationErrors[inputName] += msgs[error] + ' ';
         }
       }
     }
