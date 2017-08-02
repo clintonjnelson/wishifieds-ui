@@ -33,12 +33,23 @@ export class AdminUserManagementComponent extends SearchBoxComponent implements 
 
   updateSitemap() {
     this.apiAdminService.updateSitemap()
-      .subscribe(
-        success => {
-          console.log("Success of sitemap update is: ", success);
-        },
-        error => {
-          console.log("Error in sitemap update is: ", error);
-        });
+        .subscribe(
+          success => {
+            console.log("Success of sitemap update is: ", success);
+          },
+          error => {
+            console.log("Error in sitemap update is: ", error);
+          });
+  }
+
+  userCleanup() {
+    this.apiAdminService.userCleanup()
+        .subscribe(
+          success => {
+            console.log("Success of user cleanup task is: ", success);
+          },
+          error => {
+            console.log("Error in user cleanup task is: ", error);
+          });
   }
 }

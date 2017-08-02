@@ -1,8 +1,18 @@
 <!-- User Management Search -->
 <div class="search-container" *ngIf="isAdmin">
+
+  <!-- Sitemap Update -->
   <div id="sitemap-update-container">
-    <h2 class="syynpost-white-text sitemap-heading"> Update Sitemap </h2>
-    <button id="sitemap-update-button" (click)="updateSitemap()" class="icon-button">
+    <h2 class="syynpost-white-text admin-subheading"> Update Sitemap </h2>
+    <button id="sitemap-update-button" (click)="updateSitemap()" class="icon-button admin-section-button">
+      <i class="fa fa-refresh fa-2x sp-hover"></i>
+    </button>
+  </div>
+
+  <!-- User Cleanup -->
+  <div id="user-cleanup-container">
+    <h2 class="syynpost-white-text admin-subheading"> User Cleanup </h2>
+    <button id="user-cleanup-button" (click)="userCleanup()" class="icon-button admin-section-button">
       <i class="fa fa-refresh fa-2x sp-hover"></i>
     </button>
   </div>

@@ -1,15 +1,15 @@
 /* Sitemap Update Section */
-#sitemap-update-container {
+#sitemap-update-container, #user-cleanup-container {
   padding: 15px;
   border: 1px bold white;
   border-radius: 0px;
 }
 
-#sitemap-heading {
+.admin-subheading {
   font-weight: normal;
 }
 
-#sitemap-update-button {
+.admin-section-button {
   text-align: center;
 }
 

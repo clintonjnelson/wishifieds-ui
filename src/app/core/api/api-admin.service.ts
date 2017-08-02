@@ -43,4 +43,19 @@ export class ApiAdminService {
                  return Observable.throw(error);
                });
   }
+
+  userCleanup(): Observable<any> {
+    const userCleanupUrl = this.signpostApi.routes.adminUserCleanup;
+    const options        = this.signpostApi.getRequestOptionWithEatHeader();
+
+    return this.http
+               .put(userCleanupUrl, JSON.stringify({trigger: true}), options)
+               .map( res => {
+                 console.log("Success cleaning up users", res);
+                 return res.json();
+               })
+               .catch( (error: Response) => {
+                 return Observable.throw(error);
+               });
+  }
 }

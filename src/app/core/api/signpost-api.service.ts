@@ -13,6 +13,7 @@ const ROUTES = {
   // Admin
   adminGetUsers: '/api/users',
   adminUpdateSitemap: '/api/tasks/sitemap',
+  adminUserCleanup: '/api/tasks/cleanupusers',
 
   // Users
   createUser:  '/api/users',
