@@ -207,7 +207,7 @@ export class UserDashboardComponent implements OnInit {
   buildLine(apiInteractions: any[], dateCounts: any, chartData: any) {
     // Build count object
     apiInteractions.forEach(function(dataPoint) {
-      const date = new Date(dataPoint.createdAt).toLocaleDateString();
+      const date = new Date(dataPoint.eventDate).toLocaleDateString();
       dateCounts[date]++;
     });
     // set point counts in same order as labels; only one line per chart
@@ -227,7 +227,7 @@ export class UserDashboardComponent implements OnInit {
   // chartDataRef is a passed reference object to modify within here
   resetDateCountsAndPopulateChartXAxisLabels(apiInteractions: any[], chartDataRef: any) {
     let dateCounts = {};
-    const startDateStr  = new Date(apiInteractions[0].createdAt).toLocaleDateString();
+    const startDateStr  = new Date(apiInteractions[0].eventDate).toLocaleDateString();
     const stopMillis    = Date.now();  // through now
     console.log("STOP DATE SHOULD BE NOW: ", stopMillis);
 
