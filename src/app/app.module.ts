@@ -25,6 +25,7 @@ import { FooterComponent }               from './footer/footer.component';
 import { AdminDashboardComponent }       from './admin/dashboard/admin-dashboard.component';
 import { AdminUserManagementComponent }  from './admin/user-management/admin-user-management.component';
 
+import { HomeComponent }                 from './home/home.component';
 import { SearchBoxComponent }            from './search/search-box/search-box.component';
 import { SearchResultsComponent}         from './search/search-results/search-results.component';
 
@@ -109,6 +110,7 @@ export function HttpFactory(backend: XHRBackend,
 
                   NavbarComponent,
                   FooterComponent,
+                  HomeComponent,
                   SearchBoxComponent,
                   SearchResultsComponent,
                   AdminDashboardComponent,        // move to child module for dashboard

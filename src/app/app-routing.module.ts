@@ -7,6 +7,7 @@ import { RequestPasswordResetComponent } from './password-reset/request-password
 import { PasswordResetComponent }        from './password-reset/password-reset.component';
 import { AdminDashboardComponent }       from './admin/dashboard/admin-dashboard.component';
 import { AdminUserManagementComponent }  from './admin/user-management/admin-user-management.component';
+import { HomeComponent }                 from './home/home.component';
 import { SearchBoxComponent }            from './search/search-box/search-box.component';
 import { UserPageComponent }             from './users/user-page.component';
 import { UserSettingsComponent }         from './users/settings/user-settings.component';
@@ -43,8 +44,7 @@ const rootRoutes: Routes = [
   { path: ':username/dashboard', component: UserDashboardComponent, canActivate: [OwnerGuard], pathMatch: 'full'},
   { path: ':username', component: UserPageComponent, pathMatch: 'full' },
 
-  // TODO: UPDATE TO ADD A HOME PAGE THAT CAN BRING IN THE SEARCH BOX
-  { path: '', component: SearchBoxComponent, pathMatch: 'full' },
+  { path: '', component: HomeComponent, pathMatch: 'full' },
   // { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
 
