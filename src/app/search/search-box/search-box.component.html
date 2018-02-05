@@ -1,25 +1,35 @@
-<!-- Search -->
-<div class="search-container">
-  <div class="search-box">
-    <form #searchForm="ngForm" name="searchForm" (ngSubmit)="search($event)" class="search-box-form">
-      <md-input-container md-float [ngStyle]="{'color': 'white'}" layout="row" class="search-box-input-container">
-        <input mdInput type="text" [(ngModel)]="searchStr" placeholder="find someone" name="search">
-      </md-input-container>
 
-      <button (click)="search($event)" type="submit" class="search-btn-icon">
-          <i class="fa fa-search fa-2x sp-hover"></i>
-        </button>
-    </form>
+<!-- TODO: Refactor this page into a HOME PAGE -->
+
+<div class="home-container">
+
+  <!-- Search -->
+  <div class="search-container">
+    <div class="search-box">
+      <form #searchForm="ngForm" name="searchForm" (ngSubmit)="search($event)" class="search-box-form">
+        <md-input-container md-float [ngStyle]="{'color': 'white'}" layout="row" class="search-box-input-container">
+          <input mdInput type="text" [(ngModel)]="searchStr" placeholder="find someone" name="search">
+        </md-input-container>
+
+        <button (click)="search($event)" type="submit" class="search-btn-icon">
+            <i class="fa fa-search fa-2x sp-hover"></i>
+          </button>
+      </form>
+    </div>
+
+    <!-- Results found -->
+    <div class="search-results-container" *ngIf="(foundUsers?.length) || (foundSigns?.length)">
+      <search-results [users]="foundUsers" [signs]="foundSigns"></search-results>
+    </div>
+
+    <!-- NO Results -->
+    <div class="search-results-container" *ngIf="hasSearched && foundUsers?.length === 0 && foundSigns?.length === 0">
+      <p class="no-results-message">0 results found for "{{searchStr}}"</p>
+    </div>
   </div>
 
-  <!-- Results found -->
-  <div class="search-results-container" *ngIf="(foundUsers?.length) || (foundSigns?.length)">
-    <search-results [users]="foundUsers" [signs]="foundSigns"></search-results>
-  </div>
-
-  <!-- NO Results -->
-  <div class="search-results-container" *ngIf="hasSearched && foundUsers?.length === 0 && foundSigns?.length === 0">
-    <p class="no-results-message">0 results found for "{{searchStr}}"</p>
+    <!-- How-To Video -->
+  <div class="intro-video">
+    <iframe width="300" height="169" src="https://www.youtube.com/embed/pazX4TG-v78?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
 </div>
-

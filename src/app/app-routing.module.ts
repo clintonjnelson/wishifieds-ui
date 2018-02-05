@@ -43,6 +43,7 @@ const rootRoutes: Routes = [
   { path: ':username/dashboard', component: UserDashboardComponent, canActivate: [OwnerGuard], pathMatch: 'full'},
   { path: ':username', component: UserPageComponent, pathMatch: 'full' },
 
+  // TODO: UPDATE TO ADD A HOME PAGE THAT CAN BRING IN THE SEARCH BOX
   { path: '', component: SearchBoxComponent, pathMatch: 'full' },
   // { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
