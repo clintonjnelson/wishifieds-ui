@@ -77,6 +77,10 @@ export class SignContentComponent implements OnInit, OnDestroy, AfterViewChecked
     return this.helpers.urlWithoutProtocol(url);
   }
 
+  verifyOrAddProtocolToUrl(url: string) {
+    return this.helpers.verifyOrAddProtocolToUrl(url)
+  }
+
   // ************* Form Methods *************
   cancel() {
     this.toggleEditing();

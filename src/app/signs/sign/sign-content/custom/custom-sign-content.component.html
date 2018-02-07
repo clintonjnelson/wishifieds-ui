@@ -6,11 +6,11 @@
   <!-- Sign Info -->
   <div class="sign-content" *ngIf="!isEditing">
     <h3 class="sign-content-title">
-      <a href="{{sign.linkUrl}}" (click)="logInteraction()" target="_blank" class="sign-content-title">{{ sign.signName }}</a>
+      <a href="{{ verifyOrAddProtocolToUrl(sign.linkUrl) }}" (click)="logInteraction()" target="_blank" class="sign-content-title">{{ sign.signName }}</a>
     </h3>
     <!-- <h3 class="sign-content-title">{{ sign.signName }}</h3> -->
     <p class="sign-content-first-line"> <small>{{ sign.description }}</small></p>
-    <a href="{{sign.linkUrl}}" target="_blank" class="sign-content-second-line"> {{ urlWithoutPrototol(sign.linkUrl) }} </a>
+    <a href="{{ verifyOrAddProtocolToUrl(sign.linkUrl) }}" target="_blank" class="sign-content-second-line"> {{ urlWithoutPrototol(sign.linkUrl) }} </a>
   </div>
 
   <!-- Sign Edit Form -->
