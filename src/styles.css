@@ -41,7 +41,7 @@ body {
   background-color: #808080;
   max-width: calc(100% - 16px);  /* Full width without margins */
 
-  background-image: url('assets/syynpost_background.png');
+  /*background-image: url('assets/syynpost_background.png');*/
   background-position: center center;
   background-repeat: no-repeat;
 }
