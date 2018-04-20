@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnInit, ViewChild, OnDestroy, AfterViewChecked } from '@angular/core';
 import { NgForm, FormControl }   from '@angular/forms';   // Remove if no validation logic
-import { MdTooltipModule }       from '@angular/material';
+import { MatTooltipModule }       from '@angular/material';
 import { IconService }           from '../../../core/services/icon.service';
 import { HelpersService }        from '../../../shared/helpers/helpers.service';
 import { AuthService, UserAuth } from '../../../core/auth/auth.service';

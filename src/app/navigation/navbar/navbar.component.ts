@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { MdTooltipModule } from '@angular/material';
+import { MatTooltipModule } from '@angular/material';
 import { IconService } from '../../core/services/icon.service';
 import { AuthService, UserAuth } from '../../core/auth/auth.service';
 import { Subscription } from 'rxjs/Subscription';

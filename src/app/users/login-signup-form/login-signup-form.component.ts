@@ -1,13 +1,13 @@
 import { Component, Output, EventEmitter, ViewChild, AfterViewChecked } from '@angular/core';
 import { NgForm, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MdTooltipModule } from '@angular/material';
+import { MatTooltipModule } from '@angular/material';
 import { AuthService } from '../../core/auth/auth.service';
 import { ApiUsersService } from '../../core/api/api-users.service';
 import { ApiAuthService } from '../../core/api/api-auth.service';
 import { UserCreds } from '../../users/user.model';
 import { NotificationService } from '../../core/services/notification.service';
-import { MdInputModule } from '@angular/material';
+import { MatInputModule } from '@angular/material';
 import { GAEventService } from '../../core/services/ga-event.service';
 
 

@@ -3,7 +3,7 @@ import { NavigationEnd, Router, UrlSerializer } from '@angular/router';
 import { Location } from '@angular/common';
 import { AuthService, UserAuth } from '../core/auth/auth.service';
 import { NotificationService } from '../core/services/notification.service';
-import { MdTooltipModule } from '@angular/material';
+import { MatTooltipModule } from '@angular/material';
 import { IconService } from '../core/services/icon.service';
 import { Subscription } from 'rxjs/Subscription';
 import { SignpostApi } from '../core/api/signpost-api.service';

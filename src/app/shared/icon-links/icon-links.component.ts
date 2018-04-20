@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IconService } from '../../core/services/icon.service';
-import { MdTooltipModule } from '@angular/material';
+import { MatTooltipModule } from '@angular/material';
 import { HoverColorDirective } from '../hover-color/hover-color.directive';
 
 

@@ -32,7 +32,7 @@ export class HttpIntercept extends Http {
         if(res.status === 401 && body.reset) {
           console.log("RESETTING...");
           that.authService.logout();   // deletes cookies, reset auth values, redirect home
-          return Observable.empty();
+          return Observable.empty<Response>();
         }
         // Continue as normal
         else {
@@ -44,7 +44,7 @@ export class HttpIntercept extends Http {
         // In such case, look for SyntaxError & 401 Status => reset intended
         if(e instanceof SyntaxError && res.status === 401) {
           that.authService.logout();
-          return Observable.empty();
+          return Observable.empty<Response>();
         }
         else { return observable; }
       }
