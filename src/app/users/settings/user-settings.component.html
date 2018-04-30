@@ -25,10 +25,10 @@
 
     <!-- Username -->
     <div class="settings-input-error-container">
-      <md-input-container class="user-settings-input">
+      <mat-form-field class="user-settings-input">
         <i class="{{buildIconClass('user', 1)}}"></i>
-        <input mdInput type="text" name="username" [(ngModel)]="tempSettings.username" placeholder="your signpost username" minlength="1" maxlength="20" required/>
-      </md-input-container>
+        <input matInput type="text" name="username" [(ngModel)]="tempSettings.username" placeholder="your signpost username" minlength="1" maxlength="20" required/>
+      </mat-form-field>
       <!-- Show errors only if exist and input has been modified -->
       <div *ngIf="displayedValidationErrors.username" class="input-errors error">
         {{ displayedValidationErrors.username }}
@@ -37,10 +37,10 @@
 
     <!-- Contact & Login Email -->
     <div class="settings-input-error-container">
-      <md-input-container class="user-settings-input">
+      <mat-form-field class="user-settings-input">
         <i class="{{buildIconClass('envelope', 1)}}"></i>
-        <input mdInput type="email" name="email" [(ngModel)]="tempSettings.email" placeholder="your login/contact email" minlength="5" required/>
-      </md-input-container>
+        <input matInput type="email" name="email" [(ngModel)]="tempSettings.email" placeholder="your login/contact email" minlength="5" required/>
+      </mat-form-field>
       <div *ngIf="displayedValidationErrors.email" class="input-errors error">
         {{ displayedValidationErrors.email }}
       </div>

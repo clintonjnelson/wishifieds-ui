@@ -4,9 +4,9 @@
     <p class="login-signup-instructions"> login/signup with providers above OR here</p>
     <!-- Email Input -->
     <div class="login-signup-input-error-container">
-      <md-input-container md-no-float layout="row" class="login-input-container">
-        <input mdInput type="text" [(ngModel)]="userCreds.email" placeholder="email" name="email" minlength="6" [pattern]="userCreds.newAccount ? emailRegex : ''" required>
-      </md-input-container>
+      <mat-form-field md-no-float layout="row" class="login-input-container">
+        <input matInput type="text" [(ngModel)]="userCreds.email" placeholder="email" name="email" minlength="6" [pattern]="userCreds.newAccount ? emailRegex : ''" required>
+      </mat-form-field>
       <div *ngIf="displayedValidationErrors.email" class="input-errors error">
         {{ displayedValidationErrors.email }}
       </div>
@@ -14,9 +14,9 @@
 
     <!-- Password Input -->
     <div class="login-signup-input-error-container">
-      <md-input-container layout="row" class="login-input-container">
-        <input mdInput type="password" [(ngModel)]="userCreds.password" placeholder="password" minlength="6" name="password" required>
-      </md-input-container>
+      <mat-form-field layout="row" class="login-input-container">
+        <input matInput type="password" [(ngModel)]="userCreds.password" placeholder="password" minlength="6" name="password" required>
+      </mat-form-field>
       <div *ngIf="displayedValidationErrors.password" class="input-errors error">
         {{ displayedValidationErrors.password }}
       </div>
@@ -39,13 +39,13 @@
 
     <div class="buttons-container">
       <!-- Submit Form Button -->
-      <button type="submit" (click)="loginOrSignup($event)" mdTooltip="submit" mdTooltipPosition="above" class="login-signup-button submit" [disabled]="loginForm.invalid">
+      <button type="submit" (click)="loginOrSignup($event)" matTooltip="submit" matTooltipPosition="above" class="login-signup-button submit" [disabled]="loginForm.invalid">
         <i class="fa fa-sign-in fa-3x"></i>
       </button>
 
       <!-- Cancel Form Button -->
       <!-- REMOVED FOR NOW BECAUSE CANNOT REOPEN THE FORM -->
-      <!-- <button type="cancel" (click)="cancel()" mdTooltip="cancel" mdTooltipPosition="above" class="login-signup-button cancel">
+      <!-- <button type="cancel" (click)="cancel()" matTooltip="cancel" matTooltipPosition="above" class="login-signup-button cancel">
         <i class="fa fa-times fa-3x"></i>
       </button> -->
     </div>

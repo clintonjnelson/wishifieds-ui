@@ -12,28 +12,28 @@
       <!-- Choose ONE Key Data Input Based on Sign Type -->
       <div [ngSwitch]="sign.icon">
         <!-- email -->
-        <md-input-container *ngSwitchCase="'envelope'">
+        <mat-form-field *ngSwitchCase="'envelope'">
           <i class="{{buildIconClass('envelope', '1')}}"></i>
-          <input mdInput type="email" name="email" ngControl="email" [(ngModel)]="tempSign.knownAs" placeholder="emailmee@example.com" required/>
-        </md-input-container>
+          <input matInput type="email" name="email" ngControl="email" [(ngModel)]="tempSign.knownAs" placeholder="emailmee@example.com" required/>
+        </mat-form-field>
         <div *ngIf="displayedValidationErrors.email" class="input-errors error">
           {{ displayedValidationErrors.email }}
         </div>
 
         <!-- phone -->
-        <md-input-container *ngSwitchCase="'phone'">
+        <mat-form-field *ngSwitchCase="'phone'">
           <i class="{{buildIconClass('phone', '1')}}"></i>
-          <input mdInput type="tel" name="phone" ngControl="phone" [(ngModel)]="tempSign.knownAs" placeholder="(555)555-5555" required/>
-        </md-input-container>
+          <input matInput type="tel" name="phone" ngControl="phone" [(ngModel)]="tempSign.knownAs" placeholder="(555)555-5555" required/>
+        </mat-form-field>
         <div *ngIf="displayedValidationErrors.phone" class="input-errors error">
           {{ displayedValidationErrors.phone }}
         </div>
 
         <!-- Website -->
-<!--         <md-input-container *ngSwitchCase="'globe'">
+<!--         <mat-form-field *ngSwitchCase="'globe'">
           <i class="{{buildIconClass('globe', '1')}}"></i>
-          <input mdInput type="url" name="website" ngControl="website" [(ngModel)]="tempSign.linkUrl" placeholder="www.mywebsite.com" required/>
-        </md-input-container>
+          <input matInput type="url" name="website" ngControl="website" [(ngModel)]="tempSign.linkUrl" placeholder="www.mywebsite.com" required/>
+        </mat-form-field>
         <div *ngIf="displayedValidationErrors.website" class="input-errors error">
           {{ displayedValidationErrors.website }}
         </div> -->
@@ -41,20 +41,20 @@
       </div>
 
       <!-- description -->
-      <md-input-container layout="row">
+      <mat-form-field layout="row">
         <i class="{{buildIconClass('info-circle', '1')}}"></i>
-        <input mdInput type="text" name="desc" ngControl="desc" [(ngModel)]="tempSign.description" placeholder="short description" md-maxlength="30">
-      </md-input-container>
+        <input matInput type="text" name="desc" ngControl="desc" [(ngModel)]="tempSign.description" placeholder="short description" md-maxlength="30">
+      </mat-form-field>
 
       <!-- form buttons -->
       <div>
         <!-- ok button -->
-        <a (click)="save(tempSign)" type="submit" mdTooltip="save" mdTooltipPosition="above" class="sign-saveicon" [attr.disabled]="!signForm.form.valid">
+        <a (click)="save(tempSign)" type="submit" matTooltip="save" matTooltipPosition="above" class="sign-saveicon" [attr.disabled]="!signForm.form.valid">
           <i class="{{buildIconClass('check', '2')}}"></i>
         </a>
         <!-- cancel button -->
         <a (click)="cancel()" class="sign-cancelicon">
-          <i *ngIf="!showPreviewLabel" mdTooltip="cancel" mdTooltipPosition="above" class="{{buildIconClass('times', '2')}}"></i>
+          <i *ngIf="!showPreviewLabel" matTooltip="cancel" matTooltipPosition="above" class="{{buildIconClass('times', '2')}}"></i>
           <p *ngIf="showPreviewLabel"  class="preview-button-label">Preview</p>
         </a>
       </div>
@@ -65,13 +65,13 @@
   <div [style.background]="sign.bgColor" class="sign-management-icons-container">
     <!-- Delete Icon -->
     <div *ngIf="auth.isLoggedIn && isOwner && (!isEditing || forSignCreation)" class="sign-delete-icon">
-      <a (click)="destroy()" mdTooltip="delete" mdTooltipPosition="above" class="sign-delete-icon">
+      <a (click)="destroy()" matTooltip="delete" matTooltipPosition="above" class="sign-delete-icon">
         <i class="fa fa-times fa-1x" aria-hidden="true"></i>
       </a>
     </div>
     <!-- Edit Icon -->
     <div *ngIf="auth.isLoggedIn && isOwner && !isEditing" class="sign-edit-icon">
-      <a (click)="toggleEditing()" mdTooltip="edit" mdTooltipPosition="above" class="edit-icon">
+      <a (click)="toggleEditing()" matTooltip="edit" matTooltipPosition="above" class="edit-icon">
         <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
       </a>
     </div>

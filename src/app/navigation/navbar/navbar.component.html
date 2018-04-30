@@ -1,6 +1,6 @@
 <!-- Navigation Header Bar -->
 <div class="navbar">
-  <div mdTooltip="home" mdTooltipPosition="right" class="navbar-signpost-icon">
+  <div matTooltip="home" matTooltipPosition="right" class="navbar-signpost-icon">
     <!-- Logged Out => Landing Page + Search -->
     <a *ngIf="!auth.isLoggedIn" routerLink="/">
       <img src="/assets/syynpost_icon.svg" alt="login/signup icon" class="signpost-icon-main">
@@ -20,7 +20,7 @@
       <span class="login-text">Login | Signup</span>
     </i>
   </div>
-  <div *ngIf="showLoginLinks && !auth.isLoggedIn" (click)="toggleShowLoginLinks()" mdTooltip="[click to hide]" mdTooltipPosition="above"  class="nav-toggle-control">
+  <div *ngIf="showLoginLinks && !auth.isLoggedIn" (click)="toggleShowLoginLinks()" matTooltip="[click to hide]" matTooltipPosition="above"  class="nav-toggle-control">
     <i class="{{buildIconClass('angle-double-right', '2')}}"></i>
   </div>
   <div class="nav-right-links-container" *ngIf="auth.isLoggedOut">
@@ -33,7 +33,7 @@
                    (click)="gaClick(link.icon)">
         </icon-link>
       </li>
-      <!-- <li (click)="toggleShowSignpostLoginForm()" mdTooltip="syynpost" mdTooltipPosition="above"  class="login-signup-form-link">
+      <!-- <li (click)="toggleShowSignpostLoginForm()" matTooltip="syynpost" matTooltipPosition="above"  class="login-signup-form-link">
         <img src="/assets/syynpost_icon.svg" alt="login/signup icon" class="signpost-icon-link">
       </li> -->
     </ul>
@@ -45,13 +45,13 @@
   <!-- Toggle to OPEN nav links -->
   <section (click)="toggleShowUserNavLinks()" *ngIf="auth.isLoggedIn" class="nav-toggle-control">
     <!-- Open Nav Links Button -->
-    <div *ngIf="!showUserNavLinks" mdTooltip="[click to show]" mdTooltipPosition="left" class="user-navlinks-toggle">
+    <div *ngIf="!showUserNavLinks" matTooltip="[click to show]" matTooltipPosition="left" class="user-navlinks-toggle">
       <i class="{{buildIconClass('angle-double-left', '2')}}"></i>
       <i class="{{buildIconClass('user', '2')}}"></i>
     </div>
 
     <!-- Close Button -->
-    <div *ngIf="showUserNavLinks" mdTooltip="[click to hide]" mdTooltipPosition="above" class="user-navlinks-toggle"> <!-- (click)="toggleShowUserNavLinks()" -->
+    <div *ngIf="showUserNavLinks" matTooltip="[click to hide]" matTooltipPosition="above" class="user-navlinks-toggle"> <!-- (click)="toggleShowUserNavLinks()" -->
       <i class="{{buildIconClass('angle-double-right', '2')}}"></i>
     </div>
   </section>
@@ -62,23 +62,23 @@
     <ul *ngIf="showUserNavLinks" class="navbar-login-links">
       <!-- Search Button -->
       <li>
-        <a routerLink="/search" (click)="toggleShowUserNavLinks()" mdTooltip="search" mdTooltipPosition="above">
+        <a routerLink="/search" (click)="toggleShowUserNavLinks()" matTooltip="search" matTooltipPosition="above">
           <i class="{{buildIconClass('search', '2')}}"></i>
         </a>
       </li>
       <!-- Signout Button -->
       <li (click)="logout()" class="user-signout-link">
-        <p mdTooltip="logout" mdTooltipPosition="above" class="signout-text">Signout</p>
+        <p matTooltip="logout" matTooltipPosition="above" class="signout-text">Signout</p>
       </li>
       <!-- Settings Button -->
       <li>
-        <a [routerLink]="[auth.username, 'settings']" (click)="toggleShowUserNavLinks()" mdTooltip="settings" mdTooltipPosition="above">
+        <a [routerLink]="[auth.username, 'settings']" (click)="toggleShowUserNavLinks()" matTooltip="settings" matTooltipPosition="above">
           <i class="{{buildIconClass('cog', '2')}}"></i>
         </a>
       </li>
       <!-- Dashboard Button -->
       <li>
-        <a [routerLink]="[auth.username, 'dashboard']" (click)="toggleShowUserNavLinks(); gaClick('dashboard')" mdTooltip="dashboard" mdTooltipPosition="above">
+        <a [routerLink]="[auth.username, 'dashboard']" (click)="toggleShowUserNavLinks(); gaClick('dashboard')" matTooltip="dashboard" matTooltipPosition="above">
           <i class="{{buildIconClass('line-chart', '2')}}"></i>
         </a>
       </li>

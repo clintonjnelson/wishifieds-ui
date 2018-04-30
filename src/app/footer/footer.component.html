@@ -1,7 +1,7 @@
 <div class="footer-container">
   <!-- Help Link -->
   <div class="faq-link-container">
-    <a routerLink="/faq" mdTooltip="help/faq" mdTooltipPosition="above" class="faq-icon">
+    <a routerLink="/faq" matTooltip="help/faq" matTooltipPosition="above" class="faq-icon">
       <i class="{{buildIconClass('question', '2')}}"></i>
     </a>
   </div>
@@ -9,13 +9,13 @@
 
   <!-- Social Sharing Links -->
   <div *ngIf="!showSharingLinks" class="sharing-links-container">
-    <i (click)="toggleShowSharingLinks()" mdTooltip="[show social sharing]" mdTooltipPosition="above" class="{{buildIconClass('angle-double-up', 2)}} link-toggle-icon"></i>
+    <i (click)="toggleShowSharingLinks()" matTooltip="[show social sharing]" matTooltipPosition="above" class="{{buildIconClass('angle-double-up', 2)}} link-toggle-icon"></i>
   </div>
 
   <div *ngIf="showSharingLinks" class="sharing-links-container">
       <ul class="drop-up-links">
         <li *ngIf="auth.isLoggedIn">
-          <i class="{{buildIconClass('share', '2')}} social-sharing-links" (click)="copyMyUrlToClipboard()" mdTooltip="copy my URL" mdTooltipPosition="above"></i>
+          <i class="{{buildIconClass('share', '2')}} social-sharing-links" (click)="copyMyUrlToClipboard()" matTooltip="copy my URL" matTooltipPosition="above"></i>
         </li>
         <li *ngFor="let link of socialSharingLinks" class="social-sharing-links">
           <icon-link [url]="link.url"
@@ -26,6 +26,6 @@
           </icon-link>
         </li>
       </ul>
-    <i (click)="toggleShowSharingLinks()" mdTooltip="[hide social sharing]" mdTooltipPosition="above" class="{{buildIconClass('angle-double-down', '2')}} link-toggle-icon"></i>
+    <i (click)="toggleShowSharingLinks()" matTooltip="[hide social sharing]" matTooltipPosition="above" class="{{buildIconClass('angle-double-down', '2')}} link-toggle-icon"></i>
   </div>
 </div>

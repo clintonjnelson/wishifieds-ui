@@ -19,9 +19,9 @@
 
   <div class="search-box">
     <form #searchForm="ngForm" name="searchForm" (ngSubmit)="search($event)" class="search-box-form">
-      <md-input-container md-float [ngStyle]="{'color': 'white'}" layout="row" class="search-box-input-container">
-        <input mdInput type="text" [(ngModel)]="searchStr" placeholder="find someone" name="search">
-      </md-input-container>
+      <mat-form-field md-float [ngStyle]="{'color': 'white'}" layout="row" class="search-box-input-container">
+        <input matInput type="text" [(ngModel)]="searchStr" placeholder="find someone" name="search">
+      </mat-form-field>
 
       <button (click)="search($event)" type="submit" class="icon-button">
           <i class="fa fa-search fa-2x sp-hover"></i>

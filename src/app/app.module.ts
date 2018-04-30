@@ -6,7 +6,7 @@ import { RouterModule }    from '@angular/router';
 import { AppRouterModule } from './app-routing.module';
 import { FormsModule }     from '@angular/forms';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
-import { MatDialogModule, MatInputModule, MatTooltipModule }  from '@angular/material';  // MaterialModule
+import { MatDialogModule, MatInputModule, MatTooltipModule, MatFormFieldModule }  from '@angular/material';  // MaterialModule
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DragulaModule }   from 'ng2-dragula/ng2-dragula';
 import { ChartsModule }    from 'ng2-charts/ng2-charts';
@@ -98,6 +98,7 @@ export function HttpFactory(backend: XHRBackend,
                   NoopAnimationsModule,
                   MatDialogModule,
                   MatInputModule,
+                  MatFormFieldModule,
                   MatTooltipModule,
                   DragulaModule,
                   ChartsModule,    // move to child module for dashboard

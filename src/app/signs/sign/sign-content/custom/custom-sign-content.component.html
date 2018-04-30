@@ -18,46 +18,46 @@
     <form #signForm="ngForm" name="signForm" class="sign-form">
 
       <!-- sign Title -->
-      <md-input-container>
+      <mat-form-field>
         <i class="{{buildIconClass('star', '1')}}"></i>
-        <input mdInput type="text" name="title" [(ngModel)]="tempSign.signName" placeholder="Sign Title" md-maxlength="30" required/>
-      </md-input-container>
+        <input matInput type="text" name="title" [(ngModel)]="tempSign.signName" placeholder="Sign Title" md-maxlength="30" required/>
+      </mat-form-field>
       <div *ngIf="displayedValidationErrors.title" class="input-errors error">
         {{ displayedValidationErrors.title }}
       </div>
 
 
       <!-- url -->
-      <md-input-container>
+      <mat-form-field>
         <i class="{{buildIconClass('link', '1')}}"></i>
-        <input mdInput type="url" name="url" [(ngModel)]="tempSign.linkUrl" placeholder="http://www.somewebsite.com/..." required/>
-      </md-input-container>
+        <input matInput type="url" name="url" [(ngModel)]="tempSign.linkUrl" placeholder="http://www.somewebsite.com/..." required/>
+      </mat-form-field>
       <div *ngIf="displayedValidationErrors.url" class="input-errors error">
         {{ displayedValidationErrors.url }}
       </div>
 
 
       <!-- knownAs/username -->
-      <md-input-container>
+      <mat-form-field>
         <i class="{{buildIconClass('user-o', '1')}}"></i>
-        <input mdInput type="text" name="username" [(ngModel)]="tempSign.knownAs" placeholder="@myusername" md-maxlength="30">
-      </md-input-container>
+        <input matInput type="text" name="username" [(ngModel)]="tempSign.knownAs" placeholder="@myusername" md-maxlength="30">
+      </mat-form-field>
 
       <!-- description -->
-      <md-input-container>
+      <mat-form-field>
         <i class="{{buildIconClass('info-circle', '1')}}"></i>
-        <input mdInput type="text" name="desc" [(ngModel)]="tempSign.description" placeholder="short description">
-      </md-input-container>
+        <input matInput type="text" name="desc" [(ngModel)]="tempSign.description" placeholder="short description">
+      </mat-form-field>
 
       <!-- form buttons -->
       <div>
         <!-- ok button -->
-        <a (click)="save(tempSign)" type="submit" class="sign-saveicon" mdTooltip="save" mdTooltipPosition="above" [attr.disabled]="!signForm.form.valid">
+        <a (click)="save(tempSign)" type="submit" class="sign-saveicon" matTooltip="save" matTooltipPosition="above" [attr.disabled]="!signForm.form.valid">
           <i class="{{buildIconClass('check', '2')}}"></i>
         </a>
         <!-- cancel button -->
         <a (click)="(showPreviewLabel ? preview() : cancel())" class="sign-cancelicon">
-          <i *ngIf="!showPreviewLabel" class="{{buildIconClass('times', '2')}}" mdTooltip="cancel" mdTooltipPosition="above" ></i>
+          <i *ngIf="!showPreviewLabel" class="{{buildIconClass('times', '2')}}" matTooltip="cancel" matTooltipPosition="above" ></i>
           <p *ngIf="showPreviewLabel"  class="preview-button-label">Preview</p>
         </a>
       </div>
@@ -69,13 +69,13 @@
   <div [style.background]="sign.bgColor" class="sign-management-icons-container">
     <!-- Delete Icon -->
     <div *ngIf="auth.isLoggedIn && isOwner && (!isEditing || forSignCreation)" class="sign-delete-icon" >
-      <a (click)="destroy()" mdTooltip="delete" mdTooltipPosition="above" class="sign-delete-icon">
+      <a (click)="destroy()" matTooltip="delete" matTooltipPosition="above" class="sign-delete-icon">
         <i class="fa fa-times fa-1x" aria-hidden="true"></i>
       </a>
     </div>
     <!-- Edit Icon -->
     <div *ngIf="auth.isLoggedIn && isOwner && !isEditing" class="sign-edit-icon">
-      <a (click)="toggleEditing()" mdTooltip="edit" mdTooltipPosition="above" class="edit-icon">
+      <a (click)="toggleEditing()" matTooltip="edit" matTooltipPosition="above" class="edit-icon">
         <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
       </a>
     </div>

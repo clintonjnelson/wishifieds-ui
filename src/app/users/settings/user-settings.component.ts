@@ -7,6 +7,8 @@ import { AuthService }         from '../../core/auth/auth.service';
 import { ApiUsersService }     from '../../core/api/api-users.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ModalService }        from '../../core/services/modal.service';
+import { MatInputModule }      from '@angular/material';
+
 
 @Component({
   moduleId: module.id,
