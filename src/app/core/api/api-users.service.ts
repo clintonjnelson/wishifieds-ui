@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { SignpostApi } from '../api/signpost-api.service';
-import { UserCreds, User, UserSettings } from '../../users/user.model';
+import { UserCreds, User, UserUpdates } from '../../users/user.model';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -102,13 +102,13 @@ export class ApiUsersService {
   }
 
   // UPDATE THIS TO RETURN THE NEW USER????
-  updateUser(userSettings: UserSettings): Observable<any> {
-    const userUpdateUrl = this.signpostApi.buildUrl('updateUser', [{':id': userSettings.userId}]);
+  updateUser(userUpdates: UserUpdates): Observable<any> {
+    const userUpdateUrl = this.signpostApi.buildUrl('updateUser', [{':id': userUpdates.userId}]);
     const options = this.signpostApi.getRequestOptionWithEatHeader();
-
+    console.log("Updates to make: ", userUpdates);
     console.log("USER UPDATE URL IS: ", userUpdateUrl);
     return this.http
-               .patch(userUpdateUrl, JSON.stringify({userSettings: userSettings}), options)
+               .patch(userUpdateUrl, JSON.stringify({userUpdates: userUpdates}), options)
                .map( success => {
                  console.log("RESPONSE FROM UPDATE USER IN OBSERVABLE");
                  return success.json();

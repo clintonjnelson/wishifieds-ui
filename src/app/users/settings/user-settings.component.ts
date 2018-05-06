@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
 import { Router }              from '@angular/router';
 import { NgForm, FormControl } from '@angular/forms';
-import { User, UserSettings }  from "../user.model";
+import { User, UserUpdates }  from "../user.model";
 import { IconService }         from '../../core/services/icon.service';
 import { AuthService }         from '../../core/auth/auth.service';
 import { ApiUsersService }     from '../../core/api/api-users.service';
@@ -23,8 +23,8 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
   emailWasResent = false;
   userSettingsForm: NgForm;
   @ViewChild('userSettingsForm') currentForm: NgForm;
-  userSettings: UserSettings;
-  tempSettings: UserSettings;
+  userSettings: UserUpdates;
+  tempSettings: UserUpdates;
 
   constructor(private icons:           IconService,
               private authService:     AuthService,

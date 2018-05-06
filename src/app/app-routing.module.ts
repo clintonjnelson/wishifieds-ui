@@ -11,7 +11,6 @@ import { HomeComponent }                 from './home/home.component';
 import { SearchBoxComponent }            from './search/search-box/search-box.component';
 import { UserPageComponent }             from './users/user-page.component';
 import { UserSettingsComponent }         from './users/settings/user-settings.component';
-import { UserDashboardComponent }        from './users/dashboard/user-dashboard.component';
 import { OauthRedirectComponent }        from './core/redirects/oauth-redirect.component';
 import { UserConfirmationRedirectComponent } from './core/redirects/user-confirmation-redirect.component';
 import { TermsConditionsComponent }          from './static-pages/terms-conditions/terms-conditions.component';
@@ -41,7 +40,6 @@ const rootRoutes: Routes = [
 
   // These have to come last to avoid username confusion
   { path: ':username/settings',  component: UserSettingsComponent,  canActivate: [OwnerGuard], pathMatch: 'full'},
-  { path: ':username/dashboard', component: UserDashboardComponent, canActivate: [OwnerGuard], pathMatch: 'full'},
   { path: ':username', component: UserPageComponent, pathMatch: 'full' },
 
   { path: '', component: HomeComponent, pathMatch: 'full' },

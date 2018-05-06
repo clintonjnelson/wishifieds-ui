@@ -1,11 +1,5 @@
 <div id="user-page-main-container">
 
   <!-- Load Add Sign Area -->
-  <add-sign *ngIf="auth.isLoggedIn && isOwner" [signs]="signs" (saveEE)="save($event)" (destroyEE)="destroy($event)"></add-sign>
-
-  <!-- Username Heading -->
-  <!-- <p *ngIf="signs && signs.length" class="heading">{{auth.username}}'s syynpost</p> -->
-
-  <!-- Load User's Signs -->
-  <signs-list *ngIf="!isProcessing" [signs]="signs" (saveEE)="save($event)" (destroyEE)="destroy($event)"></signs-list>
+  <h1>This is the UserPage</h1>
 </div>

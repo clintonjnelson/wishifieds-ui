@@ -43,7 +43,6 @@ import { LoginSignupFormComponent }      from './users/login-signup-form/login-s
 import { UserSignComponent }             from './users/user-sign/user-sign.component';
 import { UserPageComponent }             from './users/user-page.component';
 import { UserSettingsComponent }         from './users/settings/user-settings.component';
-import { UserDashboardComponent }        from './users/dashboard/user-dashboard.component';
 
 import { RequestPasswordResetComponent } from './password-reset/request-password-reset.component';
 import { PasswordResetComponent }        from './password-reset/password-reset.component';
@@ -131,7 +130,6 @@ export function HttpFactory(backend: XHRBackend,
                   UserSignComponent,
                   UserPageComponent,
                   UserSettingsComponent,         // move to child module for dashboard?
-                  UserDashboardComponent,
 
                   RequestPasswordResetComponent,
                   PasswordResetComponent,

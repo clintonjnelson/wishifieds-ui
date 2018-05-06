@@ -11,7 +11,7 @@ export class UserCreds {
   termsCond:  boolean;
 }
 
-export class UserSettings extends User {
+export class UserUpdates extends User {
   userId:   string;
   email: string;
 }
