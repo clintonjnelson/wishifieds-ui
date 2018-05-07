@@ -2,4 +2,6 @@ User-agent: *
 Disallow: /termsandconditions
 Disallow: /privacynotice
 Crawl-delay: 10
-Sitemap: https://www.syynpost.com/sitemap.txt
+
+# Use the sitemap template below if you publish a dynamic sitemap.txt file
+# Sitemap: https://www.thissite.com/sitemap.txt

@@ -16,7 +16,7 @@
 // $black-6-opacity: rgba(black, 0.06);
 // $white-6-opacity: rgba(white, 0.06);
 
-$mat-syynpost-white: (
+$mat-site-white: (
   50:   #ffffff,
   100:  #ffffff,
   200:  #ffffff,
@@ -50,18 +50,18 @@ $mat-syynpost-white: (
 );
 
 $mat-font-family: helvetica, 'Helvetica Neue', sans-serif !default;
-$syynpost-primary: mat-palette($mat-syynpost-white);
-$syynpost-accent:  mat-palette($mat-syynpost-white, A200, A100, A400);
+$site-primary: mat-palette($mat-site-white);
+$site-accent:  mat-palette($mat-site-white, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$syynpost-warn:    mat-palette($mat-red);
+$site-warn:    mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$syynpost-theme: mat-light-theme($mat-syynpost-white, $mat-syynpost-white, $syynpost-warn);
+$site-theme: mat-light-theme($mat-site-white, $mat-site-white, $site-warn);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat-tooltip-theme($syynpost-theme);
-// @include mat-input-theme($syynpost-theme);
+@include mat-tooltip-theme($site-theme);
+// @include mat-input-theme($site-theme);
 // @include angular-material-theme($mat-light-theme);

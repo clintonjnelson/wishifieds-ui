@@ -20,7 +20,7 @@ const OAUTHS: OauthLink[] = [];
 
 @Component({
   moduleId: module.id,
-  selector: 'signpost-navbar',
+  selector: 'main-navbar',
   templateUrl: 'navbar.component.html',  // trigger: [@visibilityChanged]='showLoginLinks'
   styleUrls:  ['navbar.component.css'],
   // animations: [trigger('visibilityChanged', [
@@ -35,7 +35,7 @@ const OAUTHS: OauthLink[] = [];
 export class NavbarComponent implements OnDestroy {
   oauthLinks = OAUTHS;
   showLoginLinks        = false;
-  showSignpostLoginForm = false;
+  showLoginForm = false;
   showUserNavLinks      = false;
   auth: UserAuth;
   isLoggedIn            = false;
@@ -72,11 +72,11 @@ export class NavbarComponent implements OnDestroy {
 
     // If setting value directly, do that.
     if(typeof(input) === 'boolean') {
-      this.showSignpostLoginForm = input;
+      this.showLoginForm = input;
     }
     // Else, just toggle the value
     else {
-      this.showSignpostLoginForm = !this.showSignpostLoginForm;
+      this.showLoginForm = !this.showLoginForm;
     }
   }
 
@@ -89,7 +89,7 @@ export class NavbarComponent implements OnDestroy {
     else {
       this.showLoginLinks = !this.showLoginLinks;
     }
-    if(this.showSignpostLoginForm) {
+    if(this.showLoginForm) {
       this.toggleShowSignpostLoginForm(false);
     }
   }

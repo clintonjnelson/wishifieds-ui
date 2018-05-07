@@ -28,7 +28,7 @@ const SOCIAL_LINKS: NavLink[] = [
 
 @Component({
   moduleId: module.id,
-  selector: 'signpost-footer',
+  selector: 'site-footer',
   templateUrl: 'footer.component.html',
   styleUrls: ['footer.component.css'],
 })
@@ -122,7 +122,7 @@ export class FooterComponent implements OnDestroy {
       try {
         document.execCommand('copy');  // copy selected text
         this.clipboardUrlEl.nativeElement.blur();
-        this.notifications.notify('success', 'Your syynpost link URL has been copied to your clipboard! You can now paste it wherever you\'d like.');
+        this.notifications.notify('success', 'Your link URL has been copied to your clipboard! You can now paste it wherever you\'d like.');
         window.scrollTo(0, 0);
       }
       catch (e) {
@@ -150,7 +150,7 @@ export class FooterComponent implements OnDestroy {
     // UNO urls take :url
     switch(icon) {
       case 'twitter': {  // takes :text, :url, :hashtags
-        return this.signpostApi.buildUrl(`social-${icon}`, [{':text': 'Check out my syynpost online directory.'}, {':url': currentUrl}, {':hashtags':'syynpost'}]);
+        return this.signpostApi.buildUrl(`social-${icon}`, [{':text': 'This page is so cool that I recommend you checking it out.'}, {':url': currentUrl}, {':hashtags':'my-site-hashtag'}]);
       }
       case 'facebook': return this.signpostApi.buildUrl(`social-${icon}`, [{':url': currentUrl}]);
       case 'google':   return this.signpostApi.buildUrl(`social-${icon}`, [{':url': currentUrl}]);

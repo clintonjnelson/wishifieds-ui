@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { GuestService } from './core/services/guest.service';
 
 @Component({
-  selector: 'syynpost-main',
+  selector: 'site-main',
   template: `
     <notifications></notifications>
-    <signpost-navbar></signpost-navbar>
+    <main-navbar></main-navbar>
 
     <router-outlet></router-outlet>
 
-    <signpost-footer></signpost-footer>
+    <site-footer></site-footer>
   `,
 })
 

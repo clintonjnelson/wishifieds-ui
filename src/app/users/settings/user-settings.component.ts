@@ -98,8 +98,8 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
     console.log("USER SETTINGS IS: ", this.userSettings);
 
     if(this.userSettings.username !== this.tempSettings.username) {
-      const warningTitle = 'Username & Syynpost URL Address Change';
-      const warningMsg   = 'Changing your username changes the address to your syynpost. ' +
+      const warningTitle = 'Username & URL Address Change';
+      const warningMsg   = 'Changing your username changes the address to your page. ' +
                            'Links using the old username will no longer work. ' +
                            'Are you sure you want to change your username?';
       console.log("STARTING MODAL NOW...");
@@ -136,9 +136,9 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
           // Updates notifications
           that.notifService.notify('success', 'Settings updates saved.');
           if(usernameChange) {
-            const msg = 'Your username changed. Please remember, this has changed the address of your syynpost. ' +
-                        'If you have any existing links to your syynpost account around the interwebs, ' +
-                        'they will no longer work until you update them to your new syynpost address.';
+            const msg = 'Your username changed. Please remember, this has changed the address of your page. ' +
+                        'If you have any existing links to your page around the interwebs, ' +
+                        'they will no longer work until you update them to your new address (ie: with the new username).';
             that.notifService.notify('warning', msg, 12000);
           }
           // Redirect to new URL, if username changed (ie: url also changed)

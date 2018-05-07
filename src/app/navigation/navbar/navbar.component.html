@@ -1,13 +1,13 @@
 <!-- Navigation Header Bar -->
 <div class="navbar">
-  <div matTooltip="home" matTooltipPosition="right" class="navbar-signpost-icon">
+  <div matTooltip="home" matTooltipPosition="right" class="navbar-main-icon">
     <!-- Logged Out => Landing Page + Search -->
     <a *ngIf="!auth.isLoggedIn" routerLink="/">
-      <img src="/assets/syynpost_icon.svg" alt="login/signup icon" class="signpost-icon-main">
+      <img src="/assets/main_icon.svg" alt="login/signup icon" class="icon-main">
     </a>
     <!-- Logged In => User Home Page -->
     <a *ngIf="auth.isLoggedIn" [routerLink]="[auth.username]">
-      <img src="/assets/syynpost_icon.svg" alt="login/signup icon" class="signpost-icon-main">
+      <img src="/assets/main_icon.svg" alt="login/signup icon" class="icon-main">
     </a>
   </div>
 
@@ -33,9 +33,6 @@
                    (click)="gaClick(link.icon)">
         </icon-link>
       </li>
-      <!-- <li (click)="toggleShowSignpostLoginForm()" matTooltip="syynpost" matTooltipPosition="above"  class="login-signup-form-link">
-        <img src="/assets/syynpost_icon.svg" alt="login/signup icon" class="signpost-icon-link">
-      </li> -->
     </ul>
   </div>
 
@@ -60,12 +57,6 @@
   <div class="nav-right-links-container" *ngIf="auth.isLoggedIn">
     <!-- Opened Nav Links Options -->
     <ul *ngIf="showUserNavLinks" class="navbar-login-links">
-      <!-- Search Button -->
-      <li>
-        <a routerLink="/search" (click)="toggleShowUserNavLinks()" matTooltip="search" matTooltipPosition="above">
-          <i class="{{buildIconClass('search', '2')}}"></i>
-        </a>
-      </li>
       <!-- Signout Button -->
       <li (click)="logout()" class="user-signout-link">
         <p matTooltip="logout" matTooltipPosition="above" class="signout-text">Signout</p>
@@ -76,18 +67,12 @@
           <i class="{{buildIconClass('cog', '2')}}"></i>
         </a>
       </li>
-      <!-- Dashboard Button -->
-      <li>
-        <a [routerLink]="[auth.username, 'dashboard']" (click)="toggleShowUserNavLinks(); gaClick('dashboard')" matTooltip="dashboard" matTooltipPosition="above">
-          <i class="{{buildIconClass('line-chart', '2')}}"></i>
-        </a>
-      </li>
     </ul>
   </div>
 </div>
 <hr class="navbar-bottom-hr">
 
 <!-- Login/Signup Form -->
-<section *ngIf="showSignpostLoginForm" class="navbar-login-signup-form">
+<section *ngIf="showLoginForm" class="navbar-login-signup-form">
   <login-signup-form (close)="onCloseLogin($event)"></login-signup-form>
 </section>

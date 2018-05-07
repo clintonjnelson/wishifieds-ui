@@ -3,45 +3,11 @@
 
   <!-- Sitemap Update -->
   <div id="sitemap-update-container">
-    <h2 class="syynpost-white-text admin-subheading"> Update Sitemap </h2>
+    <h2 class="site-white-text admin-subheading"> Trigger API Sitemap Update</h2>
     <button id="sitemap-update-button" (click)="updateSitemap()" class="icon-button admin-section-button">
       <i class="fa fa-refresh fa-2x sp-hover"></i>
     </button>
   </div>
 
-  <!-- User Cleanup -->
-  <div id="user-cleanup-container">
-    <h2 class="syynpost-white-text admin-subheading"> User Cleanup </h2>
-    <button id="user-cleanup-button" (click)="userCleanup()" class="icon-button admin-section-button">
-      <i class="fa fa-refresh fa-2x sp-hover"></i>
-    </button>
-  </div>
-
-  <div class="search-box">
-    <form #searchForm="ngForm" name="searchForm" (ngSubmit)="search($event)" class="search-box-form">
-      <mat-form-field md-float [ngStyle]="{'color': 'white'}" layout="row" class="search-box-input-container">
-        <input matInput type="text" [(ngModel)]="searchStr" placeholder="find someone" name="search">
-      </mat-form-field>
-
-      <button (click)="search($event)" type="submit" class="icon-button">
-          <i class="fa fa-search fa-2x sp-hover"></i>
-        </button>
-    </form>
-  </div>
-
-  <!-- Results found -->
-  <div class="search-results-container" *ngIf="foundUsers?.length">
-    <!-- Users Results Found -->
-    <ul>
-      <li *ngFor="let user of foundUsers" class="search-results-user-sign">
-          <user-sign [user]="user"></user-sign>
-      </li>
-    </ul>
-  </div>
-
-  <!-- NO Results -->
-  <div class="search-results-container" *ngIf="hasSearched && foundUsers?.length === 0 && foundSigns?.length === 0">
-    <p class="no-results-message"> 0 results found for "{{searchStr}}" </p>
-  </div>
 </div>
 

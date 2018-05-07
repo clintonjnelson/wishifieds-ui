@@ -5,13 +5,10 @@ import { RouterModule, Routes } from '@angular/router';
 // Components for routing to
 import { RequestPasswordResetComponent } from './password-reset/request-password-reset.component';
 import { PasswordResetComponent }        from './password-reset/password-reset.component';
-import { AdminDashboardComponent }       from './admin/dashboard/admin-dashboard.component';
 import { AdminUserManagementComponent }  from './admin/user-management/admin-user-management.component';
 import { HomeComponent }                 from './home/home.component';
-import { SearchBoxComponent }            from './search/search-box/search-box.component';
 import { UserPageComponent }             from './users/user-page.component';
 import { UserSettingsComponent }         from './users/settings/user-settings.component';
-import { OauthRedirectComponent }        from './core/redirects/oauth-redirect.component';
 import { UserConfirmationRedirectComponent } from './core/redirects/user-confirmation-redirect.component';
 import { TermsConditionsComponent }          from './static-pages/terms-conditions/terms-conditions.component';
 import { PrivacyNoticeComponent }            from './static-pages/privacy-notice/privacy-notice.component';
@@ -22,21 +19,16 @@ import { OwnerGuard } from './core/auth/owner-guard.service';
 
 // App Routes
 const rootRoutes: Routes = [
-  { path: 'oauth/errors/:redirecttype',  component: OauthRedirectComponent, pathMatch: 'full'},
-  { path: 'oauth/success/:redirecttype', component: OauthRedirectComponent, pathMatch: 'full'},
   { path: 'user/confirmation', component: UserConfirmationRedirectComponent, pathMatch: 'full'},
 
   { path: 'requestpasswordchange', component: RequestPasswordResetComponent, pathMatch: 'full'},
   { path: 'requestpasswordchange/change', component: PasswordResetComponent, pathMatch: 'full' },
 
   { path: 'admin/users', component: AdminUserManagementComponent, canActivate: [AdminGuard], pathMatch: 'full' },
-  { path: 'admin', component: AdminDashboardComponent, canActivate: [AdminGuard], pathMatch: 'full' },
 
-  { path: 'search', component: SearchBoxComponent, pathMatch: 'full' },
   { path: 'faq', component: FaqComponent, pathMatch: 'full' },
   { path: 'termsandconditions', component: TermsConditionsComponent, pathMatch: 'full' },
   { path: 'privacynotice', component: PrivacyNoticeComponent, pathMatch: 'full' },
-  { path: 'api/auto/:oauth', redirectTo: '/oauth/errors/reset', pathMatch: 'full' },
 
   // These have to come last to avoid username confusion
   { path: ':username/settings',  component: UserSettingsComponent,  canActivate: [OwnerGuard], pathMatch: 'full'},
