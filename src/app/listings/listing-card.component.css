@@ -228,19 +228,35 @@ h3.listing-card-title {
 
 
 /* Purely Decorative Card Styling */
-div.listing-display-bubble-med {
+div.listing-display-bubbles {
+  position: relative;
+}
+div.listing-display-bubble-lrg {
   background-color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
   border-radius: 15px;
   width: 30px;
   height: 30px;
   margin-top: 3px;
 }
-
+div.listing-display-bubble-med {
+  background-color: white;
+  position: absolute;
+  top: 23px;
+  left: 29px;
+  border-radius: 7.5px;
+  width: 15px;
+  height: 15px;
+}
 div.listing-display-bubble-sml {
   background-color: white;
+  position: absolute;
+  top: 30px;
+  left: 46px;
   border-radius: 5px;
   width: 10px;
   height: 10px;
-  margin-left: 30px;
 }
 
