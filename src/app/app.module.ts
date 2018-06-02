@@ -6,13 +6,13 @@ import { RouterModule }    from '@angular/router';
 import { AppRouterModule } from './app-routing.module';
 import { FormsModule }     from '@angular/forms';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
-import { MatDialogModule, MatInputModule, MatTooltipModule, MatFormFieldModule }  from '@angular/material';  // MaterialModule
+import { MatDialogModule, MatInputModule, MatTooltipModule, MatFormFieldModule, MatChipsModule }  from '@angular/material';  // MaterialModule
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DragulaModule }   from 'ng2-dragula/ng2-dragula';
 import { ChartsModule }    from 'ng2-charts/ng2-charts';
 import 'hammerjs';
 
-// Components
+// Core Components (From Template)
 import { AppComponent }                  from './app.component';
 import { TermsConditionsComponent }      from './static-pages/terms-conditions/terms-conditions.component';
 import { PrivacyNoticeComponent }        from './static-pages/privacy-notice/privacy-notice.component';
@@ -34,6 +34,9 @@ import { PasswordResetComponent }        from './password-reset/password-reset.c
 
 import { NotificationsComponent }        from './notifications/notifications.component';
 import { ConfirmModalComponent }         from './shared/confirm-modal/confirm-modal.component';
+
+// Custom Components
+import { ListingCardComponent }          from './listings/listing-card.component';
 
 // Directives
 import { HoverColorDirective }           from './shared/hover-color/hover-color.directive';
@@ -77,11 +80,15 @@ export function HttpFactory(backend: XHRBackend,
                   NoopAnimationsModule,
                   MatDialogModule,
                   MatInputModule,
+                  MatChipsModule,
                   MatFormFieldModule,
                   MatTooltipModule,
                   DragulaModule,
                   ChartsModule,    // move to child module for dashboard
                 ],
+  exports:      [
+                  MatChipsModule,
+                ]
   declarations: [
                   AppComponent,
                   TermsConditionsComponent,
@@ -103,6 +110,9 @@ export function HttpFactory(backend: XHRBackend,
 
                   NotificationsComponent,
                   ConfirmModalComponent,
+
+                  // Custom Components
+                  ListingCardComponent,
 
                   HoverColorDirective,
                   HoverBackgroundDirective,

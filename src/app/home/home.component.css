@@ -1,2 +1,7 @@
 .home-container {
+  display: flex;
+  flex: 1 0 auto;
+  /*height: auto;
+  min-height: 100%;
+  max-width: 100%;*/
 }
