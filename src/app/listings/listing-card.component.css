@@ -166,7 +166,7 @@ div.listing-card-details-container {
   flex-direction: row;
   justify-content: space-between;
   padding: 0 1em 0 1em;
-  margin-top: 1em;
+  margin-top: 0.8em;
 }
 
 div.listing-card-condition-container {

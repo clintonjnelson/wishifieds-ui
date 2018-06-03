@@ -6,40 +6,55 @@
   <!-- INTERIOR CONTAINER -->
   <div class="listing-display-main-container">
 
-    <!-- IMAGES SECTION -->
-    <div class="listing-display-image-container" [ngClass] = "{ 'image-expand': !expandedInfo, 'image-shrunk': expandedInfo }">
-      <i class="info-box-size-control" (click)="toggleInfoContainerExpand()"> ^ </i>
+    <!-- UPPER IMAGES SECTION -->
+    <div class="listing-display-image-container" [ngClass]="{ 'image-expand': !expandedInfo, 'image-shrunk': expandedInfo }">
+      <i class="info-box-size-control" [ngClass]="expandedInfo ? buildIconClass('angle-down', '2') : buildIconClass('angle-up', '2')" (click)="toggleInfoContainerExpand()"></i>
 
-      <!-- SEE IF THERE IS AN IMAGE CAROUSSEL IN ANGULAR MATERIAL THAT COULD BE USED HERE -->
-      <img class="listing-card-image" [src]="listing.heroImage" alt="ListingHeroImage for {{listing.title}}">
-      <i class="image-scroll-left"> < </i>
-      <i class="image-scroll-right"> > </i>
+      <div dragScroll scrollbar-hidden="true" drag-scroll-y-disabled="true" #nav>
+        <!-- USE *ngFor here instead to scroll through array of images -->
+        <img *ngFor="let image of listing.images" class="listing-card-image" [src]="image" alt="ListingHeroImage for {{listing.title}}">
+      </div>
+      <i class="image-scroll-left {{ buildIconClass('angle-left', '2') }}" (click)="moveLeft()" *ngIf="!expandedInfo"></i>
+      <i class="image-scroll-right {{ buildIconClass('angle-right', '2') }}" (click)="moveRight()" *ngIf="!expandedInfo"></i>
     </div>
 
-    <!-- INFO SECTION -->
+
+    <!-- LOWER SHRUNK INFO SECTION-->
     <div class="listing-display-info-container info-shrunk" *ngIf="!expandedInfo">
       <h3 class="listing-card-title">{{ listing.title }}</h3>
-      <!-- <i class="listing-card-respond-button {{buildIconClass('share', '2')}}"></i> -->
     </div>
+
+
+    <!-- LOWER EXPANDED INFO SECTION -->
     <div class="listing-display-info-container info-expand" *ngIf="expandedInfo">
+      <!-- DESCRIPTION SECTION -->
       <div class="listing-card-info-desc-container">
         <p class="listing-card-info-desc ">{{ listing.description }}</p>
       </div>
+
+      <!-- LINK SECTION -->
       <div class="listing-card-info-link-container">
         <label class="card-info-label" for="">like this:</label>
         <a class="listing-card-info-content listing-card-info-link" href="{{ verifyOrAddProtocolToUrl(listing.linkUrl) }}" targer="_blank">{{ urlWithoutPrototol(listing.linkUrl) }}</a>
       </div>
+
+      <!-- ITEM DETAILS SECTION -->
       <div class="listing-card-details-container">
+
+        <!-- CONDITION SECTION -->
         <div class="listing-card-condition-container">
           <label class="card-info-label" for="">condition</label>
           <mat-chip class="listing-card-info-content">{{ listing.condition }}</mat-chip>
         </div>
+
+        <!-- PRICE SECTION -->
         <div class="listing-card-price-container">
           <label class="card-info-label" for="">asking</label>
           <mat-chip class="listing-card-info-content" selected="true" [color]="primary">${{ listing.price }}</mat-chip>
-          <!-- <p class="listing-card-info-content">Price: ${{ listing.price }}</p> -->
         </div>
       </div>
+
+      <!-- TITLE SECTION -->
       <div class="listing-card-info-title-container">
         <h3 class="listing-card-title">{{ listing.title }}</h3>
       </div>
@@ -52,7 +67,6 @@
     <div class="listing-display-bubble-lrg"></div>
     <div class="listing-display-bubble-med"></div>
     <div class="listing-display-bubble-sml"></div>
-
   </div>
 
 </div>

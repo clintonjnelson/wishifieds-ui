@@ -43,6 +43,7 @@ import { HoverColorDirective }           from './shared/hover-color/hover-color.
 import { HoverBackgroundDirective }      from './shared/hover-background/hover-background.component';
 import { UniqueValidatorDirective }      from './shared/validators/unique.directive';
 import { DragulaDelayLiftDirective }     from './shared/dragula-delay-lift/dragula-delay-lift.directive';
+import { DragScrollModule }              from 'ngx-drag-scroll';
 
 // Services - make them available EVERYWHERE (otherwise, just add it specifically into Component as a provider)
 import { HttpIntercept }                 from './core/api/http-intercept';
@@ -85,6 +86,7 @@ export function HttpFactory(backend: XHRBackend,
                   MatTooltipModule,
                   DragulaModule,
                   ChartsModule,    // move to child module for dashboard
+                  DragScrollModule,
                 ],
   exports:      [
                   MatChipsModule,

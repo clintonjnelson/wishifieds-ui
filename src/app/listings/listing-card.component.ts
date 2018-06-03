@@ -1,7 +1,8 @@
-import { Component   } from '@angular/core';
+import { Component, ViewChild  } from '@angular/core';
 import { IconService } from '../core/services/icon.service';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { HelpersService } from '../shared/helpers/helpers.service';
+import { DragScrollDirective } from 'ngx-drag-scroll';
 
 
 export class Listing {
@@ -15,7 +16,7 @@ export class Listing {
   price:       String;
   zipcode:     String;
   status:      String;
-  heroImage:   String;
+  images:      String[];
   imagesRef:   String;
   slug:        String;
   createdAt:   String;
@@ -35,7 +36,10 @@ const A_LISTING: Listing = {
   price:       "100",
   zipcode:     "99999",
   status:      "10",
-  heroImage:   "assets/favicon.ico",
+  images:      ["http://ecx.images-amazon.com/images/I/41W4p0WkW1L.jpg",
+                "http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
+                "http://img.wolverineworldwide.com/is/image/WolverineWorldWide/PG49049_1_1200x735?$dw-large$"
+                ],
   imagesRef:   "12",
   slug:        "13",
   createdAt:   "14",
@@ -56,11 +60,19 @@ const A_LISTING: Listing = {
 })
 
 export class ListingCardComponent {
+  @ViewChild('nav', {read: DragScrollDirective}) ds: DragScrollDirective;
   listing: Listing = A_LISTING;
   expandedInfo = false;
 
   constructor( private icons: IconService,
                private helpers: HelpersService) {
+  }
+
+  moveLeft() {
+    this.ds.moveLeft();
+  }
+  moveRight() {
+    this.ds.moveRight();
   }
 
   buildIconClass(icon: string, size: string = '2') {
