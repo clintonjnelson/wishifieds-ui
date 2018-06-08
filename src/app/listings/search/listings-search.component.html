@@ -1,0 +1,42 @@
+<div class="listings-search-container">
+  <!-- Search Bar Section -->
+  <div>
+
+    <!-- Search Input -->
+    <div>Search input box Component here</div>
+
+    <!-- Search Options Toggles -->
+    <div>Show the various options there are</div>
+
+    <!-- Search Options Area -->
+    <div id="search-filters" *ngIf="showFilterOptions">
+      <ul>
+        <li *ngFor="let icon of filterIcons">
+          <i class="{{buildIconClass(icon, 1)}}"
+             (click)="filter(icon)">
+             <!-- [style.color]="filters[icon] ? icon.bgColor : 'white'"> -->
+          </i>
+        </li>
+      </ul>
+    </div>
+
+
+
+  </div>
+
+  <!-- Search Results Title -->
+  <h2 class="search-results-heading">search results</h2>
+
+  <!-- Listing Results Found -->
+  <section class="results-container" *ngIf="listings.length > 0">
+    <div class="listing-result-container" *ngFor="let listing of filteredListings">
+      <listing-card [listing]="listing"></listing-card>
+    </div>
+    <div class="filler"></div>
+    <div class="filler"></div>
+    <div class="filler"></div>
+    <div class="filler"></div>
+    <div class="filler"></div>
+    <div class="filler"></div>
+  </section>
+</div>

@@ -1,7 +1,10 @@
 .home-container {
   display: flex;
   flex: 1 0 auto;
-  /*height: auto;
-  min-height: 100%;
-  max-width: 100%;*/
+}
+
+/*TEMPORARY - PARENT OF LISTINGS-SEARCH WILL NEED THIS*/
+listings-search {
+  display: flex;
+  width: 100%;
 }

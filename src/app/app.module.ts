@@ -37,6 +37,7 @@ import { ConfirmModalComponent }         from './shared/confirm-modal/confirm-mo
 
 // Custom Components
 import { ListingCardComponent }          from './listings/listing-card.component';
+import { ListingsSearchComponent }       from './listings/search/listings-search.component';
 
 // Directives
 import { HoverColorDirective }           from './shared/hover-color/hover-color.directive';
@@ -90,7 +91,7 @@ export function HttpFactory(backend: XHRBackend,
                 ],
   exports:      [
                   MatChipsModule,
-                ]
+                ],
   declarations: [
                   AppComponent,
                   TermsConditionsComponent,
@@ -115,6 +116,7 @@ export function HttpFactory(backend: XHRBackend,
 
                   // Custom Components
                   ListingCardComponent,
+                  ListingsSearchComponent,
 
                   HoverColorDirective,
                   HoverBackgroundDirective,
