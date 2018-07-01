@@ -5,13 +5,13 @@ listings-search {
   width: 100%;
 }*/
 
-div.listings-search-container {
+div.listing-cards-container {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-section.results-container {
+section.cards-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -22,7 +22,7 @@ section.results-container {
   justify-content: center;*/
 }
 
-div.listing-result-container {
+div.listing-cards-container {
   display: flex;
   margin: 0.5em 0.1em 0.5em 0.1em;
 }

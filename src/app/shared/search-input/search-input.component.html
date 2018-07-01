@@ -1,0 +1,14 @@
+<!-- Search -->
+<div class="search-container">
+  <div class="search-box">
+    <form #searchForm="ngForm" name="searchForm" (ngSubmit)="search($event)" class="search-box-form">
+      <mat-input-container mat-float [ngStyle]="{'color': 'white'}" layout="row" class="search-box-input-container">
+        <input matInput type="text" [(ngModel)]="searchStr" placeholder="whatcha sellin?" name="search">
+      </mat-input-container>
+
+      <button (click)="search($event)" type="submit" class="search-btn-icon">
+          <i class="fa fa-search fa-2x sp-hover"></i>
+        </button>
+    </form>
+  </div>
+</div>

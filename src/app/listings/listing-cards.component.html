@@ -1,18 +1,8 @@
-<div class="listings-search-container">
-  <!-- Search Bar Section -->
+<div class="listing-cards-container">
+
+  <!-- Search Options Area -->
   <div>
-
-    <!-- Search Input -->
-    <listings-search-input></listings-search-input>
-
-    <!-- Search Options Toggles -->
-    <div>
-      <i class="{{buildIconClass('filter', 1)}}"></i>
-      <i class="{{buildIconClass('exchange-alt', 1)}} fa-rotate-90"></i>
-    </div>
-
-    <!-- Search Options Area -->
-    <div id="search-filters" *ngIf="showFilterOptions">
+    <div id="cards-filters" *ngIf="showFilterOptions">
       <ul>
         <li *ngFor="let icon of filterIcons">
           <i class="{{buildIconClass(icon, 1)}}"
@@ -25,8 +15,8 @@
   </div>
 
   <!-- Listing Results Found -->
-  <section class="results-container" *ngIf="listings.length > 0">
-    <div class="listing-result-container" *ngFor="let listing of filteredListings">
+  <section class="cards-container" *ngIf="listings.length > 0">
+    <div class="listing-cards-container" *ngFor="let listing of filteredListings">
       <listing-card [listing]="listing"></listing-card>
     </div>
     <div class="filler"></div>

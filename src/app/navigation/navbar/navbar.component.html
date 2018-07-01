@@ -3,12 +3,12 @@
   <div matTooltip="home" matTooltipPosition="right" class="navbar-main-icon">
     <!-- Logged Out => Landing Page + Search -->
     <a *ngIf="!auth.isLoggedIn" routerLink="/">
-      WISHIFIEDS
+      <img src="/assets/favicon.ico" alt="WISHIFIEDS" class="icon-main">
       <!-- <img src="MAIN_SITE_ICON_HERE.jpg" alt="WISHIFIEDS" class="icon-main"> -->
     </a>
     <!-- Logged In => User Home Page -->
     <a *ngIf="auth.isLoggedIn" [routerLink]="[auth.username]">
-      WISHIFIEDS
+      <img src="/assets/favicon.ico" alt="WISHIFIEDS" class="icon-main">
       <!-- <img src="MAIN_SITE_ICON_HERE.jpg" alt="WISHIFIEDS" class="icon-main"> -->
     </a>
   </div>

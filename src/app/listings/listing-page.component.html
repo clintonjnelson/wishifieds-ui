@@ -1,0 +1,82 @@
+<div class="listing-main-container">
+  <mat-card class="listing">
+    <!-- Top Header Bar -->
+    <mat-card-header class="listing-top-header">
+      <div mat-card-avatar class="card-avatar"></div>
+      <mat-card-title>clintonjnelson</mat-card-title>
+      <mat-card-subtitle>
+        <i class="{{ buildIconClass('star', 1) }}"></i>
+        <i class="{{ buildIconClass('star', 1) }}"></i>
+        <i class="{{ buildIconClass('star', 1) }}"></i>
+        <i class="{{ buildIconClass('star', 1) }}"></i>
+        <i class="{{ buildIconClass('star', 1) }}"> &nbsp;(12)</i>
+      </mat-card-subtitle>
+      <i class="{{ buildIconClass('heart', 2) }}"></i>
+      <i class="{{ buildIconClass('times', 2) }}"></i>
+    </mat-card-header>
+
+    <!-- Images Section -->
+    <div class="listing-images-container">
+      <!-- Images Scroll Caroussel & Icons -->
+      <div class="image-carousel">
+        <ngu-carousel [inputs]="carouselConfig">
+          <ngu-item NguCarouselItem *ngFor="let image of listing.images" class="bannerStyle" (carouselLoad)="carouselLoaded($event)">
+            <img class="listing-image" height="100%" src="{{ image }}" alt="Image for {{ listing.title }}">
+          </ngu-item>
+          <button NguCarouselPrev class="leftRs">
+            <i class="{{ buildIconClass('angle-left', 4) }} caroussel-icon"></i>
+          </button>
+          <button NguCarouselNext class="rightRs">
+            <i class="{{ buildIconClass('angle-right', 4) }} caroussel-icon"></i>
+          </button>
+        </ngu-carousel>
+        <!-- <img *ngFor="let image of listing.images" height="30%" class="listing-image" [src]="image" alt="ListingHeroImage for {{listing.title}}"> -->
+      </div>
+    </div>
+
+    <!-- Title & Description Section -->
+    <div class="listing-title-desc-container">
+      <h3 class="listing-title">{{ listing.title }}</h3>
+      <p class="listing-desc ">{{ listing.description }}</p>
+    </div>
+
+    <div class="listing-example-link-container">
+      <label class="listing-example-link-label" for="">like this:</label>
+      <a class="listing-example-link" href="{{ verifyOrAddProtocolToUrl(listing.linkUrl) }}" targer="_blank">{{ urlWithoutPrototol(listing.linkUrl) }}</a>
+    </div>
+
+    <!-- Condition Section -->
+    <div class="listing-card-condition-container">
+      <label class="card-info-label" for="">condition</label>
+      <mat-chip class="listing-card-info-content">{{ listing.condition }}</mat-chip>
+    </div>
+
+    <!-- Price Section -->
+    <div class="listing-card-price-container">
+      <label class="card-info-label" for="">asking</label>
+      <mat-chip class="listing-card-info-content" selected="true" [color]="primary">${{ listing.price }}</mat-chip>
+    </div>
+
+    <!-- Location Map Section -->
+    <div class="listing-location-map-container"></div>
+
+    <!-- Contact Buyer Icon & Message Section -->
+    <!-- IF THERE IS ALREADY CORRESPONDENCE WITH THIS BUYER, SHOW IT, ELSE SHOW NEW CORRESPONDENCE TEXTBOX IN BUBBLE. OOH, write in a normal textbox, but show in a bubble above. Should be a component.-->
+    <!-- Component should take in seller's ID, Buyer's ID, Listing ID. Then populate correspondence & messagebox with preview bubble above. -->
+    <div class="listing-contact-buyer-container">
+      <i class="{{ buildIconClass('comments', 2) }}"></i>
+      <div *ngIf="showMessageBox" class="listing-chat-container">
+        <user-messages [listingId]="1234" [sellerId]="2" [buyerId]="1"></user-messages>
+      </div>
+    </div>
+
+    <!-- CLocation Map -->
+    <div class="listing-location-map">
+      <i class="{{ buildIconClass('map-marker', 2) }}"></i>
+      <div class="listing-map-container">
+        <img src="https://camo.githubusercontent.com/6f53eeb8108ef87ccdb03ef0a8f51e9368be6e3a/68747470733a2f2f676f6f676c656d6170732e6769746875622e696f2f6a732d6d61702d6c6162656c2f73637265656e73686f742e706e67" alt="">
+        <!-- SOME MESSAGE/CHAT TYPE COMPONENT SHOULD GO HERE -->
+      </div>
+    </div>
+  </mat-card>
+</div>

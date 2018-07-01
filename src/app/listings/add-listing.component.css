@@ -1,0 +1,65 @@
+.add-sign-icon-container {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.icons-main-container {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/deep/ label.md-input-placeholder.md-empty:not(.md-focused) {
+  margin-left: 20px;
+}
+
+p.heading {
+  color: white;
+  font-family: helvetica, sans-serif;
+  text-align: center;
+}
+
+ul {
+  padding-left: 0;
+  height: auto;
+
+  display: flex;
+  display: -webkit-box;
+  flex: 1 1 auto;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap-reverse;
+  -webkit-flex-wrap: wrap-reverse;
+  max-width: 80%;
+}
+
+ul > li {
+  margin-left: 6px;
+  margin-right: 6px;
+  display: inline-block;  /* Required for wrapping functionalty */
+}
+
+hr.hr-quarter-width {
+  max-width: 25%;
+}
+
+.oauth-icons-list {
+  list-style: none;
+}
+
+.sign-preview {
+  display: flex;
+  justify-content: flex-start;
+  flex: 1;
+}
+/deep/ .sign-preview sign {
+  display: flex;
+  flex: 1 0 auto;
+}
+/deep/ .sign-preview div.sign-container {
+  flex: 1 0 auto;
+}

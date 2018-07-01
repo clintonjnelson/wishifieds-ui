@@ -6,10 +6,13 @@ import { RouterModule }    from '@angular/router';
 import { AppRouterModule } from './app-routing.module';
 import { FormsModule }     from '@angular/forms';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
-import { MatDialogModule, MatInputModule, MatTooltipModule, MatFormFieldModule, MatChipsModule }  from '@angular/material';  // MaterialModule
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { DragulaModule }   from 'ng2-dragula/ng2-dragula';
-import { ChartsModule }    from 'ng2-charts/ng2-charts';
+import { MatDialogModule, MatInputModule, MatTooltipModule, MatFormFieldModule,
+  MatTabsModule, MatChipsModule, MatCardModule }  from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DragulaModule }    from 'ng2-dragula/ng2-dragula';
+import { DragScrollModule } from 'ngx-drag-scroll';
+import { NguCarouselModule } from '@ngu/carousel';
+import { ChartsModule }     from 'ng2-charts/ng2-charts';
 import 'hammerjs';
 
 // Core Components (From Template)
@@ -36,15 +39,21 @@ import { NotificationsComponent }        from './notifications/notifications.com
 import { ConfirmModalComponent }         from './shared/confirm-modal/confirm-modal.component';
 
 // Custom Components
+import { AddListingComponent }           from './listings/add-listing.component';
+import { ListingPageComponent }          from './listings/listing-page.component';
 import { ListingCardComponent }          from './listings/listing-card.component';
+import { ListingCardsComponent }         from './listings/listing-cards.component';
+import { ListingsSearchInputComponent }  from './listings/search/listings-search-input.component';
 import { ListingsSearchComponent }       from './listings/search/listings-search.component';
+
+import { UserMessagesComponent }         from './messages/user-messages.component';
+import { MessageBubbleComponent }         from './messages/message-bubble.component';
 
 // Directives
 import { HoverColorDirective }           from './shared/hover-color/hover-color.directive';
 import { HoverBackgroundDirective }      from './shared/hover-background/hover-background.component';
 import { UniqueValidatorDirective }      from './shared/validators/unique.directive';
 import { DragulaDelayLiftDirective }     from './shared/dragula-delay-lift/dragula-delay-lift.directive';
-import { DragScrollModule }              from 'ngx-drag-scroll';
 
 // Services - make them available EVERYWHERE (otherwise, just add it specifically into Component as a provider)
 import { HttpIntercept }                 from './core/api/http-intercept';
@@ -79,17 +88,21 @@ export function HttpFactory(backend: XHRBackend,
                   FormsModule,
                   HttpModule,
                   // MaterialModule.forRoot(),
-                  NoopAnimationsModule,
+                  BrowserAnimationsModule,
                   MatDialogModule,
                   MatInputModule,
                   MatChipsModule,
+                  MatTabsModule,
+                  MatCardModule,
                   MatFormFieldModule,
                   MatTooltipModule,
                   DragulaModule,
                   ChartsModule,    // move to child module for dashboard
                   DragScrollModule,
+                  NguCarouselModule,
                 ],
   exports:      [
+                  MatTabsModule,
                   MatChipsModule,
                 ],
   declarations: [
@@ -115,8 +128,15 @@ export function HttpFactory(backend: XHRBackend,
                   ConfirmModalComponent,
 
                   // Custom Components
+                  AddListingComponent,
+                  ListingPageComponent,
                   ListingCardComponent,
+                  ListingCardsComponent,
+                  ListingsSearchInputComponent,
                   ListingsSearchComponent,
+
+                  UserMessagesComponent,
+                  MessageBubbleComponent,
 
                   HoverColorDirective,
                   HoverBackgroundDirective,

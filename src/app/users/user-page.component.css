@@ -11,3 +11,9 @@ p.heading {
   font-family: helvetica, sans-serif;
   text-align: center;
 }
+
+/* For listing-cards component to be styled correctly */
+listing-cards {
+  display: flex;
+  width: 100%;
+}

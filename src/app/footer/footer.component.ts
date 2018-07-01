@@ -166,7 +166,7 @@ export class FooterComponent implements OnDestroy {
   // CALL HERE OR SHOULD I RETURN THE VALUE TO SET EXPLICITLY?
   private rebuildSocialSharingLinks() {
     this.socialSharingLinks = this.socialSharingLinks.map( (link: NavLink) => {
-      console.log("LINK ICON IS: ", link.icon);
+      // console.log("LINK ICON IS: ", link.icon);  // TODO: THIS IS BEING TRIGGERED MAAAANY TIMES. FIX FOR PROD.
       link.url = this.buildUrl(link.icon);
       return link;
     });

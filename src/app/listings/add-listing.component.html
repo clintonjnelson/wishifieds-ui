@@ -1,0 +1,31 @@
+<div class="add-sign-comtainer">
+  <!-- Add-Sign Icon -->
+  <div *ngIf="!showAddCategoryIcons && !showForm" class="add-sign-icon-container">
+    <i (click)="toggleShowAddListingIcons()" mdTooltip="[add a sign]" mdTooltipPosition="above" class="{{buildIconClass('plus', '2')}}"></i>
+  </div>
+
+  <div *ngIf="showAddCategoryIcons || showForm">
+    <!-- Heading -->
+    <p class="heading">add a sign</p>
+
+    <div *ngIf="showAddCategoryIcons" class="icons-main-container">
+      <!-- Oauth Links -->
+      <ul>
+        <li *ngFor="let category of Categories" class="categories-list">
+          <!-- POPULATE THE LIST OF CATEGORY ICONS HERE -->
+        </li>
+      </ul>
+      <hr class="hr-quarter-width"/>
+      <!-- Generic & Custom Links -->
+      <ul>
+
+      </ul>
+    </div>
+
+    <!-- Preview New Sign Area - THIS SHOULD BE BELOW THE FORM & CONSTANTLY UPDATING... -->
+    <div *ngIf="showForm" class="sign-preview">
+      <!-- SHOW A LISTING PREVIEW HERE -->
+      <!-- <listing-card ></listing-card> -->
+    </div>
+  </div>
+</div>

@@ -7,6 +7,7 @@ import { RequestPasswordResetComponent } from './password-reset/request-password
 import { PasswordResetComponent }        from './password-reset/password-reset.component';
 import { AdminUserManagementComponent }  from './admin/user-management/admin-user-management.component';
 import { HomeComponent }                 from './home/home.component';
+import { ListingPageComponent }          from './listings/listing-page.component';
 import { UserPageComponent }             from './users/user-page.component';
 import { UserSettingsComponent }         from './users/settings/user-settings.component';
 import { UserConfirmationRedirectComponent } from './core/redirects/user-confirmation-redirect.component';
@@ -31,7 +32,8 @@ const rootRoutes: Routes = [
   { path: 'privacynotice', component: PrivacyNoticeComponent, pathMatch: 'full' },
 
   // These have to come last to avoid username confusion
-  { path: ':username/settings',  component: UserSettingsComponent,  canActivate: [OwnerGuard], pathMatch: 'full'},
+  { path: ':username/settings',  component: UserSettingsComponent, canActivate: [OwnerGuard], pathMatch: 'full'},
+  { path: ':username/listings/:listingId',  component: ListingPageComponent, pathMatch: 'full'},
   { path: ':username', component: UserPageComponent, pathMatch: 'full' },
 
   { path: '', component: HomeComponent, pathMatch: 'full' },

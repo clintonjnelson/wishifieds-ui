@@ -27,6 +27,7 @@
     "@angular/platform-browser-dynamic": "5.2.10",
     "@angular/platform-server": "5.2.10",
     "@angular/router": "5.2.10",
+    "@ngu/carousel": "^1.4.8",
     "angular-in-memory-web-api": "0.5.2",
     "chart.js": "2.7.2",
     "core-js": "2.5.5",

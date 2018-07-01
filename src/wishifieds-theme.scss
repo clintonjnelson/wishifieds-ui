@@ -1,0 +1,47 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+$mat-gray: (
+  50: #FAFAFA,
+  100: #F5F5F5,
+  200: #EEEEEE,
+  300: #E0E0E0,
+  400: #BDBDBD,
+  500: #9E9E9E,
+  600: #757575,
+  700: #616161,
+  800: #424242,
+  900: #212121,
+  A100: #F5F5F5,
+  A200: #EEEEEE,
+  A400: #BDBDBD,
+  A700: #616161,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: white,
+    600: white,
+    700: white,
+    800: $white-87-opacity,
+    900: $white-87-opacity,
+    A100: $black-87-opacity,
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+
+$wishifieds-app-primary: mat-palette($mat-gray);
+$wishifieds-app-accent:  mat-palette($mat-gray, A200, A100, A400);
+$wishifieds-app-warn:    mat-palette($mat-red);
+$wishifieds-app-theme: mat-light-theme($wishifieds-app-primary, $wishifieds-app-accent, $wishifieds-app-warn);
+
+@include angular-material-theme($wishifieds-app-theme);
+
+.mat-card {
+  background-color: mat-color($mat-gray, 700);
+
+}

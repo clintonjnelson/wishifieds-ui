@@ -1,0 +1,39 @@
+<div class="user-messages-main-container">
+<!--
+  Loop Here for all messages
+  Switch here
+    Load other-sender messages right
+    Load self-sender messages left
+  Load newest self-sender message preview left
+  Load new message textboc below
+-->
+  <div class="messages-display-container">
+  <!--
+    I HAVE A FEELING THE METHOD ON CLASS SELECTION WILL BE BOUND & HIT REPEATEDLY CAUSING POOR PAGE PERF.
+    CONSIDER USING A SWITCH OR NG-IF/ELSE TO LOAD THESE...
+  -->
+    <div *ngFor="let message of messages" class="message-bubble-container">
+      <message-bubble [message]="message" [isRecipient]="isReceivedMessage(message)"></message-bubble>
+         <!-- [ngClass]="{ 'self-message': isSelfMessage(message), 'other-message': !isSelfMessage(message) }"
+      <p><small> {{ message.createdAt }} </small></p>
+      <p>{{ message.content }}</p> -->
+    </div>
+
+    <!-- The Preview Message Being Written -->
+    <div *ngIf="tempMessage.content.length > 0" class="message-bubble-container message-preview-container">
+      <message-bubble [message]="tempMessage" [isRecipient]="false"></message-bubble>
+    </div>
+  </div>
+
+  <!-- TODO: MAYBE BREAK OUT THE MESSAGE FORM STUFF??? SIMPLIFY FORM, BUT COULD COMPLICATE PREVIEW.... -->
+  <div class="new-message-container">
+    <form #messageForm="ngForm" name="messageForm" layout="column">
+      <mat-form-field>
+        <!-- TODO: Placeholder should be worded according to the viewer!!! Seller? Buyer? -->
+        <textarea matInput type="textarea" name="content" ngControl="content" [(ngModel)]="tempMessage.content" placeholder="Want to sell yours? Message the buyer here:::"></textarea>
+      </mat-form-field>
+    </form>
+  </div>
+
+
+</div>

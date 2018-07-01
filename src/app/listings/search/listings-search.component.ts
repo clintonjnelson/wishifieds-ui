@@ -166,7 +166,7 @@ const LISTINGS: Listing[] = [
     createdAt:   "14",
     updatedAt:   "15"
   }
-]
+];
 
 
 // Probably swap this out with a dynamic icon map that also has a local backup hardcoded
@@ -205,7 +205,7 @@ const CATEGORY_LIST = {
   'tickets & events':        { icon: 'star' },
   'tools & equipment':       { icon: 'star' },
   'travel & accommodations': { icon: 'star' }
-}
+};
 
 
 

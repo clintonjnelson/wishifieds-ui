@@ -1,0 +1,22 @@
+
+<!-- Recipient Message Bubble -->
+<div *ngIf="isRecipient" class="speech-bubble-ds right-color">
+  <p><small>{{ message.createdAt }}</small></p>
+  <p>{{ message.content }}</p>
+  <div class="speech-bubble-ds-arrow-right"></div>
+</div>
+
+<!-- Sender Message Bubble -->
+<div *ngIf="!isRecipient" class="speech-bubble-ds left-color">
+  <p><small>{{ message.createdAt }}</small></p>
+  <p>{{ message.content }}</p>
+  <div class="speech-bubble-ds-arrow-left"></div>
+</div>
+
+<!--
+<div class="speech-bubble-ds">
+    <p><strong>Demo speech bubble</strong></p>
+    <p>This is CSS speech bubble with borders and drop shadow.</p>
+    <div class="speech-bubble-ds-arrow"></div>
+</div>
+ -->
