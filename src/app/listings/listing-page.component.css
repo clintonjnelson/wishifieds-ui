@@ -77,36 +77,45 @@ ngu-item.bannerStyle {
 
 div.listing-title-desc-container {
   border-top: 1px solid lightgray;
+  text-align: center;
+  padding-top: 1em;
+}
+
+/deep/ div.mat-chip-list-wrapper {
+  justify-content: center;
+}
+
+.price {
+  color: white;
+  font-size: 1.5em;
 }
 
 div.listing-example-link-container {
-  border-top: 1px solid lightgray;
-}
-
-
-/*
-
-
-div.listing-card-condition-container {
+  /*border-top: 1px solid lightgray;*/
   display: flex;
   flex-direction: column;
-  flex: 1 0 auto;
+  text-align: center;
+  padding-top: 1em;
+  margin-bottom: 1em;
 }
 
-div.listing-card-price-container {
+div.grouped-items-container {
   display: flex;
-  flex-direction: column;
-  flex: 1 0 auto;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 90%;
 }
 
-div.listing-location-map-container {
-  display: flex;
-  flex-direction: column;
-  flex: 1 0 auto;
+div.listing-location-map {
+  text-align: center;
 }
 
-div.listing-contact-buyer-container {
-  display: flex;
-  flex-direction: column;
-  flex: 1 0 auto;
-}*/
+div.listing-location-map i {
+  padding-bottom: 0.5em;
+}
+
+div.listing-contact-buyer-container i {
+  padding-bottom: 0.5em;
+  padding-left: 47%
+}
+

@@ -39,7 +39,8 @@ export class ListingPageComponent implements OnInit {
   @Input() listing: Listing = LISTING;
   @Input() isNewListing: Boolean = false;
   public carouselConfig: NguCarousel;
-  showMessageBox: Boolean = true;    // MAKE THIS TOGGLED PER THE MESSAGES ICON
+  showMessages: Boolean = false;    // MAKE THIS TOGGLED PER THE MESSAGES ICON
+  showLocationMap: Boolean = false;
 
   constructor(private icons:   IconService,
               private helpers: HelpersService) {
@@ -78,5 +79,13 @@ export class ListingPageComponent implements OnInit {
   // For the a-link href display
   urlWithoutPrototol(url: string) {
     return this.helpers.urlWithoutProtocol(url);
+  }
+
+  toggleShowMessages() {
+    this.showMessages = !this.showMessages;
+  }
+
+  toggleShowLocationMap() {
+    this.showLocationMap = !this.showLocationMap;
   }
 }

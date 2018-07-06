@@ -37,6 +37,7 @@
 }
 .speech-bubble-ds p {
   margin-bottom: 10px;
+  word-wrap: break-word;
 }
 .speech-bubble-ds p:last-of-type {
   margin-bottom: 0;

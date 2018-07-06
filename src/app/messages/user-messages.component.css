@@ -17,8 +17,14 @@
 /deep/ mat-form-field {
   width: 90%;
   max-width: 30em;
-  border: 2px solid white;
   padding: 5px;
+}
+
+form.message-form {
+  border: 2px solid lightgray;
+  width: 100%;
+  max-width: 30em;
+  margin-bottom: 1em;
 }
 
 /*/deep/ label.mat-form-field-label {
@@ -43,4 +49,28 @@
 
 textarea {
   color: white;
+  min-height: 3em;
+}
+
+
+/*Checkbox Field*/
+.notify-checkbox {
+  margin-left: 0.3em;
+}
+
+/deep/ div.mat-checkbox-frame {
+  border-color: white;
+}
+
+.message-form {
+  position: relative;
+  padding-bottom: 1em;
+}
+
+/*Send Icon*/
+.message-form i {
+  display: block;
+  position: absolute;
+  right: 1em;
+  bottom: 0.3em;
 }

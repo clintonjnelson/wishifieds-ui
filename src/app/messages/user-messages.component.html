@@ -20,18 +20,26 @@
     </div>
 
     <!-- The Preview Message Being Written -->
-    <div *ngIf="tempMessage.content.length > 0" class="message-bubble-container message-preview-container">
+    <!-- ngIf ensures it waits for the tempMessage to be available before trying to show -->
+    <div *ngIf="tempMessage.content.length >= 0" class="message-bubble-container message-preview-container">
       <message-bubble [message]="tempMessage" [isRecipient]="false"></message-bubble>
     </div>
   </div>
 
-  <!-- TODO: MAYBE BREAK OUT THE MESSAGE FORM STUFF??? SIMPLIFY FORM, BUT COULD COMPLICATE PREVIEW.... -->
+
+  <!--
+  THIS M-U-S-T BE BROKEN OUT BECAUSE IT NEEDS TO BE INSERTED IN VARIOUS PLACES FOR THE ABILITY TO REPLY TO DIFFERENT THREADS
+
+  THE PREVIEW WILL GET ITS OWN POPULATION OF A MESSAGE
+  -->
   <div class="new-message-container">
-    <form #messageForm="ngForm" name="messageForm" layout="column">
+    <form class="message-form" #messageForm="ngForm" name="messageForm" layout="column">
       <mat-form-field>
         <!-- TODO: Placeholder should be worded according to the viewer!!! Seller? Buyer? -->
         <textarea matInput type="textarea" name="content" ngControl="content" [(ngModel)]="tempMessage.content" placeholder="Want to sell yours? Message the buyer here:::"></textarea>
       </mat-form-field>
+      <mat-checkbox class="notify-checkbox" name="notifyImmediately" [(ngModel)]="notifyImmediately">Notify Buyer Immediately</mat-checkbox>
+      <i class="{{ buildIconClass('paper-plane', 2) }}" (click)="send()"></i>
     </form>
   </div>
 

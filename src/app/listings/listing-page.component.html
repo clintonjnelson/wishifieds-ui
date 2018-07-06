@@ -36,47 +36,52 @@
 
     <!-- Title & Description Section -->
     <div class="listing-title-desc-container">
+      <mat-chip-list>
+        <mat-chip class="price" selected>$ {{ listing.price }}</mat-chip>
+      </mat-chip-list>
       <h3 class="listing-title">{{ listing.title }}</h3>
       <p class="listing-desc ">{{ listing.description }}</p>
     </div>
 
     <div class="listing-example-link-container">
-      <label class="listing-example-link-label" for="">like this:</label>
+      <label class="listing-example-link-label" for="">Here's an example on another site:</label>
       <a class="listing-example-link" href="{{ verifyOrAddProtocolToUrl(listing.linkUrl) }}" targer="_blank">{{ urlWithoutPrototol(listing.linkUrl) }}</a>
     </div>
 
-    <!-- Condition Section -->
-    <div class="listing-card-condition-container">
-      <label class="card-info-label" for="">condition</label>
-      <mat-chip class="listing-card-info-content">{{ listing.condition }}</mat-chip>
-    </div>
-
-    <!-- Price Section -->
-    <div class="listing-card-price-container">
-      <label class="card-info-label" for="">asking</label>
-      <mat-chip class="listing-card-info-content" selected="true" [color]="primary">${{ listing.price }}</mat-chip>
-    </div>
-
-    <!-- Location Map Section -->
-    <div class="listing-location-map-container"></div>
+    <!--
+    <div class="grouped-items-container">
+      Condition Section
+      <div class="listing-card-condition-container">
+        <label class="card-info-label" for="">Condition</label>
+        <mat-chip-list>
+          <mat-chip class="listing-card-info-content">{{ listing.condition }}</mat-chip>
+        </mat-chip-list>
+      </div>
+    </div> -->
 
     <!-- Contact Buyer Icon & Message Section -->
     <!-- IF THERE IS ALREADY CORRESPONDENCE WITH THIS BUYER, SHOW IT, ELSE SHOW NEW CORRESPONDENCE TEXTBOX IN BUBBLE. OOH, write in a normal textbox, but show in a bubble above. Should be a component.-->
     <!-- Component should take in seller's ID, Buyer's ID, Listing ID. Then populate correspondence & messagebox with preview bubble above. -->
+    <hr>
     <div class="listing-contact-buyer-container">
-      <i class="{{ buildIconClass('comments', 2) }}"></i>
-      <div *ngIf="showMessageBox" class="listing-chat-container">
+      <i class="{{ buildIconClass('comments', 3) }}" (click)="toggleShowMessages()" ></i>
+      <div *ngIf="showMessages" class="listing-chat-container">
         <user-messages [listingId]="1234" [sellerId]="2" [buyerId]="1"></user-messages>
       </div>
     </div>
 
-    <!-- CLocation Map -->
-    <div class="listing-location-map">
-      <i class="{{ buildIconClass('map-marker', 2) }}"></i>
-      <div class="listing-map-container">
-        <img src="https://camo.githubusercontent.com/6f53eeb8108ef87ccdb03ef0a8f51e9368be6e3a/68747470733a2f2f676f6f676c656d6170732e6769746875622e696f2f6a732d6d61702d6c6162656c2f73637265656e73686f742e706e67" alt="">
-        <!-- SOME MESSAGE/CHAT TYPE COMPONENT SHOULD GO HERE -->
+    <hr>
+    <!-- Location Map Section -->
+    <div class="listing-location-map-container">
+      <div class="listing-location-map">
+        <i class="{{ buildIconClass('map-marker', 3) }}" (click)="toggleShowLocationMap()"></i>
+        <div *ngIf="showLocationMap" class="listing-map-container">
+          <img src="https://camo.githubusercontent.com/6f53eeb8108ef87ccdb03ef0a8f51e9368be6e3a/68747470733a2f2f676f6f676c656d6170732e6769746875622e696f2f6a732d6d61702d6c6162656c2f73637265656e73686f742e706e67" alt="" width="100%">
+          <!-- SOME MESSAGE/CHAT TYPE COMPONENT SHOULD GO HERE -->
+        </div>
+        <p> {{ listing.location }} </p>
       </div>
     </div>
+
   </mat-card>
 </div>

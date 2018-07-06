@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { NgForm, FormControl }   from '@angular/forms';   // TODO: Remove if no validation logic
+import { NgForm, FormControl, FormsModule }   from '@angular/forms';   // TODO: Remove if no validation logic
 import { IconService }         from '../core/services/icon.service';
 import { HelpersService }      from '../shared/helpers/helpers.service';
 import { Listing }             from '../listings/listing.model';
 import { Message }             from './message.model';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 // ORDER APPEARS TO BE RANDOM, BUT SHOULD DISPLAY BASED ON DATE-TIMESTANP
 const MESSAGES: Message[] = [
@@ -34,6 +35,7 @@ export class UserMessagesComponent implements OnInit {
   messageForm: NgForm;
   @ViewChild('messageForm') currentForm: NgForm;
   tempMessage: Message;
+  notifyImmediately: Boolean;
 
   constructor( private icons: IconService,
                private helpers: HelpersService) {
@@ -49,6 +51,7 @@ export class UserMessagesComponent implements OnInit {
        content: '',
        createdAt: 'preview'
      };
+     this.notifyImmediately = true;
   }
 
   buildIconClass(icon: string, size: string = '2') {
@@ -64,7 +67,9 @@ export class UserMessagesComponent implements OnInit {
 
   // TODO: HOOK UP SEND ABILITY FOR CREATING NEW MESSAGES
   send() {
+    console.log("SENDING NEW MESSAGE");
     // !!!!! TODO: MUST SANITIZE THE TEXT BEFORE SAVING!!!!!!!!!!
+    // SHOULD TURN THE PREVIEW INTO A NEW BUBBLE AND RESET THE PREVIEW MESSAGE //
   }
 
   // Logged OUT Helpers
