@@ -8,6 +8,7 @@ import { PasswordResetComponent }        from './password-reset/password-reset.c
 import { AdminUserManagementComponent }  from './admin/user-management/admin-user-management.component';
 import { HomeComponent }                 from './home/home.component';
 import { ListingPageComponent }          from './listings/listing-page.component';
+import { EditListingComponent }          from './listings/edit-listing.component';
 import { UserPageComponent }             from './users/user-page.component';
 import { UserSettingsComponent }         from './users/settings/user-settings.component';
 import { UserConfirmationRedirectComponent } from './core/redirects/user-confirmation-redirect.component';

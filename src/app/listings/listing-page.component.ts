@@ -1,11 +1,6 @@
-import { Component, Input, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 // import { Router }          from '@angular/router';
-import { IconService } from '../core/services/icon.service';
-import { HelpersService } from '../shared/helpers/helpers.service';
-// import { ApiUsersService } from '../core/api/api-users.service';
 import { Listing } from './listing.model';
-import { DragScrollDirective } from 'ngx-drag-scroll';
-import { NguCarousel } from '@ngu/carousel';
 
 const LISTING: Listing = {
   user_id:     "1",
@@ -36,56 +31,29 @@ const LISTING: Listing = {
   styleUrls: ['listing-page.component.css']
 })
 export class ListingPageComponent implements OnInit {
-  @Input() listing: Listing = LISTING;
-  @Input() isNewListing: Boolean = false;
-  public carouselConfig: NguCarousel;
-  showMessages: Boolean = false;    // MAKE THIS TOGGLED PER THE MESSAGES ICON
-  showLocationMap: Boolean = false;
+  isEditing:Boolean = false;  // TODO: WE NEED AN EVENT LISTENER FOR CHANGING THIS ONE FROM BELOW
+  listing: Listing;
 
-  constructor(private icons:   IconService,
-              private helpers: HelpersService) {
+  constructor() {
 
   }
 
   ngOnInit() {
-    this.carouselConfig = {
-      grid: {xs: 1, sm: 1, md: 1, lg: 1, all: 0},
-      slide: 1,
-      speed: 400,
-      // interval: 4000,
-      point: {
-        visible: true
-      },
-      load: 2,
-      touch: true,
-      loop: true,
-      custom: 'banner'
-    }
+    this.listing = LISTING;
   }
 
-  carouselLoaded(event: Event) {
-    console.log("Carousel has loaded: ", event);
+  toggleEditing(input: any = null): void {
+    if(typeof(input) === 'boolean') { this.isEditing = input; }
+    else { this.isEditing = !this.isEditing; }
+    console.log("isEditing IS NOW: ", this.isEditing);
+    this.scrollToEdit();   // Scroll so the edit is in view
   }
 
-  buildIconClass(icon: string, size: string = '2') {
-    return this.icons.buildIconClass(icon, size);
-  }
-
-  // For the a-link href generation
-  verifyOrAddProtocolToUrl(url: string) {
-    return this.helpers.verifyOrAddProtocolToUrl(url)
-  }
-
-  // For the a-link href display
-  urlWithoutPrototol(url: string) {
-    return this.helpers.urlWithoutProtocol(url);
-  }
-
-  toggleShowMessages() {
-    this.showMessages = !this.showMessages;
-  }
-
-  toggleShowLocationMap() {
-    this.showLocationMap = !this.showLocationMap;
+  private scrollToEdit() {
+    setTimeout( () => {
+      const editEl = document.getElementById('listing-edit-container');
+      console.log("ELEMENT TO SCROLL TO IS: ", editEl);
+      editEl.scrollIntoView({behavior: 'smooth'});
+    }, 300);
   }
 }

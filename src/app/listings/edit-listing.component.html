@@ -1,0 +1,167 @@
+<div class="edit-listing-container">
+
+  <!-- TODO: PROVIDE A TAB TO FLIP BETWEEN CARD VIEW & FULL VIEW; DEFAUL TO CARD; -->
+  <div class="preview-listing-container">
+    <listing-full [listing]="tempListing" [isPreview]="true"></listing-full>
+  </div>
+
+  <div id="listing-edit-container" class="edit-form-container">
+    <!-- Listing Edit Form -->
+    <div class="listing-content-edit-form-container">
+      <form [formGroup]="listingForm" name="listingForm" class="listing-form" layout="column">
+
+        <!-- Category -->
+        <mat-form-field layout="column">
+          <mat-label><i class="{{buildIconClass('info-circle', '1')}}"></i> Choose a Category</mat-label>
+          <mat-select name="category" [formControl]="listingForm.controls['category']" [(ngModel)]="tempListing.category" placeholder="Choose a Category" required>
+            <mat-option *ngFor="let category of categories" [value]="category.id">
+              {{ category.name }}
+            </mat-option>
+          </mat-select>
+          <div *ngIf="displayedValidationErrors.category" class="input-errors error">
+            {{ displayedValidationErrors.category }}
+          </div>
+        </mat-form-field>
+
+        <!-- Condition -->
+        <mat-form-field layout="column">
+          <mat-label><i class="{{buildIconClass('info-circle', '1')}}"></i> Desired Condition</mat-label>
+          <mat-select name="condition" [formControl]="listingForm.controls['condition']" [(ngModel)]="tempListing.condition" placeholder="Choose a Condition" required>
+            <mat-option *ngFor="let condition of conditions" [value]="condition.id">
+              {{ condition.name }}
+            </mat-option>
+          </mat-select>
+          <div *ngIf="displayedValidationErrors.condition" class="input-errors error">
+            {{ displayedValidationErrors.condition }}
+          </div>
+        </mat-form-field>
+
+        <!-- Title -->
+        <mat-input-container>
+          <mat-label><i class="{{buildIconClass('info-circle', '1')}}"></i> Wish Listing Title</mat-label>
+          <input matInput type="text" name="title" [formControl]="listingForm.controls['title']" [(ngModel)]="tempListing.title" placeholder="Title of what you're looking for..." required/>
+        </mat-input-container>
+        <div *ngIf="displayedValidationErrors.title" class="input-errors error">
+          {{ displayedValidationErrors.title }}
+        </div>
+
+        <!-- Description -->
+        <mat-input-container layout="row">
+          <mat-label><i class="{{buildIconClass('info-circle', '1')}}"></i> Wish Listing Description</mat-label>
+          <textarea matInput matTextareaAutosize matAutosizeMinRows="6" matAutosizeMaxRows="20" name="description" [formControl]="listingForm.controls['description']" [(ngModel)]="tempListing.description" placeholder="Description of what you're looking for..." mat-maxlength="2000"></textarea>
+          <div *ngIf="displayedValidationErrors.description" class="input-errors error">
+            {{ displayedValidationErrors.description }}
+          </div>
+        </mat-input-container>
+
+        <!-- LinkUrl -->
+        <mat-input-container layout="row">
+          <mat-label><i class="{{buildIconClass('info-circle', '1')}}"></i> Link to an Example</mat-label>
+          <input matInput type="text" name="linkUrl" [formControl]="listingForm.controls['linkUrl']" [(ngModel)]="tempListing.linkUrl"/>
+          <mat-hint>Having a link to the item (or a similar item) can help clarify what you're looking for. Good websites: Amazon, Nike, etc. Bad websites: ebay, craigslist, etc that disappear quickly.</mat-hint>
+          <div *ngIf="displayedValidationErrors.linkUrl" class="input-errors error">
+            {{ displayedValidationErrors.linkUrl }}
+          </div>
+        </mat-input-container>
+
+        <!-- TODO: IMPLEMENT A DRAG & DROP PICTURE INPUT WITH DRAGGABLE ORDERING AND ABILITY TO SELECT FROM LINKURL -->
+        <!-- TODO:
+          THIS SHOULD BE A MORE COMPLEX SECTION CONTAINING IMAGE UPLOAD, SITE SCRAPE, ETC.
+          Example site should automatically scrape
+          Additional scrape sites should be allowed. Pictures will be downloaded & saved to cloud.
+          Of all of the images, multiple can be selected to be used.
+          There should be a summery of selected images and from those, hero can be clicked. -->
+        <!-- PHASE1 WILL JUST USE THE EXAMPLE LINK_URL. LATER PHASES WILL ALLOW MORE SITES FOR SCRAPING. -->
+
+
+        <!-- Populate a bunch of checkboxes with images linked, but hide the checkboxes. When select the image, select the checkbox. Image could maybe be the label?
+        Images with an index that has been selected get the css attribute of that on-page ID changed to have a border for "selected". -->
+        <div class="images-container">
+          <label class="images-label"><i class="{{buildIconClass('info-circle', '1')}}"></i> Select Images for your Wish Listing</label>
+          <div class="images-selection-container">
+            <div layout="row" formArrayName="images" *ngFor="let group of listingForm.controls['images'].controls; let ind=index">
+              <div [formGroupName]="ind">
+                <input type="checkbox" formControlName="checked" class="images-checkbox"/>
+                <img (click)="toggleSelectImage(ind)" src="{{group.controls.url.value}}" [ngClass]="{'image-selected': group.controls.checked.value}" class="image" alt="" width="60px">
+              </div>
+            </div>
+          </div>
+          <div *ngIf="displayedValidationErrors.images" class="input-errors error">
+            {{ displayedValidationErrors.images }}
+          </div>
+          <div class="select-images-hint-container">
+            <p><small class="select-images-hint">Pick from any images you've uploaded or that we found at the address of the example webpage you provided in the section above.</small></p>
+          </div>
+        </div>
+
+
+        <!-- Select Hero Image from Selected Images -->
+        <mat-form-field layout="column">
+          <mat-label><i class="{{buildIconClass('info-circle', '1')}}"></i> Pick the Primary Image</mat-label>
+          <mat-select name="heroImage" [formControl]="listingForm.controls['heroImage']" [(ngModel)]="tempListing.heroImage" [ngStyle]="{'background': 'url(getSelectedHero() ) center contain no-repeat'}" placeholder="Choose a Main Image">
+            <mat-option *ngFor="let group of listingForm.controls['images'].controls | callback: keepTruthyFilter; let ind=index" [value]="group.controls.url.value">
+              <img src="{{ group.controls.url.value }}" alt="Listing Image" height="40px">
+            </mat-option>
+          </mat-select>
+          <mat-hint>Picking a primary image requires you've selected images in the section above.</mat-hint>
+          <div *ngIf="displayedValidationErrors.category" class="input-errors error">
+            {{ displayedValidationErrors.category }}
+          </div>
+        </mat-form-field>
+
+        <!-- Price -->
+        <mat-input-container layout="row" class="price-input-container">
+          <mat-label class="price-input-label"><i class="{{buildIconClass('info-circle', '1')}}"></i> Willing to Pay</mat-label>
+          <input matInput type="number" name="price" [formControl]="listingForm.controls['price']" [(ngModel)]="tempListing.price" max="99999999"/>
+          <span matPrefix>$&nbsp;</span>
+          <div *ngIf="displayedValidationErrors.price" class="input-errors error">
+            {{ displayedValidationErrors.price }}
+          </div>
+        </mat-input-container>
+
+
+        <!-- TODO: COME UP WITH A WAY TO INPUT THE FULL LOCATION HERE. City/State or Zip? MAYBE GOOGLE MAPS INTEGRATION? -->
+        <!-- TODO: USER'S LOCATIONS OR OPTIONAL "+ ADD NEW LOCATION" THAT UN-HIDES A SET OF
+        LOCATION FIELDS THAT OTHERWISE ARE POPULATED BEHIND THE SCENES WITH THE SAVED VALUES. -->
+        <!-- Location -->
+        <mat-form-field layout="row">
+          <mat-label><i class="{{buildIconClass('info-circle', '1')}}"></i> Purchase Location</mat-label>
+          <mat-select name="location" [formControl]="listingForm.controls['location']"  [(ngModel)]="tempListing.location" placeholder="Choose a Location (eg: meeting location for purchase)" required>
+            <mat-option *ngFor="let location of locations" [value]="location.id">
+              {{ location.description }}
+            </mat-option>
+          </mat-select>
+          <div *ngIf="displayedValidationErrors.location" class="input-errors error">
+            {{ displayedValidationErrors.location }}
+          </div>
+        </mat-form-field>
+
+        <!-- TODO: ADD A LIST OF CHIPS HERE FOR KEYWORDS? ADD SOMETHING. TEXT INPUTS WITH OPTIONAL ADD ANOTHER. -->
+        <!-- Keywords -->
+        <mat-input-container layout="row">
+          <mat-label><i class="{{buildIconClass('info-circle', '1')}}"></i> Keywords</mat-label>
+          <input matInput type="text" name="keywords" [formControl]="listingForm.controls['keywords']" [(ngModel)]="tempListing.keywords" placeholder="Description of what you're looking for..." mat-maxlength="2000"/>
+          <div *ngIf="displayedValidationErrors.keywords" class="input-errors error">
+            {{ displayedValidationErrors.keywords }}
+          </div>
+        </mat-input-container>
+
+
+
+
+        <!-- form buttons -->
+        <div>
+          <!-- ok button -->
+          <a (click)="save(tempListing)" type="submit" matTooltip="save" matTooltipPosition="above" class="listing-saveicon" [attr.disabled]="!listingForm.valid">
+            <i class="{{buildIconClass('check', '2')}}"></i>
+          </a>
+          <!-- cancel button -->
+          <a (click)="cancel()" class="listing-cancelicon">
+            <i *ngIf="!showPreviewLabel" matTooltip="cancel" matTooltipPosition="above" class="{{buildIconClass('times', '2')}}"></i>
+            <p *ngIf="showPreviewLabel"  class="preview-button-label">Preview</p>
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

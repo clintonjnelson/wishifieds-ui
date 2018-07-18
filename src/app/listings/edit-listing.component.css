@@ -1,0 +1,93 @@
+div.edit-form-container {
+  margin-top: 1em;  /* space between preview & form */
+}
+
+div.listing-content-edit-form-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-form-field {
+  display: flex;
+}
+
+
+/*Set spacing between input field sections*/
+::ng-deep mat-form-field, ::ng-deep mat-input-container {
+  margin-bottom: 1em;
+}
+
+/*Change Input Label Color to Gray for pre/post input*/
+::ng-deep mat-label, mat-label i{
+  color: lightgray;
+}
+
+::ng-deep .mat-option-text {
+  color: #808080;
+}
+
+/*Min/Max width on input lines (to avoid cutting placeholders off or input lines being awkwardly long)*/
+::ng-deep .mat-input-wrapper {
+  min-width: 280px;
+  max-width: 600px;
+}
+::ng-deep mat-input-container.price-input-container .mat-input-wrapper {
+  min-width: 100px;
+  max-width: 100px;
+}
+
+/*Set the underline color to white*/
+::ng-deep .mat-input-underline {
+  background: white;
+}
+
+/* FIXME: Hack to keep the mat-hint from overlapping content below. https://github.com/angular/material2/issues/5227 */
+::ng-deep .mat-input-underline,
+::ng-deep .mat-input-subscript-wrapper,
+::ng-deep .mat-input-ripple {
+  position: initial !important;
+  display: block;
+}
+
+
+
+/*Images*/
+.images-selection-container {
+  display: flex;
+  margin: 1em 0 1em 0;
+}
+
+
+.select-images-hint-container {
+  max-width: 500px;
+  margin-top: -1em;
+  line-height: 0.84;  /*Keep lines spaced like material hints*/
+}
+/*Match Material mat-hint styling*/
+.select-images-hint {
+  font-size: 0.75em;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.images-checkbox {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+.image {
+  border: 1px solid rgba(0, 0, 0, 0);
+  padding: 5px;
+  background-clip: content-box;
+}
+
+.image-selected {
+  /*border: 2px solid black;
+  outline: 2px solid white;*/
+  border: solid 1px white;
+}
+
+
+::ng-deep mat-label.price-input-label:parent:parent:parent {
+  margin-left: -2em;
+}

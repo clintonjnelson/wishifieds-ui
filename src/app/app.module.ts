@@ -4,10 +4,10 @@ import { NgModule }        from '@angular/core';
 import { BrowserModule }   from '@angular/platform-browser';
 import { RouterModule }    from '@angular/router';
 import { AppRouterModule } from './app-routing.module';
-import { FormsModule }     from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }     from '@angular/forms';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { MatDialogModule, MatInputModule, MatTooltipModule, MatFormFieldModule,
-  MatCheckboxModule, MatTabsModule, MatChipsModule, MatCardModule }  from '@angular/material';
+  MatSelectModule, MatCheckboxModule, MatTabsModule, MatChipsModule, MatCardModule }  from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragulaModule }    from 'ng2-dragula/ng2-dragula';
 import { DragScrollModule } from 'ngx-drag-scroll';
@@ -40,7 +40,9 @@ import { ConfirmModalComponent }         from './shared/confirm-modal/confirm-mo
 
 // Custom Components
 import { AddListingComponent }           from './listings/add-listing.component';
+import { EditListingComponent }          from './listings/edit-listing.component';
 import { ListingPageComponent }          from './listings/listing-page.component';
+import { ListingFullComponent }          from './listings/listing-full.component';
 import { ListingCardComponent }          from './listings/listing-card.component';
 import { ListingCardsComponent }         from './listings/listing-cards.component';
 import { ListingsSearchInputComponent }  from './listings/search/listings-search-input.component';
@@ -74,6 +76,9 @@ import { UserConfirmationRedirectComponent } from './core/redirects/user-confirm
 import { AdminGuard } from './core/auth/admin-guard.service';
 import { OwnerGuard } from './core/auth/owner-guard.service';
 
+// Pipes
+import { CallbackPipe } from './shared/pipes/callback.pipe';
+
 // Providers
 export function HttpFactory(backend: XHRBackend,
                             defaultOptions: RequestOptions,
@@ -86,6 +91,7 @@ export function HttpFactory(backend: XHRBackend,
                   BrowserModule,
                   AppRouterModule,
                   FormsModule,
+                  ReactiveFormsModule,
                   HttpModule,
                   // MaterialModule.forRoot(),
                   BrowserAnimationsModule,
@@ -95,6 +101,7 @@ export function HttpFactory(backend: XHRBackend,
                   MatTabsModule,
                   MatCardModule,
                   MatFormFieldModule,
+                  MatSelectModule,
                   MatCheckboxModule,
                   MatTooltipModule,
                   DragulaModule,
@@ -130,7 +137,9 @@ export function HttpFactory(backend: XHRBackend,
 
                   // Custom Components
                   AddListingComponent,
+                  EditListingComponent,
                   ListingPageComponent,
+                  ListingFullComponent,
                   ListingCardComponent,
                   ListingCardsComponent,
                   ListingsSearchInputComponent,
@@ -145,6 +154,8 @@ export function HttpFactory(backend: XHRBackend,
                   DragulaDelayLiftDirective,
 
                   UserConfirmationRedirectComponent,  // Really a service, but built as component
+
+                  CallbackPipe,
                 ],
   bootstrap:    [
                   AppComponent,
