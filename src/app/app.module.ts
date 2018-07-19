@@ -64,9 +64,10 @@ import { GuestService }                  from './core/services/guest.service';
 import { GAEventService }                from './core/services/ga-event.service';
 import { NotificationService }           from './core/services/notification.service';
 import { ModalService }                  from './core/services/modal.service';
-import { SignpostApi }                   from './core/api/signpost-api.service';
+import { WishifiedsApi }                 from './core/api/wishifieds-api.service';
 import { ApiAuthService }                from './core/api/api-auth.service';
 import { ApiAdminService }               from './core/api/api-admin.service';
+import { ApiEnumsService }               from './core/api/api-enums.service';
 import { ApiUsersService }               from './core/api/api-users.service';
 import { HelpersService }                from './shared/helpers/helpers.service';
 import { IconService }                   from './core/services/icon.service';
@@ -113,6 +114,8 @@ export function HttpFactory(backend: XHRBackend,
                   MatTabsModule,
                   MatChipsModule,
                 ],
+
+  // For stuff in the HTML
   declarations: [
                   AppComponent,
                   TermsConditionsComponent,
@@ -160,6 +163,8 @@ export function HttpFactory(backend: XHRBackend,
   bootstrap:    [
                   AppComponent,
                 ],
+
+  // For DI in the Constructors
   providers:    [
                   AdminGuard,
                   OwnerGuard,
@@ -170,9 +175,10 @@ export function HttpFactory(backend: XHRBackend,
                   IconService,
                   NotificationService,
                   ModalService,
-                  SignpostApi,
+                  WishifiedsApi,
                   ApiAuthService,
                   ApiAdminService,
+                  ApiEnumsService,
                   ApiUsersService,
                   {provide: Http,
                     useFactory: HttpFactory,

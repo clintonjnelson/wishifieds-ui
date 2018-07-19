@@ -13,7 +13,6 @@ const ROUTES = {
   // Admin
   adminGetUsers: '/api/users',
   adminUpdateSitemap: '/api/tasks/sitemap',
-  adminUserCleanup: '/api/tasks/cleanupusers',
 
   // Users
   createUser:  '/api/users',
@@ -24,41 +23,20 @@ const ROUTES = {
   updateUser:  '/api/users/:id',
   checkAvailability: '/api/users/available?username=:username&email=:email',
 
-  // Signs
-  getSignsByUsernameOrId: '/api/signs/:usernameOrId',
-  createSign:             '/api/signs',
-  updateSign:             '/api/signs',
-  updateSignOrder:        '/api/signs/order',
-  destroySign:            '/api/signs',
+    // Categories
+  getCategories: '/api/categories',
+
+  // Conditions
+  getConditions: '/api/conditions',
+
+  // Listings
+  getListing: '/api/listings',
+  createListing: '/api/listings',
+  updateListing: '/api/listings/:id',
+  deleteListing: '/api/listings/:id',
 
   // Search
   search: '/api/search?searchStr=:searchStr',
-
-  // Oauth Sign Links
-  oauthAutoSign: {
-    amazon:           '/api/auto/amazon',
-    deviantart:       '/api/auto/deviantart',
-    disqus:           '/api/auto/disqus',
-    etsy:             '/api/auto/etsy',
-    facebook:         '/api/auto/facebook',
-    foursquare:       '/api/auto/foursquare',
-    github:           '/api/auto/github',
-    google:           '/api/auto/google',
-    imgur:            '/api/auto/imgur',
-    instagram:        '/api/auto/instagram',
-    linkedin:         '/api/auto/linkedin',
-    patreon:          '/api/auto/patreon',
-    pinterest:        '/api/auto/pinterest',
-    reddit:           '/api/auto/reddit',
-    spotify:          '/api/auto/spotify',
-    tumblr:           '/api/auto/tumblr',
-    'stack-overflow': '/api/auto/stackexchange',
-    twitter:          '/api/auto/twitter',
-    vimeo:            '/api/auto/vimeo',
-    vk:               '/api/auto/vkontakte',
-    wordpress:        '/api/auto/wordpress',
-    youtube:          '/api/auto/youtube',
-  },
 
   // Log Interactions
   userPageVisit:    '/api/interactions/log/userpagevisit?guid=:guid&pageusername=:pageusername&userid=:userid',
@@ -77,7 +55,7 @@ const ROUTES = {
 
 @Injectable()
 
-export class SignpostApi {
+export class WishifiedsApi {
   routes = ROUTES;
 
 

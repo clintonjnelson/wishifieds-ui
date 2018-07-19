@@ -22,7 +22,7 @@ export abstract class AbstractSearchInputComponent implements OnInit {
 
   constructor(
               // private   apiSearchService: ApiSearchService,
-              // private   signpostApi:      SignpostApi,
+              // private   wishifiedsApi:      WishifiedsApi,
               protected authService:      AuthService,
               private   route:            ActivatedRoute,
               // private   gaEvent:          GAEventService

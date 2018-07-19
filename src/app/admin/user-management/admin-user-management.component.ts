@@ -33,13 +33,13 @@ export class AdminUserManagementComponent implements OnInit {
   }
 
   userCleanup() {
-    this.apiAdminService.userCleanup()
-        .subscribe(
-          success => {
-            console.log("Success of user cleanup task is: ", success);
-          },
-          error => {
-            console.log("Error in user cleanup task is: ", error);
-          });
+    // this.apiAdminService.userCleanup()
+    //     .subscribe(
+    //       success => {
+    //         console.log("Success of user cleanup task is: ", success);
+    //       },
+    //       error => {
+    //         console.log("Error in user cleanup task is: ", error);
+    //       });
   }
 }

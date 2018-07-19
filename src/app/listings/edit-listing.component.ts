@@ -5,57 +5,11 @@ import 'rxjs/add/operator/takeUntil';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators }   from '@angular/forms';   // Remove if no validation logic
 import { IconService } from '../core/services/icon.service';
 import { HelpersService } from '../shared/helpers/helpers.service';
+import { ApiEnumsService } from '../core/api/api-enums.service';
+import { Category } from '../shared/models/category.model';
+import { Condition } from '../shared/models/condition.model';
 import { Listing } from './listing.model';
 
-
-const CATEGORY_LIST = [
-  { id: 1, icon: 'star', name: 'antiques' },
-  { id: 2, icon: 'star', name: 'art' },
-  { id: 3, icon: 'star', name: 'atv & off-road' },
-  { id: 4, icon: 'star', name: 'autoparts' },
-  { id: 5, icon: 'star', name: 'autos' },
-  { id: 6, icon: 'star', name: 'baby & kids' },
-  { id: 7, icon: 'star', name: 'bicycles & parts' },
-  { id: 8, icon: 'star', name: 'boats & watercraft' },
-  { id: 9, icon: 'star', name: 'books & magazines' },
-  { id: 10, icon: 'star', name: 'camera & video' },
-  { id: 11, icon: 'star', name: 'clothing & assessories' },
-  { id: 12, icon: 'star', name: 'collectibles' },
-  { id: 13, icon: 'star', name: 'computers' },
-  { id: 14, icon: 'star', name: 'electronics' },
-  { id: 15, icon: 'star', name: 'farm & agriculture' },
-  { id: 16, icon: 'star', name: 'furniture' },
-  { id: 17, icon: 'star', name: 'games & toys' },
-  { id: 18, icon: 'star', name: 'gigs' },
-  { id: 19, icon: 'star', name: 'health & beauty' },
-  { id: 20, icon: 'star', name: 'housewares' },
-  { id: 21, icon: 'star', name: 'housing & apartments' },
-  { id: 22, icon: 'star', name: 'jewelery' },
-  { id: 23, icon: 'star', name: 'lawn & garden' },
-  { id: 24, icon: 'star', name: 'materials' },
-  { id: 25, icon: 'star', name: 'motorcycles & scooters' },
-  { id: 26, icon: 'star', name: 'musical goods' },
-  { id: 27, icon: 'star', name: 'other' },
-  { id: 28, icon: 'star', name: 'real estate' },
-  { id: 29, icon: 'star', name: 'rentals' },
-  { id: 30, icon: 'star', name: 'services & consulting' },
-  { id: 31, icon: 'star', name: 'sporting goods' },
-  { id: 32, icon: 'star', name: 'tickets & events' },
-  { id: 33, icon: 'star', name: 'tools & equipment' },
-  { id: 34, icon: 'star', name:'travel & accommodations'  }
-];
-
-// TODO: CHANGE THE ORDER OF THIS ARRANGEMENT. MAYBE CREATE AN ORDERING FIELD?
-const CONDITION_LIST = [
-  { id: 1, icon: 'star', name: 'any' },
-  { id: 2, icon: 'star', name: 'as-is' },
-  { id: 3, icon: 'star', name: 'poor' },
-  { id: 4, icon: 'star', name: 'fair' },
-  { id: 5, icon: 'star', name: 'good' },
-  { id: 6, icon: 'star', name: 'excellent' },
-  { id: 7, icon: 'star', name: 'new' },
-  { id: 8, icon: 'star', name: 'not applicable' }
-];
 
 const UPLOADED_IMAGES = [
   'https://cdn.shopify.com/s/files/1/1083/5260/products/Wild_Things_Baby_Shoes_by_by_Sew_Darn_Ezy_for_Twig_and_Tale.jpg?v=1519893991',
@@ -98,8 +52,8 @@ export class EditListingComponent implements OnInit {
   @Output() saveEE    = new EventEmitter<any>();
   @Output() destroyEE = new EventEmitter<any>();
   tempListing: Listing;
-  categories = CATEGORY_LIST;  // TODO: POPULATE WITH API PROVIDED CATEGORY LIST
-  conditions = CONDITION_LIST;  // TODO: POPULATE WITH API PROVIDED CATEGORY LIST
+  categories: Category[];  // TODO: POPULATE WITH API PROVIDED CATEGORY LIST
+  conditions: Condition[];  // TODO: POPULATE WITH API PROVIDED CATEGORY LIST
   locations = USER_MEETING_LOCATIONS;  // TODO: POPULATE WITH API OF USER"S INPUT LOCATIONS
 
   scrapedImages: string[] = SCRAPED_LINK_URL_SITE_IMAGES;
@@ -112,7 +66,8 @@ export class EditListingComponent implements OnInit {
 
   constructor(private icons:       IconService,
               private helpers:     HelpersService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private apiEnums:    ApiEnumsService) {
     // Creates a FormGroup of k/v pairs that specify the FormControls in the group. Value starts as default value.
     // This FG will get bound to the Form. We can do so in HTML with <form [formGroup]="myForm"
 
@@ -149,6 +104,7 @@ export class EditListingComponent implements OnInit {
     this.allImages = this.refreshAllImages();
     this.buildImages();
     this.resetTempListing();
+    this.getEnums();
   }
 
   ngOnDestroy() {
@@ -254,6 +210,32 @@ export class EditListingComponent implements OnInit {
       checked: checked,
       hero: hero
     });
+  }
+
+  getEnums() {
+    const that = this;
+    this.apiEnums.getCategories()
+        .subscribe(
+          categories => {
+            console.log("CATEGORIES RETURNED FROM GET: ", categories);
+            //that.isProcessing = false;
+            that.categories = categories;
+          },
+          error => {
+            console.log("ERROR GETTING CATEGORIES: ", error);
+          }
+        );
+    this.apiEnums.getConditions()
+    .subscribe(
+      conditions => {
+        console.log("CONDITIONS RETURNED FROM GET: ", conditions);
+        //that.isProcessing = false;
+        that.conditions = conditions;
+      },
+      error => {
+        console.log("ERROR GETTING CONDITIONS: ", error);
+      }
+    );
   }
 
   buildImages() {

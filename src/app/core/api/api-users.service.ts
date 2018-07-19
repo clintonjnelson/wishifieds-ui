@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { SignpostApi } from '../api/signpost-api.service';
+import { WishifiedsApi } from '../api/wishifieds-api.service';
 import { UserCreds, User, UserUpdates } from '../../users/user.model';
 
 import 'rxjs/add/operator/map';
@@ -26,11 +26,11 @@ class UserByIdResponse {
 
 export class ApiUsersService {
   constructor(private http:        Http,
-              private signpostApi: SignpostApi) {}
+              private wishifiedsApi: WishifiedsApi) {}
 
   // Create a new User Account
   createUser(creds: UserCreds): Observable<any> {
-    const createUserUrl = this.signpostApi.routes.createUser;
+    const createUserUrl = this.wishifiedsApi.routes.createUser;
     console.log("DATA TO SEND IS: ", JSON.stringify(creds));
     return this.http
                .post(createUserUrl, JSON.stringify(creds))
@@ -46,7 +46,7 @@ export class ApiUsersService {
   }
 
   confirmUser(token: string, email: string): Observable<any> {
-    const confirmUserUrl = this.signpostApi.buildUrl('confirmUser', [{':confirmationtoken': token}, {':email': email}]);
+    const confirmUserUrl = this.wishifiedsApi.buildUrl('confirmUser', [{':confirmationtoken': token}, {':email': email}]);
     return this.http
                .get(confirmUserUrl)
                .map( success => {
@@ -59,8 +59,8 @@ export class ApiUsersService {
   }
 
   resendUserConfirmation(userId: string): Observable<any> {
-    const confirmationResendUrl = this.signpostApi.buildUrl('resendUserConfirmation', [ {':userId': userId} ]);
-    const options = this.signpostApi.getRequestOptionWithEatHeader();
+    const confirmationResendUrl = this.wishifiedsApi.buildUrl('resendUserConfirmation', [ {':userId': userId} ]);
+    const options = this.wishifiedsApi.getRequestOptionWithEatHeader();
     return this.http
                .get(confirmationResendUrl, options)
                .map( success => {
@@ -73,8 +73,8 @@ export class ApiUsersService {
   }
 
   getUserById(usernameOrId: string): Observable<any> {
-    const getUserUrl = this.signpostApi.buildUrl('getUserById', [ {':usernameOrId': usernameOrId} ] );
-    const options    = this.signpostApi.getRequestOptionWithEatHeader();
+    const getUserUrl = this.wishifiedsApi.buildUrl('getUserById', [ {':usernameOrId': usernameOrId} ] );
+    const options    = this.wishifiedsApi.getRequestOptionWithEatHeader();
 
     console.log("HEADERS IS: ", options);
     return this.http
@@ -89,7 +89,7 @@ export class ApiUsersService {
   }
 
   getUsernameByUserId(userId: string): Observable<any> {
-    const getUsernameUrl = this.signpostApi.buildUrl('getUsernameByUserId', [ {':id': userId} ] );
+    const getUsernameUrl = this.wishifiedsApi.buildUrl('getUsernameByUserId', [ {':id': userId} ] );
     return this.http
                .get(getUsernameUrl)
                .map( username => {
@@ -103,8 +103,8 @@ export class ApiUsersService {
 
   // UPDATE THIS TO RETURN THE NEW USER????
   updateUser(userUpdates: UserUpdates): Observable<any> {
-    const userUpdateUrl = this.signpostApi.buildUrl('updateUser', [{':id': userUpdates.userId}]);
-    const options = this.signpostApi.getRequestOptionWithEatHeader();
+    const userUpdateUrl = this.wishifiedsApi.buildUrl('updateUser', [{':id': userUpdates.userId}]);
+    const options = this.wishifiedsApi.getRequestOptionWithEatHeader();
     console.log("Updates to make: ", userUpdates);
     console.log("USER UPDATE URL IS: ", userUpdateUrl);
     return this.http
@@ -119,8 +119,8 @@ export class ApiUsersService {
   }
 
   checkAvailableValues(username: string = '', email: string = '') {
-    const getAvailabilityUrl = this.signpostApi.buildUrl('checkAvailability', [{':username': username}, {':email': email}]);
-    const options = this.signpostApi.getRequestOptionWithEatHeader();
+    const getAvailabilityUrl = this.wishifiedsApi.buildUrl('checkAvailability', [{':username': username}, {':email': email}]);
+    const options = this.wishifiedsApi.getRequestOptionWithEatHeader();
 
     console.log("URL FOR CHECKING AVAILABILITY IS: ", getAvailabilityUrl);
     return this.http

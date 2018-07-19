@@ -6,7 +6,7 @@ import { NotificationService } from '../core/services/notification.service';
 import { MatTooltipModule } from '@angular/material';
 import { IconService } from '../core/services/icon.service';
 import { Subscription } from 'rxjs/Subscription';
-import { SignpostApi } from '../core/api/signpost-api.service';
+import { WishifiedsApi } from '../core/api/wishifieds-api.service';
 import { GAEventService } from '../core/services/ga-event.service';
 
 import 'rxjs/add/operator/map';
@@ -50,7 +50,7 @@ export class FooterComponent implements OnDestroy {
               private urlSerializer: UrlSerializer,
               private authService:   AuthService,
               private notifications: NotificationService,
-              private signpostApi:   SignpostApi,
+              private wishifiedsApi:   WishifiedsApi,
               private gaEvent:       GAEventService) {
 
     // Initialize user's clipboard copy link
@@ -150,10 +150,10 @@ export class FooterComponent implements OnDestroy {
     // UNO urls take :url
     switch(icon) {
       case 'twitter': {  // takes :text, :url, :hashtags
-        return this.signpostApi.buildUrl(`social-${icon}`, [{':text': 'This page is so cool that I recommend you checking it out.'}, {':url': currentUrl}, {':hashtags':'my-site-hashtag'}]);
+        return this.wishifiedsApi.buildUrl(`social-${icon}`, [{':text': 'This page is so cool that I recommend you checking it out.'}, {':url': currentUrl}, {':hashtags':'my-site-hashtag'}]);
       }
-      case 'facebook': return this.signpostApi.buildUrl(`social-${icon}`, [{':url': currentUrl}]);
-      case 'google':   return this.signpostApi.buildUrl(`social-${icon}`, [{':url': currentUrl}]);
+      case 'facebook': return this.wishifiedsApi.buildUrl(`social-${icon}`, [{':url': currentUrl}]);
+      case 'google':   return this.wishifiedsApi.buildUrl(`social-${icon}`, [{':url': currentUrl}]);
       default:         return '';
     }
   }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { SignpostApi } from '../api/signpost-api.service';
+import { WishifiedsApi } from '../api/wishifieds-api.service';
 import { User } from '../../users/user.model';
 
 import 'rxjs/add/operator/map';
@@ -12,11 +12,11 @@ import 'rxjs/add/operator/catch';
 
 export class ApiAdminService {
   constructor(private http:        Http,
-              private signpostApi: SignpostApi) {}
+              private wishifiedsApi: WishifiedsApi) {}
 
   getUsers(): Observable<User[]> {
-    const getUsersUrl = this.signpostApi.routes.adminGetUsers;
-    const options     = this.signpostApi.getRequestOptionWithEatHeader();
+    const getUsersUrl = this.wishifiedsApi.routes.adminGetUsers;
+    const options     = this.wishifiedsApi.getRequestOptionWithEatHeader();
 
     return this.http
                .get(getUsersUrl, options)
@@ -30,8 +30,8 @@ export class ApiAdminService {
   }
 
   updateSitemap(): Observable<any> {
-    const updateSitemapUrl = this.signpostApi.routes.adminUpdateSitemap;
-    const options          = this.signpostApi.getRequestOptionWithEatHeader();
+    const updateSitemapUrl = this.wishifiedsApi.routes.adminUpdateSitemap;
+    const options          = this.wishifiedsApi.getRequestOptionWithEatHeader();
 
     return this.http
                .put(updateSitemapUrl, JSON.stringify({trigger: true}), options)
@@ -44,18 +44,18 @@ export class ApiAdminService {
                });
   }
 
-  userCleanup(): Observable<any> {
-    const userCleanupUrl = this.signpostApi.routes.adminUserCleanup;
-    const options        = this.signpostApi.getRequestOptionWithEatHeader();
+  // userCleanup(): Observable<any> {
+  //   const userCleanupUrl = this.wishifiedsApi.routes.adminUserCleanup;
+  //   const options        = this.wishifiedsApi.getRequestOptionWithEatHeader();
 
-    return this.http
-               .put(userCleanupUrl, JSON.stringify({trigger: true}), options)
-               .map( res => {
-                 console.log("Success cleaning up users", res);
-                 return res.json();
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
-  }
+  //   return this.http
+  //              .put(userCleanupUrl, JSON.stringify({trigger: true}), options)
+  //              .map( res => {
+  //                console.log("Success cleaning up users", res);
+  //                return res.json();
+  //              })
+  //              .catch( (error: Response) => {
+  //                return Observable.throw(error);
+  //              });
+  // }
 }
