@@ -68,6 +68,8 @@ import { WishifiedsApi }                 from './core/api/wishifieds-api.service
 import { ApiAuthService }                from './core/api/api-auth.service';
 import { ApiAdminService }               from './core/api/api-admin.service';
 import { ApiEnumsService }               from './core/api/api-enums.service';
+import { ApiImagesService }              from './core/api/api-images.service';
+import { ApiListingsService }            from './core/api/api-listings.service';
 import { ApiUsersService }               from './core/api/api-users.service';
 import { HelpersService }                from './shared/helpers/helpers.service';
 import { IconService }                   from './core/services/icon.service';
@@ -179,6 +181,8 @@ export function HttpFactory(backend: XHRBackend,
                   ApiAuthService,
                   ApiAdminService,
                   ApiEnumsService,
+                  ApiImagesService,
+                  ApiListingsService,
                   ApiUsersService,
                   {provide: Http,
                     useFactory: HttpFactory,

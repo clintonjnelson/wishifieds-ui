@@ -1,5 +1,6 @@
 div.edit-form-container {
   margin-top: 1em;  /* space between preview & form */
+  margin-bottom: 2em;
 }
 
 div.listing-content-edit-form-container form {
@@ -14,7 +15,7 @@ mat-form-field {
 
 /*Set spacing between input field sections*/
 ::ng-deep mat-form-field, ::ng-deep mat-input-container {
-  margin-bottom: 1em;
+  margin-bottom: 1.2em;
 }
 
 /*Change Input Label Color to Gray for pre/post input*/
@@ -27,7 +28,7 @@ mat-form-field {
 }
 
 /*Min/Max width on input lines (to avoid cutting placeholders off or input lines being awkwardly long)*/
-::ng-deep .mat-input-wrapper {
+::ng-deep .mat-input-wrapper, .images-container {
   min-width: 280px;
   max-width: 600px;
 }
@@ -51,9 +52,17 @@ mat-form-field {
 
 
 /*Images*/
+.images-container {
+  position: relative;
+}
+
 .images-selection-container {
   display: flex;
-  margin: 1em 0 1em 0;
+  flex-wrap: wrap;
+  border-bottom: 1px solid white;
+  margin: 1em 0 1.2em 0;
+
+  /* min/max width set ahove with .mat-input-wrapper */
 }
 
 

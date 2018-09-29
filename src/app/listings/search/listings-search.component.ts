@@ -7,7 +7,8 @@ import { Listing }         from '../listing.model';
 
 const LISTINGS: Listing[] = [
   {
-    user_id:     "1",
+    id:          "1",
+    userId:     "1",
     category:    "baby & kids",  // TODO: Decide if UI does the name conversion or the API
     condition:   "good",  // TODO: Decide if UI does the name conversion or the API
     title:       "Cool Thing Wanted But Description Is Way Too Long",
@@ -15,7 +16,7 @@ const LISTINGS: Listing[] = [
     keywords:    "keyword, keyword, keyword, keyword",
     linkUrl:     "https://mmm.somewebsite.com/an/example/of/what/i/want",
     price:       "100",
-    zipcode:     "99999",
+    location:     "99999",
     status:      "10",
     images:      ["http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
                   "http://ecx.images-amazon.com/images/I/41W4p0WkW1L.jpg",
@@ -27,7 +28,8 @@ const LISTINGS: Listing[] = [
     updatedAt:   "15"
   },
   {
-    user_id:     "1",
+    id:          "1",
+    userId:     "1",
     category:    "baby & kids",  // TODO: Decide if UI does the name conversion or the API
     condition:   "good",  // TODO: Decide if UI does the name conversion or the API
     title:       "Cool Thing Wanted But Description Is Way Too Long",
@@ -35,7 +37,7 @@ const LISTINGS: Listing[] = [
     keywords:    "keyword, keyword, keyword, keyword",
     linkUrl:     "https://mmm.somewebsite.com/an/example/of/what/i/want",
     price:       "100",
-    zipcode:     "99999",
+    location:     "99999",
     status:      "10",
     images:      ["http://ecx.images-amazon.com/images/I/41W4p0WkW1L.jpg",
                   "http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
@@ -47,7 +49,8 @@ const LISTINGS: Listing[] = [
     updatedAt:   "15"
   },
   {
-    user_id:     "1",
+    id:          "1",
+    userId:     "1",
     category:    "baby & kids",  // TODO: Decide if UI does the name conversion or the API
     condition:   "good",  // TODO: Decide if UI does the name conversion or the API
     title:       "Cool Thing Wanted But Description Is Way Too Long",
@@ -55,7 +58,7 @@ const LISTINGS: Listing[] = [
     keywords:    "keyword, keyword, keyword, keyword",
     linkUrl:     "https://mmm.somewebsite.com/an/example/of/what/i/want",
     price:       "100",
-    zipcode:     "99999",
+    location:     "99999",
     status:      "10",
     images:      ["http://img.wolverineworldwide.com/is/image/WolverineWorldWide/PG49049_1_1200x735?$dw-large$",
                   "http://ecx.images-amazon.com/images/I/41W4p0WkW1L.jpg",
@@ -67,7 +70,8 @@ const LISTINGS: Listing[] = [
     updatedAt:   "15"
   },
   {
-    user_id:     "1",
+    id:          "1",
+    userId:     "1",
     category:    "baby & kids",  // TODO: Decide if UI does the name conversion or the API
     condition:   "good",  // TODO: Decide if UI does the name conversion or the API
     title:       "Cool Thing Wanted But Description Is Way Too Long",
@@ -75,7 +79,7 @@ const LISTINGS: Listing[] = [
     keywords:    "keyword, keyword, keyword, keyword",
     linkUrl:     "https://mmm.somewebsite.com/an/example/of/what/i/want",
     price:       "100",
-    zipcode:     "99999",
+    location:     "99999",
     status:      "10",
     images:      ["http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
                   "http://ecx.images-amazon.com/images/I/41W4p0WkW1L.jpg",
@@ -87,7 +91,8 @@ const LISTINGS: Listing[] = [
     updatedAt:   "15"
   },
   {
-    user_id:     "1",
+    id:          "1",
+    userId:     "1",
     category:    "baby & kids",  // TODO: Decide if UI does the name conversion or the API
     condition:   "good",  // TODO: Decide if UI does the name conversion or the API
     title:       "Cool Thing Wanted But Description Is Way Too Long",
@@ -95,7 +100,7 @@ const LISTINGS: Listing[] = [
     keywords:    "keyword, keyword, keyword, keyword",
     linkUrl:     "https://mmm.somewebsite.com/an/example/of/what/i/want",
     price:       "100",
-    zipcode:     "99999",
+    location:     "99999",
     status:      "10",
     images:      ["http://ecx.images-amazon.com/images/I/41W4p0WkW1L.jpg",
                   "http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
@@ -107,7 +112,8 @@ const LISTINGS: Listing[] = [
     updatedAt:   "15"
   },
   {
-    user_id:     "1",
+    id:          "1",
+    userId:     "1",
     category:    "baby & kids",  // TODO: Decide if UI does the name conversion or the API
     condition:   "good",  // TODO: Decide if UI does the name conversion or the API
     title:       "Cool Thing Wanted But Description Is Way Too Long",
@@ -115,7 +121,7 @@ const LISTINGS: Listing[] = [
     keywords:    "keyword, keyword, keyword, keyword",
     linkUrl:     "https://mmm.somewebsite.com/an/example/of/what/i/want",
     price:       "100",
-    zipcode:     "99999",
+    location:     "99999",
     status:      "10",
     images:      ["http://img.wolverineworldwide.com/is/image/WolverineWorldWide/PG49049_1_1200x735?$dw-large$",
                   "http://ecx.images-amazon.com/images/I/41W4p0WkW1L.jpg",
@@ -127,7 +133,8 @@ const LISTINGS: Listing[] = [
     updatedAt:   "15"
   },
   {
-    user_id:     "1",
+    id:          "1",
+    userId:     "1",
     category:    "baby & kids",  // TODO: Decide if UI does the name conversion or the API
     condition:   "good",  // TODO: Decide if UI does the name conversion or the API
     title:       "Cool Thing Wanted But Description Is Way Too Long",
@@ -135,7 +142,7 @@ const LISTINGS: Listing[] = [
     keywords:    "keyword, keyword, keyword, keyword",
     linkUrl:     "https://mmm.somewebsite.com/an/example/of/what/i/want",
     price:       "100",
-    zipcode:     "99999",
+    location:     "99999",
     status:      "10",
     images:      ["http://ecx.images-amazon.com/images/I/41W4p0WkW1L.jpg",
                   "http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
@@ -147,7 +154,8 @@ const LISTINGS: Listing[] = [
     updatedAt:   "15"
   },
   {
-    user_id:     "1",
+    id:          "1",
+    userId:     "1",
     category:    "baby & kids",  // TODO: Decide if UI does the name conversion or the API
     condition:   "good",  // TODO: Decide if UI does the name conversion or the API
     title:       "Cool Thing Wanted But Description Is Way Too Long",
@@ -155,7 +163,7 @@ const LISTINGS: Listing[] = [
     keywords:    "keyword, keyword, keyword, keyword",
     linkUrl:     "https://mmm.somewebsite.com/an/example/of/what/i/want",
     price:       "100",
-    zipcode:     "99999",
+    location:     "99999",
     status:      "10",
     images:      ["http://img.wolverineworldwide.com/is/image/WolverineWorldWide/PG49049_1_1200x735?$dw-large$",
                   "http://ecx.images-amazon.com/images/I/41W4p0WkW1L.jpg",

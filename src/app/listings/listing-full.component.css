@@ -70,7 +70,7 @@ ngu-item.bannerStyle {
 
 /deep/ ngu-item > img {
   height: auto;
-  width: 100%;
+  /*width: 100%;*/
   max-width: 30em;
   max-height: 100%;
 }

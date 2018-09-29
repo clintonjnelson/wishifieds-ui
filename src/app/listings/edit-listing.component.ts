@@ -6,20 +6,20 @@ import { FormBuilder, FormGroup, FormControl, FormArray, Validators }   from '@a
 import { IconService } from '../core/services/icon.service';
 import { HelpersService } from '../shared/helpers/helpers.service';
 import { ApiEnumsService } from '../core/api/api-enums.service';
+import { ApiImagesService } from '../core/api/api-images.service';
+import { ApiListingsService } from '../core/api/api-listings.service';
 import { Category } from '../shared/models/category.model';
 import { Condition } from '../shared/models/condition.model';
 import { Listing } from './listing.model';
 
+// TODO: The Form structure is losing it's getter correctness, so probably manually setting/pushing in controls instead
+    // of using the proper setters. Look through & fix the direct setting of values so that things align better.
 
-const UPLOADED_IMAGES = [
-  'https://cdn.shopify.com/s/files/1/1083/5260/products/Wild_Things_Baby_Shoes_by_by_Sew_Darn_Ezy_for_Twig_and_Tale.jpg?v=1519893991',
-  'https://cdn.shopify.com/s/files/1/1083/5260/products/Robyn_Deer.jpg?v=1519893991'
-];
 
-const SCRAPED_LINK_URL_SITE_IMAGES = [
-  "https://cdn.shopify.com/s/files/1/1083/5260/products/Fox_Kate.jpg?v=1519893991",
-  "https://cdn.shopify.com/s/files/1/1083/5260/products/Robyn_circle.jpg?v=1519893991"
-];
+// const UPLOADED_IMAGES = [
+//   'https://cdn.shopify.com/s/files/1/1083/5260/products/Wild_Things_Baby_Shoes_by_by_Sew_Darn_Ezy_for_Twig_and_Tale.jpg?v=1519893991',
+//   'https://cdn.shopify.com/s/files/1/1083/5260/products/Robyn_Deer.jpg?v=1519893991'
+// ];
 
 export class Location {
   id: string;
@@ -28,14 +28,14 @@ export class Location {
   address1: string;
   address2: string;
   city: string;
-  zipcode: string;
+  location: string;
   state: string;
   country: string;
 }
 
 const USER_MEETING_LOCATIONS = [
-  {id: "1", referenceName: "home", description: "Starbucks Meeting Location", address1: "123 1st", address2: "#1", city: "Newcastle", zipcode: "98059", state: "WA", country: "USA"},
-  {id: "2", referenceName: "vacation", description: "Vacation Starbucks Meeting Location", address1: "987 9st", address2: "#9", city: "Bend", zipcode: "97654", state: "OR", country: "USA"}
+  {id: "1", referenceName: "home", description: "Starbucks Meeting Location", address1: "123 1st", address2: "#1", city: "Newcastle", location: "98059", state: "WA", country: "USA"},
+  {id: "2", referenceName: "vacation", description: "Vacation Starbucks Meeting Location", address1: "987 9st", address2: "#9", city: "Bend", location: "97654", state: "OR", country: "USA"}
 ];
 
 
@@ -56,9 +56,10 @@ export class EditListingComponent implements OnInit {
   conditions: Condition[];  // TODO: POPULATE WITH API PROVIDED CATEGORY LIST
   locations = USER_MEETING_LOCATIONS;  // TODO: POPULATE WITH API OF USER"S INPUT LOCATIONS
 
-  scrapedImages: string[] = SCRAPED_LINK_URL_SITE_IMAGES;
-  uploadedImages: string[] = UPLOADED_IMAGES;
-  allImages: string[];
+
+
+  allImages: string[] = [];
+  hints: object = {};
 
 
   private unsubscribe: Subject<any> = new Subject();
@@ -67,44 +68,26 @@ export class EditListingComponent implements OnInit {
   constructor(private icons:       IconService,
               private helpers:     HelpersService,
               private formBuilder: FormBuilder,
-              private apiEnums:    ApiEnumsService) {
+              private apiEnums:    ApiEnumsService,
+              private apiImages:   ApiImagesService,
+              private apiListings: ApiListingsService) {
     // Creates a FormGroup of k/v pairs that specify the FormControls in the group. Value starts as default value.
     // This FG will get bound to the Form. We can do so in HTML with <form [formGroup]="myForm"
 
-        // this.auth = authService.auth;
+    // this.auth = authService.auth;
     // this._subscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => {
     //   this.auth = newVal;
     // });
-    this.listingForm = this.formBuilder.group({  // FUTURE: LISTINGFORM
-      category: ['', Validators.required],
-      condition: [''],
-      title: ['', Validators.required],
-      description: ['', Validators.required],
-      linkUrl: [, {updateOn: 'blur'}],  // Subscription valueChange triggered only on blur
-      images: this.formBuilder.array([]),
-      heroImage: [''],
-      price: ['', Validators.required],
-      location: ['', Validators.required],
-      keywords: ['']
-    });
+    const that = this;
+    this.buildForm();
     console.log("LISTING FORM IS: ", this.listingForm);
-
-    // This subscription updates the images by scraping the example site for its images
-    // Works as an onBlur update of the URL after it's typed in
-    this.listingForm.controls['linkUrl']
-      .valueChanges
-      .takeUntil(this.unsubscribe)  // Prevents observable leaks
-      .subscribe( (newVal: string) => {
-      // TODO: Call API to scrape the newly updated address
-      console.log("Changed the url: ", newVal);
-    })
   }
 
   ngOnInit() {
-    this.allImages = this.refreshAllImages();
-    this.buildImages();
-    this.resetTempListing();
-    this.getEnums();
+    this.resetTempListing();  // FIXME: THIS SHOULD BE BEFORE REFORESH_ALL_IMAGES & BUILD_IMAGES
+    this.refreshAllImages();  // FIXME: VERIFY combined refreshAllImages & buildCheckboxImages OR Break out separately
+    this.resetForm();
+    this.getEnums();  // Gets category, condition, etc values.
   }
 
   ngOnDestroy() {
@@ -127,91 +110,125 @@ export class EditListingComponent implements OnInit {
     return this.helpers.urlWithoutProtocol(url);
   }
 
-  refreshAllImages() {
-    // Combine all images from all places in here
-    const allImageUrls = this.scrapedImages.concat(this.uploadedImages);
-    console.log("ALL IMAGE URLS FOUND ARE:", allImageUrls);
-    return allImageUrls;
-  }
-
-
-  // Maybe add all callback filters into a library object later?
-  // THIS GETS CALLED A L-O-T.
-  keepTruthyFilter(item: any) {
-    return item.controls['checked'].value;
-  }
-
-  // TODO: UPDATE THESE CONTROL METHODS
-  destroy(event: any) {
-    console.log("SIGNCOMPONENT DESTROY EVENT IS EMITTING EVENT TO ADD-SIGN: ", event);
-    this.destroyEE.emit(event);
-  }
-
-  // TODO: USE A SIMPLE PASS-UP FOR SAVING??
-  save(event: any): void {
-    // Listing preview
-    if(event && event.preview === true) {
-      this.listing = event.listing;
-      return;
-    }
-    // Listing creation
-    else {
-      console.log("SIGN AT THE SIGN_COMPONENT LEVEL IS: ", event);
-      this.saveEE.emit(event);    // keep passing the listing up
-    }
-  }
-
-  // SAVE IT DIRECTLY AND PASS UP THE SAVED LISTING INFORMATION??
-  save2(tempListing: Listing) {
+  // Builds or resets the form to its original basic values
+  buildForm() {
     const that = this;
-    // Create New Listing?
-    if(this.forListingCreation) {
-
-      // TODO: DO IMPORTANT VALIDATIONS OF STUFF HERE BEFORE ALLOWING SAVING
-      // if(!tempListing.listingName ) { return this.triggerEmptyInputValidations(); }
-      // if(tempListing.listingName === 'custom' && !tempListing.linkUrl) { return this.triggerEmptyInputValidations(); }
-
-      console.log("CALLING THE CREATE SIGN ROUTE for this listing: ", tempListing);
-      // this.apiListingsService.createListing(tempListing)
-      //   .subscribe(
-      //     listing => {
-      //       console.log("SUCCESSFUL SIGN CREATION: ", listing);
-      //       that.saveEE.emit(listing);  // pass the new listing up
-      //       that.toggleEditing(false);
-      //       that.resetTempListing();
-      //     },
-      //     error => {
-      //       console.log("GOT AN ERROR CREATING SIGN. ERROR: ", error);
-      //     });
-    }
-    // Else Update existing listing
-    else {
-      console.log("CALLING THE UPDATE SIGN ROUTE");
-      // this.apiListingsService.updateListing(tempListing)
-      //   .subscribe(
-      //     success => {  // returns {error: false}
-      //       console.log("SUCCESSFUL UPDATE. OBJECT IS: ", success);
-      //       // After success, update the listing and then reset the temp listing
-      //       that.listing = Object.assign({}, tempListing);
-      //       that.saveEE.emit(tempListing);  // pass the new listing up
-      //       that.resetTempListing();
-      //     },
-      //     error => {  // return {error: true, msg: }
-      //       console.log("ERROR DURING UPDATE. ERROR IS: ", error);
-      //       // SHOW SOME ERROR TO USER HERE
-      //     });
-    }
-  }
-
-  // ************* Form Methods *************
-  addImage(url: string, checked: boolean = false, hero: boolean = false): FormGroup {
-    return this.formBuilder.group({
-      url: url,
-      checked: checked,
-      hero: hero
+    this.listingForm = this.formBuilder.group({  // FUTURE: LISTINGFORM
+      category: ['', Validators.required],
+      condition: [''],
+      title: ['', Validators.required],
+      description: ['', Validators.required],
+      linkUrl: ['', {updateOn: 'blur'}],  // Subscription valueChange triggered only on blur
+      images: this.formBuilder.array([]),
+      heroImage: ['', Validators.required],
+      price: ['', Validators.required],
+      location: ['', Validators.required],
+      keywords: ['']
     });
+    // FIXME? MAY HAVE TO PUT THE LISTING_FORM LINK_URL SUBSCRIPTION DOWN HERE.
+    this.setLinkUrlSubscription();
   }
 
+  setLinkUrlSubscription() {
+    // This subscription updates the images by scraping the example site for its images
+    // Works as an onBlur update of the URL after it's typed in
+    this.listingForm.controls['linkUrl']
+      .valueChanges
+      .takeUntil(this.unsubscribe)  // Prevents observable leaks
+      .subscribe( (newVal: string) => {
+        // TODO: Call API to scrape the newly updated address
+        console.log("Changed the url: ", newVal);
+        this.refreshAllImages();
+      });
+  }
+
+  // Filter for ONLY selected (checked) images; used to filter for hero image options list.
+  keepTruthyFilter(item: any) {
+    return item.controls['checked'].value;  // TODO: Fix? THIS GETS CALLED A L-O-T.
+  }
+
+  // Call API for updates
+  save() {
+    const that = this;
+
+    // Final Form Data Check
+    if(passesCriticalValidations()) {
+
+      // Update Listing Flow (has ID)
+      if(this.listing.id) {
+        this.apiListings.updateListing(buildListingSaveObject())
+          .subscribe(
+            listing => {
+              console.log("SUCCESSFUL Update WITH RESPONSE: ", listing);
+              // TODO: SHOULD WE BUBBLE UP DATA TO PRIOR PAGES HERE, SO DON'T NEED TO RELOAD? PROBABLY.
+            },
+            error => {
+              console.log("ERROR DURING Update WITH ERROR: ", error);
+              // TODO: PROPOGATE API ERRORS TO THE UI ERROR MESSAGES
+            });
+      }
+
+      // Create Listing Flow (no ID)
+      else {
+        this.apiListings.createListing(buildListingSaveObject())
+          .subscribe(
+            listing => {
+              console.log("SUCCESSFUL Create WITH RESPONSE: ", listing);
+              // TODO: SHOULD WE BUBBLE UP DATA TO PRIOR PAGES HERE, SO DON'T NEED TO RELOAD? PROBABLY.
+            },
+            error => {
+              console.log("ERROR DURING Create WITH ERROR: ", error);
+              // TODO: PROPOGATE API ERRORS TO THE UI ERROR MESSAGES
+            });
+      }
+    }
+    // Form data failed - trigger errors
+    else {
+      this.triggerEmptyInputValidations();
+    }
+
+    // Critical pre-save checks
+    function passesCriticalValidations() {
+      const checks = that.listingForm.get('category').value &&
+        that.listingForm.get('title').value &&
+        that.listingForm.get('price').value &&
+        that.listingForm.get('location').value &&
+        that.listingForm.get('heroImage').value;
+
+      console.log("CHECKS IS: ", checks);
+      return !!checks;
+    }
+
+    function buildListingSaveObject() {
+      let saveObj = Object.assign({}, that.listingForm.value);
+
+      console.log("THE FORM MODEL IS: ", that.tempListing);
+
+      // Get only selected images
+      const correctImages = that.listingForm.get('images') as FormArray;
+      let selectedImages = correctImages.controls
+        .map(item => item.value)       // get all value objects
+        .filter(item => item.checked)  // keep only checked ones
+        .map(item => item.url)         // get their urls
+
+      // Set hero image first (could do in one line, but harder to read unless familiar with splice)
+      selectedImages.splice(selectedImages.indexOf(saveObj.heroImage), 1);  // Remove hero from list
+      selectedImages.splice(0, 0, saveObj.heroImage);  // Set hero first
+
+      saveObj.images = selectedImages;  // set on the save object
+
+      // Set the non-form values
+      saveObj.id = that.listing.id;
+      saveObj.userId = that.listing.userId;  // TODO: UPDATE TO GET OFF OF THE AUTH OBJECT????
+
+      console.log("THE saveObj IS:", saveObj);
+      return saveObj;
+      // console.log("THE ORIG IMAGES ARE: ", correctImages);
+      // console.log("THE FILTERED IMAGES ARE: ", selectedImages);
+    }
+  }
+
+  // Getting stuff like Categories & Conditions from Api
   getEnums() {
     const that = this;
     this.apiEnums.getCategories()
@@ -238,17 +255,6 @@ export class EditListingComponent implements OnInit {
     );
   }
 
-  buildImages() {
-    // This should UPDATE OR ADD, NOT JUST ADD
-    console.log("LISTING FORM FOR IMAGES IS: ", this.listingForm);
-    this.allImages.forEach( img => {
-      // Note: "images" is a FormArray, which is an Array of FormGroups, which each has the Control properties we set in addImage
-      const images = this.listingForm.controls['images'] as FormArray;
-      images.controls.push(this.addImage(img));
-    });
-    console.log("ALLIMAGES IS: ", this.allImages);
-  }
-
   // TODO: if HERO image becomes unselected, then REMOVE HERO IMAGE URL FROM THE CONTROL VALUE ALSO
   toggleSelectImage(index: number) {
     console.log("INDEX FOR CHECKBOX IS: ", index);
@@ -263,6 +269,15 @@ export class EditListingComponent implements OnInit {
     this.refreshTempListingImages();
   }
 
+  toggleHint(hint: string) {
+    console.log("HINTS IS: ", this.hints);
+    console.log("HINT IS: ", hint);
+    console.log("HAS OWN PROPERTY ON HINT IS: ", this.hints.hasOwnProperty(hint));
+    if(this.hints.hasOwnProperty(hint)) {
+      this.hints[hint] = !this.hints[hint];
+    }
+  }
+
   // THIS IS NOT WORKING< SO PROBABLY NEED TO DO DOM MANIPULAtion OF CSS VIA AN ID ON NG-SELECT
   getSelectedHero() {
     return this.listingForm.controls['heroImage'].value;
@@ -274,21 +289,85 @@ export class EditListingComponent implements OnInit {
   }
 
   cancel() {
+    this.resetForm();
     this.resetTempListing();
-
   }
 
 
 
 
 
+  // Reset Functions
+  resetForm() {
+    // Set all values to the original listing;
+    this.listingForm.patchValue({
+      category:    this.listing.category,
+      condition:   this.listing.condition,
+      title:       this.listing.title,
+      description: this.listing.description,
+      linkUrl:     this.listing.linkUrl,
+      heroImage:   ( this.listing.images[0] || ''),
+      price:       this.listing.price,
+      location:    this.listing.location,
+      keywords:    this.listing.keywords
+    });
 
+    this.listingForm.get('images').reset();
+    // Reset images as well, but have to do so with built object, so use reset function
+    this.refreshTempListingImages();
+  }
 
+  // This is mostly for the selectable images right now. Maybe change name(s) later.
+  // This requests the API to get all images from the linkURL & add them to allImages;
+  refreshAllImages() {
+    const that = this;
+    // Combine all images from all places in here
+    if(this.tempListing && this.tempListing.linkUrl) {
+      this.apiImages.getExternalImages(this.tempListing.linkUrl)
+        .subscribe(
+          urls => {
+            console.log("SUCCESSFUL SIGN CREATION: ", urls);
+            // TODO: DEDUP SIMILAR URLS FROM THE ARRAY
+            that.allImages = urls.concat(that.listing.images);
+            buildCheckboxImages();  // Builds into Checkboxes
+          },
+          error => {
+            console.log("GOT AN ERROR CREATING SIGN. ERROR: ", error);
+          });
+    }
+    else if(this.tempListing && this.tempListing.images) {
+      this.allImages = this.tempListing.images;
+    }
+    else {
+      this.allImages = [];
+    }
 
+    // TODO: MAY NEED TO FILTER OUT EMPTY URL VALUES FROM LIST, AS RESET COULD CREATE THIS CONDITION IF NO PICTURES ARE FOUND
+    // This builds the images into FormControls for displaying as checkboxes
+    function buildCheckboxImages() {
+      const imagesControls = that.listingForm.controls['images'] as FormArray;
+      const imgCtrArr = imagesControls.value;
 
+      // Add all images to the controls
+      that.allImages.forEach( imgUrl => {
+        // Note: "images" is a FormArray, which is an Array of FormGroups, which each has the Control properties we set in addImage
+        if(-1 === imgCtrArr.findIndex(function matchingUrl(elem) {return elem.url === imgUrl; }))  {
+          let images = that.listingForm.controls['images'] as FormArray;
+          images.controls.push(addImage(imgUrl));
+        }
+      });
+    }
 
+    // Create the form controls for an image
+    function addImage(url: string, checked: boolean = false, hero: boolean = false): FormGroup {
+      return that.formBuilder.group({
+        url: url,
+        checked: checked,
+        hero: hero
+      });
+    }
+  }
 
-  // ********** CONSIDER BREAKING OUT TO A SERVICE *************
   // Resets the buttons that are triggered by changes
   private resetFormDisplay() {
     const controls = this.listingForm.controls;
@@ -299,6 +378,7 @@ export class EditListingComponent implements OnInit {
     });
   }
 
+  // Creates List of Image Urls from only Selected Images
   private refreshTempListingImages() {
     // TODO: ENSURE THE HERO IMAGE IS THE FIRST IMAGE
 
@@ -314,9 +394,29 @@ export class EditListingComponent implements OnInit {
 
   private resetTempListing() {
     this.tempListing = Object.assign({}, this.listing);  // Make a copy
+    this.resetHints();
+  }
+
+  resetHints() {
+    this.hints = {
+      category: false,
+      condition: false,
+      title: false,
+      description: false,
+      linkUrl: false,
+      images: false,
+      hero: false,
+      price: false,
+      location: false,
+      keywords: false
+    };
+    console.log("HINTS REST TO: ", this.hints);
   }
 
 
+
+
+  // ********** CONSIDER BREAKING OUT TO A SERVICE *************
   // ******************** CUSTOM VALIDATIONS HERE **************************
   // NOTE: validationErrorMessages are implemented in each listing content type
   validationErrorMessages: Object;

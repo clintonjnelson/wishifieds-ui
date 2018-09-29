@@ -23,20 +23,23 @@ const ROUTES = {
   updateUser:  '/api/users/:id',
   checkAvailability: '/api/users/available?username=:username&email=:email',
 
-    // Categories
+  // Categories
   getCategories: '/api/categories',
 
   // Conditions
   getConditions: '/api/conditions',
 
   // Listings
-  getListing: '/api/listings',
+  getListing:    '/api/listings',
   createListing: '/api/listings',
   updateListing: '/api/listings/:id',
   deleteListing: '/api/listings/:id',
 
   // Search
   search: '/api/search?searchStr=:searchStr',
+
+  // Images
+  getExternalImages: '/api/external/getimages',
 
   // Log Interactions
   userPageVisit:    '/api/interactions/log/userpagevisit?guid=:guid&pageusername=:pageusername&userid=:userid',

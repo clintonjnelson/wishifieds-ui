@@ -3,15 +3,16 @@ import { Component, OnInit } from '@angular/core';
 import { Listing } from './listing.model';
 
 const LISTING: Listing = {
-  user_id:     "1",
-  category:    "baby & kids",  // TODO: Decide if UI does the name conversion or the API
-  condition:   "good",  // TODO: Decide if UI does the name conversion or the API
+  id:          "1",
+  userId:      "1",
+  category:    "2",  // TODO: Decide if UI does the name conversion or the API
+  condition:   "2",  // TODO: Decide if UI does the name conversion or the API
   title:       "Cool Thing Wanted But Description Is Way Too Long",
   description: "Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor", // sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   keywords:    "keyword, keyword, keyword, keyword",
-  linkUrl:     "https://mmm.somewebsite.com/an/example/of/what/i/want",
+  linkUrl:     "https://www.etsy.com/listing/536967730/fox-baby-booties-baby-shoes-cotton-baby?ref=shop_home_active_48",
   price:       "100",
-  zipcode:     "99999", // TODO: SHOULD THIS BE LOCATION???
+  location:    "99999", // TODO: SHOULD THIS BE LOCATION???
   status:      "10",
   images:      ["http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
                 "http://ecx.images-amazon.com/images/I/41W4p0WkW1L.jpg",
@@ -42,6 +43,7 @@ export class ListingPageComponent implements OnInit {
     this.listing = LISTING;
   }
 
+  // This toggles into edit mode via the full-listing icon
   toggleEditing(input: any = null): void {
     if(typeof(input) === 'boolean') { this.isEditing = input; }
     else { this.isEditing = !this.isEditing; }
