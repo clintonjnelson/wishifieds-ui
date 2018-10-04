@@ -1,5 +1,5 @@
 import { Component, Input, Output, ViewChild, OnInit, EventEmitter } from '@angular/core';
-// import { Router }          from '@angular/router';
+import { Router } from '@angular/router';
 import { IconService } from '../core/services/icon.service';
 import { HelpersService } from '../shared/helpers/helpers.service';
 import { Listing } from './listing.model';
@@ -16,15 +16,18 @@ import { NguCarousel } from '@ngu/carousel';
 export class ListingFullComponent implements OnInit {
   @Input() listing: Listing;
   @Input() isPreview: Boolean = false;  // TODO: MAKE THIS SET READONLY CAPABILITIES TO LISTING
+  @Input() isEditing: Boolean = false;  // TODO: Verify if should default this or Not.
+
   @Output() editingEE = new EventEmitter<any>();
+
   public carouselConfig: NguCarousel;
   showMessages: Boolean = false;    // MAKE THIS TOGGLED PER THE MESSAGES ICON
   showLocationMap: Boolean = false;
-  isEditing: Boolean = false;  // TODO: PROBABLY DONT NEED THIS NOW THAT MANAGING EXTERNALLY
   isOwner: Boolean = true;  // TODO: HOOK THIS UP; NEEDED FOR BUTTONS & SUCH.
 
   constructor(private icons:   IconService,
-              private helpers: HelpersService) {
+              private helpers: HelpersService,
+              private router: Router) {
 
   }
 
@@ -78,5 +81,13 @@ export class ListingFullComponent implements OnInit {
     // Emit the value back up the chain
     this.editingEE.emit(this.isEditing);
     console.log("EDITING TOGGLED & IS NOW: ", this.isEditing);
+  }
+
+  closeListing(): void {
+    let username = window.localStorage.getItem('username');
+    console.log("GOING BACK...");
+    // TODO: Should have a saved page that the user came from
+    // TODO: Go back to that previously loaded page
+    this.router.navigate(['/', username, 'listings']);
   }
 }

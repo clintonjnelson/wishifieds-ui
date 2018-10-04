@@ -1,13 +1,33 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { MatTooltipModule } from '@angular/material';
 import { HelpersService }  from '../shared/helpers/helpers.service';
 import { IconService }     from '../core/services/icon.service';
+import { AuthService }     from '../core/auth/auth.service';
 // import { GAEventService }  from '../../core/services/ga-event.service';
 import { Listing }            from './listing.model';
 
 export class Category{
-
 }
+
+
+const NEW_LISTING: Listing = {
+  id:          undefined,
+  userId:      "1", // Fill this in with the requesting user information
+  category:    "",  // TODO: Decide if UI does the name conversion or the API
+  condition:   "",  // TODO: Decide if UI does the name conversion or the API
+  title:       "",
+  description: "",
+  keywords:    "",
+  linkUrl:     "",
+  price:       "",
+  location:    "",
+  status:      "",
+  images:      [],
+  imagesRef:   "",
+  slug:        "",
+  createdAt:   "",
+  updatedAt:   ""
+};
 
 
 @Component({
@@ -24,12 +44,12 @@ export class Category{
 // Normal listings are just a picture
 // Maybe other types as well??
 
-export class AddListingComponent {
+export class AddListingComponent implements OnInit{
   categories: Category[];
   selectedCategory: Category;
   showAddCategoryIcons = false;
-  showForm = false;
-  @Input()  listings: Listing[];
+  newListing = NEW_LISTING;
+  @Input() isEditing = false;
   @Output() saveEE  = new EventEmitter<any>();
   @Output() destroyEE = new EventEmitter<any>();
   // MAYBE: TO ENABLE DYNAMIC SIGN TYPE UPDATE, LISTEN VIA NEW @OUTPUT FOR CHANGES,
@@ -57,8 +77,14 @@ export class AddListingComponent {
   // }
 
   constructor(private helpers: HelpersService,
-              private icons:   IconService) {}
+              private icons: IconService,
+              private authService: AuthService) {
+  }
               // private gaEvent: GAEventService
+
+  ngOnInit() {
+    this.newListing['userId'] = this.authService.auth.userId;
+  }
 
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);
@@ -77,11 +103,10 @@ export class AddListingComponent {
   // Functions for Bubbling Up
   destroy(event: any) {
     console.log("IN ADD-LISTING DESTROY FUNCTION; EVENT IS ", event);
-    this.toggleShowForm(false);
+    this.toggleIsEditing(false);
   }
   save(event: any) {
     let newListing = event;
-    if(!event._id) { newListing._id = this.listings.length; }  // ?????????? WHAT IS THIS DOING?
     console.log("LISTING AT THE ADDLISTING LEVEL IS: ", newListing);
     // Reset the area to closed. Triggered by event emitters from inner save/close
     this.closeForms();
@@ -98,10 +123,10 @@ export class AddListingComponent {
     if(typeof(input) === 'boolean') { this.showAddCategoryIcons = input; }
     else { this.showAddCategoryIcons = !this.showAddCategoryIcons; }
   }
-  toggleShowForm(input: any = null):void {
+  toggleIsEditing(input: any = null):void {
     // If setting value directly, do that. Else, just toggle the value
-    if(typeof(input) === 'boolean') { this.showForm = input; }
-    else { this.showForm = !this.showForm; }
+    if(typeof(input) === 'boolean') { this.isEditing = input; }
+    else { this.isEditing = !this.isEditing; }
   }
 
   // gaClick(category: string, label: string) {
@@ -111,7 +136,7 @@ export class AddListingComponent {
   // Toggle Control Functions
   private closeForms() {
     this.toggleShowAddCategoryIcons(false);
-    this.toggleShowForm(false);
+    this.toggleIsEditing(false);
   }
 }
 

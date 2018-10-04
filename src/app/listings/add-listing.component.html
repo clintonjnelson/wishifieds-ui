@@ -1,29 +1,20 @@
-<div class="add-sign-comtainer">
+<div class="add-listing-comtainer">
   <!-- Add-Sign Icon -->
-  <div *ngIf="!showAddCategoryIcons && !showForm" class="add-sign-icon-container">
-    <i (click)="toggleShowAddListingIcons()" mdTooltip="[add a sign]" mdTooltipPosition="above" class="{{buildIconClass('plus', '2')}}"></i>
+  <div *ngIf="!isEditing" class="add-listing-icon-container">
+    <i (click)="toggleIsEditing()" mdTooltip="[add a listing]" mdTooltipPosition="above" class="{{buildIconClass('plus', '2')}}"></i>
   </div>
 
-  <div *ngIf="showAddCategoryIcons || showForm">
+  <div *ngIf="isEditing">
     <!-- Heading -->
-    <p class="heading">add a sign</p>
+    <p class="heading">add a listing</p>
 
-    <div *ngIf="showAddCategoryIcons" class="icons-main-container">
-      <!-- Oauth Links -->
-      <ul>
-        <li *ngFor="let category of Categories" class="categories-list">
-          <!-- POPULATE THE LIST OF CATEGORY ICONS HERE -->
-        </li>
-      </ul>
-      <hr class="hr-quarter-width"/>
-      <!-- Generic & Custom Links -->
-      <ul>
-
-      </ul>
+    <!-- Editing (it has its OWN Preview full-listing) -->
+    <div class="listing-edit-container">
+      <edit-listing [listing]="newListing"></edit-listing>
     </div>
 
     <!-- Preview New Sign Area - THIS SHOULD BE BELOW THE FORM & CONSTANTLY UPDATING... -->
-    <div *ngIf="showForm" class="sign-preview">
+    <div *ngIf="isEditing" class="listing-preview">
       <!-- SHOW A LISTING PREVIEW HERE -->
       <!-- <listing-card ></listing-card> -->
     </div>

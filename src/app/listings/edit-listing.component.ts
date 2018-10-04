@@ -102,12 +102,12 @@ export class EditListingComponent implements OnInit {
 
   // For the a-link href generation
   verifyOrAddProtocolToUrl(url: string) {
-    return this.helpers.verifyOrAddProtocolToUrl(url)
+    if(url) { return this.helpers.verifyOrAddProtocolToUrl(url); }
   }
 
   // For the a-link href display
   urlWithoutPrototol(url: string) {
-    return this.helpers.urlWithoutProtocol(url);
+    if(url) { return this.helpers.urlWithoutProtocol(url); }
   }
 
   // Builds or resets the form to its original basic values
@@ -299,22 +299,24 @@ export class EditListingComponent implements OnInit {
 
   // Reset Functions
   resetForm() {
-    // Set all values to the original listing;
-    this.listingForm.patchValue({
-      category:    this.listing.category,
-      condition:   this.listing.condition,
-      title:       this.listing.title,
-      description: this.listing.description,
-      linkUrl:     this.listing.linkUrl,
-      heroImage:   ( this.listing.images[0] || ''),
-      price:       this.listing.price,
-      location:    this.listing.location,
-      keywords:    this.listing.keywords
-    });
+    if(this && this.listingForm) {
+      // Set all values to the original listing;
+      this.listingForm.patchValue({
+        category:    this.listing.category,
+        condition:   this.listing.condition,
+        title:       this.listing.title,
+        description: this.listing.description,
+        linkUrl:     this.listing.linkUrl,
+        heroImage:   ( this.listing.images[0] || ''),
+        price:       this.listing.price,
+        location:    this.listing.location,
+        keywords:    this.listing.keywords
+      });
 
-    this.listingForm.get('images').reset();
-    // Reset images as well, but have to do so with built object, so use reset function
-    this.refreshTempListingImages();
+      this.listingForm.get('images').reset();
+      // Reset images as well, but have to do so with built object, so use reset function
+      this.refreshTempListingImages();
+    }
   }
 
   // This is mostly for the selectable images right now. Maybe change name(s) later.

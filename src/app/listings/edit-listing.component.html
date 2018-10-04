@@ -60,7 +60,7 @@
         <!-- Description -->
         <mat-input-container layout="row">
           <mat-label>Wish Listing Description</mat-label>
-          <textarea matInput matTextareaAutosize matAutosizeMinRows="6" matAutosizeMaxRows="20" name="description" [formControl]="listingForm.controls['description']" [(ngModel)]="tempListing.description" placeholder="Description of what you're looking for..." mat-maxlength="2000"></textarea>
+          <textarea class="listing-textarea" matInput matTextareaAutosize matAutosizeMinRows="6" matAutosizeMaxRows="20" name="description" [formControl]="listingForm.controls['description']" [(ngModel)]="tempListing.description" placeholder="Description of what you're looking for..." mat-maxlength="2000"></textarea>
           <mat-hint>
             <i (mouseover)="toggleHint('description')" (mouseleave)="toggleHint('description')" class="{{buildIconClass('question-circle', '1')}}"></i>
             <span [hidden]="!hints.description"> Describe what you're looking for here. This is the proper place to get into the details about what you want. </span>
@@ -190,7 +190,7 @@
 
 
         <!-- form buttons -->
-        <div>
+        <div id="listings-controls">
           <!-- ok button -->
           <a (click)="save()" type="submit" matTooltip="save" matTooltipPosition="above" class="listing-saveicon" [attr.disabled]="!listingForm.valid">
             <i class="{{buildIconClass('check', '2')}}"></i>

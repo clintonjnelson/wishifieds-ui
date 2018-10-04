@@ -37,6 +37,12 @@ mat-form-field {
   max-width: 100px;
 }
 
+/* TODO: THIS STYLING IS NOT WORKING YET */
+:ng-deep .listing-textarea {
+  border-radius: 3px;
+  border: 1px solid lightgray;
+}
+
 /*Set the underline color to white*/
 ::ng-deep .mat-input-underline {
   background: white;
@@ -54,6 +60,7 @@ mat-form-field {
 /*Images*/
 .images-container {
   position: relative;
+  text-align: left;
 }
 
 .images-selection-container {
@@ -98,4 +105,11 @@ mat-form-field {
 
 ::ng-deep mat-label.price-input-label:parent:parent:parent {
   margin-left: -2em;
+}
+
+div#listings-controls {
+  display: flex;
+  flex-direction: row;
+  /*align-self: flex-start;
+  justify-content: flex-start;*/
 }

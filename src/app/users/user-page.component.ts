@@ -178,6 +178,8 @@ const LISTINGS: Listing[] = [
 ];
 
 
+// TODO: Use the end of the route to set the correct tab
+
 @Component({
   moduleId: module.id,
   selector: "user-page",
