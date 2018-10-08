@@ -34,6 +34,7 @@ const ROUTES = {
   createListing: '/api/listings',
   updateListing: '/api/listings/:id',
   deleteListing: '/api/listings/:id',
+  searchListings: '/api/listings/search?search=:searchStr',
 
   // Search
   search: '/api/search?searchStr=:searchStr',

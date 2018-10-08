@@ -1,0 +1,40 @@
+/*
+NOTE: parent must be styled with this to enable proper width:
+listings-search {
+  display: flex;
+  width: 100%;
+}*/
+
+div.listings-search-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+section.results-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  max-width: 100%;
+
+  /*flex: 1;
+  justify-content: center;*/
+}
+
+div.listing-result-container {
+  display: flex;
+  margin: 0.5em 0.1em 0.5em 0.1em;
+}
+
+/*This creates a bunch of listing-card wide divs that have no height,
+so they can stack on eachother infinitely, but when there is space to go wide
+they will fill the width. Amazing & genius. This keeps it looking like the cards
+are left-aligned with space-between when in reality they CANNOT be left aligned.*/
+div.filler {
+  /* have to match the width AND the margins to stay aligned */
+  margin-left: 0.1em;
+  margin-right: 0.1em;
+  width: 310px;  /* same as width of one listing-card */
+  height: 0;     /* height should be zero, so won't ever wrap */
+}

@@ -1,0 +1,35 @@
+<div class="listings-search-container">
+  <!-- Search Bar Section -->
+  <div>
+    <!-- Search Options Toggles -->
+    <div>
+      <i class="{{buildIconClass('filter', 1)}}"></i>
+      <i class="{{buildIconClass('exchange-alt', 1)}} fa-rotate-90"></i>
+    </div>
+
+    <!-- Search Options Area -->
+    <div id="search-filters" *ngIf="showFilterOptions">
+      <ul>
+        <li *ngFor="let icon of filterIcons">
+          <i class="{{buildIconClass(icon, 1)}}"
+             (click)="filter(icon)">
+             <!-- [style.color]="filters[icon] ? icon.bgColor : 'white'"> -->
+          </i>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Listing Results Found -->
+  <section class="results-container" *ngIf="listings.length > 0">
+    <div class="listing-result-container" *ngFor="let listing of filteredListings">
+      <listing-card [listing]="listing"></listing-card>
+    </div>
+    <div class="filler"></div>
+    <div class="filler"></div>
+    <div class="filler"></div>
+    <div class="filler"></div>
+    <div class="filler"></div>
+    <div class="filler"></div>
+  </section>
+</div>

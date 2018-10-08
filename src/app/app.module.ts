@@ -45,11 +45,11 @@ import { ListingPageComponent }          from './listings/listing-page.component
 import { ListingFullComponent }          from './listings/listing-full.component';
 import { ListingCardComponent }          from './listings/listing-card.component';
 import { ListingCardsComponent }         from './listings/listing-cards.component';
-import { ListingsSearchInputComponent }  from './listings/search/listings-search-input.component';
 import { ListingsSearchComponent }       from './listings/search/listings-search.component';
+import { ListingsSearchResultsComponent }from './listings/search/listings-search-results.component';
 
 import { UserMessagesComponent }         from './messages/user-messages.component';
-import { MessageBubbleComponent }         from './messages/message-bubble.component';
+import { MessageBubbleComponent }        from './messages/message-bubble.component';
 
 // Directives
 import { HoverColorDirective }           from './shared/hover-color/hover-color.directive';
@@ -70,6 +70,7 @@ import { ApiAdminService }               from './core/api/api-admin.service';
 import { ApiEnumsService }               from './core/api/api-enums.service';
 import { ApiImagesService }              from './core/api/api-images.service';
 import { ApiListingsService }            from './core/api/api-listings.service';
+import { ApiSearchService }              from './core/api/api-search.service';
 import { ApiUsersService }               from './core/api/api-users.service';
 import { HelpersService }                from './shared/helpers/helpers.service';
 import { IconService }                   from './core/services/icon.service';
@@ -147,8 +148,8 @@ export function HttpFactory(backend: XHRBackend,
                   ListingFullComponent,
                   ListingCardComponent,
                   ListingCardsComponent,
-                  ListingsSearchInputComponent,
                   ListingsSearchComponent,
+                  ListingsSearchResultsComponent,
 
                   UserMessagesComponent,
                   MessageBubbleComponent,
@@ -183,6 +184,7 @@ export function HttpFactory(backend: XHRBackend,
                   ApiEnumsService,
                   ApiImagesService,
                   ApiListingsService,
+                  ApiSearchService,
                   ApiUsersService,
                   {provide: Http,
                     useFactory: HttpFactory,

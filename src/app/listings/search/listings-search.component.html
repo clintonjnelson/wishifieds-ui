@@ -1,39 +1,19 @@
-<div class="listings-search-container">
-  <!-- Search Bar Section -->
-  <div>
+<!-- Search -->
+<!-- TODO: Placeholder should be dynamic to a value specified in the class that extends -->
+<div class="search-container">
+  <div class="search-box">
+    <form #searchForm="ngForm" name="searchForm" (ngSubmit)="search($event)" class="search-box-form">
+      <mat-input-container mat-float [ngStyle]="{'color': 'white'}" layout="row" class="search-box-input-container">
+        <input matInput type="text" [(ngModel)]="searchStr" placeholder="whatcha sellin?" name="search">
+      </mat-input-container>
 
-    <!-- Search Input -->
-    <listings-search-input></listings-search-input>
-
-    <!-- Search Options Toggles -->
-    <div>
-      <i class="{{buildIconClass('filter', 1)}}"></i>
-      <i class="{{buildIconClass('exchange-alt', 1)}} fa-rotate-90"></i>
-    </div>
-
-    <!-- Search Options Area -->
-    <div id="search-filters" *ngIf="showFilterOptions">
-      <ul>
-        <li *ngFor="let icon of filterIcons">
-          <i class="{{buildIconClass(icon, 1)}}"
-             (click)="filter(icon)">
-             <!-- [style.color]="filters[icon] ? icon.bgColor : 'white'"> -->
-          </i>
-        </li>
-      </ul>
-    </div>
+      <button (click)="search($event)" type="submit" class="search-btn-icon">
+          <i class="fa fa-search fa-3x sp-hover"></i>
+        </button>
+    </form>
   </div>
 
-  <!-- Listing Results Found -->
-  <section class="results-container" *ngIf="listings.length > 0">
-    <div class="listing-result-container" *ngFor="let listing of filteredListings">
-      <listing-card [listing]="listing"></listing-card>
-    </div>
-    <div class="filler"></div>
-    <div class="filler"></div>
-    <div class="filler"></div>
-    <div class="filler"></div>
-    <div class="filler"></div>
-    <div class="filler"></div>
-  </section>
+  <div class="results-box">
+    <listings-search-results [listings]="listings"></listings-search-results>
+  </div>
 </div>
