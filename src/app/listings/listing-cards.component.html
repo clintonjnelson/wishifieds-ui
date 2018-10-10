@@ -1,8 +1,9 @@
 <div class="listing-cards-container">
 
   <!-- Search Options Area -->
+  <!-- TODO: CURRENTLY PERMANENTLY TURNED OFF BY ngIf=false; HOOK UP IF NEED, ELSE REMOVE -->
   <div>
-    <div id="cards-filters" *ngIf="showFilterOptions">
+    <div id="cards-filters" *ngIf="false">
       <ul>
         <li *ngFor="let icon of filterIcons">
           <i class="{{buildIconClass(icon, 1)}}"

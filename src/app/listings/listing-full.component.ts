@@ -15,15 +15,15 @@ import { NguCarousel } from '@ngu/carousel';
 })
 export class ListingFullComponent implements OnInit {
   @Input() listing: Listing;
-  @Input() isPreview: Boolean = false;  // TODO: MAKE THIS SET READONLY CAPABILITIES TO LISTING
-  @Input() isEditing: Boolean = false;  // TODO: Verify if should default this or Not.
+  @Input() isPreview: boolean = false;  // TODO: MAKE THIS SET READONLY CAPABILITIES TO LISTING
+  @Input() isEditing: boolean = false;  // TODO: Verify if should default this or Not.
 
-  @Output() editingEE = new EventEmitter<any>();
+  @Output() editingEE = new EventEmitter<boolean>();
 
   public carouselConfig: NguCarousel;
-  showMessages: Boolean = false;    // MAKE THIS TOGGLED PER THE MESSAGES ICON
-  showLocationMap: Boolean = false;
-  isOwner: Boolean = true;  // TODO: HOOK THIS UP; NEEDED FOR BUTTONS & SUCH.
+  showMessages: boolean = false;    // MAKE THIS TOGGLED PER THE MESSAGES ICON
+  showLocationMap: boolean = false;
+  isOwner: boolean = true;  // TODO: HOOK THIS UP; NEEDED FOR BUTTONS & SUCH.
 
   constructor(private icons:   IconService,
               private helpers: HelpersService,
@@ -78,16 +78,16 @@ export class ListingFullComponent implements OnInit {
     if(typeof(input) === 'boolean') { this.isEditing = input; }
     else { this.isEditing = !this.isEditing; }
 
-    // Emit the value back up the chain
-    this.editingEE.emit(this.isEditing);
     console.log("EDITING TOGGLED & IS NOW: ", this.isEditing);
+    // Emit the value back up the chain
+    console.log("In listing-full. BUBBLING UP editingEE with value: ", input);
+    this.editingEE.emit(this.isEditing);
   }
 
   closeListing(): void {
     let username = window.localStorage.getItem('username');
-    console.log("GOING BACK...");
     // TODO: Should have a saved page that the user came from
     // TODO: Go back to that previously loaded page
-    this.router.navigate(['/', username, 'listings']);
+    this.toggleEditing(false);
   }
 }

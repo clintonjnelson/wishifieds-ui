@@ -2,7 +2,7 @@
 
   <!-- TODO: PROVIDE A TAB TO FLIP BETWEEN CARD VIEW & FULL VIEW; DEFAUL TO CARD; -->
   <div class="preview-listing-container">
-    <listing-full [listing]="tempListing" [isPreview]="true"></listing-full>
+    <listing-full [listing]="tempListing" [isPreview]="true" (editingEE)="toggleEditing($event)"></listing-full>
   </div>
 
   <div id="listing-edit-container" class="edit-form-container">
@@ -98,7 +98,7 @@
         <div class="images-container">
           <label class="images-label">Select Images for your Wish Listing</label>
           <div class="images-selection-container">
-            <div layout="row" formArrayName="images" *ngFor="let group of listingForm.controls['images'].controls; let ind=index">
+            <div layout="row" formArrayName="images" *ngFor="let group of getImageGroup().controls; let ind=index">
               <div [formGroupName]="ind">
                 <input type="checkbox" formControlName="checked" class="images-checkbox"/>
                 <img (click)="toggleSelectImage(ind)" src="{{group.controls.url.value}}" [ngClass]="{'image-selected': group.controls.checked.value}" class="image" alt="" width="60px">
@@ -123,7 +123,8 @@
         <mat-form-field layout="column">
           <mat-label>Pick the Primary Image</mat-label>
           <mat-select name="heroImage" [formControl]="listingForm.controls['heroImage']" [(ngModel)]="tempListing.heroImage" [ngStyle]="{'background': 'url(getSelectedHero() ) center contain no-repeat'}" placeholder="Select a Primary from Your Images">
-            <mat-option *ngFor="let group of listingForm.controls['images'].controls | callback: keepTruthyFilter; let ind=index" [value]="group.controls.url.value">
+            <mat-option *ngFor="let group of getImageGroup().controls | callback: keepTruthyFilter; let ind=index" [value]="group.controls.url.value">
+            <!-- <mat-option *ngFor="let group of listingForm.controls['images'].controls | callback: keepTruthyFilter; let ind=index" [value]="group.controls.url.value"> -->
               <img src="{{ group.controls.url.value }}" alt="Listing Image" height="40px">
             </mat-option>
           </mat-select>

@@ -1,4 +1,4 @@
-<div class="add-listing-comtainer">
+<div class="add-listing-container">
   <!-- Add-Sign Icon -->
   <div *ngIf="!isEditing" class="add-listing-icon-container">
     <i (click)="toggleIsEditing()" mdTooltip="[add a listing]" mdTooltipPosition="above" class="{{buildIconClass('plus', '2')}}"></i>
@@ -10,7 +10,7 @@
 
     <!-- Editing (it has its OWN Preview full-listing) -->
     <div class="listing-edit-container">
-      <edit-listing [listing]="newListing"></edit-listing>
+      <edit-listing [listing]="newListing" (editingEE)="toggleIsEditing($event)"></edit-listing>
     </div>
 
     <!-- Preview New Sign Area - THIS SHOULD BE BELOW THE FORM & CONSTANTLY UPDATING... -->

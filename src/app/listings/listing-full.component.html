@@ -5,15 +5,15 @@
       <div mat-card-avatar class="card-avatar"></div>
       <mat-card-title>clintonjnelson</mat-card-title>
       <mat-card-subtitle>
-        <i class="{{ buildIconClass('star', 1) }}"></i>
-        <i class="{{ buildIconClass('star', 1) }}"></i>
-        <i class="{{ buildIconClass('star', 1) }}"></i>
-        <i class="{{ buildIconClass('star', 1) }}"></i>
-        <i class="{{ buildIconClass('star', 1) }}"> &nbsp;(12)</i>
+        <i class="{{ buildIconClass('star', '1') }}"></i>
+        <i class="{{ buildIconClass('star', '1') }}"></i>
+        <i class="{{ buildIconClass('star', '1') }}"></i>
+        <i class="{{ buildIconClass('star', '1') }}"></i>
+        <i class="{{ buildIconClass('star', '1') }}"> &nbsp;(12)</i>
       </mat-card-subtitle>
-      <i *ngIf="isOwner && !isPreview" (click)="toggleEditing()" class="{{ buildIconClass('pencil', 2) }}"></i>
-      <i class="{{ buildIconClass('heart', 2) }}"></i>
-      <i *ngIf="isOwner && !isEditing" (click)="closeListing()" class="{{ buildIconClass('times', 2) }}"></i>
+      <i *ngIf="isOwner && !isPreview" (click)="toggleEditing()" class="{{ buildIconClass('pencil', '2') }}"></i>
+      <i class="{{ buildIconClass('heart', '2') }}"></i>
+      <i *ngIf="isOwner && !isEditing" (click)="closeListing()" class="{{ buildIconClass('times', '2') }}"></i>
     </mat-card-header>
 
     <!-- Images Section -->
@@ -25,10 +25,10 @@
             <img class="listing-image" height="100%" src="{{ image }}" alt="Image for {{ listing.title }}">
           </ngu-item>
           <button NguCarouselPrev class="leftRs">
-            <i class="{{ buildIconClass('angle-left', 4) }} caroussel-icon"></i>
+            <i class="{{ buildIconClass('angle-left', '4') }} caroussel-icon"></i>
           </button>
           <button NguCarouselNext class="rightRs">
-            <i class="{{ buildIconClass('angle-right', 4) }} caroussel-icon"></i>
+            <i class="{{ buildIconClass('angle-right', '4') }} caroussel-icon"></i>
           </button>
         </ngu-carousel>
       </div>
@@ -53,7 +53,7 @@
     <!-- Component should take in seller's ID, Buyer's ID, Listing ID. Then populate correspondence & messagebox with preview bubble above. -->
     <hr>
     <div *ngIf="!isPreview" class="listing-contact-buyer-container">
-      <i class="{{ buildIconClass('comments', 3) }}" (click)="toggleShowMessages()" ></i>
+      <i class="{{ buildIconClass('comments', '3') }}" (click)="toggleShowMessages()" ></i>
       <div *ngIf="showMessages" class="listing-chat-container">
         <user-messages [listingId]="1234" [sellerId]="2" [buyerId]="1"></user-messages>
       </div>
@@ -63,8 +63,9 @@
     <!-- Location Map Section -->
     <div *ngIf="!isPreview" class="listing-location-map-container">
       <div class="listing-location-map">
-        <i class="{{ buildIconClass('map-marker', 3) }}" (click)="toggleShowLocationMap()"></i>
+        <i class="{{ buildIconClass('map-marker', '3') }}" (click)="toggleShowLocationMap()"></i>
         <div *ngIf="showLocationMap" class="listing-map-container">
+          <!-- TODO: REPLACE HARDCODED MAP WITH REAL MAP -->
           <img src="https://camo.githubusercontent.com/6f53eeb8108ef87ccdb03ef0a8f51e9368be6e3a/68747470733a2f2f676f6f676c656d6170732e6769746875622e696f2f6a732d6d61702d6c6162656c2f73637265656e73686f742e706e67" alt="" width="100%">
           <!-- SOME MESSAGE/CHAT TYPE COMPONENT SHOULD GO HERE -->
         </div>

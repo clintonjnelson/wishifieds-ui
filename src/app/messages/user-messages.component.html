@@ -39,7 +39,7 @@
         <textarea matInput type="textarea" name="content" ngControl="content" [(ngModel)]="tempMessage.content" placeholder="Want to sell yours? Message the buyer here:::"></textarea>
       </mat-form-field>
       <mat-checkbox class="notify-checkbox" name="notifyImmediately" [(ngModel)]="notifyImmediately">Notify Buyer Immediately</mat-checkbox>
-      <i class="{{ buildIconClass('paper-plane', 2) }}" (click)="send()"></i>
+      <i class="{{ buildIconClass('paper-plane', '2') }}" (click)="send()"></i>
     </form>
   </div>
 

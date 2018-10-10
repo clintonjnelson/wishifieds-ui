@@ -14,6 +14,7 @@ const LISTING: Listing = {
   price:       "100",
   location:    "99999", // TODO: SHOULD THIS BE LOCATION???
   status:      "10",
+  heroImage:   "http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
   images:      ["http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
                 "http://ecx.images-amazon.com/images/I/41W4p0WkW1L.jpg",
                 "http://img.wolverineworldwide.com/is/image/WolverineWorldWide/PG49049_1_1200x735?$dw-large$"

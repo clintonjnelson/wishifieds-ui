@@ -51,6 +51,7 @@ export class EditListingComponent implements OnInit {
   @Input() listing: Listing;  // TODO: GET THIS FROM NGONINIT, NOT INPUT
   @Output() saveEE    = new EventEmitter<any>();
   @Output() destroyEE = new EventEmitter<any>();
+  @Output() editingEE = new EventEmitter<boolean>();
   tempListing: Listing;
   categories: Category[];  // TODO: POPULATE WITH API PROVIDED CATEGORY LIST
   conditions: Condition[];  // TODO: POPULATE WITH API PROVIDED CATEGORY LIST
@@ -59,7 +60,7 @@ export class EditListingComponent implements OnInit {
 
 
   allImages: string[] = [];
-  hints: object = {};
+  hints: any = {};
 
 
   private unsubscribe: Subject<any> = new Subject();
@@ -255,6 +256,10 @@ export class EditListingComponent implements OnInit {
     );
   }
 
+  getImageGroup() {
+    return <FormArray>this.listingForm.get('images');
+  }
+
   // TODO: if HERO image becomes unselected, then REMOVE HERO IMAGE URL FROM THE CONTROL VALUE ALSO
   toggleSelectImage(index: number) {
     console.log("INDEX FOR CHECKBOX IS: ", index);
@@ -276,6 +281,12 @@ export class EditListingComponent implements OnInit {
     if(this.hints.hasOwnProperty(hint)) {
       this.hints[hint] = !this.hints[hint];
     }
+  }
+
+  toggleEditing(event: any) {
+    console.log("IN edit-listing. BUBBLING editingEE up with this event: ", event);
+
+    this.editingEE.emit(event);
   }
 
   // THIS IS NOT WORKING< SO PROBABLY NEED TO DO DOM MANIPULAtion OF CSS VIA AN ID ON NG-SELECT
@@ -421,8 +432,8 @@ export class EditListingComponent implements OnInit {
   // ********** CONSIDER BREAKING OUT TO A SERVICE *************
   // ******************** CUSTOM VALIDATIONS HERE **************************
   // NOTE: validationErrorMessages are implemented in each listing content type
-  validationErrorMessages: Object;
-  displayedValidationErrors = {
+  validationErrorMessages: any;
+  displayedValidationErrors: any = {
     title: '',
     linkUrl: '',
     keywords: '',
