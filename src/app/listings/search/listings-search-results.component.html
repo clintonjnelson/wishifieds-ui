@@ -22,7 +22,7 @@
   </div>
 
   <!-- Listing Results Found -->
-  <section class="results-container" *ngIf="listings.length > 0">
+  <section class="results-container" *ngIf="listings && listings.length > 0">
     <div class="listing-result-container" *ngFor="let listing of filteredListings">
       <listing-card [listing]="listing"></listing-card>
     </div>

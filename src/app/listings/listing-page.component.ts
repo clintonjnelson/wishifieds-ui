@@ -46,6 +46,7 @@ export class ListingPageComponent implements OnInit {
 
   // This toggles into edit mode via the full-listing icon
   toggleEditing(input: any = null): void {
+    console.log("In Listing Page. isEditing will now be: ", this.isEditing);
     if(typeof(input) === 'boolean') { this.isEditing = input; }
     else { this.isEditing = !this.isEditing; }
     console.log("isEditing IS NOW: ", this.isEditing);
@@ -53,10 +54,12 @@ export class ListingPageComponent implements OnInit {
   }
 
   private scrollToEdit() {
-    setTimeout( () => {
-      const editEl = document.getElementById('listing-edit-container');
-      console.log("ELEMENT TO SCROLL TO IS: ", editEl);
-      editEl.scrollIntoView({behavior: 'smooth'});
-    }, 300);
+    if(this.isEditing) {
+      setTimeout( () => {
+        const editEl = document.getElementById('listing-edit-container');
+        console.log("ELEMENT TO SCROLL TO IS: ", editEl);
+        editEl.scrollIntoView({behavior: 'smooth'});
+      }, 300);
+    }
   }
 }

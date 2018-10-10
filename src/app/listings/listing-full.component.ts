@@ -80,12 +80,12 @@ export class ListingFullComponent implements OnInit {
 
     console.log("EDITING TOGGLED & IS NOW: ", this.isEditing);
     // Emit the value back up the chain
-    console.log("In listing-full. BUBBLING UP editingEE with value: ", input);
+    console.log("In listing-full. BUBBLING UP editingEE with value: ", this.isEditing);
     this.editingEE.emit(this.isEditing);
   }
 
   closeListing(): void {
-    let username = window.localStorage.getItem('username');
+    // let username = window.localStorage.getItem('username');
     // TODO: Should have a saved page that the user came from
     // TODO: Go back to that previously loaded page
     this.toggleEditing(false);
