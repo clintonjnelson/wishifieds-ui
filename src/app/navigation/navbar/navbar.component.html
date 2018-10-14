@@ -69,6 +69,11 @@
           <i class="{{buildIconClass('cog', '2')}}"></i>
         </a>
       </li>
+      <li>
+        <a [routerLink]="[auth.username]" (click)="toggleShowUserNavLinks()" matTooltip="my wishifieds" matTooltipPosition="above">
+          <i class="{{buildIconClass('home', '2')}}"></i>
+        </a>
+      </li>
     </ul>
   </div>
 </div>

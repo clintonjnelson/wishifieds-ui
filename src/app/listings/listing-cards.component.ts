@@ -161,6 +161,8 @@ export class ListingCardsComponent implements OnInit, OnChanges {
   }
 
   private resetListings() {
-    this.filteredListings = this.listings.slice();  // Copy orig array to reset the display array
+    if(this.listings) {
+      this.filteredListings = this.listings.slice();
+    }  // Copy orig array to reset the display array
   }
 }
