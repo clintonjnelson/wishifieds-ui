@@ -16,8 +16,9 @@ div.listing-card-container {
   position: absolute;
   left: -70px;
   top: -70px;
-  width: 300px;
-  height: 600px;
+  /*width: 300px;*/  /*TODO: COULD SET A MAX FOR WIDTH I SUPPOSE;*/
+  width: 100%;    /*TODO: COULD SET A MAX FOR WIDTH I SUPPOSE;*/
+  /*height: 100vw;  TODO: HEIGHT SHOULD BE RELATIVE TO THE WIDTH /*TODO: COULD SET A MAX FOR HEIGHT I SUPPOSE;*/*/
   padding: 0; /* reset */
   padding-bottom: 92%;
   fill: white;
@@ -34,8 +35,9 @@ div.listing-display-main-container {
   background-color: gray;
   border: 5px solid white;
   border-radius: 15px;
-  width: 300px;
-  height: 300px;
+  /*width: 300px;*/  /*TODO: COULD SET A MAX FOR WIDTH I SUPPOSE;*/
+  width: 100%;  /*TODO: COULD SET A MAX FOR WIDTH I SUPPOSE;*/
+  height: 300px;  /*TODO: HEIGHT SHOULD BE RELATIVE TO THE WIDTH*/  /*TODO: COULD SET A MAX FOR HEIGHT I SUPPOSE;*/
 }
 
 div.listing-display-image-container {
@@ -236,7 +238,7 @@ h3.listing-card-title {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  font-size: 1em;
+  font-size: 2vw;
 }
 
 

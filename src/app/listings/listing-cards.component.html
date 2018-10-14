@@ -16,8 +16,8 @@
   </div>
 
   <!-- Listing Results Found -->
-  <section class="cards-container" *ngIf="listings.length > 0">
-    <div class="listing-cards-container" *ngFor="let listing of filteredListings">
+  <section class="cards-container" *ngIf="listings.length > 0" squareWidthElement="listing-display-main-container">
+    <div #cardContainer class="card-container" *ngFor="let listing of filteredListings">
       <listing-card [listing]="listing"></listing-card>
     </div>
     <div class="filler"></div>

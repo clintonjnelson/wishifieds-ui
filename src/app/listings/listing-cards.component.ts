@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, ViewChild, OnInit, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
 import { Router }          from '@angular/router';
 import { IconService }     from '../core/services/icon.service';
 import { ApiUsersService } from '../core/api/api-users.service';
@@ -55,7 +55,6 @@ const CATEGORY_LIST = {
 export class ListingCardsComponent implements OnInit, OnChanges {
   // Options Area flags should come in as @Input() also.
   @Input() listings: Listing[];
-
   filteredListings: Listing[];
   filters: Object;        // Object of icon names {name: Boolean} false=show true=hide
   filterIcons: string[];  // Selected filters
@@ -73,6 +72,26 @@ export class ListingCardsComponent implements OnInit, OnChanges {
     console.log("Filtered Listings init is: ", this.filteredListings);
     console.log("FilterIcons at init is: ", this.filterIcons);
   }
+
+  // ngAfterViewInit() {
+  //   this.resizeCards();
+  //   // this.cardContainer.nativeElement.querySelector('.card-container');
+  // }
+  // resizeCards($event) {
+  //   let cards = this.elRef.nativeElement.querySelectorAll('.card-container');
+  //   let matchWidth = 0;
+  //   if(cards && cards.length > 0) {
+  //     matchWidth = cards[0].clientWidth;
+  //     console.log("UPDATE ALL HEIGHTS TO: ", matchWidth);
+  //     // Update alll of the heights to match the width
+  //     cards.forEach((card) => {
+  //       console.log("current card is: ", card);
+  //       console.log("CARD HEIGHT BEFORE IS: ", card.style.height);
+  //       card.style.height = matchWidth;
+  //       console.log("CARD HEIGHT IS NOW: ", card.style.height);
+  //     });
+  //   }
+  // }
 
   ngOnChanges(changes: SimpleChanges) {
     this.listings = changes.listings.currentValue;

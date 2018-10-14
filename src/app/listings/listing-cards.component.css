@@ -8,7 +8,8 @@ listings-search {
 div.listing-cards-container {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  margin: 0.5em 0.1em 0.5em 0.1em;
+  /*width: 100%;*/
 }
 
 section.cards-container {
@@ -22,10 +23,19 @@ section.cards-container {
   justify-content: center;*/
 }
 
-div.listing-cards-container {
+div.card-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5em 0.1em 0.5em 0.1em;
+  width: 30%;
+  min-width: 90px;   /*Fix This to EM or Something Responsive?*/
+  max-width: 400px;  /*Fix This to EM or Something Responsive?*/
+}
+
+/*div.listing-cards-container {
   display: flex;
   margin: 0.5em 0.1em 0.5em 0.1em;
-}
+}*/
 
 /*This creates a bunch of listing-card wide divs that have no height,
 so they can stack on eachother infinitely, but when there is space to go wide

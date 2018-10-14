@@ -56,6 +56,7 @@ import { HoverColorDirective }           from './shared/hover-color/hover-color.
 import { HoverBackgroundDirective }      from './shared/hover-background/hover-background.component';
 import { UniqueValidatorDirective }      from './shared/validators/unique.directive';
 import { DragulaDelayLiftDirective }     from './shared/dragula-delay-lift/dragula-delay-lift.directive';
+import { SquareWidthElementDirective }   from './shared/directives/square-width-element.directive';
 
 // Services - make them available EVERYWHERE (otherwise, just add it specifically into Component as a provider)
 import { HttpIntercept }                 from './core/api/http-intercept';
@@ -158,6 +159,7 @@ export function HttpFactory(backend: XHRBackend,
                   HoverBackgroundDirective,
                   UniqueValidatorDirective,
                   DragulaDelayLiftDirective,
+                  SquareWidthElementDirective,
 
                   UserConfirmationRedirectComponent,  // Really a service, but built as component
 
