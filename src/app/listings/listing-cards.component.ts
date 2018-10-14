@@ -119,15 +119,15 @@ export class ListingCardsComponent implements OnInit, OnChanges {
   // *********** HELPERS *************
   private generateFiltersAndIcons() {
     const that = this;
-    this.listings.forEach((listing) => {
-      // If already added, break. Else add to filters & displayIcons
-      var icon = CATEGORY_LIST[listing.category]['icon'];
-      if(that.filters[icon] !== undefined) { return; }  // VERIFY THAT THIS SHOULDN"T BE SEARCHING FILTERICONS
-      else {
-        that.filters[icon] = false;   // addToFilters(icon);
-        that.filterIcons.push(icon);  // addDisplayIcon(icon); TODO: TRY TO GET RID OF THIS ARRAY!!!!!!! USE JUST THE FILTERS ARRAY.
-      }
-    });
+    // this.listings.forEach((listing) => {
+    //   // If already added, break. Else add to filters & displayIcons
+    //   var icon = CATEGORY_LIST[listing.category]['icon'];
+    //   if(that.filters[icon] !== undefined) { return; }  // VERIFY THAT THIS SHOULDN"T BE SEARCHING FILTERICONS
+    //   else {
+    //     that.filters[icon] = false;   // addToFilters(icon);
+    //     that.filterIcons.push(icon);  // addDisplayIcon(icon); TODO: TRY TO GET RID OF THIS ARRAY!!!!!!! USE JUST THE FILTERS ARRAY.
+    //   }
+    // });
   }
 
   private toggleFilterByIcon(icon: string) {

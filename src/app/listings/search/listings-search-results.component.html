@@ -9,20 +9,21 @@
 
     <!-- Search Options Area -->
     <!-- TODO: CURRENTLY PERMANENTLY TURNED OFF WITH ngIf=false. HOOK UP OR REMOVE. -->
-    <div id="search-filters" *ngIf="false">
+    <!-- <div id="search-filters" *ngIf="false">
       <ul>
         <li *ngFor="let icon of filterIcons">
           <i class="{{buildIconClass(icon, '1')}}"
              (click)="filter(icon)">
-             <!-- [style.color]="filters[icon] ? icon.bgColor : 'white'"> -->
+             [style.color]="filters[icon] ? icon.bgColor : 'white'">
           </i>
         </li>
       </ul>
-    </div>
+    </div> -->
   </div>
 
   <!-- Listing Results Found -->
-  <section class="results-container" *ngIf="listings && listings.length > 0">
+  <listing-cards [listings]="listings"></listing-cards>
+  <!-- <section class="results-container" *ngIf="listings && listings.length > 0">
     <div class="listing-result-container" *ngFor="let listing of filteredListings">
       <listing-card [listing]="listing"></listing-card>
     </div>
@@ -32,5 +33,5 @@
     <div class="filler"></div>
     <div class="filler"></div>
     <div class="filler"></div>
-  </section>
+  </section> -->
 </div>
