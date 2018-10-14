@@ -18,7 +18,7 @@ div.listing-card-container {
   top: -70px;
   /*width: 300px;*/  /*TODO: COULD SET A MAX FOR WIDTH I SUPPOSE;*/
   width: 100%;    /*TODO: COULD SET A MAX FOR WIDTH I SUPPOSE;*/
-  /*height: 100vw;  TODO: HEIGHT SHOULD BE RELATIVE TO THE WIDTH /*TODO: COULD SET A MAX FOR HEIGHT I SUPPOSE;*/*/
+  /*height: 100vw;  TODO: HEIGHT SHOULD BE RELATIVE TO THE WIDTH /*TODO: COULD SET A MAX FOR HEIGHT I SUPPOSE;*/
   padding: 0; /* reset */
   padding-bottom: 92%;
   fill: white;
@@ -34,10 +34,12 @@ div.listing-display-main-container {
   flex: 1 0 auto;
   background-color: gray;
   border: 5px solid white;
+  border: 0.6vw solid white;
   border-radius: 15px;
+  border-radius: 2vw;
   /*width: 300px;*/  /*TODO: COULD SET A MAX FOR WIDTH I SUPPOSE;*/
   width: 100%;  /*TODO: COULD SET A MAX FOR WIDTH I SUPPOSE;*/
-  height: 300px;  /*TODO: HEIGHT SHOULD BE RELATIVE TO THE WIDTH*/  /*TODO: COULD SET A MAX FOR HEIGHT I SUPPOSE;*/
+  /*height: 300px;  TODO: HEIGHT SHOULD BE RELATIVE TO THE WIDTH  /*TODO: COULD SET A MAX FOR HEIGHT I SUPPOSE;*/
 }
 
 div.listing-display-image-container {
@@ -45,8 +47,9 @@ div.listing-display-image-container {
   display: flex;
   flex: 1 0 auto;
   align-self: flex-start;
-  width: 100%;
+  width: 101%;
   position: relative;  /*Makes inner div absolutes relative to this*/
+  margin: -0.05em;
 }
 div.listing-display-image-container div {
   width: 100%;
@@ -231,7 +234,8 @@ h3.listing-card-title {
   position: absolute;
   bottom: 0;
   margin: 0;
-  padding: 0.3em;
+  padding: 0;
+  padding-left: 0.3em;
   width: 100%;
 
   text-align: left;
