@@ -45,6 +45,6 @@ div.filler {
   /* have to match the width AND the margins to stay aligned */
   margin-left: 0.1em;
   margin-right: 0.1em;
-  width: 310px;  /* same as width of one listing-card */
+  width: 30%;  /* same as width of one listing-card */
   height: 0;     /* height should be zero, so won't ever wrap */
 }
