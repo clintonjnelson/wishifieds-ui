@@ -30,7 +30,7 @@ const ROUTES = {
   getConditions: '/api/conditions',
 
   // Listings
-  getListing:    '/api/listings',
+  getListingsByUser: '/api/listings/:usernameOrId',
   createListing: '/api/listings',
   updateListing: '/api/listings/:id',
   deleteListing: '/api/listings/:id',

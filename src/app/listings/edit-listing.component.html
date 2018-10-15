@@ -28,7 +28,7 @@
         </mat-form-field>
 
         <!-- Condition -->
-        <mat-form-field layout="column">
+        <mat-form-field layout="column" *ngIf="tempListing.category">
           <mat-label>Desired Condition</mat-label>
           <mat-select name="condition" [formControl]="listingForm.controls['condition']" [(ngModel)]="tempListing.condition" placeholder="Choose a Condition" required>
             <mat-option *ngFor="let condition of conditions" [value]="condition.id">
@@ -95,7 +95,7 @@
 
         <!-- Populate a bunch of checkboxes with images linked, but hide the checkboxes. When select the image, select the checkbox. Image could maybe be the label?
         Images with an index that has been selected get the css attribute of that on-page ID changed to have a border for "selected". -->
-        <div class="images-container">
+        <div class="images-container" *ngIf="tempListing.linkUrl && tempListing.linkUrl.length > 3">
           <label class="images-label">Select Images for your Wish Listing</label>
           <div class="images-selection-container">
             <div layout="row" formArrayName="images" *ngFor="let group of getImageGroup().controls; let ind=index">
@@ -120,7 +120,7 @@
 
 
         <!-- Select Hero Image from Selected Images -->
-        <mat-form-field layout="column">
+        <mat-form-field layout="column" *ngIf="getImageGroup().controls && getImageGroup().controls.length > 0">
           <mat-label>Pick the Primary Image</mat-label>
           <mat-select name="heroImage" [formControl]="listingForm.controls['heroImage']" [(ngModel)]="tempListing.heroImage" [ngStyle]="{'background': 'url(getSelectedHero() ) center contain no-repeat'}" placeholder="Select a Primary from Your Images">
             <mat-option *ngFor="let group of getImageGroup().controls | callback: keepTruthyFilter; let ind=index" [value]="group.controls.url.value">

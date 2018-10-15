@@ -10,7 +10,7 @@
 
     <!-- Editing (it has its OWN Preview full-listing) -->
     <div class="listing-edit-container">
-      <edit-listing [listing]="newListing" (editingEE)="toggleIsEditing($event)"></edit-listing>
+      <edit-listing [listing]="newListing" (editingEE)="toggleIsEditing($event)" (saveEE)="save($event)"></edit-listing>
     </div>
 
     <!-- Preview New Sign Area - THIS SHOULD BE BELOW THE FORM & CONSTANTLY UPDATING... -->

@@ -6,6 +6,12 @@
   text-align: center;
 }
 
+add-listing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 p.heading {
   color: white;
   font-family: helvetica, sans-serif;

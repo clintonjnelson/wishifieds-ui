@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params }       from '@angular/router';
 import { AuthService, UserAuth }        from '../core/auth/auth.service';
+import { ApiListingsService }           from '../core/api/api-listings.service';
 import { Subscription }                 from 'rxjs/Subscription';
 import { IconService }                  from '../core/services/icon.service';
 import { Listing }                      from '../listings/listing.model';
@@ -201,11 +202,12 @@ export class UserPageComponent implements OnInit, OnDestroy {
   isOwner = false;
   isProcessing: boolean;
   usernameFromRoute: string;
-  listings: Listing[] = LISTINGS;  // SOMEDAY GET THIS FROM API CALL FOR USER"S LISTINGS
+  listings: Listing[] = [];  // SOMEDAY GET THIS FROM API CALL FOR USER"S LISTINGS
 
   constructor( private authService:     AuthService,
                private icons:           IconService,
-               private route:           ActivatedRoute) {
+               private route:           ActivatedRoute,
+               private listingsApi:     ApiListingsService) {
     this.auth = authService.auth;
     this.authSubscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => {
       this.auth = newVal;
@@ -223,12 +225,41 @@ export class UserPageComponent implements OnInit, OnDestroy {
     this.pageSubscription = this.route.params.subscribe( (params: Params) => {
       const username = params['username'];
       console.log("TRIGGERED SUBSCRIPTION THAT WATCHES PARAMS: ", params);
-      that.updateUsernameBasedData(username)
+      that.updateUsernameBasedData(username);
+      this.getListings();
     });
   }
 
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);
+  }
+
+  getListings() {
+    const that = this;
+
+    this.listingsApi
+      .getListingsByUser(that.usernameFromRoute)
+      .subscribe(
+        listings => {
+          console.log("LISTINGS FOUND: ", listings);
+          that.listings = listings;
+        },
+        error => {
+          console.log("ERROR GETTING LISTINGS: ", error);
+        });
+  }
+
+  save(event: any) {
+    let newListing = event;
+    console.log("FOUND NEW LISTING TO ADD IF NOT ALREADY ADDED");
+    let ids = this.listings.map(listing => listing.id);
+    let matchFound = ids.find(id => { return (id === newListing.id); } );
+
+    // If not already added, then add
+    if(!matchFound) {
+      console.log("ADDING THIS LISTING: ", newListing);
+      this.listings.push(newListing);
+    }
   }
 
   private updateUsernameBasedData(username: string) {

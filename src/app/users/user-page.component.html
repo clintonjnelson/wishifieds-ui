@@ -1,11 +1,26 @@
 <div id="user-page-main-container">
 
-  <mat-tab-group>
-    <mat-tab label="listings" class="{{ buildIconClass('cloud', '2') }}">
-      <add-listing *ngIf="auth.isLoggedIn && isOwner" (saveEE)="save($event)" (destroyEE)="destroy($event)"></add-listing>
-      <listing-cards [listings]="listings"></listing-cards>
-    </mat-tab>
-    <mat-tab label="messages" class="{{ buildIconClass('comments', '2') }}">MESSAGES CONTENT</mat-tab>
-    <mat-tab label="empty" class="{{ buildIconClass('question', '2') }}">UNKNOWN CONTENT</mat-tab>
-  </mat-tab-group>
+
+
+  <!-- Owner User: Content Tabs -->
+  <div *ngIf="auth.isLoggedIn && isOwner">
+    <mat-tab-group>
+
+      <mat-tab id="user-listings" label="listings" class="{{ buildIconClass('cloud', '2') }}">
+        <add-listing (saveEE)="save($event)" (destroyEE)="destroy($event)"></add-listing>
+        <listing-cards [listings]="listings"></listing-cards>
+      </mat-tab>
+
+      <mat-tab label="messages" class="{{ buildIconClass('comments', '2') }}">MESSAGES CONTENT</mat-tab>
+
+      <mat-tab label="empty" class="{{ buildIconClass('question', '2') }}">UNKNOWN CONTENT</mat-tab>
+
+    </mat-tab-group>
+  </div>
+
+
+  <!-- Guest: Listings -->
+  <div *ngIf="!isOwner">
+    <listing-cards [listings]="listings"></listing-cards>
+  </div>
 </div>

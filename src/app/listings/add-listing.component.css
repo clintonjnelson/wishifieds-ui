@@ -1,3 +1,8 @@
+.add-listing-container {
+  width: 50%;
+  max-width: 600px;
+}
+
 .add-sign-icon-container {
   display: flex;
   flex: 1 1 auto;

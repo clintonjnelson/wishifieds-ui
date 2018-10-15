@@ -13,6 +13,21 @@ export class ApiListingsService {
   constructor(private http:          Http,
               private wishifiedsApi: WishifiedsApi) {}
 
+  // This assumes user object on request will be used to get their listings
+  getListingsByUser(usernameOrId: any): Observable<Listing[]> {
+    const getListingsByUserUrl = this.wishifiedsApi.buildUrl('getListingsByUser', [{':usernameOrId': usernameOrId}]);
+    // const options = this.wishifiedsApi.getRequestOptionWithEatHeader();
+
+    return this.http
+               .get(getListingsByUserUrl)
+               .map(res => {
+                 return res.json().listings as Listing[];
+               })
+               .catch( (error: Response) => {
+                 return Observable.throw(error);
+               });
+  }
+
   createListing(listingData: any): Observable<Listing> {
     const createListingUrl = this.wishifiedsApi.routes.createListing;
 

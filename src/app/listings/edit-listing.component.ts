@@ -175,6 +175,11 @@ export class EditListingComponent implements OnInit {
           .subscribe(
             listing => {
               console.log("SUCCESSFUL Create WITH RESPONSE: ", listing);
+              // this.resetTempListing();  // FIXME: THIS SHOULD BE BEFORE REFORESH_ALL_IMAGES & BUILD_IMAGES
+              // this.refreshAllImages();  // FIXME: VERIFY combined refreshAllImages & buildCheckboxImages OR Break out separately
+              // this.resetForm();
+              this.saveEE.emit(listing);  // Emit to close add-listing
+              console.log("emitted to close window")
               // TODO: SHOULD WE BUBBLE UP DATA TO PRIOR PAGES HERE, SO DON'T NEED TO RELOAD? PROBABLY.
             },
             error => {
