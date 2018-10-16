@@ -29,7 +29,7 @@ div.card-container {
   margin: 0.5em 0.4em 0.5em 0.4em;
   width: 28%;
   min-width: 90px;   /*Fix This to EM or Something Responsive?*/
-  max-width: 400px;  /*Fix This to EM or Something Responsive?*/
+  max-width: 300px;  /*Fix This to EM or Something Responsive?*/
 }
 
 /*div.listing-cards-container {

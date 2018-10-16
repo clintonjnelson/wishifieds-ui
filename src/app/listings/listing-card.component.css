@@ -34,7 +34,7 @@ div.listing-display-main-container {
   flex: 1 0 auto;
   background-color: gray;
   border: 5px solid white;
-  border: 0.6vw solid white;
+  border: 0.3vw solid white;
   border-radius: 15px;
   border-radius: 2vw;
   /*width: 300px;*/  /*TODO: COULD SET A MAX FOR WIDTH I SUPPOSE;*/
@@ -242,7 +242,7 @@ h3.listing-card-title {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  font-size: 2vw;
+  font-size: 2vw;  /* TODO: TRY DOING A CALC OF calc(8px + 1vw) or something; */
 }
 
 
@@ -260,6 +260,10 @@ div.listing-display-bubble-lrg {
   width: 30px;
   height: 30px;
   margin-top: 3px;
+
+  color: grey;
+  line-height: 2;
+  font-size: 1em;
 }
 div.listing-display-bubble-med {
   background-color: white;
@@ -269,6 +273,9 @@ div.listing-display-bubble-med {
   border-radius: 7.5px;
   width: 15px;
   height: 15px;
+
+  color: grey;
+  font-size: 0.8em;
 }
 div.listing-display-bubble-sml {
   background-color: white;
