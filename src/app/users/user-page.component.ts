@@ -37,6 +37,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
     this.authSubscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => {
       this.auth = newVal;
     });
+    // TODO: get this listener working so that added listings will automatically show on save w/o GET request.
     this.listingsSubscription = this.listingsEmit.subscribe((newVal: Listing) => {
       // When emit newListing, take it and add it to listings model
       this.listings.push(newVal);
@@ -46,6 +47,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.authSubscription.unsubscribe();
     this.pageSubscription.unsubscribe();
+    this.listingsSubscription.unsubscribe();
   }
 
   ngOnInit(): void {
