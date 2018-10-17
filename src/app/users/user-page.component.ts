@@ -3,188 +3,11 @@ import { ActivatedRoute, Params }       from '@angular/router';
 import { AuthService, UserAuth }        from '../core/auth/auth.service';
 import { ApiListingsService }           from '../core/api/api-listings.service';
 import { Subscription }                 from 'rxjs/Subscription';
+import { Subject    } from 'rxjs/Subject';
 import { IconService }                  from '../core/services/icon.service';
 import { Listing }                      from '../listings/listing.model';
 import 'rxjs/add/operator/switchMap';
 
-const LISTINGS: Listing[] = [
-  {
-    id:          "1",
-    userId:     "1",
-    category:    "baby & kids",  // TODO: Decide if UI does the name conversion or the API
-    condition:   "good",  // TODO: Decide if UI does the name conversion or the API
-    title:       "Cool Thing Wanted But Description Is Way Too Long",
-    description: "Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor", // sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    keywords:    "keyword, keyword, keyword, keyword",
-    linkUrl:     "https://mmm.somewebsite.com/an/example/of/what/i/want",
-    price:       "100",
-    location:     "99999",
-    status:      "10",
-    heroImage:   "http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
-    images:      ["http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
-                  "http://ecx.images-amazon.com/images/I/41W4p0WkW1L.jpg",
-                  "http://img.wolverineworldwide.com/is/image/WolverineWorldWide/PG49049_1_1200x735?$dw-large$"
-                  ],
-    imagesRef:   "12",
-    slug:        "13",
-    createdAt:   "14",
-    updatedAt:   "15"
-  },
-  {
-    id:          "1",
-    userId:     "1",
-    category:    "baby & kids",  // TODO: Decide if UI does the name conversion or the API
-    condition:   "good",  // TODO: Decide if UI does the name conversion or the API
-    title:       "Cool Thing Wanted But Description Is Way Too Long",
-    description: "Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor", // sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    keywords:    "keyword, keyword, keyword, keyword",
-    linkUrl:     "https://mmm.somewebsite.com/an/example/of/what/i/want",
-    price:       "100",
-    location:     "99999",
-    status:      "10",
-    heroImage:   "http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
-    images:      ["http://ecx.images-amazon.com/images/I/41W4p0WkW1L.jpg",
-                  "http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
-                  "http://img.wolverineworldwide.com/is/image/WolverineWorldWide/PG49049_1_1200x735?$dw-large$"
-                  ],
-    imagesRef:   "12",
-    slug:        "13",
-    createdAt:   "14",
-    updatedAt:   "15"
-  },
-  {
-    id:          "1",
-    userId:     "1",
-    category:    "baby & kids",  // TODO: Decide if UI does the name conversion or the API
-    condition:   "good",  // TODO: Decide if UI does the name conversion or the API
-    title:       "Cool Thing Wanted But Description Is Way Too Long",
-    description: "Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor", // sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    keywords:    "keyword, keyword, keyword, keyword",
-    linkUrl:     "https://mmm.somewebsite.com/an/example/of/what/i/want",
-    price:       "100",
-    location:     "99999",
-    status:      "10",
-    heroImage:   "http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
-    images:      ["http://img.wolverineworldwide.com/is/image/WolverineWorldWide/PG49049_1_1200x735?$dw-large$",
-                  "http://ecx.images-amazon.com/images/I/41W4p0WkW1L.jpg",
-                  "http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg"
-                  ],
-    imagesRef:   "12",
-    slug:        "13",
-    createdAt:   "14",
-    updatedAt:   "15"
-  },
-  {
-    id:          "1",
-    userId:     "1",
-    category:    "baby & kids",  // TODO: Decide if UI does the name conversion or the API
-    condition:   "good",  // TODO: Decide if UI does the name conversion or the API
-    title:       "Cool Thing Wanted But Description Is Way Too Long",
-    description: "Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor", // sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    keywords:    "keyword, keyword, keyword, keyword",
-    linkUrl:     "https://mmm.somewebsite.com/an/example/of/what/i/want",
-    price:       "100",
-    location:     "99999",
-    status:      "10",
-    heroImage:   "http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
-    images:      ["http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
-                  "http://ecx.images-amazon.com/images/I/41W4p0WkW1L.jpg",
-                  "http://img.wolverineworldwide.com/is/image/WolverineWorldWide/PG49049_1_1200x735?$dw-large$"
-                  ],
-    imagesRef:   "12",
-    slug:        "13",
-    createdAt:   "14",
-    updatedAt:   "15"
-  },
-  {
-    id:          "1",
-    userId:     "1",
-    category:    "baby & kids",  // TODO: Decide if UI does the name conversion or the API
-    condition:   "good",  // TODO: Decide if UI does the name conversion or the API
-    title:       "Cool Thing Wanted But Description Is Way Too Long",
-    description: "Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor", // sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    keywords:    "keyword, keyword, keyword, keyword",
-    linkUrl:     "https://mmm.somewebsite.com/an/example/of/what/i/want",
-    price:       "100",
-    location:     "99999",
-    status:      "10",
-    heroImage:   "http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
-    images:      ["http://ecx.images-amazon.com/images/I/41W4p0WkW1L.jpg",
-                  "http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
-                  "http://img.wolverineworldwide.com/is/image/WolverineWorldWide/PG49049_1_1200x735?$dw-large$"
-                  ],
-    imagesRef:   "12",
-    slug:        "13",
-    createdAt:   "14",
-    updatedAt:   "15"
-  },
-  {
-    id:          "1",
-    userId:     "1",
-    category:    "baby & kids",  // TODO: Decide if UI does the name conversion or the API
-    condition:   "good",  // TODO: Decide if UI does the name conversion or the API
-    title:       "Cool Thing Wanted But Description Is Way Too Long",
-    description: "Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor", // sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    keywords:    "keyword, keyword, keyword, keyword",
-    linkUrl:     "https://mmm.somewebsite.com/an/example/of/what/i/want",
-    price:       "100",
-    location:     "99999",
-    status:      "10",
-    heroImage:   "http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
-    images:      ["http://img.wolverineworldwide.com/is/image/WolverineWorldWide/PG49049_1_1200x735?$dw-large$",
-                  "http://ecx.images-amazon.com/images/I/41W4p0WkW1L.jpg",
-                  "http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg"
-                  ],
-    imagesRef:   "12",
-    slug:        "13",
-    createdAt:   "14",
-    updatedAt:   "15"
-  },
-  {
-    id:          "1",
-    userId:     "1",
-    category:    "baby & kids",  // TODO: Decide if UI does the name conversion or the API
-    condition:   "good",  // TODO: Decide if UI does the name conversion or the API
-    title:       "Cool Thing Wanted But Description Is Way Too Long",
-    description: "Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor", // sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    keywords:    "keyword, keyword, keyword, keyword",
-    linkUrl:     "https://mmm.somewebsite.com/an/example/of/what/i/want",
-    price:       "100",
-    location:     "99999",
-    status:      "10",
-    heroImage:   "http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
-    images:      ["http://ecx.images-amazon.com/images/I/41W4p0WkW1L.jpg",
-                  "http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
-                  "http://img.wolverineworldwide.com/is/image/WolverineWorldWide/PG49049_1_1200x735?$dw-large$"
-                  ],
-    imagesRef:   "12",
-    slug:        "13",
-    createdAt:   "14",
-    updatedAt:   "15"
-  },
-  {
-    id:          "1",
-    userId:     "1",
-    category:    "baby & kids",  // TODO: Decide if UI does the name conversion or the API
-    condition:   "good",  // TODO: Decide if UI does the name conversion or the API
-    title:       "Cool Thing Wanted But Description Is Way Too Long",
-    description: "Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor", // sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    keywords:    "keyword, keyword, keyword, keyword",
-    linkUrl:     "https://mmm.somewebsite.com/an/example/of/what/i/want",
-    price:       "100",
-    location:     "99999",
-    status:      "10",
-    heroImage:   "http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg",
-    images:      ["http://img.wolverineworldwide.com/is/image/WolverineWorldWide/PG49049_1_1200x735?$dw-large$",
-                  "http://ecx.images-amazon.com/images/I/41W4p0WkW1L.jpg",
-                  "http://ecx.images-amazon.com/images/I/51EOogsHt6L.jpg"
-                  ],
-    imagesRef:   "12",
-    slug:        "13",
-    createdAt:   "14",
-    updatedAt:   "15"
-  }
-];
 
 
 // TODO: Use the end of the route to set the correct tab
@@ -199,10 +22,12 @@ export class UserPageComponent implements OnInit, OnDestroy {
   auth: UserAuth;
   authSubscription: Subscription;
   pageSubscription: Subscription;
+  listingsSubscription: Subscription;
   isOwner = false;
   isProcessing: boolean;
   usernameFromRoute: string;
   listings: Listing[] = [];  // SOMEDAY GET THIS FROM API CALL FOR USER"S LISTINGS
+  listingsEmit: Subject<Listing> = new Subject<Listing>();
 
   constructor( private authService:     AuthService,
                private icons:           IconService,
@@ -211,6 +36,10 @@ export class UserPageComponent implements OnInit, OnDestroy {
     this.auth = authService.auth;
     this.authSubscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => {
       this.auth = newVal;
+    });
+    this.listingsSubscription = this.listingsEmit.subscribe((newVal: Listing) => {
+      // When emit newListing, take it and add it to listings model
+      this.listings.push(newVal);
     });
   }
 
@@ -258,7 +87,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
     // If not already added, then add
     if(!matchFound) {
       console.log("ADDING THIS LISTING: ", newListing);
-      this.listings.push(newListing);
+      // this.listings.push(newListing);
+      this.listingsEmit.next(newListing);
     }
   }
 

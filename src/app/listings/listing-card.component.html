@@ -1,31 +1,21 @@
 <div class="listing-card-container">
 
-  <!-- INTERIOR CONTAINER -->
+  <!-- Card Container -->
   <div class="listing-display-main-container">
 
-    <!-- UPPER IMAGES SECTION -->
-    <div class="listing-display-image-container" [ngClass]="{ 'image-expand': !expandedInfo, 'image-shrunk': expandedInfo }">
-
-      <!-- Icon For BOTH Expanding/Contracting Info Section -->
-      <i class="info-box-size-control" [ngClass]="expandedInfo ? buildIconClass('angle-down', '2') : buildIconClass('angle-up', '2')" (click)="toggleInfoContainerExpand()"></i>
-
-      <!-- Images Scroll Caroussel & Icons -->
-      <div class="image-caroussel" dragScroll scrollbar-hidden="true" drag-scroll-y-disabled="true" #nav>
-        <img *ngFor="let image of listing.images" class="listing-card-image" [src]="image" alt="ListingHeroImage for {{listing.title}}">
-      </div>
-      <i class="image-scroll-left {{ buildIconClass('angle-left', '2') }}" (click)="moveLeft()" *ngIf="!expandedInfo"></i>
-      <i class="image-scroll-right {{ buildIconClass('angle-right', '2') }}" (click)="moveRight()" *ngIf="!expandedInfo"></i>
-    </div>
-
-
-    <!-- LOWER SHRUNK INFO SECTION-->
+    <!-- UPPER SHRUNK INFO SECTION-->
     <div class="listing-display-info-container info-shrunk" *ngIf="!expandedInfo">
       <h3 class="listing-card-title">{{ listing.title }}</h3>
     </div>
 
 
-    <!-- LOWER EXPANDED INFO SECTION -->
+    <!-- UPPER EXPANDED INFO SECTION -->
     <div class="listing-display-info-container info-expand" *ngIf="expandedInfo">
+      <!-- TITLE SECTION -->
+      <div class="listing-card-info-title-container">
+        <h3 class="listing-card-title">{{ listing.title }}</h3>
+      </div>
+
       <!-- DESCRIPTION SECTION -->
       <div class="listing-card-info-desc-container">
         <p class="listing-card-info-desc ">{{ listing.description }}</p>
@@ -53,11 +43,24 @@
         </div>
       </div>
 
-      <!-- TITLE SECTION -->
-      <div class="listing-card-info-title-container">
-        <h3 class="listing-card-title">{{ listing.title }}</h3>
-      </div>
       <!-- <i class="listing-card-respond-button {{buildIconClass('share', '2')}}"></i> -->
+    </div>
+
+
+
+
+    <!-- LOWER IMAGES SECTION -->
+    <div class="listing-display-image-container" [ngClass]="{ 'image-expand': !expandedInfo, 'image-shrunk': expandedInfo }">
+
+      <!-- Icon For BOTH Expanding/Contracting Info Section -->
+      <i class="info-box-size-control" [ngClass]="expandedInfo ? buildIconClass('angle-down', '2') : buildIconClass('angle-up', '2')" (click)="toggleInfoContainerExpand()"></i>
+
+      <!-- Images Scroll Caroussel & Icons -->
+      <div class="image-caroussel" dragScroll scrollbar-hidden="true" drag-scroll-y-disabled="true" #nav>
+        <img *ngFor="let image of listing.images" class="listing-card-image" [src]="image" alt="ListingHeroImage for {{listing.title}}">
+      </div>
+      <i class="image-scroll-left {{ buildIconClass('angle-left', '2') }}" (click)="moveLeft()" *ngIf="!expandedInfo"></i>
+      <i class="image-scroll-right {{ buildIconClass('angle-right', '2') }}" (click)="moveRight()" *ngIf="!expandedInfo"></i>
     </div>
   </div>
 

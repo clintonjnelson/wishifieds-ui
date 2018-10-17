@@ -32,9 +32,10 @@ div.listing-display-main-container {
   flex-direction: column;
   align-self: flex-start;
   flex: 1 0 auto;
+  /*background-color: #a1a1a1;*/
   background-color: gray;
-  border: 5px solid white;
-  border: 0.3vw solid white;
+  /*border: 5px solid white;*/
+  /*border: 0.3vw solid white;*/
   border-radius: 15px;
   border-radius: 2vw;
   /*width: 300px;*/  /*TODO: COULD SET A MAX FOR WIDTH I SUPPOSE;*/
@@ -74,7 +75,7 @@ div.listing-display-image-container div div {
 img.listing-card-image {
   width: 100%;
   height: 100%;
-  border-radius: 5px 5px 0px 0px;
+  border-radius: 15px 15px 15px 15px;
 }
 
 i.image-scroll-left {
@@ -242,7 +243,8 @@ h3.listing-card-title {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  font-size: 2vw;  /* TODO: TRY DOING A CALC OF calc(8px + 1vw) or something; */
+  font-weight: normal;
+  font-size: calc(12px + 0.5vw);  /* TODO: TRY DOING A CALC OF calc(8px + 1vw) or something; */
 }
 
 
