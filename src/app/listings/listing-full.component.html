@@ -55,7 +55,7 @@
     <div *ngIf="!isPreview" class="listing-contact-buyer-container">
       <i class="{{ buildIconClass('comments', '3') }}" (click)="toggleShowMessages()" ></i>
       <div *ngIf="showMessages" class="listing-chat-container">
-        <user-messages [listingId]="1234" [sellerId]="2" [buyerId]="1"></user-messages>
+        <user-messages [listingId]="1234" [sellerId]="2" [listingOwnerId]="1"></user-messages>
       </div>
     </div>
 

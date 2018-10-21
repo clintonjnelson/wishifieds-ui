@@ -29,12 +29,16 @@ const ROUTES = {
   // Conditions
   getConditions: '/api/conditions',
 
-  // Listings
+  // Listings & listing-based resources
   getListingsByUser: '/api/listings/:usernameOrId',
   createListing: '/api/listings',
   updateListing: '/api/listings/:id',
   deleteListing: '/api/listings/:id',
   searchListings: '/api/listings/search?search=:searchStr',
+  getListingMessages: '/api/listings/:id/messages',
+
+  // Messages
+  createMessage: '/api/messages',
 
   // Search
   search: '/api/search?searchStr=:searchStr',

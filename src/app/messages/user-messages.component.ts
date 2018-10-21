@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgForm, FormControl, FormsModule }   from '@angular/forms';   // TODO: Remove if no validation logic
 import { IconService }         from '../core/services/icon.service';
+import { ApiMessagesService }   from '../core/api/api-messages.service';
 import { HelpersService }      from '../shared/helpers/helpers.service';
 import { Listing }             from '../listings/listing.model';
 import { Message }             from './message.model';
@@ -25,11 +26,11 @@ const MESSAGES: Message[] = [
 // TODO: ADD AUTH FOR MESSAGES LOGIC & CREATION LOGIC/authorization
 export class UserMessagesComponent implements OnInit {
   @Input() listingId: number;
-  @Input() sellerId: number;  // Person who listed listing
-  @Input() buyerId: number;   // Person who is contacting on listing
-  // @Input() viewerId: number;  // Person currently viewing these messages - GET FROM AUTH SERVICE!!!!
-  viewerId: 2;  // GET FROM AUTH
+  @Input() listingOwnerId: number;
+  @Input() sellerId: number;
+  currentViewerId: 2;  // WHO is viewing - get from auth. Enables logic to tell how to display stuff.
   messages: Message[];
+
 
   // TODO: MAYBE BREAK OUT THE FORM PORTION OF MESSAGE TO SEPARATE COMPONENT
   messageForm: NgForm;
@@ -38,7 +39,8 @@ export class UserMessagesComponent implements OnInit {
   notifyImmediately: Boolean;
 
   constructor( private icons: IconService,
-               private helpers: HelpersService) {
+               private helpers: HelpersService,
+               private messagesApi: ApiMessagesService) {
   }
 
   ngOnInit() {
@@ -49,16 +51,30 @@ export class UserMessagesComponent implements OnInit {
        recipientId: 2,
        listingId: 3,
        content: '',
-       createdAt: 'preview'
+       createdAt: '';
      };
-     this.notifyImmediately = true;
+     this.notifyImmediately = true;  // TODO: Hook feature up to SMS messaging notification, controlled by user settings as to whether to show or not
+  }
+
+  getMessages() {
+    this.messagesApi.getListingMessages(this.listingId)
+      .subscribe(
+        msgs => {
+          console.log("MESSAGES FOUND for listing ARE: ", msgs);
+         },
+        error => {
+          console.log("Error getting messages for listing: ", error);
+        });
   }
 
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);
   }
 
-  isReceivedMessage(message: Message) {
+  isViewerSentMessage(message: Message) {
+    // Sender == CurrentViewer? Display CurrentViewer's messages on LEFT
+    // Sender != CurrentViewer? Display Other Person's message on RIGHT
+
     const currentViewerId = 1; // TODO: GET REAL VIEWER FROM AUTH
     return (currentViewerId != message.recipientId);
   }
@@ -67,7 +83,17 @@ export class UserMessagesComponent implements OnInit {
 
   // TODO: HOOK UP SEND ABILITY FOR CREATING NEW MESSAGES
   send() {
-    console.log("SENDING NEW MESSAGE");
+    const that = this;
+    console.log("SENDING NEW MESSAGE with this payload: ", that.tempMessage);
+    this.messagesApi.createMessage(that.tempMessage)
+      .subscribe(
+        newMsg => {
+          console.log("MESSAGE CREATED IS: ", newMsg);
+          that.messages.push(newMsg);  // TODO: THIS WILL NOT WORK - NEED TO DO SOMETHING LIKE: that.msgsEmit.next(newMsg)
+        },
+        error => {
+          console.log("Error creating message: ", error);
+        });
     // !!!!! TODO: MUST SANITIZE THE TEXT BEFORE SAVING!!!!!!!!!!
     // SHOULD TURN THE PREVIEW INTO A NEW BUBBLE AND RESET THE PREVIEW MESSAGE //
   }

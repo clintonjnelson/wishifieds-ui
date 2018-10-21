@@ -59,7 +59,7 @@ export class ListingPageComponent implements OnInit {
         const editEl = document.getElementById('listing-edit-container');
         console.log("ELEMENT TO SCROLL TO IS: ", editEl);
         editEl.scrollIntoView({behavior: 'smooth'});
-      }, 300);
+      }, 200);
     }
   }
 }

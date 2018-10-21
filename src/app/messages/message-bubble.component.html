@@ -1,13 +1,13 @@
 
 <!-- Recipient Message Bubble -->
-<div *ngIf="isRecipient" class="speech-bubble-ds right-color">
+<div *ngIf="!viewerIsSender" class="speech-bubble-ds right-color">
   <p><small>{{ message.createdAt }}</small></p>
   <p>{{ message.content }}</p>
   <div class="speech-bubble-ds-arrow-right"></div>
 </div>
 
 <!-- Sender Message Bubble -->
-<div *ngIf="!isRecipient" class="speech-bubble-ds left-color">
+<div *ngIf="viewerIsSender" class="speech-bubble-ds left-color">
   <p><small>{{ message.createdAt }}</small></p>
   <p>{{ message.content }}</p>
   <div class="speech-bubble-ds-arrow-left"></div>

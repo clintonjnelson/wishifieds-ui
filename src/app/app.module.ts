@@ -71,6 +71,7 @@ import { ApiAdminService }               from './core/api/api-admin.service';
 import { ApiEnumsService }               from './core/api/api-enums.service';
 import { ApiImagesService }              from './core/api/api-images.service';
 import { ApiListingsService }            from './core/api/api-listings.service';
+import { ApiMessagesService }            from './core/api/api-messages.service';
 import { ApiSearchService }              from './core/api/api-search.service';
 import { ApiUsersService }               from './core/api/api-users.service';
 import { HelpersService }                from './shared/helpers/helpers.service';
@@ -186,6 +187,7 @@ export function HttpFactory(backend: XHRBackend,
                   ApiEnumsService,
                   ApiImagesService,
                   ApiListingsService,
+                  ApiMessagesService,
                   ApiSearchService,
                   ApiUsersService,
                   {provide: Http,

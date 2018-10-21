@@ -13,7 +13,7 @@
     CONSIDER USING A SWITCH OR NG-IF/ELSE TO LOAD THESE...
   -->
     <div *ngFor="let message of messages" class="message-bubble-container">
-      <message-bubble [message]="message" [isRecipient]="isReceivedMessage(message)"></message-bubble>
+      <message-bubble [message]="message" [viewerIsSender]="isViewerSentMessage(message)"></message-bubble>
          <!-- [ngClass]="{ 'self-message': isSelfMessage(message), 'other-message': !isSelfMessage(message) }"
       <p><small> {{ message.createdAt }} </small></p>
       <p>{{ message.content }}</p> -->
@@ -22,7 +22,7 @@
     <!-- The Preview Message Being Written -->
     <!-- ngIf ensures it waits for the tempMessage to be available before trying to show -->
     <div *ngIf="tempMessage.content.length >= 0" class="message-bubble-container message-preview-container">
-      <message-bubble [message]="tempMessage" [isRecipient]="false"></message-bubble>
+      <message-bubble [message]="tempMessage" [viewerIsSender]="true"></message-bubble>
     </div>
   </div>
 

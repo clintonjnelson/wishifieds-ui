@@ -11,5 +11,5 @@ import { Message } from './message.model';
 // TODO: ADD AUTH FOR MESSAGES LOGIC & CREATION LOGIC/authorization
 export class MessageBubbleComponent {
   @Input() message: Message;
-  @Input() isRecipient: boolean;  // Triggers recipient bubble style
+  @Input() viewerIsSender: boolean;  // Triggers recipient bubble style
 }
