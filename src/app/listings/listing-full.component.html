@@ -48,20 +48,54 @@
       <a class="listing-example-link" href="{{ verifyOrAddProtocolToUrl(listing.linkUrl) }}" targer="_blank">{{ urlWithoutPrototol(listing.linkUrl) }}</a>
     </div>
 
-    <!-- Contact Buyer Icon & Message Section -->
-    <!-- IF THERE IS ALREADY CORRESPONDENCE WITH THIS BUYER, SHOW IT, ELSE SHOW NEW CORRESPONDENCE TEXTBOX IN BUBBLE. OOH, write in a normal textbox, but show in a bubble above. Should be a component.-->
-    <!-- Component should take in seller's ID, Buyer's ID, Listing ID. Then populate correspondence & messagebox with preview bubble above. -->
-    <hr>
     <div *ngIf="!isPreview" class="listing-contact-buyer-container">
-      <i class="{{ buildIconClass('comments', '3') }}" (click)="toggleShowMessages()" ></i>
-      <div *ngIf="showMessages" class="listing-chat-container">
-        <user-messages [listingId]="1234" [sellerId]="2" [listingOwnerId]="1"></user-messages>
+      <hr>
+      <!--
+      TODO: hook up the correspondantID in accordance with the following
+        OWNER:
+          - Show "no messages", if no messages
+          - Show icon with number in it of users that have contacted
+          - Show colored circle of unread messages
+          - show user profile icons inside the message bubble. should act like a filter when clicked
+              - show all (order by most recent message top) by default
+              - user profile bubble at top should show only their box (like former search filter, only by user id)
+                - border the bubble in some color, if they have unread messages
+                - CHANGE unread messages to have a datetime? Once loaded, then set as read?
+              - user bubble profile icon should also show on their msg box
+        NON-OWNER
+          X - always show messages
+          X - show the input/preview section for contacting owner
+          ?- show any existing messages by loading them, if available
+
+      -->
+      <!-- Owner Messages Section -->
+      <div *ngIf="isOwner">
+
+        <!-- Messages -->
+        <i *ngIf="msgCorrespondantIds && msgCorrespondantIds.length" class="{{ buildIconClass('comments', '3') }}" (click)="toggleShowMessages()" ></i>
+        <div *ngIf="showMessages" class="listing-chat-container">
+          <div *ngFor="let id of msgCorrespondantIds; let ind = index" class="{{ 'msg-container-' + ind }}">
+            <user-messages [listingId]="listing.id" [listingOwnerId]="listing.userId" [correspondantId]="id"></user-messages>
+          </div>
+        </div>
+
+        <!-- No Messages -->
+        <p *ngIf="!msgCorrespondantIds || (msgCorrespondantIds && !msgCorrespondantIds.length)">
+          No Messages.... yet.
+        </p>
+      </div>
+
+      <!-- Non-Owner Messages Section -->
+      <div *ngIf="!isOwner">
+        <div class="listing-chat-container">
+          <user-messages [listingId]="listing.id" [listingOwnerId]="listing.userId" [correspondantId]="currentViewerId"></user-messages>
+        </div>
       </div>
     </div>
 
-    <hr>
     <!-- Location Map Section -->
     <div *ngIf="!isPreview" class="listing-location-map-container">
+      <hr>
       <div class="listing-location-map">
         <i class="{{ buildIconClass('map-marker', '3') }}" (click)="toggleShowLocationMap()"></i>
         <div *ngIf="showLocationMap" class="listing-map-container">

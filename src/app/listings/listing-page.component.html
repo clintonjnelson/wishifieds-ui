@@ -1,12 +1,12 @@
 <div class="listing-page-main-container">
 
   <!-- Normal Listing Viewing (NOT preview, as that is show within the editing component)-->
-  <div *ngIf="!isEditing" class="listing-full-container">
+  <div *ngIf="listing && !isEditing" class="listing-full-container">
     <listing-full [listing]="listing" [isPreview]="false" [isEditing]="isEditing" (editingEE)="toggleEditing($event)"></listing-full>
   </div>
 
   <!-- Editing (it has its OWN Preview full-listing) -->
-  <div *ngIf="isEditing" class="listing-edit-container">
+  <div *ngIf="listing && isEditing" class="listing-edit-container">
     <edit-listing [listing]="listing" (editingEE)="toggleEditing($event)"></edit-listing>
   </div>
 </div>

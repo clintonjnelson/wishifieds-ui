@@ -14,6 +14,19 @@ export class ApiListingsService {
               private wishifiedsApi: WishifiedsApi) {}
 
   // This assumes user object on request will be used to get their listings
+  getListing(listingId: any): Observable<Listing> {
+    const getListingUrl = this.wishifiedsApi.buildUrl('getListing', [{':id': listingId}]);
+
+    return this.http
+               .get(getListingUrl)
+               .map(res => {
+                 return res.json().listing as Listing;
+               })
+               .catch( (error: Response) => {
+                 return Observable.throw(error);
+               });
+  }
+
   getListingsByUser(usernameOrId: any): Observable<Listing[]> {
     const getListingsByUserUrl = this.wishifiedsApi.buildUrl('getListingsByUser', [{':usernameOrId': usernameOrId}]);
     // const options = this.wishifiedsApi.getRequestOptionWithEatHeader();

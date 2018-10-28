@@ -13,7 +13,7 @@
     CONSIDER USING A SWITCH OR NG-IF/ELSE TO LOAD THESE...
   -->
     <div *ngFor="let message of messages" class="message-bubble-container">
-      <message-bubble [message]="message" [viewerIsSender]="isViewerSentMessage(message)"></message-bubble>
+      <message-bubble *ngIf="message" [message]="message" [viewerIsSender]="isViewerSentMessage(message)"></message-bubble>
          <!-- [ngClass]="{ 'self-message': isSelfMessage(message), 'other-message': !isSelfMessage(message) }"
       <p><small> {{ message.createdAt }} </small></p>
       <p>{{ message.content }}</p> -->

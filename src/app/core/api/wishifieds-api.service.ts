@@ -30,12 +30,15 @@ const ROUTES = {
   getConditions: '/api/conditions',
 
   // Listings & listing-based resources
-  getListingsByUser: '/api/listings/:usernameOrId',
+  getListingsByUser: '/api/listings/user/:usernameOrId',
+  getListing: '/api/listings/:id',
   createListing: '/api/listings',
   updateListing: '/api/listings/:id',
   deleteListing: '/api/listings/:id',
   searchListings: '/api/listings/search?search=:searchStr',
-  getListingMessages: '/api/listings/:id/messages',
+  // TODO: We also need ?filtertype=user,filter=<user_id>, so we can filter for specific listings
+  getListingMessages: '/api/listings/:id/messages?correspondant=:correspondantId',
+  getListingMessagesCorrespondants: '/api/listings/:id/messages?correspondants_only=true',
 
   // Messages
   createMessage: '/api/messages',

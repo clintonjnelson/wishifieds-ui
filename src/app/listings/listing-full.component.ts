@@ -2,6 +2,8 @@ import { Component, Input, Output, ViewChild, OnInit, EventEmitter } from '@angu
 import { Router } from '@angular/router';
 import { IconService } from '../core/services/icon.service';
 import { HelpersService } from '../shared/helpers/helpers.service';
+import { AuthService } from '../core/auth/auth.service';
+import { ApiMessagesService } from '../core/api/api-messages.service';
 import { Listing } from './listing.model';
 import { NguCarousel } from '@ngu/carousel';
 
@@ -23,11 +25,15 @@ export class ListingFullComponent implements OnInit {
   public carouselConfig: NguCarousel;
   showMessages: boolean = false;    // MAKE THIS TOGGLED PER THE MESSAGES ICON
   showLocationMap: boolean = false;
+  currentViewerId: string;
   isOwner: boolean = true;  // TODO: HOOK THIS UP; NEEDED FOR BUTTONS & SUCH.
+  msgCorrespondantIds = [];
 
   constructor(private icons:   IconService,
               private helpers: HelpersService,
-              private router: Router) {
+              private router: Router,
+              private authService: AuthService,
+              private messagesApi: ApiMessagesService) {
 
   }
 
@@ -45,6 +51,11 @@ export class ListingFullComponent implements OnInit {
       loop: true,
       custom: 'banner'
     }
+
+    this.getCorrespondantUsersList();
+    this.currentViewerId = this.authService.auth.userId;
+    this.isOwner = this.helpers.isEqualStrInt(this.listing.userId, this.currentViewerId);
+    console.log("IS OWNER IS, listindOwner, currentViewer: ", this.isOwner, this.listing.userId, this.currentViewerId);
   }
 
   carouselLoaded(event: Event) {
@@ -82,6 +93,29 @@ export class ListingFullComponent implements OnInit {
     // Emit the value back up the chain
     console.log("In listing-full. BUBBLING UP editingEE with value: ", this.isEditing);
     this.editingEE.emit(this.isEditing);
+  }
+
+  // Load any info needed for passing to messages boxes
+    // If viewer is owner, then get ALL users on listing
+    // If viewer is NOT owner, then VIEWER is only user needed & already have them!
+  getCorrespondantUsersList() {
+    const that = this;
+    if(this.isOwner) {
+      // Listing owner may be talking with many people
+      this.messagesApi.getListingMessagesCorrespondants(this.listing.id)
+        .subscribe(
+          correspondants => {
+            console.log("CORRESPONDANTS RETURNED ARE: ", correspondants);
+            that.msgCorrespondantIds = correspondants;
+          },
+          error => {
+            console.log("Error getting message correspondants: ", error);
+          });
+    }
+    else {
+      // If not owner, then owner should be only correspondant
+      this.msgCorrespondantIds = [that.listing.userId];
+    }
   }
 
   closeListing(): void {

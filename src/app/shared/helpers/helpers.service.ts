@@ -4,6 +4,11 @@ import { Injectable } from '@angular/core';
 
 export class HelpersService {
 
+  isEqualStrInt(strInt1: any, strInt2: any) {
+    try { return ( Number(strInt1).toString() === Number(strInt2).toString() ); }
+    catch (e) { return false; }
+  }
+
   urlWithoutProtocol(url) {
     if(url) {
       const checkFormatUrl = url.toLowerCase();

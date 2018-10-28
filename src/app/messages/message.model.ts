@@ -1,8 +1,9 @@
 
 export class Message {
-  senderId: number;
-  recipientId: number;
-  listingId: number;
+  senderId: string;
+  recipientId: string;
+  listingId: string;
   content: string;
+  status: string;
   createdAt: string; // DATESTAMP?????
 }
