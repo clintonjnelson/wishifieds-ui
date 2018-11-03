@@ -62,10 +62,10 @@ hr.hr-quarter-width {
   justify-content: flex-start;
   flex: 1;
 }
-/deep/ .sign-preview sign {
+::ng-deep .sign-preview sign {
   display: flex;
   flex: 1 0 auto;
 }
-/deep/ .sign-preview div.sign-container {
+::ng-deep .sign-preview div.sign-container {
   flex: 1 0 auto;
 }

@@ -60,6 +60,7 @@
         <img *ngFor="let image of listing.images" class="listing-card-image" [src]="image" alt="ListingHeroImage for {{listing.title}}">
       </div>
       <i class="image-scroll-left {{ buildIconClass('angle-left', '2') }}" (click)="moveLeft()" *ngIf="!expandedInfo"></i>
+      <a [routerLink]="['/', listing.ownerUsername, 'listings', listing.id]" class="full-listing-link-center" matTooltip="full listing" matTooltipPosition="above"></a>
       <i class="image-scroll-right {{ buildIconClass('angle-right', '2') }}" (click)="moveRight()" *ngIf="!expandedInfo"></i>
     </div>
   </div>

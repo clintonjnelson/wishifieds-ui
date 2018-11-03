@@ -37,11 +37,12 @@ export class UserPageComponent implements OnInit, OnDestroy {
     this.authSubscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => {
       this.auth = newVal;
     });
-    // TODO: get this listener working so that added listings will automatically show on save w/o GET request.
-    // this.listingsSubscription = this.listingsEmit.subscribe((newVal: Listing) => {
-    //   // When emit newListing, take it and add it to listings model
-    //   this.listings.push(newVal);
-    // });
+    this.listingsSubscription = this.listingsEmit.subscribe((newListings: Listing[]) => {
+      if(newListings && newListings.length) {
+        // Initial GET listings may get lots; saving a listing adds only one.
+        this.listings = this.listings.concat(newListings);  // Concat & SET
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -73,7 +74,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
       .subscribe(
         listings => {
           console.log("LISTINGS FOUND: ", listings);
-          that.listings = listings;
+          that.listingsEmit.next(listings);  // Add these via observer
         },
         error => {
           console.log("ERROR GETTING LISTINGS: ", error);
@@ -89,9 +90,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
     // If not already added, then add
     if(!matchFound) {
       console.log("ADDING THIS LISTING: ", newListing);
-      this.listings.push(newListing)
       // this.listings.push(newListing);
-      this.listingsEmit.next(this.listings);
+      this.listingsEmit.next([newListing]);
     }
   }
 

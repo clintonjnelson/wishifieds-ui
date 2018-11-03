@@ -7,40 +7,40 @@ import { Listing }         from './listing.model';
 
 // Probably swap this out with a dynamic icon map that also has a local backup hardcoded
 const CATEGORY_LIST = {
-  'antiques':                { id: 1, icon: 'star', name: 'antiques' },
-  'art':                     { id: 2, icon: 'star', name: 'art' },
-  'atv & off-road':          { id: 3, icon: 'star', name: 'atv & off-road' },
-  'autoparts':               { id: 4, icon: 'star', name: 'autoparts' },
-  'autos':                   { id: 5, icon: 'star', name: 'autos' },
-  'baby & kids':             { id: 6, icon: 'star', name: 'baby & kids' },
-  'bicycles & parts':        { id: 7, icon: 'star', name: 'bicycles & parts' },
-  'boats & watercraft':      { id: 8, icon: 'star', name: 'boats & watercraft' },
-  'books & magazines':       { id: 9, icon: 'star', name: 'books & magazines' },
-  'camera & video':          { id: 10, icon: 'star', name: 'camera & video' },
-  'clothing & assessories':  { id: 11, icon: 'star', name: 'clothing & assessories' },
-  'collectibles':            { id: 12, icon: 'star', name: 'collectibles' },
-  'computers':               { id: 13, icon: 'star', name: 'computers' },
-  'electronics':             { id: 14, icon: 'star', name: 'electronics' },
-  'farm & agriculture':      { id: 15, icon: 'star', name: 'farm & agriculture' },
-  'furniture':               { id: 16, icon: 'star', name: 'furniture' },
-  'games & toys':            { id: 17, icon: 'star', name: 'games & toys' },
-  'gigs':                    { id: 18, icon: 'star', name: 'gigs' },
-  'health & beauty':         { id: 19, icon: 'star', name: 'health & beauty' },
-  'housewares':              { id: 20, icon: 'star', name: 'housewares' },
-  'housing & apartments':    { id: 21, icon: 'star', name: 'housing & apartments' },
-  'jewelery':                { id: 22, icon: 'star', name: 'jewelery' },
-  'lawn & garden':           { id: 23, icon: 'star', name: 'lawn & garden' },
-  'materials':               { id: 24, icon: 'star', name: 'materials' },
-  'motorcycles & scooters':  { id: 25, icon: 'star', name: 'motorcycles & scooters' },
-  'musical goods':           { id: 26, icon: 'star', name: 'musical goods' },
-  'other':                   { id: 27, icon: 'star', name: 'other' },
-  'real estate':             { id: 28, icon: 'star', name: 'real estate' },
-  'rentals':                 { id: 29, icon: 'star', name: 'rentals' },
-  'services & consulting':   { id: 30, icon: 'star', name: 'services & consulting' },
-  'sporting goods':          { id: 31, icon: 'star', name: 'sporting goods' },
-  'tickets & events':        { id: 32, icon: 'star', name: 'tickets & events' },
-  'tools & equipment':       { id: 33, icon: 'star', name: 'tools & equipment' },
-  'travel & accommodations': { id: 34, icon: 'star', name:'travel & accommodations'  }
+  '1':                { id: 1, icon: 'star', name: 'antiques' },
+  '2':                     { id: 2, icon: 'star', name: 'art' },
+  '3':          { id: 3, icon: 'star', name: 'atv & off-road' },
+  '4':               { id: 4, icon: 'star', name: 'autoparts' },
+  '5':                   { id: 5, icon: 'star', name: 'autos' },
+  '6':             { id: 6, icon: 'star', name: 'baby & kids' },
+  '7':        { id: 7, icon: 'star', name: 'bicycles & parts' },
+  '8':      { id: 8, icon: 'star', name: 'boats & watercraft' },
+  '9':       { id: 9, icon: 'star', name: 'books & magazines' },
+  '10':          { id: 10, icon: 'star', name: 'camera & video' },
+  '11':  { id: 11, icon: 'star', name: 'clothing & assessories' },
+  '12':            { id: 12, icon: 'star', name: 'collectibles' },
+  '13':               { id: 13, icon: 'star', name: 'computers' },
+  '14':             { id: 14, icon: 'star', name: 'electronics' },
+  '15':      { id: 15, icon: 'star', name: 'farm & agriculture' },
+  '16':               { id: 16, icon: 'star', name: 'furniture' },
+  '17':            { id: 17, icon: 'star', name: 'games & toys' },
+  '18':                    { id: 18, icon: 'star', name: 'gigs' },
+  '19':         { id: 19, icon: 'star', name: 'health & beauty' },
+  '20':              { id: 20, icon: 'star', name: 'housewares' },
+  '21':    { id: 21, icon: 'star', name: 'housing & apartments' },
+  '22':                { id: 22, icon: 'star', name: 'jewelery' },
+  '23':           { id: 23, icon: 'star', name: 'lawn & garden' },
+  '24':               { id: 24, icon: 'star', name: 'materials' },
+  '25':  { id: 25, icon: 'star', name: 'motorcycles & scooters' },
+  '26':           { id: 26, icon: 'star', name: 'musical goods' },
+  '27':                   { id: 27, icon: 'star', name: 'other' },
+  '28':             { id: 28, icon: 'star', name: 'real estate' },
+  '29':                 { id: 29, icon: 'star', name: 'rentals' },
+  '30':   { id: 30, icon: 'star', name: 'services & consulting' },
+  '31':          { id: 31, icon: 'star', name: 'sporting goods' },
+  '32':        { id: 32, icon: 'star', name: 'tickets & events' },
+  '33':       { id: 33, icon: 'star', name: 'tools & equipment' },
+  '34': { id: 34, icon: 'star', name:'travel & accommodations'  }
 };
 
 
@@ -146,7 +146,7 @@ export class ListingCardsComponent implements OnInit, OnChanges {
       const that = this;
       // If compare sign icon to filter list to see if allow or not
       this.filteredListings = this.listings.filter((listing) => {
-        var icon = CATEGORY_LIST[listing.category]['icon'];
+        var icon = CATEGORY_LIST[listing.categoryId]['icon'];
         return that.filters[icon];  // true will keep
       });
     }

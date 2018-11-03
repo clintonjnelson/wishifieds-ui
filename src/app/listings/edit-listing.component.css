@@ -38,10 +38,15 @@ mat-form-field {
   max-width: 100px;
 }
 
-/* TODO: THIS STYLING IS NOT WORKING YET */
-:ng-deep .listing-textarea {
-  border-radius: 3px;
-  border: 1px solid lightgray;
+/deep/ div.mat-input-infix > textarea {
+  border-radius: 5px;
+  background-color: #8c8c8c;
+  padding: 3px;
+  color: white;
+}
+
+::ng-deep mat-input-container.price-input-container div.mat-input-flex.mat-form-field-flex {
+  min-width: 10em;
 }
 
 /*Set the underline color to white*/

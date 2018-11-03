@@ -13,6 +13,7 @@ div.listing-main-container {
   flex-direction: column;
   flex: 1 0 auto;
   width: 100%;
+  max-width: 50em;
 }
 
 .card-avatar {
@@ -104,6 +105,10 @@ div.grouped-items-container {
   flex-direction: row;
   justify-content: flex-start;
   width: 90%;
+}
+
+.no-messages {
+  text-align: center;
 }
 
 div.listing-location-map {

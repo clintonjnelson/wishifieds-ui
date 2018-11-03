@@ -115,15 +115,15 @@ export class EditListingComponent implements OnInit {
   buildForm() {
     const that = this;
     this.listingForm = this.formBuilder.group({  // FUTURE: LISTINGFORM
-      category: ['', Validators.required],
-      condition: [''],
+      categoryId: ['', Validators.required],
+      conditionId: [''],
       title: ['', Validators.required],
       description: ['', Validators.required],
       linkUrl: ['', {updateOn: 'blur'}],  // Subscription valueChange triggered only on blur
       images: this.formBuilder.array([]),
       heroImage: ['', Validators.required],
       price: ['', Validators.required],
-      location: ['', Validators.required],
+      locationId: ['', Validators.required],
       keywords: ['']
     });
     // FIXME? MAY HAVE TO PUT THE LISTING_FORM LINK_URL SUBSCRIPTION DOWN HERE.
@@ -162,6 +162,7 @@ export class EditListingComponent implements OnInit {
             listing => {
               console.log("SUCCESSFUL Update WITH RESPONSE: ", listing);
               // TODO: SHOULD WE BUBBLE UP DATA TO PRIOR PAGES HERE, SO DON'T NEED TO RELOAD? PROBABLY.
+              this.saveEE.emit(listing);
             },
             error => {
               console.log("ERROR DURING Update WITH ERROR: ", error);
@@ -195,10 +196,10 @@ export class EditListingComponent implements OnInit {
 
     // Critical pre-save checks
     function passesCriticalValidations() {
-      const checks = that.listingForm.get('category').value &&
+      const checks = that.listingForm.get('categoryId').value &&
         that.listingForm.get('title').value &&
         that.listingForm.get('price').value &&
-        that.listingForm.get('location').value &&
+        that.listingForm.get('locationId').value &&
         that.listingForm.get('heroImage').value;
 
       console.log("CHECKS IS: ", checks);
@@ -318,14 +319,14 @@ export class EditListingComponent implements OnInit {
     if(this && this.listingForm) {
       // Set all values to the original listing;
       this.listingForm.patchValue({
-        category:    this.listing.category,
-        condition:   this.listing.condition,
+        categoryId:  this.listing.categoryId,
+        conditionId: this.listing.conditionId,
         title:       this.listing.title,
         description: this.listing.description,
         linkUrl:     this.listing.linkUrl,
         heroImage:   ( this.listing.images[0] || ''),
         price:       this.listing.price,
-        location:    this.listing.location,
+        locationId:  this.listing.locationId,
         keywords:    this.listing.keywords
       });
 
@@ -437,7 +438,7 @@ export class EditListingComponent implements OnInit {
   // ********** CONSIDER BREAKING OUT TO A SERVICE *************
   // ******************** CUSTOM VALIDATIONS HERE **************************
   // NOTE: validationErrorMessages are implemented in each listing content type
-  validationErrorMessages: any;
+  validationErrorMessages: any = {};
   displayedValidationErrors: any = {
     title: '',
     linkUrl: '',

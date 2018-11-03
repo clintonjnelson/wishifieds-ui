@@ -11,23 +11,24 @@ export class Category{
 
 
 const NEW_LISTING: Listing = {
-  id:          undefined,
-  userId:      "1", // Fill this in with the requesting user information
-  category:    "",  // TODO: Decide if UI does the name conversion or the API
-  condition:   "",  // TODO: Decide if UI does the name conversion or the API
-  title:       "",
-  description: "",
-  keywords:    "",
-  linkUrl:     "",
-  price:       "",
-  location:    "",
-  status:      "",
-  heroImage:   "",
-  images:      [],
-  imagesRef:   "",
-  slug:        "",
-  createdAt:   "",
-  updatedAt:   ""
+  id:            undefined,
+  userId:        "1", // Fill this in with the requesting user information
+  ownerUsername: "",
+  categoryId:    "",  // TODO:
+  conditionId:   "",  // TODO: Decide if UI does the name conversion or the API
+  title:         "",
+  description:   "",
+  keywords:      "",
+  linkUrl:       "",
+  price:         "",
+  locationId:    "",
+  status:        "",
+  heroImage:     "",
+  images:        [],
+  imagesRef:     "",
+  slug:          "",
+  createdAt:     "",
+  updatedAt:     ""
 };
 
 

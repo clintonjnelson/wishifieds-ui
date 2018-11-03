@@ -13,7 +13,7 @@
         <!-- Category -->
         <mat-form-field layout="column">
           <mat-label>Choose a Category</mat-label>
-          <mat-select name="category" [formControl]="listingForm.controls['category']" [(ngModel)]="tempListing.category" placeholder="Choose a Category" required>
+          <mat-select name="category" [formControl]="listingForm.controls['categoryId']" [(ngModel)]="tempListing.categoryId" placeholder="Choose a Category" required>
             <mat-option *ngFor="let category of categories" [value]="category.id">
               {{ category.name }}
             </mat-option>
@@ -28,9 +28,9 @@
         </mat-form-field>
 
         <!-- Condition -->
-        <mat-form-field layout="column" *ngIf="tempListing.category">
+        <mat-form-field layout="column" *ngIf="tempListing.categoryId">
           <mat-label>Desired Condition</mat-label>
-          <mat-select name="condition" [formControl]="listingForm.controls['condition']" [(ngModel)]="tempListing.condition" placeholder="Choose a Condition" required>
+          <mat-select name="condition" [formControl]="listingForm.controls['conditionId']" [(ngModel)]="tempListing.conditionId" placeholder="Choose a Condition" required>
             <mat-option *ngFor="let condition of conditions" [value]="condition.id">
               {{ condition.name }}
             </mat-option>
@@ -159,7 +159,7 @@
         <!-- Location -->
         <mat-form-field layout="row">
           <mat-label>Purchase Location</mat-label>
-          <mat-select name="location" [formControl]="listingForm.controls['location']"  [(ngModel)]="tempListing.location" placeholder="Choose a Location (eg: meeting location for purchase)" required>
+          <mat-select name="location" [formControl]="listingForm.controls['locationId']"  [(ngModel)]="tempListing.locationId" placeholder="Choose a Location (eg: meeting location for purchase)" required>
             <mat-option *ngFor="let location of locations" [value]="location.id">
               {{ location.description }}
             </mat-option>

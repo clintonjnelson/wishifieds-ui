@@ -43,9 +43,10 @@ export class ApiListingsService {
 
   createListing(listingData: any): Observable<Listing> {
     const createListingUrl = this.wishifiedsApi.routes.createListing;
+    const options = this.wishifiedsApi.getRequestOptionWithEatHeader();
 
     return this.http
-               .post(createListingUrl, JSON.stringify({listingData: listingData}))
+               .post(createListingUrl, JSON.stringify({listingData: listingData}), options)
                .map( res => {
                  console.log("SUCCESS Create Listing: ", res);
                  return res.json().listing as Listing;
@@ -57,9 +58,10 @@ export class ApiListingsService {
 
   updateListing(listingData: any): Observable<Listing> {
     const updateListingUrl = this.wishifiedsApi.buildUrl('updateListing', [{':id': listingData.id}]);
+    const options = this.wishifiedsApi.getRequestOptionWithEatHeader();
 
     return this.http
-               .put(updateListingUrl, JSON.stringify({listingData: listingData}))
+               .put(updateListingUrl, JSON.stringify({listingData: listingData}), options)
                .map( res => {
                  console.log("SUCCESS Update Listing: ", res);
                  return res.json().listing as Listing;
