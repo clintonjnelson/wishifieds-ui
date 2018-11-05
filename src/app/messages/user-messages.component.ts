@@ -113,7 +113,8 @@ export class UserMessagesComponent implements OnInit {
     // Sender == CurrentViewer? Display CurrentViewer's messages on LEFT
     // Sender != CurrentViewer? Display Other Person's message on RIGHT
     console.log("MESSAGE BEFORE SETTING isViewerSentMessage is: ", message);
-    return (this.currentViewerId === message.senderId);
+    console.log("ARE THEY THE SAME? First, Second, Compare: ", this.currentViewerId, message.senderId, this.helpers.isEqualStrInt(this.currentViewerId, message.senderId));
+    return this.helpers.isEqualStrInt(this.currentViewerId, message.senderId);
   }
 
   setIsOwner() {

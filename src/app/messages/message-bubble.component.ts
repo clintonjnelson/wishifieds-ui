@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { HelpersService } from '../shared/helpers/helpers.service';
 import { Message } from './message.model';
 
 @Component({
@@ -12,4 +13,10 @@ import { Message } from './message.model';
 export class MessageBubbleComponent {
   @Input() message: Message;
   @Input() viewerIsSender: boolean;  // Triggers recipient bubble style
+
+  constructor(private helpers: HelpersService) {}
+
+  displayTime(timestampString: string): string {
+    return this.helpers.userDisplayTimeAgo(timestampString);
+  }
 }

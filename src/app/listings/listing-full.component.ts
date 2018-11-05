@@ -29,7 +29,7 @@ export class ListingFullComponent implements OnInit {
   isOwner: boolean = true;  // TODO: HOOK THIS UP; NEEDED FOR BUTTONS & SUCH.
   msgCorrespondantIds = [];
 
-  constructor(private icons:   IconService,
+  constructor(private icons: IconService,
               private helpers: HelpersService,
               private router: Router,
               private authService: AuthService,
