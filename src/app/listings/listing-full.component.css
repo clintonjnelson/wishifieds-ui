@@ -111,6 +111,10 @@ div.grouped-items-container {
   text-align: center;
 }
 
+.unread-msgs-color {
+  color: lightgreen;
+}
+
 div.listing-location-map {
   text-align: center;
 }

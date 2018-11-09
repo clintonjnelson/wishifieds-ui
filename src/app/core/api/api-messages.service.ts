@@ -42,7 +42,7 @@ export class ApiMessagesService {
                .get(getListingMessagesUrl, options)
                .map( res => {
                  console.log("SUCCESS GET Messages: ", res);
-                 return res.json().listingMessages;  // Example returm: listingMessages: [ { order: 0, hasUnread: true, messages: [ [Object] ] } ]
+                 return res.json();  // {listingMessages: Message[], unreadCounts: Object[Int, Int]}
                })
                .catch( (error: Response) => {
                  return Observable.throw(error);
@@ -50,7 +50,7 @@ export class ApiMessagesService {
   }
 
   // listingId may be String or Int
-  getListingMessagesCorrespondants(listingId: any): Observable<Message[]> {
+  getListingMessagesCorrespondants(listingId: any): Observable<any> {
     const getListingMessagesUrl =
       this.wishifiedsApi.buildUrl('getListingMessagesCorrespondants', [ { ':id': listingId } ] );
     const options = this.wishifiedsApi.getRequestOptionWithEatHeader();
@@ -59,7 +59,23 @@ export class ApiMessagesService {
                .get(getListingMessagesUrl, options)
                .map( res => {
                  console.log("SUCCESS GET Messages: ", res);
-                 return res.json().correspondants as string[];
+                 return res.json();  // {correspondants: String[], unreadCounts: Object[Int, Int]}
+               })
+               .catch( (error: Response) => {
+                 return Observable.throw(error);
+               });
+  }
+
+  // Only a recipient can have unread messages. Set them Read after viewing
+  updateUnreadMessagesToRead(messageIds: String[]) {
+    const updateMessagesToReadUrl = this.wishifiedsApi.routes.updateUnreadMessagesToRead;
+    const options = this.wishifiedsApi.getRequestOptionWithEatHeader();
+
+    return this.http
+               .patch(updateMessagesToReadUrl, JSON.stringify({messageIds: messageIds}), options)
+               .map( res => {
+                 console.log("SUCCESS update messages to Read: ", res);
+                 return res.json();  // { success: true/false }
                })
                .catch( (error: Response) => {
                  return Observable.throw(error);

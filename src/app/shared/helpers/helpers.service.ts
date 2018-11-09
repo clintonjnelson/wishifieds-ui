@@ -38,7 +38,7 @@ export class HelpersService {
   // Turns times into an amount of time ago. Eg: two days ago, one month ago, two minutes ago, now
   userDisplayTimeAgo(timestampString: string) {
     if(!timestampString) {
-      return 'tbd';
+      return 'preview';
     }
 
     try {
@@ -66,6 +66,7 @@ export class HelpersService {
         return (monthDiff < 2 ? (monthDiff + ' month ago') : (monthDiff + ' months ago'));
       }
 
+      console.log("DAYS DIFF IS: ", daysDiff);
       if(daysDiff < 1) {
 
         // Hours first
@@ -79,7 +80,7 @@ export class HelpersService {
         // Minutes Next
         const nowMins = nowMillis / 60000;
         const stampMins = stampMillis / 60000;
-        const minutesDiff = Math.floor(nowHours - stampHours);
+        const minutesDiff = Math.floor(nowMins - stampMins);
         if(minutesDiff > 0) {
           return (minutesDiff < 2 ? (minutesDiff + ' minute ago') : (minutesDiff + ' minutes ago'));
         }

@@ -22,7 +22,7 @@ import { Subject }             from 'rxjs/Subject';
   styleUrls: ['user-messages.component.css']
 })
 
-// TODO: In here, messaging is always between a listing owner & a seller
+// TODO: In here, messaging is always between a listing owner & a seller/correspondent
 // The question is, which one is the sender & which one is the recipient.
 // Sender
   // We know that the sender is ALWAYS the auth person, so we can get sender off of there.
@@ -63,8 +63,9 @@ export class UserMessagesComponent implements OnInit {
      this.setIsOwner();
      this.setRecipient();
      this.tempMessage = {
+       id: '',
        senderId: this.currentViewerId,  // Whoever will be sending the message out
-       recipientId: this.recipientId,  // TODO: THIS IS A LITTLE MORE COMPLICATED - BASED ON WHO CORRESPONDENCE IS WITH
+       recipientId: this.recipientId,
        listingId: this.listingId,  // COULD get this from the route for user messages
        content: '',
        status: '',
@@ -76,7 +77,7 @@ export class UserMessagesComponent implements OnInit {
      this.msgSubscription = this.msgsEmit.subscribe((newMsgs: Message[]) => {
        console.log("CHANGING MESSAGES... supposedly. With new messages: ", newMsgs);
        if(newMsgs && newMsgs.length) {
-         this.messages = this.messages.concat(newMsgs);
+         this.messages = newMsgs;
        }
      });
   }
@@ -89,12 +90,16 @@ export class UserMessagesComponent implements OnInit {
       .subscribe(
         res => {
           console.log("RESPONSE FOR GET LISTING MESSAGES IS: ", res);
-          if(res && res.length > 0) {
-            let msgs = res.map(msg => {
-              return that.mapMessage(msg);
+          var listingMessages = res.listingMessages;
+          if(listingMessages && listingMessages.length > 0) {
+            let msgs = listingMessages.map(msg => {
+              return that.mapMessageModel(msg);
             });
             console.log("MSGS TO EMIT IS: ")
             that.msgsEmit.next(msgs);
+
+            // Set the loaded UNREAD messages to READ
+            that.updateUnreadMessagesToRead();
           }
           else {
             console.log("No messages found.");
@@ -103,6 +108,34 @@ export class UserMessagesComponent implements OnInit {
         error => {
           console.log("Error getting messages for listing: ", error);
         });
+  }
+
+  updateUnreadMessagesToRead() {
+    const that = this;
+    // Get array of all unread message ids present
+    // NOTE: ONLY set READ the messages displayed, in case one has come in that's not displayed
+    console.log("MESSAGES IS: ", this.messages);
+    const messageIds = this.messages.reduce(function(unreads, current) {
+      if(current.status === 'UNREAD' &&
+        that.helpers.isEqualStrInt(current.recipientId, that.currentViewerId)) {
+        console.log("THIS MESSAGE IS: ", current);
+        unreads.push(current.id);  // include only if UNREAD
+      }
+      console.log("UNREADS IS NOW: ", unreads);
+      return unreads;
+    }, []);
+
+    if(messageIds && messageIds.length) {
+      this.messagesApi.updateUnreadMessagesToRead(messageIds)
+        .subscribe(
+          res => {
+            console.log("Success updating messages from unread to read.");
+            // TODO? Do nothing after set to read, since no need to change UI now
+          },
+          error => {
+            console.log("Error updating messages from unread to read.");
+          });
+    }
   }
 
   buildIconClass(icon: string, size: string = '2') {
@@ -126,8 +159,6 @@ export class UserMessagesComponent implements OnInit {
   }
 
   // TODO: ADD VALIDATIONS ON THE INPUT MESSAGE TO PREVENT INJECTION ATTACKS
-
-  // TODO: HOOK UP SEND ABILITY FOR CREATING NEW MESSAGES
   send() {
     const that = this;
     console.log("SENDING NEW MESSAGE with this payload: ", that.tempMessage);
@@ -135,7 +166,12 @@ export class UserMessagesComponent implements OnInit {
       .subscribe(
         newMsg => {
           console.log("MESSAGE CREATED IS: ", newMsg);
-          that.msgsEmit.next( [newMsg] );  // TODO: THIS WILL NOT WORK - NEED TO DO SOMETHING LIKE: that.msgsEmit.next(newMsg)
+          // Clear input for next message
+          this.tempMessage.content = '';
+
+          // Add message to list
+          const updatedMsgs = that.messages.concat(newMsg)
+          that.msgsEmit.next( updatedMsgs );  // TODO: THIS WILL NOT WORK - NEED TO DO SOMETHING LIKE: that.msgsEmit.next(newMsg)
         },
         error => {
           console.log("Error creating message: ", error);
@@ -146,8 +182,9 @@ export class UserMessagesComponent implements OnInit {
 
 
   // TODO: CAN WE MOVE THIS TO THE MESSAGE CLASS ITSELF?????
-  mapMessage(rawMsg) {
+  mapMessageModel(rawMsg) {
     return {
+      id: rawMsg.id,
       senderId: rawMsg.senderId,
       recipientId: rawMsg.recipientId,
       listingId: rawMsg.listingId,
@@ -156,23 +193,6 @@ export class UserMessagesComponent implements OnInit {
       createdAt: rawMsg.createdAt
     }
   }
-
-  // Logged OUT Helpers
-  // toggleInfoContainerExpand(input: any = null): void {
-  //   // Trigger GA tracking
-  //   // this.gaClick('loginsignupexpand');
-
-  //   console.log("TOGGLING TO: ", !this.expandedInfo);
-
-  //   // If setting value directly, do that.
-  //   if(typeof(input) === 'boolean') {
-  //     this.expandedInfo = input;
-  //   }
-  //   // Else, just toggle the value
-  //   else {
-  //     this.expandedInfo = !this.expandedInfo;
-  //   }
-  // }
 }
 
 

@@ -1,6 +1,7 @@
 
 <!-- Recipient Message Bubble -->
-<div *ngIf="!viewerIsSender" class="speech-bubble-ds right-color">
+<div *ngIf="!viewerIsSender" class="speech-bubble-ds right-color"
+[ngClass]="{'highlight-unread': message.status === 'UNREAD'}">
   <p><small>{{ displayTime(message.createdAt) }}</small></p>
   <p>{{ message.content }}</p>
   <div class="speech-bubble-ds-arrow-right"></div>

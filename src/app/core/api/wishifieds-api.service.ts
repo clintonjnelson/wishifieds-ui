@@ -20,6 +20,7 @@ const ROUTES = {
   resendUserConfirmation: '/api/auth/resendconfirmation?id=:userId',
   getUserById: '/api/users/:usernameOrId',
   getUsernameByUserId: '/api/users/:id/username',
+  getProfilePicByUserId: '/api/users/:id/profile_pic',
   updateUser:  '/api/users/:id',
   checkAvailability: '/api/users/available?username=:username&email=:email',
 
@@ -42,6 +43,7 @@ const ROUTES = {
 
   // Messages
   createMessage: '/api/messages',
+  updateUnreadMessagesToRead: '/api/messages/markread',
 
   // Search
   search: '/api/search?searchStr=:searchStr',

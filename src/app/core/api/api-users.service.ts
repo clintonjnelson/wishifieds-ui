@@ -101,6 +101,19 @@ export class ApiUsersService {
                });
   }
 
+  getProfilePicByUserId(userId: string): Observable<any> {
+    const getProfilePicUrl = this.wishifiedsApi.buildUrl('getProfilePicByUserId', [ {':id': userId} ]);
+    return this.http
+                 .get(getProfilePicUrl)
+                 .map( response => {
+                   console.log("RESPONSE FROM GET PROFILE_PIC_URL IS: ", response.json());
+                   return response.json();
+                 })
+                 .catch( (error: Response) => {
+                   return Observable.throw(error);
+                 });
+  }
+
   // UPDATE THIS TO RETURN THE NEW USER????
   updateUser(userUpdates: UserUpdates): Observable<any> {
     const userUpdateUrl = this.wishifiedsApi.buildUrl('updateUser', [{':id': userUpdates.userId}]);

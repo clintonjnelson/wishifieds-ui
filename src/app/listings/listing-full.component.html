@@ -72,7 +72,8 @@
       <div *ngIf="isOwner">
 
         <!-- Messages -->
-        <i *ngIf="msgCorrespondantIds && msgCorrespondantIds.length" class="{{ buildIconClass('comments', '3') }}" (click)="toggleShowMessages()" ></i>
+        <i *ngIf="msgCorrespondantIds && msgCorrespondantIds.length" class="{{ buildIconClass('comments', '3') }}" [ngClass]="{'unread-msgs-color': !!unreadMessages }" (click)="toggleShowMessages()" >
+        </i><strong *ngIf="!!unreadMessages" class="unread-msgs-color">{{unreadMessages}}</strong>
         <div *ngIf="showMessages" class="listing-chat-container">
           <div *ngFor="let id of msgCorrespondantIds; let ind = index" class="{{ 'msg-container-' + ind }}">
             <user-messages [listingId]="listing.id" [listingOwnerId]="listing.userId" [correspondantId]="id"></user-messages>
@@ -87,6 +88,9 @@
 
       <!-- Non-Owner Messages Section -->
       <div *ngIf="!isOwner">
+
+        <i class="{{ buildIconClass('comments', '3') }}" [ngClass]="{'unread-msgs-color': !!unreadMessages }">
+        </i>{{unreadMessages}}
         <div class="listing-chat-container">
           <user-messages [listingId]="listing.id" [listingOwnerId]="listing.userId" [correspondantId]="currentViewerId"></user-messages>
         </div>

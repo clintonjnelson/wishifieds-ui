@@ -1,5 +1,6 @@
 
 export class Message {
+  id: string;
   senderId: string;
   recipientId: string;
   listingId: string;

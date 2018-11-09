@@ -22,6 +22,11 @@
   color: white;
 }
 
+/* Highlight Unread Messages (Conditional) */
+.highlight-unread {
+  border: 10px solid lightgreen;
+}
+
 /* Generic Bubble Styling - EXCEPT Color */
 .speech-bubble-ds {
   -webkit-border-radius: 4px;

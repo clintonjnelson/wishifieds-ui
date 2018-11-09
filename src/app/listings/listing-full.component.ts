@@ -28,6 +28,7 @@ export class ListingFullComponent implements OnInit {
   currentViewerId: string;
   isOwner: boolean = true;  // TODO: HOOK THIS UP; NEEDED FOR BUTTONS & SUCH.
   msgCorrespondantIds = [];
+  unreadMessages: number;
 
   constructor(private icons: IconService,
               private helpers: HelpersService,
@@ -52,7 +53,7 @@ export class ListingFullComponent implements OnInit {
       custom: 'banner'
     }
 
-    this.getCorrespondantUsersList();
+    this.getCorrespondantMessagesInfo();
     this.currentViewerId = this.authService.auth.userId;
     this.isOwner = this.helpers.isEqualStrInt(this.listing.userId, this.currentViewerId);
     console.log("IS OWNER IS, listindOwner, currentViewer: ", this.isOwner, this.listing.userId, this.currentViewerId);
@@ -98,15 +99,20 @@ export class ListingFullComponent implements OnInit {
   // Load any info needed for passing to messages boxes
     // If viewer is owner, then get ALL users on listing
     // If viewer is NOT owner, then VIEWER is only user needed & already have them!
-  getCorrespondantUsersList() {
+  getCorrespondantMessagesInfo() {
     const that = this;
     if(this.isOwner) {
       // Listing owner may be talking with many people
       this.messagesApi.getListingMessagesCorrespondants(this.listing.id)
         .subscribe(
-          correspondants => {
-            console.log("CORRESPONDANTS RETURNED ARE: ", correspondants);
-            that.msgCorrespondantIds = correspondants;
+          res => {
+            console.log("CORRESPONDANTS RETURNED ARE: ", res.correspondants);
+            that.msgCorrespondantIds = res.correspondants;
+            // Total unread messages for Listing
+            that.unreadMessages = Object.keys(res.unreadCounts)
+              .reduce( function(total, key) {
+                return total + res.unreadCounts[key];
+              }, 0);
           },
           error => {
             console.log("Error getting message correspondants: ", error);
