@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { WishifiedsApi } from '../api/wishifieds-api.service';
 import { UserCreds, User, UserUpdates } from '../../users/user.model';
-
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { map, catchError } from 'rxjs/operators';
 
 // TODO: CREATE OBJECTS FOR THE RESPONSES ONCE THEYRE DIALED IN
 class CreateUserResponse {
@@ -34,28 +32,32 @@ export class ApiUsersService {
     console.log("DATA TO SEND IS: ", JSON.stringify(creds));
     return this.http
                .post(createUserUrl, JSON.stringify(creds))
-               .map( user =>  {
-                 console.log("RESPONSE FROM USER CREATION IS: ", user.json());
-                 return user.json();
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-                 // show error message to user
-                 // Maybe use remote logging infrastructure
-               });
+               .pipe(
+                 map( user =>  {
+                   console.log("RESPONSE FROM USER CREATION IS: ", user.json());
+                   return user.json();
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                   // show error message to user
+                   // Maybe use remote logging infrastructure
+                 })
+               );
   }
 
   confirmUser(token: string, email: string): Observable<any> {
     const confirmUserUrl = this.wishifiedsApi.buildUrl('confirmUser', [{':confirmationtoken': token}, {':email': email}]);
     return this.http
                .get(confirmUserUrl)
-               .map( success => {
-                 console.log("SUCCESS FROM CONFIRM USER IS: ", success);
-                 return success.json();
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map( success => {
+                   console.log("SUCCESS FROM CONFIRM USER IS: ", success);
+                   return success.json();
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 
   resendUserConfirmation(userId: string): Observable<any> {
@@ -63,13 +65,15 @@ export class ApiUsersService {
     const options = this.wishifiedsApi.getRequestOptionWithEatHeader();
     return this.http
                .get(confirmationResendUrl, options)
-               .map( success => {
-                 console.log("SUCCESS FROM RESEND CONFIRMATION IS: ", success);
-                 return success.json();
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map( success => {
+                   console.log("SUCCESS FROM RESEND CONFIRMATION IS: ", success);
+                   return success.json();
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 
   getUserById(usernameOrId: string): Observable<any> {
@@ -79,39 +83,45 @@ export class ApiUsersService {
     console.log("HEADERS IS: ", options);
     return this.http
                .get(getUserUrl, options)
-               .map( user => {
-                 console.log("RESPONSE FROM GET USER BY ID IS: ", user.json());
-                 return user.json() as UserByIdResponse;
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map( user => {
+                   console.log("RESPONSE FROM GET USER BY ID IS: ", user.json());
+                   return user.json() as UserByIdResponse;
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 
   getUsernameByUserId(userId: string): Observable<any> {
     const getUsernameUrl = this.wishifiedsApi.buildUrl('getUsernameByUserId', [ {':id': userId} ] );
     return this.http
                .get(getUsernameUrl)
-               .map( username => {
-                 console.log("RESPONSE FROM GET USERNAME IS: ", username.json());
-                 return username.json();
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map( username => {
+                   console.log("RESPONSE FROM GET USERNAME IS: ", username.json());
+                   return username.json();
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 
   getProfilePicByUserId(userId: string): Observable<any> {
     const getProfilePicUrl = this.wishifiedsApi.buildUrl('getProfilePicByUserId', [ {':id': userId} ]);
     return this.http
                  .get(getProfilePicUrl)
-                 .map( response => {
-                   console.log("RESPONSE FROM GET PROFILE_PIC_URL IS: ", response.json());
-                   return response.json();
-                 })
-                 .catch( (error: Response) => {
-                   return Observable.throw(error);
-                 });
+                 .pipe(
+                   map( response => {
+                     console.log("RESPONSE FROM GET PROFILE_PIC_URL IS: ", response.json());
+                     return response.json();
+                   }),
+                   catchError( (error: Response) => {
+                     return Observable.throw(error);
+                   })
+                 );
   }
 
   // UPDATE THIS TO RETURN THE NEW USER????
@@ -122,13 +132,15 @@ export class ApiUsersService {
     console.log("USER UPDATE URL IS: ", userUpdateUrl);
     return this.http
                .patch(userUpdateUrl, JSON.stringify({userUpdates: userUpdates}), options)
-               .map( success => {
-                 console.log("RESPONSE FROM UPDATE USER IN OBSERVABLE");
-                 return success.json();
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map( success => {
+                   console.log("RESPONSE FROM UPDATE USER IN OBSERVABLE");
+                   return success.json();
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 
   checkAvailableValues(username: string = '', email: string = '') {
@@ -138,12 +150,14 @@ export class ApiUsersService {
     console.log("URL FOR CHECKING AVAILABILITY IS: ", getAvailabilityUrl);
     return this.http
                .get(getAvailabilityUrl, options)
-               .map( availability => {
-                 console.log("RESPONSE FROM GET AVAILABILITY IS: ", availability);
-                 return availability.json();
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map( availability => {
+                   console.log("RESPONSE FROM GET AVAILABILITY IS: ", availability);
+                   return availability.json();
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 }

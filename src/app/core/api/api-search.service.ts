@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { WishifiedsApi } from '../api/wishifieds-api.service';
 import { Listing } from '../../listings/listing.model';
-
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { map, catchError } from 'rxjs/operators';
 
 
 @Injectable()
@@ -19,12 +17,14 @@ export class ApiSearchService {
 
     return this.http
                .get(searchListingsUrl)
-               .map( res => {
-                 console.log("SUCCESS GET (search) Listings: ", res);
-                 return res.json().listings as Listing[];
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map( res => {
+                   console.log("SUCCESS GET (search) Listings: ", res);
+                   return res.json().listings as Listing[];
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 }

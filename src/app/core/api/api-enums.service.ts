@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { WishifiedsApi } from '../api/wishifieds-api.service';
 import { Category } from '../../shared/models/category.model';
 import { Condition } from '../../shared/models/condition.model';
-
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { map, catchError } from 'rxjs/operators';
 
 
 @Injectable()
@@ -20,13 +18,15 @@ export class ApiEnumsService {
 
     return this.http
                .get(getCategoriesUrl)
-               .map( res => {
-                 console.log("SUCCESS GET Categories: ", res);
-                 return res.json().categories as Category[];
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map( res => {
+                   console.log("SUCCESS GET Categories: ", res);
+                   return res.json().categories as Category[];
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 
   getConditions(): Observable<Condition[]> {
@@ -34,12 +34,14 @@ export class ApiEnumsService {
 
     return this.http
                .get(getConditionsUrl)
-               .map( res => {
-                 console.log("SUCCESS GETTING CONDITIONS", res);
-                 return res.json().conditions as Condition[];
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map( res => {
+                   console.log("SUCCESS GETTING CONDITIONS", res);
+                   return res.json().conditions as Condition[];
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 }

@@ -45,7 +45,7 @@
         </mat-form-field>
 
         <!-- Title -->
-        <mat-input-container>
+        <mat-form-field>
           <mat-label>Wish Listing Title</mat-label>
           <input matInput type="text" name="title" [formControl]="listingForm.controls['title']" [(ngModel)]="tempListing.title" placeholder="Title of what you're looking for..." required/>
           <mat-hint>
@@ -55,10 +55,10 @@
           <div *ngIf="displayedValidationErrors.title" class="input-errors error">
             {{ displayedValidationErrors.title }}
           </div>
-        </mat-input-container>
+        </mat-form-field>
 
         <!-- Description -->
-        <mat-input-container layout="row">
+        <mat-form-field layout="row">
           <mat-label>Wish Listing Description</mat-label>
           <textarea class="listing-textarea" matInput matTextareaAutosize matAutosizeMinRows="6" matAutosizeMaxRows="20" name="description" [formControl]="listingForm.controls['description']" [(ngModel)]="tempListing.description" placeholder="Description of what you're looking for..." mat-maxlength="2000"></textarea>
           <mat-hint>
@@ -68,10 +68,10 @@
           <div *ngIf="displayedValidationErrors.description" class="input-errors error">
             {{ displayedValidationErrors.description }}
           </div>
-        </mat-input-container>
+        </mat-form-field>
 
         <!-- LinkUrl -->
-        <mat-input-container layout="row">
+        <mat-form-field layout="row">
           <mat-label>Link to an Example</mat-label>
           <input matInput type="text" name="linkUrl" [formControl]="listingForm.controls['linkUrl']" [(ngModel)]="tempListing.linkUrl"/>
           <mat-hint>
@@ -81,7 +81,7 @@
           <div *ngIf="displayedValidationErrors.linkUrl" class="input-errors error">
             {{ displayedValidationErrors.linkUrl }}
           </div>
-        </mat-input-container>
+        </mat-form-field>
 
         <!-- TODO: IMPLEMENT A DRAG & DROP PICTURE INPUT WITH DRAGGABLE ORDERING AND ABILITY TO SELECT FROM LINKURL -->
         <!-- TODO:
@@ -139,7 +139,7 @@
         </mat-form-field>
 
         <!-- Price -->
-        <mat-input-container layout="row" class="price-input-container">
+        <mat-form-field layout="row" class="price-input-container">
           <mat-label class="price-input-label">Willing to Pay</mat-label>
           <input matInput type="number" name="price" [formControl]="listingForm.controls['price']" [(ngModel)]="tempListing.price" max="99999999"/>
           <span matPrefix>$&nbsp;</span>
@@ -150,7 +150,7 @@
           <div *ngIf="displayedValidationErrors.price" class="input-errors error">
             {{ displayedValidationErrors.price }}
           </div>
-        </mat-input-container>
+        </mat-form-field>
 
 
         <!-- TODO: COME UP WITH A WAY TO INPUT THE FULL LOCATION HERE. City/State or Zip? MAYBE GOOGLE MAPS INTEGRATION? -->
@@ -175,7 +175,7 @@
 
         <!-- TODO: ADD A LIST OF CHIPS HERE FOR KEYWORDS? ADD SOMETHING. TEXT INPUTS WITH OPTIONAL ADD ANOTHER. -->
         <!-- Keywords -->
-        <mat-input-container layout="row">
+        <mat-form-field layout="row">
           <mat-label>Keywords</mat-label>
           <input matInput type="text" name="keywords" [formControl]="listingForm.controls['keywords']" [(ngModel)]="tempListing.keywords" placeholder="Description of what you're looking for..." mat-maxlength="2000"/>
           <mat-hint>
@@ -185,7 +185,7 @@
           <div *ngIf="displayedValidationErrors.keywords" class="input-errors error">
             {{ displayedValidationErrors.keywords }}
           </div>
-        </mat-input-container>
+        </mat-form-field>
 
 
 

@@ -15,7 +15,7 @@ mat-form-field {
 
 
 /*Set spacing between input field sections*/
-::ng-deep mat-form-field, ::ng-deep mat-input-container {
+::ng-deep mat-form-field, ::ng-deep mat-form-field {
   margin-bottom: 1.2em;
 }
 
@@ -33,7 +33,7 @@ mat-form-field {
   min-width: 280px;
   max-width: 600px;
 }
-::ng-deep mat-input-container.price-input-container .mat-input-wrapper {
+::ng-deep mat-form-field.price-input-container .mat-input-wrapper {
   min-width: 100px;
   max-width: 100px;
 }
@@ -45,7 +45,7 @@ mat-form-field {
   color: white;
 }
 
-::ng-deep mat-input-container.price-input-container div.mat-input-flex.mat-form-field-flex {
+::ng-deep mat-form-field.price-input-container div.mat-input-flex.mat-form-field-flex {
   min-width: 10em;
 }
 

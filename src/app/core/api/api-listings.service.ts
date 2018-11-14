@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { WishifiedsApi } from '../api/wishifieds-api.service';
 import { Listing } from '../../listings/listing.model';
-
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { map, catchError } from 'rxjs/operators';
 
 
 @Injectable()
@@ -19,12 +17,14 @@ export class ApiListingsService {
 
     return this.http
                .get(getListingUrl)
-               .map(res => {
-                 return res.json().listing as Listing;
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map(res => {
+                   return res.json().listing as Listing;
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 
   getListingsByUser(usernameOrId: any): Observable<Listing[]> {
@@ -33,12 +33,14 @@ export class ApiListingsService {
 
     return this.http
                .get(getListingsByUserUrl)
-               .map(res => {
-                 return res.json().listings as Listing[];
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map(res => {
+                   return res.json().listings as Listing[];
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 
   createListing(listingData: any): Observable<Listing> {
@@ -47,13 +49,15 @@ export class ApiListingsService {
 
     return this.http
                .post(createListingUrl, JSON.stringify({listingData: listingData}), options)
-               .map( res => {
-                 console.log("SUCCESS Create Listing: ", res);
-                 return res.json().listing as Listing;
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map( res => {
+                   console.log("SUCCESS Create Listing: ", res);
+                   return res.json().listing as Listing;
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 
   updateListing(listingData: any): Observable<Listing> {
@@ -62,12 +66,14 @@ export class ApiListingsService {
 
     return this.http
                .put(updateListingUrl, JSON.stringify({listingData: listingData}), options)
-               .map( res => {
-                 console.log("SUCCESS Update Listing: ", res);
-                 return res.json().listing as Listing;
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map( res => {
+                   console.log("SUCCESS Update Listing: ", res);
+                   return res.json().listing as Listing;
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 }

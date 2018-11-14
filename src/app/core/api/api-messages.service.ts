@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { WishifiedsApi } from '../api/wishifieds-api.service';
 import { Message } from '../../messages/message.model';
-
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { map, catchError } from 'rxjs/operators';
 
 
 @Injectable()
@@ -21,14 +19,16 @@ export class ApiMessagesService {
 
     return this.http
                .post(createMessageUrl, JSON.stringify({message: messageData}), options)
-               .map( res => {
-                 console.log("SUCCESS CREATE MESSAGE: ", res);
-                 return res.json().message as Message;
-               })
-               .catch( (error: Response) => {
-                 console.log("ERROR CREATING MESSAGE: ", error);
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map( res => {
+                   console.log("SUCCESS CREATE MESSAGE: ", res);
+                   return res.json().message as Message;
+                 }),
+                 catchError( (error: Response) => {
+                   console.log("ERROR CREATING MESSAGE: ", error);
+                   return Observable.throw(error);
+                 })
+               );
   }
 
   // listingId may be String or Int
@@ -40,13 +40,15 @@ export class ApiMessagesService {
     console.log("CORRESPONDANT_ID IS: ", correspondantId);
     return this.http
                .get(getListingMessagesUrl, options)
-               .map( res => {
-                 console.log("SUCCESS GET Messages: ", res);
-                 return res.json();  // {listingMessages: Message[], unreadCounts: Object[Int, Int]}
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map( res => {
+                   console.log("SUCCESS GET Messages: ", res);
+                   return res.json();  // {listingMessages: Message[], unreadCounts: Object[Int, Int]}
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 
   // listingId may be String or Int
@@ -57,13 +59,15 @@ export class ApiMessagesService {
 
     return this.http
                .get(getListingMessagesUrl, options)
-               .map( res => {
-                 console.log("SUCCESS GET Messages: ", res);
-                 return res.json();  // {correspondants: String[], unreadCounts: Object[Int, Int]}
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map( res => {
+                   console.log("SUCCESS GET Messages: ", res);
+                   return res.json();  // {correspondants: String[], unreadCounts: Object[Int, Int]}
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 
   // Only a recipient can have unread messages. Set them Read after viewing
@@ -73,12 +77,14 @@ export class ApiMessagesService {
 
     return this.http
                .patch(updateMessagesToReadUrl, JSON.stringify({messageIds: messageIds}), options)
-               .map( res => {
-                 console.log("SUCCESS update messages to Read: ", res);
-                 return res.json();  // { success: true/false }
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map( res => {
+                   console.log("SUCCESS update messages to Read: ", res);
+                   return res.json();  // { success: true/false }
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 }

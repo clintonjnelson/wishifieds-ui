@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { MatTooltipModule } from '@angular/material';
 import { IconService } from '../../core/services/icon.service';
 import { AuthService, UserAuth } from '../../core/auth/auth.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { NotificationService } from '../../core/services/notification.service';
 import { GAEventService } from '../../core/services/ga-event.service';
 

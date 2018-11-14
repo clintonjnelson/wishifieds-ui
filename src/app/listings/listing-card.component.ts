@@ -2,7 +2,7 @@ import { Component, ViewChild, Input } from '@angular/core';
 import { IconService }         from '../core/services/icon.service';
 import { MatChipInputEvent }   from '@angular/material/chips';
 import { HelpersService }      from '../shared/helpers/helpers.service';
-import { DragScrollDirective } from 'ngx-drag-scroll';
+import { DragScrollComponent } from 'ngx-drag-scroll';
 import { Listing }             from './listing.model';
 
 
@@ -16,7 +16,7 @@ import { Listing }             from './listing.model';
 
 export class ListingCardComponent {
   @Input() listing: Listing;
-  @ViewChild('nav', {read: DragScrollDirective}) ds: DragScrollDirective;  // TODO: maybe change naming to images or scroll?
+  @ViewChild('nav', {read: DragScrollComponent}) ds: DragScrollComponent;  // TODO: maybe change naming to images or scroll?
   expandedInfo = false;
 
   constructor( private icons: IconService,

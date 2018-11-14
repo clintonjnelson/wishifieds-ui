@@ -1,8 +1,6 @@
 import { Component, ViewChild, Input, Output, OnInit, OnDestroy, EventEmitter } from '@angular/core';
-import { Subscription }          from 'rxjs/Subscription';  // TODO: DETERMINE WHAT THIS IS FOR & IF WE NEED IT
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/takeUntil';
-import { FormBuilder, FormGroup, FormControl, FormArray, Validators }   from '@angular/forms';   // Remove if no validation logic
+import { Subject, Subscription } from 'rxjs';
+import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';   // Remove if no validation logic
 import { IconService } from '../core/services/icon.service';
 import { HelpersService } from '../shared/helpers/helpers.service';
 import { ApiEnumsService } from '../core/api/api-enums.service';
@@ -11,6 +9,7 @@ import { ApiListingsService } from '../core/api/api-listings.service';
 import { Category } from '../shared/models/category.model';
 import { Condition } from '../shared/models/condition.model';
 import { Listing } from './listing.model';
+import { takeUntil } from 'rxjs/operators';
 
 // TODO: The Form structure is losing it's getter correctness, so probably manually setting/pushing in controls instead
     // of using the proper setters. Look through & fix the direct setting of values so that things align better.
@@ -135,7 +134,7 @@ export class EditListingComponent implements OnInit {
     // Works as an onBlur update of the URL after it's typed in
     this.listingForm.controls['linkUrl']
       .valueChanges
-      .takeUntil(this.unsubscribe)  // Prevents observable leaks
+      .pipe(takeUntil(this.unsubscribe))  // Prevents observable leaks
       .subscribe( (newVal: string) => {
         // TODO: Call API to scrape the newly updated address
         console.log("Changed the url: ", newVal);

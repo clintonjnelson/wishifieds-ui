@@ -5,8 +5,8 @@ import { HelpersService } from '../shared/helpers/helpers.service';
 import { AuthService } from '../core/auth/auth.service';
 import { ApiMessagesService } from '../core/api/api-messages.service';
 import { Listing } from './listing.model';
-import { NguCarousel } from '@ngu/carousel';
-import {MatBadgeModule} from '@angular/material/badge';
+import { NguCarousel, NguCarouselConfig } from '@ngu/carousel';
+import { MatBadgeModule } from '@angular/material/badge';
 
 
 
@@ -22,8 +22,6 @@ export class ListingFullComponent implements OnInit {
   @Input() isEditing: boolean = false;  // TODO: Verify if should default this or Not.
 
   @Output() editingEE = new EventEmitter<boolean>();
-
-  public carouselConfig: NguCarousel;
   showMessages: boolean = false;    // MAKE THIS TOGGLED PER THE MESSAGES ICON
   showLocationMap: boolean = false;
   currentViewerId: string;
@@ -31,6 +29,22 @@ export class ListingFullComponent implements OnInit {
   msgCorrespondants = [];
   unreadMessages: number;
   showingMessagesOfUserId: string = '0';
+  public carouselConfig: NguCarouselConfig = {
+    grid: {xs: 1, sm: 1, md: 1, lg: 1, all: 0},
+    slide: 1,
+    speed: 400,
+    // interval: 4000,
+    point: {
+      visible: true
+    },
+    load: 2,
+    velocity: 0,
+    touch: true,
+    loop: true,
+    custom: 'banner',
+    easing: 'cubic-bezier(0, 0, 0.2, 1)'
+  };
+
 
   constructor(private icons: IconService,
               private helpers: HelpersService,
@@ -41,20 +55,6 @@ export class ListingFullComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.carouselConfig = {
-      grid: {xs: 1, sm: 1, md: 1, lg: 1, all: 0},
-      slide: 1,
-      speed: 400,
-      // interval: 4000,
-      point: {
-        visible: true
-      },
-      load: 2,
-      touch: true,
-      loop: true,
-      custom: 'banner'
-    }
-
     this.getCorrespondantMessagesInfo();
     this.currentViewerId = this.authService.auth.userId;
     this.isOwner = this.helpers.isEqualStrInt(this.listing.userId, this.currentViewerId);

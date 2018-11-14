@@ -5,13 +5,12 @@ import { AuthService, UserAuth } from '../core/auth/auth.service';
 import { NotificationService } from '../core/services/notification.service';
 import { MatTooltipModule } from '@angular/material';
 import { IconService } from '../core/services/icon.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { WishifiedsApi } from '../core/api/wishifieds-api.service';
 import { GAEventService } from '../core/services/ga-event.service';
+import { map, catchError, switchMap } from 'rxjs/operators';
 
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/switchMap';
+
 declare let ga: Function;
 
 export class NavLink {

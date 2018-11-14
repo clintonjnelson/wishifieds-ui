@@ -10,7 +10,7 @@ import { MatDialogModule, MatInputModule, MatTooltipModule, MatFormFieldModule,
   MatSelectModule, MatCheckboxModule, MatTabsModule, MatChipsModule, MatCardModule }  from '@angular/material';
 import { MatBadgeModule } from '@angular/material/badge';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DragulaModule }    from 'ng2-dragula/ng2-dragula';
+// import { DragulaModule }    from 'ng2-dragula';  // TO USE, SEE NEW DOCS FOR NEW API
 import { DragScrollModule } from 'ngx-drag-scroll';
 import { NguCarouselModule } from '@ngu/carousel';
 import { ChartsModule }     from 'ng2-charts/ng2-charts';
@@ -112,7 +112,7 @@ export function HttpFactory(backend: XHRBackend,
                   MatSelectModule,
                   MatCheckboxModule,
                   MatTooltipModule,
-                  DragulaModule,
+                  // DragulaModule.forRoot(),
                   ChartsModule,    // move to child module for dashboard
                   DragScrollModule,
                   NguCarouselModule,

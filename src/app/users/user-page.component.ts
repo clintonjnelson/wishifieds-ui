@@ -2,11 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params }       from '@angular/router';
 import { AuthService, UserAuth }        from '../core/auth/auth.service';
 import { ApiListingsService }           from '../core/api/api-listings.service';
-import { Subscription }                 from 'rxjs/Subscription';
-import { Subject }                      from 'rxjs/Subject';
+import { Subscription, Subject }        from 'rxjs';
 import { IconService }                  from '../core/services/icon.service';
 import { Listing }                      from '../listings/listing.model';
-import 'rxjs/add/operator/switchMap';
+import { switchMap }                    from 'rxjs/operators';
 
 
 

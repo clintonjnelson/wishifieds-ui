@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { WishifiedsApi } from '../api/wishifieds-api.service';
 import { User } from '../../users/user.model';
-
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { map, catchError } from 'rxjs/operators';
 
 
 @Injectable()
@@ -20,13 +18,15 @@ export class ApiAdminService {
 
     return this.http
                .get(getUsersUrl, options)
-               .map( res => {
-                 console.log("SUCCESS ADMIN GET USERS: ", res);
-                 return res.json().users as User[];
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map( res => {
+                   console.log("SUCCESS ADMIN GET USERS: ", res);
+                   return res.json().users as User[];
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 
   updateSitemap(): Observable<any> {
@@ -35,13 +35,15 @@ export class ApiAdminService {
 
     return this.http
                .put(updateSitemapUrl, JSON.stringify({trigger: true}), options)
-               .map( res => {
-                 console.log("Success updating sitemap: ", res);
-                 return res.json();
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map( res => {
+                   console.log("Success updating sitemap: ", res);
+                   return res.json();
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 
   // userCleanup(): Observable<any> {

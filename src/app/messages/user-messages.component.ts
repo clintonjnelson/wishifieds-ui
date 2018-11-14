@@ -7,8 +7,7 @@ import { HelpersService }      from '../shared/helpers/helpers.service';
 import { Listing }             from '../listings/listing.model';
 import { Message }             from './message.model';
 import { MatCheckboxModule }   from '@angular/material/checkbox';
-import { Subscription }        from 'rxjs/Subscription';
-import { Subject }             from 'rxjs/Subject';
+import { Subscription, Subject } from 'rxjs';
 
 // ADD IN THE AUTH SERVICE TO GET THE VIEWER"S ID, so can compare & determine what to show.
 // Note, can always show the message response bar, because can always reply to a seller

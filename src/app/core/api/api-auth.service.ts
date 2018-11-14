@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { WishifiedsApi } from '../api/wishifieds-api.service';
-
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable()
 
@@ -20,13 +18,15 @@ export class ApiAuthService {
     console.log("HAVE URL & HEADERS AND NOW ABOUT TO SEND");
     return this.http
                .get(loginUrl, {headers: authHeader})
-               .map( res => {
-                 console.log("GOT AN API RESPONSE: ", res);
-                 return res.json();
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map( res => {
+                   console.log("GOT AN API RESPONSE: ", res);
+                   return res.json();
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 
   // Send password reset email
@@ -35,13 +35,15 @@ export class ApiAuthService {
 
     return this.http
                .get(resetRequestUrl)
-               .map( res => {
-                 console.log("GOT AN API RESPONSE: ", res);
-                 return res.json();
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map( res => {
+                   console.log("GOT AN API RESPONSE: ", res);
+                   return res.json();
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 
   // Change password w/ credentials
@@ -50,12 +52,14 @@ export class ApiAuthService {
 
     return this.http
                .put(resetUrl, JSON.stringify({email: email, password: password, resetToken: resetToken}))
-               .map( res => {
-                 console.log("GOT AN API RESPONSE: ", res);
-                 return res.json();
-               })
-               .catch( (error: Response) => {
-                 return Observable.throw(error);
-               });
+               .pipe(
+                 map( res => {
+                   console.log("GOT AN API RESPONSE: ", res);
+                   return res.json();
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
 }

@@ -24,11 +24,11 @@ form {
   width: 90%;
   max-width: 400px;
 }
-.mat-input-container {
+.mat-form-field {
   width: 100%;
 }
 
-::ng-deep .mat-input-container label {
+::ng-deep .mat-form-field label {
   color: white;
 }
 
