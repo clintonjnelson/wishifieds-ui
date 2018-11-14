@@ -47,8 +47,8 @@ export class HelpersService {
       const stamp = new Date(timestampString)
       const stampMillis = stamp.getTime();
 
-      console.log("timestamp coming in is: ", timestampString);
-      console.log("TIME now is: ", now, "msg timestamp is: ", stamp);
+      // console.log("timestamp coming in is: ", timestampString);
+      // console.log("TIME now is: ", now, "msg timestamp is: ", stamp);
 
       const nowDays = nowMillis / 86400000;
       const stampDays = stampMillis / 86400000;
@@ -66,7 +66,7 @@ export class HelpersService {
         return (monthDiff < 2 ? (monthDiff + ' month ago') : (monthDiff + ' months ago'));
       }
 
-      console.log("DAYS DIFF IS: ", daysDiff);
+      // console.log("DAYS DIFF IS: ", daysDiff);
       if(daysDiff < 1) {
 
         // Hours first

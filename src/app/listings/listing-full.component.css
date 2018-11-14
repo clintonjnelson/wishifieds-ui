@@ -111,6 +111,20 @@ div.grouped-items-container {
   text-align: center;
 }
 
+.msg-correspondant-avatars-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
+.message-user-pic-selector {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  margin-left: 0.4em;
+  margin-right: 0.4em;
+}
+
 .unread-msgs-color {
   color: lightgreen;
 }
@@ -124,7 +138,8 @@ div.listing-location-map i {
 }
 
 div.listing-contact-buyer-container i {
+  display: flex;
+  justify-content: center;
   padding-bottom: 0.5em;
-  padding-left: 47%
 }
 

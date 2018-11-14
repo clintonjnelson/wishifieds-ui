@@ -1,7 +1,7 @@
 export class User {
-  picUrl:   string;   // VERIFY THIS NAME REFERENCE TO AVOID MAPPING
-  username: string;
-  status:   string;
+  picUrl:        string;   // VERIFY THIS NAME REFERENCE TO AVOID MAPPING
+  username:      string;
+  status:        string;
 }
 
 export class UserCreds {
@@ -12,6 +12,6 @@ export class UserCreds {
 }
 
 export class UserUpdates extends User {
-  userId:   string;
-  email: string;
+  userId:        string;
+  email:         string;
 }

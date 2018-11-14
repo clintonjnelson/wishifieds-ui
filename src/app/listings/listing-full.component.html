@@ -71,17 +71,38 @@
       <!-- Owner Messages Section -->
       <div *ngIf="isOwner">
 
-        <!-- Messages -->
-        <i *ngIf="msgCorrespondantIds && msgCorrespondantIds.length" class="{{ buildIconClass('comments', '3') }}" [ngClass]="{'unread-msgs-color': !!unreadMessages }" (click)="toggleShowMessages()" >
-        </i><strong *ngIf="!!unreadMessages" class="unread-msgs-color">{{unreadMessages}}</strong>
-        <div *ngIf="showMessages" class="listing-chat-container">
-          <div *ngFor="let id of msgCorrespondantIds; let ind = index" class="{{ 'msg-container-' + ind }}">
-            <user-messages [listingId]="listing.id" [listingOwnerId]="listing.userId" [correspondantId]="id"></user-messages>
+        <!-- When making a new component to replace & expand old ones...
+          1) First create the controller intermediate component as a pass-thru of data to maintain former functionality
+          2) Once prior functionality is established, break into data mid-stream and add new capabilities -->
+        <!-- <listing-messages-selector></listing-messages-selector> -->
+
+
+        <!-- Messages Icon Overview-->
+        <i *ngIf="msgCorrespondants && msgCorrespondants.length" class="{{ buildIconClass('comments', '3') }}" [ngClass]="{'unread-msgs-color': !!unreadMessages }" (click)="toggleShowMessages()" matBadge="4">
+        </i>
+        <strong *ngIf="!!unreadMessages" class="unread-msgs-color">{{unreadMessages}}</strong>
+
+        <div *ngIf="showMessages" [ngSwitch]="showingMessagesOfUserId" class="listing-chat-container">
+
+          <!-- Profile Pic Selectors -->
+          <div class="msg-correspondant-avatars-container">
+            <div *ngFor="let corr of msgCorrespondants; let ind = index" class="{{ 'msg-container-userid-' + corr.userId }}">
+              <img src="{{corr.picUrl}}" alt="Profile pic of messaging user." (click)="setMessageToShow(corr.userId)" class="message-user-pic-selector">
+              <strong *ngIf="!!corr.unreadCount" class="unread-msgs-color">{{unreadMessages}}</strong>
+            </div>
           </div>
+
+          <!-- Messages that show after selection -->
+          <div *ngFor="let corr of msgCorrespondants; let ind = index" class="{{ 'msg-container-userid-' + corr.userId }}">
+            <user-messages *ngSwitchCase="corr.userId" [listingId]="listing.id" [listingOwnerId]="listing.userId" [correspondantId]="corr.userId"></user-messages>
+          </div>
+
+          <!-- Default If Nothing Selected -->
+          <div *ngSwitchCase="0"></div>
         </div>
 
         <!-- No Messages -->
-        <p *ngIf="!msgCorrespondantIds || (msgCorrespondantIds && !msgCorrespondantIds.length)" class="no-messages">
+        <p *ngIf="!msgCorrespondants || (msgCorrespondants && !msgCorrespondants.length)" class="no-messages">
           No Messages.... yet.
         </p>
       </div>
@@ -90,7 +111,8 @@
       <div *ngIf="!isOwner">
 
         <i class="{{ buildIconClass('comments', '3') }}" [ngClass]="{'unread-msgs-color': !!unreadMessages }">
-        </i>{{unreadMessages}}
+        </i>
+        <strong *ngIf="!!unreadMessages" class="unread-msgs-color">{{unreadMessages}}</strong>
         <div class="listing-chat-container">
           <user-messages [listingId]="listing.id" [listingOwnerId]="listing.userId" [correspondantId]="currentViewerId"></user-messages>
         </div>

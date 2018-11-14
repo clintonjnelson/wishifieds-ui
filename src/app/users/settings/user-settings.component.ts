@@ -45,7 +45,7 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
                               userId:   user.userId,
                               username: user.username,
                               email:    user.email,
-                              picUrl:   null,   // UPDATE THESE
+                              picUrl:   user.profilePicUrl,   // UPDATE THESE
                               status:   null};  // UPDATE THESE
                             that.resetSettingsCopy();  // Prep the editable form;
                             that.isProcessing = false;

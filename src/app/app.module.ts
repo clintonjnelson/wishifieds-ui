@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule }     from '@angular/forms';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { MatDialogModule, MatInputModule, MatTooltipModule, MatFormFieldModule,
   MatSelectModule, MatCheckboxModule, MatTabsModule, MatChipsModule, MatCardModule }  from '@angular/material';
+import { MatBadgeModule } from '@angular/material/badge';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragulaModule }    from 'ng2-dragula/ng2-dragula';
 import { DragScrollModule } from 'ngx-drag-scroll';
@@ -49,6 +50,7 @@ import { ListingsSearchComponent }       from './listings/search/listings-search
 import { ListingsSearchResultsComponent }from './listings/search/listings-search-results.component';
 
 import { UserMessagesComponent }         from './messages/user-messages.component';
+import { ListingMessagesSelectorComponent } from './messages/listing-messages-selector.component';
 import { MessageBubbleComponent }        from './messages/message-bubble.component';
 
 // Directives
@@ -118,6 +120,7 @@ export function HttpFactory(backend: XHRBackend,
   exports:      [
                   MatTabsModule,
                   MatChipsModule,
+                  MatBadgeModule,
                 ],
 
   // For stuff in the HTML

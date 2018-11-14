@@ -6,6 +6,7 @@ import { AuthService } from '../core/auth/auth.service';
 import { ApiMessagesService } from '../core/api/api-messages.service';
 import { Listing } from './listing.model';
 import { NguCarousel } from '@ngu/carousel';
+import {MatBadgeModule} from '@angular/material/badge';
 
 
 
@@ -27,8 +28,9 @@ export class ListingFullComponent implements OnInit {
   showLocationMap: boolean = false;
   currentViewerId: string;
   isOwner: boolean = true;  // TODO: HOOK THIS UP; NEEDED FOR BUTTONS & SUCH.
-  msgCorrespondantIds = [];
+  msgCorrespondants = [];
   unreadMessages: number;
+  showingMessagesOfUserId: string = '0';
 
   constructor(private icons: IconService,
               private helpers: HelpersService,
@@ -107,12 +109,10 @@ export class ListingFullComponent implements OnInit {
         .subscribe(
           res => {
             console.log("CORRESPONDANTS RETURNED ARE: ", res.correspondants);
-            that.msgCorrespondantIds = res.correspondants;
+            that.msgCorrespondants = res.correspondants;
+            console.log("CORRESPONDANTS ARE: ", that.msgCorrespondants);
             // Total unread messages for Listing
-            that.unreadMessages = Object.keys(res.unreadCounts)
-              .reduce( function(total, key) {
-                return total + res.unreadCounts[key];
-              }, 0);
+            that.unreadMessages = res.totalUnread;
           },
           error => {
             console.log("Error getting message correspondants: ", error);
@@ -120,8 +120,12 @@ export class ListingFullComponent implements OnInit {
     }
     else {
       // If not owner, then owner should be only correspondant
-      this.msgCorrespondantIds = [that.listing.userId];
+      this.msgCorrespondants = [that.listing.userId];
     }
+  }
+
+  setMessageToShow(msgUserId) {
+    this.showingMessagesOfUserId = (msgUserId === this.showingMessagesOfUserId) ? 0 : msgUserId;
   }
 
   closeListing(): void {

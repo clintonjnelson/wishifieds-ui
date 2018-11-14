@@ -1,0 +1,21 @@
+
+
+<!-- UP HERE...
+we somehow need to add a manager that can toggle data into the section below
+OR we need to be able to toggle on/off showing of different messages even if all loaded
+Possible a SWITCH statement keyed off something like UserId? -->
+
+<!-- Messages -->
+<i *ngIf="msgCorrespondantIds && msgCorrespondantIds.length" class="{{ buildIconClass('comments', '3') }}" [ngClass]="{'unread-msgs-color': !!unreadMessages }" (click)="toggleShowMessages()" >
+</i>
+<strong *ngIf="!!unreadMessages" class="unread-msgs-color">{{unreadMessages}}</strong>
+<div *ngIf="showMessages" class="listing-chat-container">
+  <div *ngFor="let id of msgCorrespondantIds; let ind = index" class="{{ 'msg-container-' + ind }}">
+    <user-messages [listingId]="listing.id" [listingOwnerId]="listing.userId" [correspondantId]="id"></user-messages>
+  </div>
+</div>
+
+<!-- No Messages -->
+<p *ngIf="!msgCorrespondantIds || (msgCorrespondantIds && !msgCorrespondantIds.length)" class="no-messages">
+  No Messages.... yet.
+</p>
