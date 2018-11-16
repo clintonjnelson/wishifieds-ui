@@ -5,8 +5,8 @@ import { HelpersService } from '../shared/helpers/helpers.service';
 import { AuthService } from '../core/auth/auth.service';
 import { ApiMessagesService } from '../core/api/api-messages.service';
 import { Listing } from './listing.model';
-import { NguCarousel, NguCarouselConfig } from '@ngu/carousel';
-import { MatBadgeModule } from '@angular/material/badge';
+import { NguCarousel } from '@ngu/carousel';
+import { MatBadgeModule } from '@angular/material';
 
 
 
@@ -29,11 +29,11 @@ export class ListingFullComponent implements OnInit {
   msgCorrespondants = [];
   unreadMessages: number;
   showingMessagesOfUserId: string = '0';
-  public carouselConfig: NguCarouselConfig = {
+  public carouselConfig = {
     grid: {xs: 1, sm: 1, md: 1, lg: 1, all: 0},
     slide: 1,
     speed: 400,
-    // interval: 4000,
+    // interval: {},
     point: {
       visible: true
     },
@@ -64,6 +64,9 @@ export class ListingFullComponent implements OnInit {
   carouselLoaded(event: Event) {
     console.log("Carousel has loaded: ", event);
   }
+  // carouselMoved(data: NguCarouselStore) {
+  //   console.log("Carousel moved: ", data);
+  // }
 
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);

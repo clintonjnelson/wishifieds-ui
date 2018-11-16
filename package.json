@@ -27,7 +27,7 @@
     "@angular/platform-browser-dynamic": "7.0.3",
     "@angular/platform-server": "7.0.3",
     "@angular/router": "7.0.3",
-    "@ngu/carousel": "1.5.4",
+    "@ngu/carousel": "1.4.8",
     "angular-in-memory-web-api": "0.7.0",
     "chart.js": "2.7.3",
     "core-js": "2.5.7",
@@ -38,6 +38,7 @@
     "ng2-dragula": "2.0.2-0",
     "ngx-drag-scroll": "2.0.2",
     "rxjs": "6.3.3",
+    "rxjs-compat": "^6.3.3",
     "typescript": "3.1.1",
     "zone.js": "0.8.26"
   },

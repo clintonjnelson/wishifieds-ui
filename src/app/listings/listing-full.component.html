@@ -78,17 +78,19 @@
 
 
         <!-- Messages Icon Overview-->
-        <i *ngIf="msgCorrespondants && msgCorrespondants.length" class="{{ buildIconClass('comments', '3') }}" [ngClass]="{'unread-msgs-color': !!unreadMessages }" (click)="toggleShowMessages()" matBadge="4">
+        <i *ngIf="msgCorrespondants && msgCorrespondants.length" class="{{ buildIconClass('comments', '3') }} messages-icon" [ngClass]="{'unread-msgs-color': !!unreadMessages }" (click)="toggleShowMessages()" matBadge="{{unreadMessages}}" matBadgeOverlap="true" [matBadgeHidden]="!unreadMessages">
         </i>
-        <strong *ngIf="!!unreadMessages" class="unread-msgs-color">{{unreadMessages}}</strong>
+        <!-- <strong *ngIf="!!unreadMessages" class="unread-msgs-color">{{unreadMessages}}</strong> -->
 
         <div *ngIf="showMessages" [ngSwitch]="showingMessagesOfUserId" class="listing-chat-container">
 
           <!-- Profile Pic Selectors -->
           <div class="msg-correspondant-avatars-container">
             <div *ngFor="let corr of msgCorrespondants; let ind = index" class="{{ 'msg-container-userid-' + corr.userId }}">
-              <img src="{{corr.picUrl}}" alt="Profile pic of messaging user." (click)="setMessageToShow(corr.userId)" class="message-user-pic-selector">
-              <strong *ngIf="!!corr.unreadCount" class="unread-msgs-color">{{unreadMessages}}</strong>
+              <section class="message-user-pic-section" (click)="setMessageToShow(corr.userId)" matBadge="{{corr.unreadCount}}" matBadgeOverlap="true" [matBadgeHidden]="!corr.unreadCount">
+                <img src="{{corr.picUrl}}" alt="Profile pic of messaging user." class="message-user-pic-selector">
+              </section>
+              <!-- <strong *ngIf="!!corr.unreadCount" class="unread-msgs-color">{{unreadMessages}}</strong> -->
             </div>
           </div>
 
@@ -110,7 +112,7 @@
       <!-- Non-Owner Messages Section -->
       <div *ngIf="!isOwner">
 
-        <i class="{{ buildIconClass('comments', '3') }}" [ngClass]="{'unread-msgs-color': !!unreadMessages }">
+        <i class="{{ buildIconClass('comments', '3') }} messages-icon" [ngClass]="{'unread-msgs-color': !!unreadMessages }">
         </i>
         <strong *ngIf="!!unreadMessages" class="unread-msgs-color">{{unreadMessages}}</strong>
         <div class="listing-chat-container">

@@ -117,12 +117,29 @@ div.grouped-items-container {
   margin-bottom: 1em;
 }
 
-.message-user-pic-selector {
+.message-user-pic-selector, .message-user-pic-section {
   width: 60px;
   height: 60px;
   border-radius: 30px;
   margin-left: 0.4em;
   margin-right: 0.4em;
+}
+
+.msg-correspondant-avatars-container {
+  margin-top: 1.2em;
+}
+
+.messages-icon {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+::ng-deep i.messages-icon span,
+::ng-deep section.message-user-pic-section span {
+  background-color: rgba(97, 97, 97, 1.0);  /* 0 opacity = transparent except text */
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: lightgreen;
 }
 
 .unread-msgs-color {
@@ -137,9 +154,7 @@ div.listing-location-map i {
   padding-bottom: 0.5em;
 }
 
-div.listing-contact-buyer-container i {
-  display: flex;
-  justify-content: center;
-  padding-bottom: 0.5em;
+div.listing-contact-buyer-container {
+  text-align: center;
 }
 

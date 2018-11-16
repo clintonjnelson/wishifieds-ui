@@ -7,8 +7,9 @@ import { AppRouterModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule }     from '@angular/forms';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { MatDialogModule, MatInputModule, MatTooltipModule, MatFormFieldModule,
-  MatSelectModule, MatCheckboxModule, MatTabsModule, MatChipsModule, MatCardModule }  from '@angular/material';
-import { MatBadgeModule } from '@angular/material/badge';
+  MatSelectModule, MatCheckboxModule, MatTabsModule, MatChipsModule, MatCardModule,
+  MatBadgeModule }  from '@angular/material';
+// import { MatBadgeModule } from '@angular/material/badge';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { DragulaModule }    from 'ng2-dragula';  // TO USE, SEE NEW DOCS FOR NEW API
 import { DragScrollModule } from 'ngx-drag-scroll';
@@ -112,15 +113,15 @@ export function HttpFactory(backend: XHRBackend,
                   MatSelectModule,
                   MatCheckboxModule,
                   MatTooltipModule,
-                  // DragulaModule.forRoot(),
-                  ChartsModule,    // move to child module for dashboard
+                  // DragulaModule.forRoot(),  // ROOT means SINGLETON
+                  ChartsModule,    // move to child module for dashboard OR REMOVE FOR NOW
                   DragScrollModule,
                   NguCarouselModule,
+                  MatBadgeModule,
                 ],
   exports:      [
-                  MatTabsModule,
-                  MatChipsModule,
-                  MatBadgeModule,
+                  MatTabsModule,  // I think this is useless
+                  MatChipsModule,  // I think this is useless
                 ],
 
   // For stuff in the HTML
