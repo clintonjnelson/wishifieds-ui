@@ -128,7 +128,8 @@ export class ListingFullComponent implements OnInit {
   }
 
   setMessageToShow(msgUserId) {
-    this.showingMessagesOfUserId = (msgUserId === this.showingMessagesOfUserId) ? 0 : msgUserId;
+    this.showingMessagesOfUserId = (msgUserId === this.showingMessagesOfUserId) ? '0' : msgUserId;
+    this.scrollToLatestMsg();
   }
 
   closeListing(): void {
@@ -136,5 +137,15 @@ export class ListingFullComponent implements OnInit {
     // TODO: Should have a saved page that the user came from
     // TODO: Go back to that previously loaded page
     this.toggleEditing(false);
+  }
+
+  private scrollToLatestMsg() {
+    if(this.showingMessagesOfUserId !== '0') {
+      setTimeout( () => {
+        const previewEl = document.getElementsByClassName('message-preview-container')[0];
+        console.log("ELEMENT TO SCROLL TO IS: ", previewEl);
+        previewEl.scrollIntoView({behavior: 'smooth'});
+      }, 200);
+    }
   }
 }
