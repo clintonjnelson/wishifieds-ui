@@ -29,35 +29,37 @@ mat-form-field {
 }
 
 /*Min/Max width on input lines (to avoid cutting placeholders off or input lines being awkwardly long)*/
-::ng-deep .mat-input-wrapper, .images-container {
+::ng-deep .mat-form-field-wrapper, .images-container {
+  width: 100%;
   min-width: 280px;
   max-width: 600px;
 }
-::ng-deep mat-form-field.price-input-container .mat-input-wrapper {
+::ng-deep mat-form-field.price-input-container .mat-form-field-wrapper {
+  width: 100%;
   min-width: 100px;
-  max-width: 100px;
+  max-width: 250px;
 }
 
-/deep/ div.mat-input-infix > textarea {
+/deep/ div.mat-form-field-infix > textarea {
   border-radius: 5px;
   background-color: #8c8c8c;
   padding: 3px;
   color: white;
 }
 
-::ng-deep mat-form-field.price-input-container div.mat-input-flex.mat-form-field-flex {
+::ng-deep mat-form-field.price-input-container div.mat-form-field-flex.mat-form-field-flex {
   min-width: 10em;
 }
 
 /*Set the underline color to white*/
-::ng-deep .mat-input-underline {
+::ng-deep .mat-form-field-underline {
   background: white;
 }
 
 /* FIXME: Hack to keep the mat-hint from overlapping content below. https://github.com/angular/material2/issues/5227 */
-::ng-deep .mat-input-underline,
-::ng-deep .mat-input-subscript-wrapper,
-::ng-deep .mat-input-ripple {
+::ng-deep .mat-form-field-underline,
+::ng-deep .mat-form-field-subscript-wrapper,
+::ng-deep .mat-form-field-ripple {
   position: initial !important;
   display: block;
 }
@@ -75,7 +77,7 @@ mat-form-field {
   border-bottom: 1px solid white;
   margin: 1em 0 1.2em 0;
 
-  /* min/max width set ahove with .mat-input-wrapper */
+  /* min/max width set ahove with .mat-form-field-wrapper */
 }
 
 

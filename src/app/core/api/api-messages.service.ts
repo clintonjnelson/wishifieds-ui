@@ -70,6 +70,40 @@ export class ApiMessagesService {
                );
   }
 
+  getUnreadUserListingsMessages(): Observable<any> {
+    const getUnreadUserListingMessagesUrl = this.wishifiedsApi.routes.getUnreadUserListingsMessages;
+    const options = this.wishifiedsApi.getRequestOptionWithEatHeader();
+
+    return this.http
+               .get(getUnreadUserListingMessagesUrl, options)
+               .pipe(
+                 map( res => {
+                   console.log("SUGGESS GET UNREAD USER LISTING MSGS: ", res);
+                   return res.json();
+                 }),
+                 catchError( (error: Response ) => {
+                   return Observable.throw(error);
+                 })
+               );
+  }
+
+  getUserTotalUnreadMessages(): Observable<any> {
+    const getUserTotalUnreadMessagesUrl = this.wishifiedsApi.routes.getUserTotalUnreadMessages;
+    const options = this.wishifiedsApi.getRequestOptionWithEatHeader();
+
+    return this.http
+               .get(getUserTotalUnreadMessagesUrl, options)
+               .pipe(
+                 map( res => {
+                   console.log("SUGGESS GET TOTAL UNREAD USER MSGS: ", res);
+                   return res.json();
+                 }),
+                 catchError( (error: Response ) => {
+                   return Observable.throw(error);
+                 })
+               );
+  }
+
   // Only a recipient can have unread messages. Set them Read after viewing
   updateUnreadMessagesToRead(messageIds: String[]) {
     const updateMessagesToReadUrl = this.wishifiedsApi.routes.updateUnreadMessagesToRead;

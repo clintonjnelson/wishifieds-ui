@@ -1,17 +1,30 @@
 <div id="user-page-main-container">
 
-
-
   <!-- Owner User: Content Tabs -->
   <div *ngIf="auth.isLoggedIn && isOwner">
     <mat-tab-group>
 
-      <mat-tab id="user-listings" label="listings" class="{{ buildIconClass('cloud', '2') }}">
+      <!-- Left Section -->
+      <mat-tab id="user-listings" label="your wishlistings" class="{{ buildIconClass('cloud', '2') }}">
+        <ng-template matTabLabel>
+
+          <span class="{{ buildIconClass('dollar-sign', '2') }}"></span>
+        </ng-template>
         <add-listing (saveEE)="save($event)" (destroyEE)="destroy($event)"></add-listing>
         <listing-cards [listings]="listings"></listing-cards>
       </mat-tab>
 
-      <mat-tab label="messages" class="{{ buildIconClass('comments', '2') }}">MESSAGES CONTENT</mat-tab>
+      <!-- Middle Section -->
+      <mat-tab>
+        <!-- Label -->
+        <ng-template matTabLabel>
+          <span matBadge="{{totalUnreadMsgs}}" matBadgeOverlap="false" [matBadgeHidden]="!totalUnreadMsgs" class="messages-tab-label">
+            seller responses
+          </span>
+        </ng-template>
+        <!-- Content -->
+        <unread-messages-by-listing></unread-messages-by-listing>
+      </mat-tab>
 
       <mat-tab label="empty" class="{{ buildIconClass('question', '2') }}">UNKNOWN CONTENT</mat-tab>
 

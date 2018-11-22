@@ -56,8 +56,10 @@
       <i class="info-box-size-control" [ngClass]="expandedInfo ? buildIconClass('angle-down', '2') : buildIconClass('angle-up', '2')" (click)="toggleInfoContainerExpand()"></i>
 
       <!-- Images Scroll Caroussel & Icons -->
-      <div class="image-caroussel" dragScroll scrollbar-hidden="true" drag-scroll-y-disabled="true" #nav>
-        <img *ngFor="let image of listing.images" class="listing-card-image" [src]="image" alt="ListingHeroImage for {{listing.title}}">
+      <div class="image-caroussel">
+        <drag-scroll #nav>
+          <img drag-scroll-item *ngFor="let image of listing.images" class="listing-card-image" [src]="image" alt="ListingHeroImage for {{listing.title}}">
+        </drag-scroll>
       </div>
       <i class="image-scroll-left {{ buildIconClass('angle-left', '2') }}" (click)="moveLeft()" *ngIf="!expandedInfo"></i>
       <a [routerLink]="['/', listing.ownerUsername, 'listings', listing.id]" class="full-listing-link-center" matTooltip="full listing" matTooltipPosition="above"></a>

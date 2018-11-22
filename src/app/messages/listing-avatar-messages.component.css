@@ -1,0 +1,24 @@
+.listing-avatar-message-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2em;
+}
+
+.listing-image {
+  align-self: center;
+  width: 6em;
+  background: #616161;
+}
+div.listing-image {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+::ng-deep div.listing-image span {
+  background-color: rgba(128, 128, 128, 1.0);  /* 0 opacity = transparent except text */
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: lightgreen;
+}
+
+

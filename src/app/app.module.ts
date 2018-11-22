@@ -52,7 +52,10 @@ import { ListingsSearchResultsComponent }from './listings/search/listings-search
 
 import { UserMessagesComponent }         from './messages/user-messages.component';
 import { ListingMessagesSelectorComponent } from './messages/listing-messages-selector.component';
+import { ListingAvatarMessagesComponent } from './messages/listing-avatar-messages.component';
+import { UnreadMessagesByListingComponent } from './messages/unread-messages-by-listing.component';
 import { MessageBubbleComponent }        from './messages/message-bubble.component';
+import { MessageBubbleAvatarComponent }  from './messages/message-bubble-avatar.component';
 
 // Directives
 import { HoverColorDirective }           from './shared/hover-color/hover-color.directive';
@@ -159,6 +162,9 @@ export function HttpFactory(backend: XHRBackend,
 
                   UserMessagesComponent,
                   MessageBubbleComponent,
+                  MessageBubbleAvatarComponent,
+                  ListingAvatarMessagesComponent,
+                  UnreadMessagesByListingComponent,
 
                   HoverColorDirective,
                   HoverBackgroundDirective,

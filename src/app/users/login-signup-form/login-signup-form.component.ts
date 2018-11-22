@@ -60,7 +60,7 @@ export class LoginSignupFormComponent implements AfterViewChecked {
           .subscribe(
             res => {
               console.log("RESPONSE TO SIGNUP FORM IS: ", res);
-              that.authService.setAuthCookies(res.eat, res.username, res.userid, res.email, res.role);
+              that.authService.setAuthCookies(res.eat, res.username, res.userId, res.email, res.role);
               that.notification.notify('success', 'Welcome! We\'ve put in a new post so you can hang some signs.');
               this.close.emit(null);
               that.router.navigate([res.username]);

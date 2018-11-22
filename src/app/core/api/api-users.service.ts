@@ -111,8 +111,9 @@ export class ApiUsersService {
 
   getProfilePicByUserId(userId: string): Observable<any> {
     const getProfilePicUrl = this.wishifiedsApi.buildUrl('getProfilePicByUserId', [ {':id': userId} ]);
+    const options = this.wishifiedsApi.getRequestOptionWithEatHeader();
     return this.http
-                 .get(getProfilePicUrl)
+                 .get(getProfilePicUrl, options)
                  .pipe(
                    map( response => {
                      console.log("RESPONSE FROM GET PROFILE_PIC_URL IS: ", response.json());

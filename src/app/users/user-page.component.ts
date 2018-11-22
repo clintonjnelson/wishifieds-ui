@@ -2,11 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params }       from '@angular/router';
 import { AuthService, UserAuth }        from '../core/auth/auth.service';
 import { ApiListingsService }           from '../core/api/api-listings.service';
+import { ApiMessagesService }           from '../core/api/api-messages.service';
 import { Subscription, Subject }        from 'rxjs';
 import { IconService }                  from '../core/services/icon.service';
 import { Listing }                      from '../listings/listing.model';
 import { switchMap }                    from 'rxjs/operators';
-
+import { MatBadgeModule }               from '@angular/material';
 
 
 // TODO: Use the end of the route to set the correct tab
@@ -25,13 +26,15 @@ export class UserPageComponent implements OnInit, OnDestroy {
   isOwner = false;
   isProcessing: boolean;
   usernameFromRoute: string;
+  totalUnreadMsgs: string;
   listings: Listing[] = [];  // SOMEDAY GET THIS FROM API CALL FOR USER"S LISTINGS
   listingsEmit: Subject<Listing[]> = new Subject<Listing[]>();
 
   constructor( private authService:     AuthService,
                private icons:           IconService,
                private route:           ActivatedRoute,
-               private listingsApi:     ApiListingsService) {
+               private listingsApi:     ApiListingsService,
+               private messagesApi:     ApiMessagesService) {
     this.auth = authService.auth;
     this.authSubscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => {
       this.auth = newVal;
@@ -59,6 +62,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
       that.updateUsernameBasedData(username);
       this.getListings();
     });
+    this.getTotalUnreadMsgs();
   }
 
   buildIconClass(icon: string, size: string = '2') {
@@ -77,6 +81,20 @@ export class UserPageComponent implements OnInit, OnDestroy {
         },
         error => {
           console.log("ERROR GETTING LISTINGS: ", error);
+        });
+  }
+
+  getTotalUnreadMsgs() {
+    const that = this;
+    this.messagesApi
+      .getUserTotalUnreadMessages()
+      .subscribe(
+        res => {
+          console.log("TOTAL MESSAGES OBJECT: ", res);
+          that.totalUnreadMsgs = res.totalUnreads;
+        },
+        error => {
+          console.log("ERROR GETTING TOTAL UNREAD MESSAGES COUNT");
         });
   }
 

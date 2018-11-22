@@ -6,6 +6,11 @@
   text-align: center;
 }
 
+unread-messages-by-listing {
+  display: flex;
+  justify-content: center;
+}
+
 add-listing {
   display: flex;
   flex-direction: column;
@@ -22,4 +27,12 @@ p.heading {
 listing-cards {
   display: flex;
   width: 100%;
+}
+
+::ng-deep span.messages-tab-label span {
+  background-color: rgba(128, 128, 128, 1.0);  /* 0 opacity = transparent except text */
+  font-size: 1rem;
+  font-weight: bold;
+  /*color: lightgreen;*/
+  color: #65FF00;
 }

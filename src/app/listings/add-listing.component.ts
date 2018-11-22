@@ -54,29 +54,6 @@ export class AddListingComponent implements OnInit{
   @Input() isEditing = false;
   @Output() saveEE  = new EventEmitter<any>();
   @Output() destroyEE = new EventEmitter<any>();
-  // MAYBE: TO ENABLE DYNAMIC SIGN TYPE UPDATE, LISTEN VIA NEW @OUTPUT FOR CHANGES,
-  // WOULD PROBABLY HAVE TO BE SENT UPON EACH KEYSTROKE OR SOMETHING LIKE THAT.
-  // THEN CAPTURE DATA & SEND BACK THE TYPE-CHANGED SIGN WITH USER'S FORM DATA
-  // UDPATED IN THIS SIGN. THEN WONT HAVE TO TURN OFF TYPES AFTER SELECTION.
-  // WOULD HAVE ONE SELECTED_SIGN THAT GETS UPDATES WITH ONLY TYPE & COLOR & ICON
-  // WHEN ANOTHER TYPE IS CHANGED.
-
-  // This builds the partial-filled out non-selectable form attributes
-  // buildListings(signAddTypes: SignAddType[] ): Sign[] {
-  //   return signAddTypes.map(function(sign) {
-  //     return { icon:        sign.icon,
-  //              bgColor:     sign.bgColor,
-  //              signName:    sign.signName,
-  //              signType:    sign.signType,
-  //              _id:         '',
-  //              description: '',
-  //              knownAs:     '',
-  //              linkUrl:     '',
-  //              picUrl:      '',
-  //              userId:      '',
-  //            };
-  //   });
-  // }
 
   constructor(private helpers: HelpersService,
               private icons: IconService,
@@ -92,9 +69,6 @@ export class AddListingComponent implements OnInit{
     return this.icons.buildIconClass(icon, size);
   }
 
-  // Set the sign to create RENAME: SET_CREATE_SIGN, SELECTED_CREATE_SIGN
-  // I THINK THIS SHOULD BE SETCATEGORY, but i also don't think we need that... yet.
-
   setCategory(category: Category) {
     this.selectedCategory = category;
     this.toggleShowAddCategoryIcons(false);
@@ -107,6 +81,7 @@ export class AddListingComponent implements OnInit{
     console.log("IN ADD-LISTING DESTROY FUNCTION; EVENT IS ", event);
     this.toggleIsEditing(false);
   }
+
   save(event: any) {
     let newListing = event;
     console.log("LISTING AT THE ADDLISTING LEVEL IS: ", newListing);
@@ -125,15 +100,12 @@ export class AddListingComponent implements OnInit{
     if(typeof(input) === 'boolean') { this.showAddCategoryIcons = input; }
     else { this.showAddCategoryIcons = !this.showAddCategoryIcons; }
   }
+
   toggleIsEditing(input: any = null):void {
     // If setting value directly, do that. Else, just toggle the value
     if(typeof(input) === 'boolean') { this.isEditing = input; }
     else { this.isEditing = !this.isEditing; }
   }
-
-  // gaClick(category: string, label: string) {
-  //   this.gaEvent.emitEvent(category, 'click', label);
-  // }
 
   // Toggle Control Functions
   private closeForms() {

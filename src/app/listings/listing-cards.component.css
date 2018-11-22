@@ -17,8 +17,7 @@ section.cards-container {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
-  max-width: 100%;
-
+  max-width: 100%;;
   /*flex: 1;
   justify-content: center;*/
 }

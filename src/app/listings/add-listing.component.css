@@ -19,6 +19,7 @@
   align-items: center;
 }
 
+/*IS THIS STILL VALID WITH "MD" labels?*/
 /deep/ label.md-input-placeholder.md-empty:not(.md-focused) {
   margin-left: 20px;
 }

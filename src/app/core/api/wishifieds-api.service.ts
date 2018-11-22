@@ -40,10 +40,12 @@ const ROUTES = {
   // TODO: We also need ?filtertype=user,filter=<user_id>, so we can filter for specific listings
   getListingMessages: '/api/listings/:id/messages?correspondant=:correspondantId',
   getListingMessagesCorrespondants: '/api/listings/:id/messages?correspondants_only=true',
+  getUnreadUserListingsMessages: '/api/messages/unreads',
 
   // Messages
   createMessage: '/api/messages',
   updateUnreadMessagesToRead: '/api/messages/markread',
+  getUserTotalUnreadMessages: '/api/messages/totalunread',
 
   // Search
   search: '/api/search?searchStr=:searchStr',

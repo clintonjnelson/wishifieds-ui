@@ -55,9 +55,9 @@ export class ListingFullComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCorrespondantMessagesInfo();
     this.currentViewerId = this.authService.auth.userId;
     this.isOwner = this.helpers.isEqualStrInt(this.listing.userId, this.currentViewerId);
+    this.getCorrespondantMessagesInfo();
     console.log("IS OWNER IS, listindOwner, currentViewer: ", this.isOwner, this.listing.userId, this.currentViewerId);
   }
 
@@ -107,6 +107,7 @@ export class ListingFullComponent implements OnInit {
   getCorrespondantMessagesInfo() {
     const that = this;
     if(this.isOwner) {
+      console.log("THIS IS THE OWNER OF THE LISTING: ", this.isOwner);
       // Listing owner may be talking with many people
       this.messagesApi.getListingMessagesCorrespondants(this.listing.id)
         .subscribe(
