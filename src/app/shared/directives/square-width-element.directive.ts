@@ -3,6 +3,7 @@ import { Directive, ElementRef, AfterViewInit, Input, HostListener } from '@angu
 // This Directive will match height to width for the elements of the class name you provide
 // So, if you have a set of div's with classes of "my-class",
 //    it will match the height to the width for each of those class elements found.
+// Example: directive in a div: <div squareWidthElement="my-sub-div">
 @Directive({
   selector: '[squareWidthElement]'
 })

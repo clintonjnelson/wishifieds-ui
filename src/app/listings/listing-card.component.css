@@ -1,7 +1,14 @@
 
-.image-caroussel {
-  height: 100% !important;
-  width: 100% !important;
+img-carousel {
+  height: 100%;
+  width: 100%;
+}
+
+img.carousel-image {
+  height: auto;
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;  /*This will scale the picture down if the height is too big*/
 }
 
 div.listing-card-container {
@@ -10,248 +17,44 @@ div.listing-card-container {
   align-self: flex-start;
   flex: 1 0 auto;
   position: relative;
+  height: 100%;
+  width: 100%;
 }
-
-/*.frame {
-  position: absolute;
-  left: -70px;
-  top: -70px;
-  width: 300px;  TODO: COULD SET A MAX FOR WIDTH I SUPPOSE;
-  width: 100%;    TODO: COULD SET A MAX FOR WIDTH I SUPPOSE;
-  height: 100vw;  TODO: HEIGHT SHOULD BE RELATIVE TO THE WIDTH /*TODO: COULD SET A MAX FOR HEIGHT I SUPPOSE;
-  padding: 0;  reset
-  padding-bottom: 92%;
-  fill: white;
-  color: white;
-
-  z-index: 100;
-}*/
 
 div.listing-display-main-container {
   display: flex;
   flex-direction: column;
   align-self: flex-start;
   flex: 1 0 auto;
-  /*background-color: #a1a1a1;*/
   background-color: gray;
-  /*border: 5px solid white;*/
-  /*border: 0.3vw solid white;*/
   border-radius: 15px;
   border-radius: 2vw;
-  /*width: 300px;*/  /*TODO: COULD SET A MAX FOR WIDTH I SUPPOSE;*/
-  width: 100%;  /*TODO: COULD SET A MAX FOR WIDTH I SUPPOSE;*/
-  /*height: 300px;  TODO: HEIGHT SHOULD BE RELATIVE TO THE WIDTH  /*TODO: COULD SET A MAX FOR HEIGHT I SUPPOSE;*/
-}
-
-div.listing-display-image-container {
-  /*border: 1px solid red;   FOR FINDING THE CONTAINER*/
-  display: flex;
-  flex: 1 0 auto;
-  align-self: flex-start;
-  width: 101%;
-  /*min-height: 100px;   TODO: MAY NEED TO TAKE THIS OUT IF IT SCREWS STUFF UP WITH IMAGE DISPLAY SIZE*/
-  height: 100%;
-  position: relative;  /*Makes inner div absolutes relative to this*/
-  margin: -0.05em;
-}
-div.listing-display-image-container div {
   width: 100%;
-  height: 100%;
-}
-div.listing-display-image-container div div {
-  width: 100%;
-  height: 100%;
-  border-radius: 15px 15px 15px 15px;
-  /*Placeholder for Background Color:*/
-  min-height: 100px;
-  background-color: white;
+  height: calc(100% - 40px);
 }
 
-
-/*TODO: PROBABLY A BETTER WAY TO DO THIS. MAYBE WITH FLEX NUMBERS*/
-.image-expand {
-  height: 90%;
-}
-
-/*TODO: PROBABLY A BETTER WAY TO DO THIS. EITHER DISPLAY HIDDEN OR FLEX NUMBERS*/
-.image-shrunk {
-  height: 0%;
-}
-
-img.listing-card-image {
-  width: 100%;
-  height: 100%;
-  /*border-radius: 15px 15px 15px 15px;*/
-}
-
-i.image-scroll-left {
-  color: black;
-  position: absolute;
-  z-index: 10;
-  left: 0%;
-  top: 50%;
-}
-a.full-listing-link-center {
-  color: green;
-  position: absolute;
-  width: 50%;
-  height: 100%;
-  z-index: 10;
-  left: 25%;
-  top: 0%;
-}
-i.image-scroll-right {
-  color: black;
-  position: absolute;
-  z-index: 10;
-  right: 0%;
-  top: 50%;
-}
-
-div.listing-display-info-container {
-  /*border: 1px solid red;   FOR FINDING THE CONTAINER*/
+div.listing-image-container {
   display: flex;
   flex: 1 0 auto;
   -webkit-flex-direction: column;
   flex-direction: column;
-  justify-content: flex-start;  /* spaces content left/right */
-  /*align-self: flex-end;   info-container at bottom of card */
+  justify-content: flex-start;
   margin: 0;
   width: 100%;
+  height: 88%;  /* Leave room for title */
   min-width: 0;
   max-width: 100%;
-  position: relative;  /* make absolute positioning of children relative to this */
-  /*white-space: nowrap;*/
   overflow: hidden;
-  /*text-overflow: ellipsis;*/
 }
 
-/*TODO: I THINK FLEXBOX CAN DO THIS ITSELF USING THE FLEX NUMBERS*/
-.info-expand {
+div.title-container {
   height: 100%;
 }
 
-/*TODO: I THINK FLEXBOX CAN DO THIS ITSELF USING THE FLEX NUMBERS*/
-.info-shrunk {
-  height: 10%;
-}
-
-i.info-box-size-control {
-  color: black;
-  position: absolute;
-  z-index: 10;
-  top: 0%;
-  left: 48%;
-}
-
-
-
-div.listing-card-info-desc-container {
-  /*border: 1px solid red;   FOR FINDING THE CONTAINER*/
-  display: flex;
-  flex-direction: row;
-  flex: 1 0 auto;
-  max-height: 60%;
-  width: calc(100% - 0.6em);  /*border + offset*/
-  /*position: absolute;*/
-  top: 0px;
-  margin: 0.2em -0.2em 0.2em 0.2em;
-
-  font-family: helvetica;
-  color: #808080;
-  background-color: white;
-  border-radius: 2px;
-}
-
-.listing-card-info-desc {
-  overflow: hidden;
-  text-align: justify;
-  position: relative;  /*Need for our static "..." at the end*/
-  margin: 0.2em 0.2em 0.2em 0.2em;
-  color: gray;
-}
-
-div.listing-card-info-link-container {
-  /*border: 1px solid orange;   FOR FINDING THE CONTAINER*/
-  display: flex;
-  flex-direction: column;
-  flex: 1 0 auto;
-  line-height: 0.9em;
-  max-height: 1.8em;
-  overflow: hidden;
-  margin-top: 0.5em;
-}
-/*label.link-label {
-  border: 1px solid red;   FOR FINDING THE CONTAINER
-  display: flex;
-  align-self: center;
-}*/
-a.listing-card-info-link {
-  /*border: 1px solid red;   FOR FINDING THE CONTAINER*/
-  font-size: 0.8em;
-  whitespace: word-wrap;
-}
-
-
-div.listing-card-details-container {
-  /*border: 1px solid red;   FOR FINDING THE CONTAINER*/
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0 1em 0 1em;
-  margin-top: 0.8em;
-}
-
-div.listing-card-condition-container {
-  display: flex;
-  flex-direction: column;
-}
-
-div.listing-card-price-container {
-  display: flex;
-  flex-direction: column;
-}
-
-label.card-info-label {
-  display: flex;
-  align-self: center;
-  text-align: center;
-  margin-left: 0.2em;
-  font-size: 0.8em;
-}
-
-.listing-card-info-content {
-  display: block;
-  padding: 0 0 0 0;
-  margin: 0;
-  text-align: center;
-  font-family: helvetica;
-  color: white;
-}
-
-
-
-i.listing-card-respond-button {
-  display: flex;
-  align-self: flex-end;  /* align bottom */
-}
-
-
-
-div.listing-card-info-title-container {
-  /*border: 1px solid red;   FOR FINDING THE CONTAINER*/
-  position: relative;  /*title absolute positioning relative to this div*/
-  display: flex;
-  flex: 1 0 auto;
-}
 h3.listing-card-title {
   display: inline;
-  position: absolute;
-  bottom: 0;
-  margin: 0;
-  padding: 0;
-  padding-left: 0.3em;
   width: 100%;
+  height: 100%;
 
   text-align: left;
   text-overflow: ellipsis;
@@ -261,8 +64,6 @@ h3.listing-card-title {
   font-size: calc(12px + 0.5vw);  /* TODO: TRY DOING A CALC OF calc(8px + 1vw) or something; */
 }
 
-
-/* Purely Decorative Card Styling */
 div.listing-display-bubbles {
   position: relative;
   height: 40px;
@@ -302,20 +103,4 @@ div.listing-display-bubble-sml {
   width: 10px;
   height: 10px;
 }
-/*div.cloud-price-container {
-  text-align: right;
-  float: right;
-}
-i.cloud-price {
-  z-index: 2;
-}
-p.cloud-price {
-  z-index: 3;
-  margin-right: 10px;
-  color: gray;
-}
-.cloud-price {
-  border: 1px solid red;   FOR FINDING THE CONTAINER
-  position: absolute;
-  right: 0;
-}*/
+

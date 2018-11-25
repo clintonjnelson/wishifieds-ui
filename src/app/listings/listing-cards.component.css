@@ -1,15 +1,10 @@
-/*
-NOTE: parent must be styled with this to enable proper width:
-listings-search {
-  display: flex;
-  width: 100%;
-}*/
+
 
 div.listing-cards-container {
   display: flex;
   flex-direction: column;
   margin: 0.5em 0.1em 0.5em 0.1em;
-  /*width: 100%;*/
+  width: 100%;
 }
 
 section.cards-container {
@@ -18,8 +13,6 @@ section.cards-container {
   flex-wrap: wrap;
   justify-content: space-around;
   max-width: 100%;;
-  /*flex: 1;
-  justify-content: center;*/
 }
 
 div.card-container {
@@ -27,14 +20,19 @@ div.card-container {
   flex-direction: column;
   margin: 0.5em 0.4em 2.5em 0.4em;
   width: 28%;
+  height: auto;
+  min-height: 0;
   min-width: 90px;   /*Fix This to EM or Something Responsive?*/
   max-width: 300px;  /*Fix This to EM or Something Responsive?*/
+  max-height: 200px; /* Set outer size explicitly, so can inherit to inner */
 }
 
-/*div.listing-cards-container {
+listing-card {
   display: flex;
-  margin: 0.5em 0.1em 0.5em 0.1em;
-}*/
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
 
 /*This creates a bunch of listing-card wide divs that have no height,
 so they can stack on eachother infinitely, but when there is space to go wide

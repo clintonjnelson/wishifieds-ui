@@ -6,22 +6,28 @@
 
       <!-- Left Section -->
       <mat-tab id="user-listings" label="your wishlistings" class="{{ buildIconClass('cloud', '2') }}">
-        <ng-template matTabLabel>
 
+        <!-- Label -->
+        <ng-template matTabLabel>
           <span class="{{ buildIconClass('dollar-sign', '2') }}"></span>
         </ng-template>
+
+        <!-- Content -->
         <add-listing (saveEE)="save($event)" (destroyEE)="destroy($event)"></add-listing>
         <listing-cards [listings]="listings"></listing-cards>
       </mat-tab>
 
+
       <!-- Middle Section -->
       <mat-tab>
+
         <!-- Label -->
         <ng-template matTabLabel>
           <span matBadge="{{totalUnreadMsgs}}" matBadgeOverlap="false" [matBadgeHidden]="!totalUnreadMsgs" class="messages-tab-label">
             seller responses
           </span>
         </ng-template>
+
         <!-- Content -->
         <unread-messages-by-listing></unread-messages-by-listing>
       </mat-tab>
