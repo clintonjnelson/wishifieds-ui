@@ -31,6 +31,69 @@ export class HelpersService {
     }
   }
 
+  miniPrice(price) {
+    // Keep price a string for consistency
+    const priceParts = price.toString().split('.');
+    const corePrice = priceParts[0];
+    const cents = priceParts[1];
+    if( isOnlyCents(corePrice, cents) ) {
+      return { display: `${corePrice}.${cents}`, symbol: '¢' };
+    }
+    if(corePrice.length > 0 && corePrice.length <= 3) {
+      return { display: twoNumbers(price, 1), symbol: '$' };
+    }
+    if( isThousands(corePrice) ) {
+      return { display: twoNumbers(corePrice, 1000), symbol: 'K' };
+    }
+    if( isMillions(corePrice) ) {
+      return { display: twoNumbers(corePrice, 1000000), symbol: 'M' };
+    }
+    else {
+      return { display: '$$$', symbol: '$' };
+    }
+
+    //--------- HELPERS ---------
+    function isOnlyCents(core, cts) {
+      return (
+        !!cts &&
+        corePrice === '0' &&
+        cts.length > 0 &&
+        cts.length < 3
+      );
+    }
+
+    function isThousands(core) {
+      return (
+        corePrice.length > 3 &&
+        corePrice.length <= 6
+      );
+    }
+
+    function isMillions(core) {
+      return (
+        corePrice.length > 6 &&
+        corePrice.length <= 9
+      );
+    }
+
+    function twoNumbers(core, magnitude) {
+      try {
+        const small = (core / magnitude);
+
+        // Show max 3 digits
+        if(Math.ceil(small).toString().length >= 3) {
+          return Math.round(small)
+        }
+        else {
+          return Math.round(small * 10) / 10;  // keeps only first decimal number
+        }
+      }
+      catch(e) {
+        return '???'
+      }
+    }
+  }
+
   // Display zone-formatted time
   // TODO: incorporate time zone! If exists, convert to zoned datetime first, then calc
 
