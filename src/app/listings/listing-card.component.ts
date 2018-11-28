@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input } from '@angular/core';
+import { Component, ViewChild, Input, OnInit } from '@angular/core';
 import { IconService }         from '../core/services/icon.service';
 import { MatChipInputEvent }   from '@angular/material/chips';
 import { HelpersService }      from '../shared/helpers/helpers.service';
@@ -7,6 +7,10 @@ import { HelpersService }      from '../shared/helpers/helpers.service';
 import { ImgCarouselComponent } from '../shared/carousel/img-carousel.component';
 import { Listing }             from './listing.model';
 
+export class PriceDisplay {
+  display: string;
+  symbol: string;
+}
 
 @Component({
   moduleId: module.id,
@@ -16,10 +20,11 @@ import { Listing }             from './listing.model';
 })
 
 
-export class ListingCardComponent {
+export class ListingCardComponent implements OnInit {
   @Input() listing: Listing;
   // @ViewChild('nav', {read: DragScrollComponent}) ds: DragScrollComponent;  // TODO: maybe change naming to images or scroll?
   expandedInfo = false;
+  price: PriceDisplay;
   // public carouselConfig = {
   //   grid: {xs: 1, sm: 1, md: 1, lg: 1, all: 0},
   //   slide: 1,
@@ -40,6 +45,9 @@ export class ListingCardComponent {
                private helpers: HelpersService) {
   }
 
+  ngOnInit() {
+    this.buildMiniPrice();
+  }
   // carouselLoaded(event: Event) {
   //   console.log("Carousel has loaded: ", event);
   // }
@@ -52,6 +60,10 @@ export class ListingCardComponent {
 
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);
+  }
+
+  buildMiniPrice() {
+     this.price = this.helpers.miniPrice(this.listing.price);
   }
 
   // For the a-link href generation

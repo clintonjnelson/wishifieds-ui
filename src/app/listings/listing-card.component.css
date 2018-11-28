@@ -82,7 +82,7 @@ div.listing-display-bubble-lrg {
   height: 30px;
   margin-top: 3px;
 
-  color: grey;
+  color: #404040;
   line-height: 2;
   font-size: 1em;
 }
@@ -95,7 +95,7 @@ div.listing-display-bubble-med {
   width: 15px;
   height: 15px;
 
-  color: grey;
+  color: #404040;
   font-size: 0.8em;
 }
 div.listing-display-bubble-sml {
