@@ -28,6 +28,7 @@ const rootRoutes: Routes = [
 
   { path: 'admin/users', component: AdminUserManagementComponent, canActivate: [AdminGuard], pathMatch: 'full' },
 
+  { path: 'search', component: HomeComponent, pathMatch: 'full' },
   { path: 'faq', component: FaqComponent, pathMatch: 'full' },
   { path: 'termsandconditions', component: TermsConditionsComponent, pathMatch: 'full' },
   { path: 'privacynotice', component: PrivacyNoticeComponent, pathMatch: 'full' },

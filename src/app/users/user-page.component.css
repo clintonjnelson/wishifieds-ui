@@ -15,6 +15,8 @@ add-listing {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 p.heading {
@@ -29,10 +31,23 @@ listing-cards {
   width: 100%;
 }
 
+.search-link-container {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
 ::ng-deep span.messages-tab-label span {
   background-color: rgba(128, 128, 128, 1.0);  /* 0 opacity = transparent except text */
   font-size: 1rem;
   font-weight: bold;
   /*color: lightgreen;*/
   color: #65FF00;
+}
+
+::ng-deep .user-tabs-icon {
+  display: flex;
+  flex-direction: column;
+}
+::ng-deep .user-tabs-icon p {
+  margin: 0;
 }

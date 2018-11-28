@@ -2,14 +2,17 @@
 
   <!-- Owner User: Content Tabs -->
   <div *ngIf="auth.isLoggedIn && isOwner">
-    <mat-tab-group>
+    <mat-tab-group [selectedIndex]="currentTabIndex" (selectedTabChange)="setCurrentTab($event)">
 
-      <!-- Left Section -->
-      <mat-tab id="user-listings" label="your wishlistings" class="{{ buildIconClass('cloud', '2') }}">
+      <!-- Wishlistings (Buying) Tab Section -->
+      <mat-tab id="user-listings">
 
         <!-- Label -->
         <ng-template matTabLabel>
-          <span class="{{ buildIconClass('dollar-sign', '2') }}"></span>
+          <div class="user-tabs-icon">
+            <p class="{{ buildIconClass('cart-arrow-down', '3') }}"></p>
+            <p>wishlistings (buying)</p>
+          </div>
         </ng-template>
 
         <!-- Content -->
@@ -18,21 +21,27 @@
       </mat-tab>
 
 
-      <!-- Middle Section -->
+      <!-- Messages (Selling) Tab Section -->
       <mat-tab>
 
         <!-- Label -->
         <ng-template matTabLabel>
+          <div class="user-tabs-icon">
+            <p class="{{ buildIconClass('hand-holding-usd', '3') }}"></p>
+            <p>messages (selling)</p>
+          </div>
+          <!-- Unread Messages Count Indicator -->
           <span matBadge="{{totalUnreadMsgs}}" matBadgeOverlap="false" [matBadgeHidden]="!totalUnreadMsgs" class="messages-tab-label">
-            seller responses
           </span>
         </ng-template>
 
         <!-- Content -->
+        <div class="search-link-container">
+          <a routerLink="/search">find buyers for my stuff</a>
+        </div>
+
         <unread-messages-by-listing></unread-messages-by-listing>
       </mat-tab>
-
-      <mat-tab label="empty" class="{{ buildIconClass('question', '2') }}">UNKNOWN CONTENT</mat-tab>
 
     </mat-tab-group>
   </div>

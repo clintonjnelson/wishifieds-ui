@@ -8,6 +8,7 @@ import { IconService }                  from '../core/services/icon.service';
 import { Listing }                      from '../listings/listing.model';
 import { switchMap }                    from 'rxjs/operators';
 import { MatBadgeModule }               from '@angular/material';
+import { MatTabChangeEvent }            from '@angular/material';
 
 
 // TODO: Use the end of the route to set the correct tab
@@ -22,10 +23,16 @@ export class UserPageComponent implements OnInit, OnDestroy {
   auth: UserAuth;
   authSubscription: Subscription;
   pageSubscription: Subscription;
+  tabsSubscription: Subscription;
   listingsSubscription: Subscription;
+
   isOwner = false;
   isProcessing: boolean;
+
   usernameFromRoute: string;
+  currentTabIndex: number;
+  tabMap = ['wishlistings', 'selling-messages'];
+
   totalUnreadMsgs: string;
   listings: Listing[] = [];  // SOMEDAY GET THIS FROM API CALL FOR USER"S LISTINGS
   listingsEmit: Subject<Listing[]> = new Subject<Listing[]>();
@@ -51,6 +58,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
     this.authSubscription.unsubscribe();
     this.pageSubscription.unsubscribe();
     this.listingsSubscription.unsubscribe();
+    this.tabsSubscription.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -62,11 +70,24 @@ export class UserPageComponent implements OnInit, OnDestroy {
       that.updateUsernameBasedData(username);
       this.getListings();
     });
+    // Update the page tab based on the URL specified tab
+    this.tabsSubscription = this.route.queryParams.subscribe( params => {
+      let tabName = params['tab'];
+      if(!!tabName) {
+        let tabIndex = that.tabMap.indexOf(tabName);
+        that.currentTabIndex = tabIndex;
+      }
+    });
     this.getTotalUnreadMsgs();
   }
 
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);
+  }
+
+  setCurrentTab(event: MatTabChangeEvent) {
+    const tab = this.tabMap[event.index];
+    this.updateExistingUrl(tab)
   }
 
   getListings() {
@@ -118,26 +139,16 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
     this.isOwner = this.authService.isOwner(this.usernameFromRoute);
     console.log("ISOWNER IS: ", this.isOwner);
-
-    // this.updateSignsFromUsername(username);  // NOTE: See below
   }
 
-  // NOTE: Sometimes updates to a user affect links on a page. Must propogate reload page data like this:
-  // private updateSignsFromUsername(username: string) {
-  //   const that = this;
-
-  //   this.isProcessing = true;
-  //   this.apiSignsService.getSignsByUsernameOrId(username)
-  //       .subscribe(
-  //         signs => {
-  //           console.log("SIGNS RETURNED TO USER PAGE IS: ", signs);
-  //           that.signs = signs;  // data is structured at level above
-  //           that.isProcessing = false;
-  //         },
-  //         error => {
-  //           console.log("ERR RETURNED FROM GET BY ID: ", error.json());
-  //           return error.json();
-  //         }
-  //       );
-  // }
+  private updateExistingUrl(tab: string) {
+    if(window.history.pushState) {
+      const updatedTabUrl = window.location.protocol + '//' +  // https://
+                             window.location.host +             // www.syynpost.com
+                             window.location.pathname +         // /
+                             '?tab=' + tab;  // ?searchQuery=Superman
+    // Update the existing history
+    window.history.pushState({path: updatedTabUrl}, '', updatedTabUrl);
+    }
+  }
 }
