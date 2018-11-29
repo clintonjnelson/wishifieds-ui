@@ -4,7 +4,7 @@
   <div class="search-box">
     <form #searchForm="ngForm" name="searchForm" (ngSubmit)="search($event)" class="search-box-form">
       <mat-form-field mat-float [ngStyle]="{'color': 'white'}" layout="row" class="search-box-input-container">
-        <input matInput type="text" [(ngModel)]="searchStr" placeholder="whatcha sellin?" name="search">
+        <input matInput type="text" [(ngModel)]="searchStr" placeholder="what are you selling?" name="search">
       </mat-form-field>
 
       <button (click)="search($event)" type="submit" class="search-btn-icon">
@@ -13,7 +13,11 @@
     </form>
   </div>
 
-  <div class="results-box">
+  <div class="results-box" *ngIf="!!(listings && listings.length)">
     <listings-search-results [listings]="listings"></listings-search-results>
+  </div>
+  <div class="results-box" *ngIf="!(listings && listings.length)">
+    <p> No buyers for that yet.</p>
+    <p> Anything else you want to sell? </p>
   </div>
 </div>

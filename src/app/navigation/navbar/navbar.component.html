@@ -18,12 +18,12 @@
 
   <!-- Toggle to OPEN nav links -->
   <div *ngIf="!showLoginLinks && !auth.isLoggedIn" (click)="toggleShowLoginLinks(); toggleShowSignpostLoginForm()" class="nav-toggle-control">
-    <i class="{{buildIconClass('angle-double-left', '2')}}">
+    <i class="{{buildIconClass('angle-double-left', '3')}}">
       <span class="login-text">Login | Signup</span>
     </i>
   </div>
   <div *ngIf="showLoginLinks && !auth.isLoggedIn" (click)="toggleShowLoginLinks()" matTooltip="[click to hide]" matTooltipPosition="above"  class="nav-toggle-control">
-    <i class="{{buildIconClass('angle-double-right', '2')}}"></i>
+    <i class="{{buildIconClass('angle-double-right', '3')}}"></i>
   </div>
   <div class="nav-right-links-container" *ngIf="auth.isLoggedOut">
     <ul *ngIf="showLoginLinks" class="navbar-login-links">
@@ -31,7 +31,7 @@
         <icon-link [url]="link.url"
                    [icon]="link.icon"
                    [bgColor]="link.bgColor"
-                   [iconSize]="'2'"
+                   [iconSize]="'3'"
                    (click)="gaClick(link.icon)">
         </icon-link>
       </li>
@@ -42,18 +42,19 @@
   <!-- Icons When Logged IN -->
 
   <!-- Toggle to OPEN nav links -->
+  <!-- TURN OFF FOR NOW
   <section (click)="toggleShowUserNavLinks()" *ngIf="auth.isLoggedIn" class="nav-toggle-control">
-    <!-- Open Nav Links Button -->
+    Open Nav Links Button
     <div *ngIf="!showUserNavLinks" matTooltip="[click to show]" matTooltipPosition="left" class="user-navlinks-toggle">
-      <i class="{{buildIconClass('angle-double-left', '2')}}"></i>
-      <i class="{{buildIconClass('user', '2')}}"></i>
+      <i class="{{buildIconClass('angle-double-left', '3')}}"></i>
+      <i class="{{buildIconClass('user', '3')}}"></i>
     </div>
 
-    <!-- Close Button -->
-    <div *ngIf="showUserNavLinks" matTooltip="[click to hide]" matTooltipPosition="above" class="user-navlinks-toggle"> <!-- (click)="toggleShowUserNavLinks()" -->
-      <i class="{{buildIconClass('angle-double-right', '2')}}"></i>
+    Close Button
+    <div *ngIf="showUserNavLinks" matTooltip="[click to hide]" matTooltipPosition="above" class="user-navlinks-toggle">
+      <i class="{{buildIconClass('angle-double-right', '3')}}"></i>
     </div>
-  </section>
+  </section> -->
 
   <!-- Icons when Logged IN -->
   <div class="nav-right-links-container" *ngIf="auth.isLoggedIn">
@@ -66,12 +67,12 @@
       <!-- Settings Button -->
       <li>
         <a [routerLink]="[auth.username, 'settings']" (click)="toggleShowUserNavLinks()" matTooltip="settings" matTooltipPosition="above">
-          <i class="{{buildIconClass('cog', '2')}}"></i>
+          <i class="{{buildIconClass('cog', '3')}}"></i>
         </a>
       </li>
       <li>
         <a [routerLink]="[auth.username]" (click)="toggleShowUserNavLinks()" matTooltip="my wishifieds" matTooltipPosition="above">
-          <i class="{{buildIconClass('home', '2')}}"></i>
+          <i class="{{buildIconClass('home', '3')}}"></i>
         </a>
       </li>
     </ul>

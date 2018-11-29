@@ -82,10 +82,10 @@ export class HelpersService {
 
         // Show max 3 digits
         if(Math.ceil(small).toString().length >= 3) {
-          return Math.round(small)
+          return Math.round(small).toString();
         }
         else {
-          return Math.round(small * 10) / 10;  // keeps only first decimal number
+          return (Math.round(small * 10) / 10).toString();  // keeps only first decimal number
         }
       }
       catch(e) {

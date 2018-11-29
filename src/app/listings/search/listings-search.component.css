@@ -28,11 +28,11 @@ form {
   width: 100%;
 }
 
-::ng-deep .mat-form-field label {
+::ng-deep span.mat-form-field-label-wrapper label.mat-form-field-label {
   color: white;
 }
 
-::ng-deep.mat-input-underline, ::ng-deep.mat-form-field-underline {
+::ng-deep div.mat-form-field-underline.ng-star-inserted {
   background-color: white;
 }
 

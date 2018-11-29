@@ -36,7 +36,7 @@ export class NavbarComponent implements OnDestroy {
   oauthLinks = OAUTHS;
   showLoginLinks        = false;
   showLoginForm = false;
-  showUserNavLinks      = false;
+  showUserNavLinks      = true;  // TURNING THIS PERMANENTLY ON FOR NOW
   auth: UserAuth;
   isLoggedIn            = false;
   isLoggedOut           = true;
@@ -101,13 +101,13 @@ export class NavbarComponent implements OnDestroy {
   // Logged IN Helpers
   toggleShowUserNavLinks(input: any = null) {
     // If setting value directly, do that.
-    if(typeof(input) === 'boolean') {
-      this.showUserNavLinks = input;
-    }
-    // Else, just toggle the value
-    else {
-      this.showUserNavLinks = !this.showUserNavLinks;
-    }
+    // if(typeof(input) === 'boolean') {
+    //   this.showUserNavLinks = input;
+    // }
+    // // Else, just toggle the value
+    // else {
+    //   this.showUserNavLinks = !this.showUserNavLinks;
+    // }
   }
 
   logout(): void {
