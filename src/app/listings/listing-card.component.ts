@@ -1,4 +1,5 @@
 import { Component, ViewChild, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { IconService }         from '../core/services/icon.service';
 import { MatChipInputEvent }   from '@angular/material/chips';
 import { HelpersService }      from '../shared/helpers/helpers.service';
@@ -24,13 +25,18 @@ export class ListingCardComponent implements OnInit {
   @Input() listing: Listing;
   expandedInfo = false;
   price: PriceDisplay;
+  listingLink: string;
 
   constructor( private icons: IconService,
-               private helpers: HelpersService) {
+               private helpers: HelpersService,
+               private router: Router) {
   }
 
   ngOnInit() {
     this.buildMiniPrice();
+    this.listingLink =this.router.createUrlTree(
+      [this.listing.ownerUsername, 'listings', this.listing.id]
+    ).toString();
   }
 
   buildIconClass(icon: string, size: string = '2') {

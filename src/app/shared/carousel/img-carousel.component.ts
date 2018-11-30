@@ -1,5 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { NgxHmCarouselModule } from 'ngx-hm-carousel';
+import { Router } from '@angular/router';
+import { Listing } from '../../listings/listing.model';
+// import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 import { SwiperComponent, SwiperDirective, SwiperConfigInterface,
   SwiperScrollbarInterface, SwiperPaginationInterface } from 'ngx-swiper-wrapper';
 
@@ -11,6 +13,7 @@ import { SwiperComponent, SwiperDirective, SwiperConfigInterface,
 })
 export class ImgCarouselComponent {
   @Input() images: string[];
+  @Input() link: string;
   @ViewChild(SwiperComponent) componentRef?: SwiperComponent;
 
   index = 0;
@@ -25,7 +28,11 @@ export class ImgCarouselComponent {
     pagination: false
   };
 
-  constructor() {}
+  constructor(private router: Router) {}
+
+  clickRedirect() {
+    this.router.navigateByUrl(this.link);
+  }
 }
 
 // listing-display-main-container
