@@ -42,6 +42,7 @@ div.listing-image-container {
   margin: 0;
   width: 100%;
   height: 88%;  /* Leave room for title */
+  max-height: 88%;
   min-width: 0;
   max-width: 100%;
   overflow: hidden;
