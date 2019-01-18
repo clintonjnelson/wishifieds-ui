@@ -5,8 +5,8 @@ import { HelpersService } from '../shared/helpers/helpers.service';
 import { AuthService } from '../core/auth/auth.service';
 import { ApiMessagesService } from '../core/api/api-messages.service';
 import { Listing } from './listing.model';
-import { NguCarousel } from '@ngu/carousel';
 import { MatBadgeModule } from '@angular/material';
+// import { ImgCarouselComponent } from '../shared/carousel/img-carousel.component';  // NOT SURE IF NEED. TRY DELETING LATER. VERIFY IN PROD BUILD.
 
 
 
@@ -30,6 +30,7 @@ export class ListingFullComponent implements OnInit {
   unreadMessages: number;
   showingMessagesOfUserId: string = '0';
   defaultPicUrl = '/assets/profile.png'; // FIXME: Make this a config value set single place elsewhere
+  listingLink: string;
   public carouselConfig = {
     grid: {xs: 1, sm: 1, md: 1, lg: 1, all: 0},
     slide: 1,
@@ -55,19 +56,19 @@ export class ListingFullComponent implements OnInit {
 
   }
 
+  // Determine who viewer is (owner or guest), so can decide content to show
+  // Determine if isOwner for owner-only related parts & logic (msgs & such)
+  // Get the listingLink, so can link to the listing
   ngOnInit() {
     this.currentViewerId = this.authService.auth.userId;
     this.isOwner = this.helpers.isEqualStrInt(this.listing.userId, this.currentViewerId);
+    this.listingLink = this.helpers.buildUserListingLink(
+      this.router,
+      this.listing.ownerUsername,
+      this.listing.id);
     this.getCorrespondantMessagesInfo();
     console.log("IS OWNER IS, listindOwner, currentViewer: ", this.isOwner, this.listing.userId, this.currentViewerId);
   }
-
-  carouselLoaded(event: Event) {
-    console.log("Carousel has loaded: ", event);
-  }
-  // carouselMoved(data: NguCarouselStore) {
-  //   console.log("Carousel moved: ", data);
-  // }
 
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);

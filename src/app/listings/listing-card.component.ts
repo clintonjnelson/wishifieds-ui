@@ -3,9 +3,7 @@ import { Router } from '@angular/router';
 import { IconService }         from '../core/services/icon.service';
 import { MatChipInputEvent }   from '@angular/material/chips';
 import { HelpersService }      from '../shared/helpers/helpers.service';
-// import { DragScrollComponent } from 'ngx-drag-scroll';
-// import { NguCarousel } from '@ngu/carousel';
-import { ImgCarouselComponent } from '../shared/carousel/img-carousel.component';
+// import { ImgCarouselComponent } from '../shared/carousel/img-carousel.component';
 import { Listing }             from './listing.model';
 
 export class PriceDisplay {
@@ -34,9 +32,10 @@ export class ListingCardComponent implements OnInit {
 
   ngOnInit() {
     this.buildMiniPrice();
-    this.listingLink =this.router.createUrlTree(
-      [this.listing.ownerUsername, 'listings', this.listing.id]
-    ).toString();
+    this.listingLink = this.helpers.buildUserListingLink(
+      this.router,
+      this.listing.ownerUsername,
+      this.listing.id);
   }
 
   buildIconClass(icon: string, size: string = '2') {

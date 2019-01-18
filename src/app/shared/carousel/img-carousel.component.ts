@@ -1,7 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Listing } from '../../listings/listing.model';
-// import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 import { SwiperComponent, SwiperDirective, SwiperConfigInterface,
   SwiperScrollbarInterface, SwiperPaginationInterface } from 'ngx-swiper-wrapper';
 
@@ -31,7 +30,10 @@ export class ImgCarouselComponent {
   constructor(private router: Router) {}
 
   clickRedirect() {
-    this.router.navigateByUrl(this.link);
+    // Only redirect for passed link (some carousel images don't link out)
+    if(this.link) {
+      this.router.navigateByUrl(this.link);
+    }
   }
 }
 

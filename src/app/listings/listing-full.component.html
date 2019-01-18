@@ -20,17 +20,7 @@
     <div class="listing-images-container">
       <!-- Images Scroll Caroussel & Icons -->
       <div class="image-carousel">
-        <ngu-carousel [inputs]="carouselConfig">
-          <ngu-item NguCarouselItem *ngFor="let image of listing.images" class="bannerStyle" (carouselLoad)="carouselLoaded($event)">
-            <img class="listing-image" height="100%" src="{{ image }}" alt="Image for {{ listing.title }}">
-          </ngu-item>
-          <button NguCarouselPrev class="leftRs">
-            <i class="{{ buildIconClass('angle-left', '4') }} caroussel-icon"></i>
-          </button>
-          <button NguCarouselNext class="rightRs">
-            <i class="{{ buildIconClass('angle-right', '4') }} caroussel-icon"></i>
-          </button>
-        </ngu-carousel>
+        <img-carousel [images]="listing.images" [link]="listingLink"></img-carousel>
       </div>
     </div>
 

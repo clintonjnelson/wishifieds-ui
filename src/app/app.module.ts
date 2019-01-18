@@ -1,5 +1,9 @@
 //// This file exists to establish key facts about the ENTIRE app
 // Modules
+const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
+  direction: 'horizontal',
+  slidesPerView: 'auto'
+};
 import { NgModule }        from '@angular/core';
 import { BrowserModule }   from '@angular/platform-browser';
 import { RouterModule }    from '@angular/router';
@@ -11,19 +15,9 @@ import { MatDialogModule, MatInputModule, MatTooltipModule, MatFormFieldModule,
   MatBadgeModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { DragulaModule }    from 'ng2-dragula';  // TO USE, SEE NEW DOCS FOR NEW API
-// FIXME!!!!!! vvvvv
-import { DragScrollModule }    from 'ngx-drag-scroll';
-import { NguCarouselModule }   from '@ngu/carousel';
-import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
-const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
-  direction: 'horizontal',
-  slidesPerView: 'auto'
-};
-// FIXME!!!!!! ^^^^^^^
-
 import { ChartsModule }        from 'ng2-charts/ng2-charts';
 import 'hammerjs';
 
@@ -132,9 +126,6 @@ export function HttpFactory(backend: XHRBackend,
                   MatTooltipModule,
                   // DragulaModule.forRoot(),  // ROOT means SINGLETON
                   ChartsModule,    // move to child module for dashboard OR REMOVE FOR NOW
-                  DragScrollModule,
-                  NguCarouselModule,
-                  NgxHmCarouselModule,
                   SwiperModule,
                   MatBadgeModule,
                 ],

@@ -31,6 +31,11 @@ export class HelpersService {
     }
   }
 
+  // Use in component controller only; Actually pass injected router into here
+  buildUserListingLink(router: any, username: string, listingId: string): string {
+    return router.createUrlTree([username, 'listings', listingId]).toString();
+  }
+
   miniPrice(price) {
     // Keep price a string for consistency
     const priceParts = price.toString().split('.');
