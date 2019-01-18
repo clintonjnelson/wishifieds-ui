@@ -135,12 +135,8 @@ export class ListingFullComponent implements OnInit {
   }
 
   closeListing(): void {
-    // let username = window.localStorage.getItem('username');
-    // TODO: Should have a saved page that the user came from
-    // TODO: Go back to that previously loaded page
     this.toggleEditing(false);
-    // If know where came from, send back there (likely case)
-    console.log("BACKURL is: ", this.backUrl);
+
     if(window.history.length > 1) {
       window.history.back();
     }
@@ -151,7 +147,7 @@ export class ListingFullComponent implements OnInit {
     }
     // If viewing someone else's listing, go to listings search page
     else {
-      this.router.navigate([''])
+      this.router.navigate(['']);
     }
   }
 
