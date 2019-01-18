@@ -55,12 +55,13 @@ export class ListingsSearchComponent implements OnInit {
   }
 
   // TODO: ? Maybe break this out into a shared method in Helpers or a Utils file
+  // Updates history of current page, so can come back to with window.history.back();
   private updateExistingUrl(searchStr: string) {
     const updatedSearchUrl = window.location.protocol + '//' +  // https://
                              window.location.host +             // www.syynpost.com
                              window.location.pathname +         // /
                              '?search=' + searchStr;  // ?searchQuery=Superman
-    // Update the existing history
-    window.history.pushState({path: updatedSearchUrl}, '', updatedSearchUrl);
+    // Update the existing history for page (don't pushState, replaceState)
+    window.history.replaceState({path: updatedSearchUrl}, '', updatedSearchUrl);
   }
 }

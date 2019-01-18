@@ -110,8 +110,8 @@ export class HelpersService {
       const stamp = new Date(timestampString)
       const stampMillis = stamp.getTime();
 
-      // console.log("timestamp coming in is: ", timestampString);
-      // console.log("TIME now is: ", now, "msg timestamp is: ", stamp);
+      console.log("timestamp coming in is: ", timestampString);
+      console.log("TIME now is: ", now, "msg timestamp is: ", stamp);
 
       const nowDays = nowMillis / 86400000;
       const stampDays = stampMillis / 86400000;
@@ -126,6 +126,11 @@ export class HelpersService {
       let monthDiff = 0;
       if(daysDiff > 30) {
         monthDiff = now.getUTCMonth() - stamp.getUTCMonth();
+
+        if( now.getUTCFullYear() != stamp.getUTCFullYear() ) {
+          monthDiff += 12;  // add one year of months
+        }
+
         return (monthDiff < 2 ? (monthDiff + ' month ago') : (monthDiff + ' months ago'));
       }
 

@@ -16,8 +16,8 @@
   <div class="results-box" *ngIf="!!(listings && listings.length)">
     <listings-search-results [listings]="listings"></listings-search-results>
   </div>
-  <div class="results-box" *ngIf="!(listings && listings.length)">
-    <p> No buyers for that yet.</p>
-    <p> Anything else you want to sell? </p>
+  <div class="results-box" *ngIf="hasSearched && !(listings && listings.length)">
+    <p class="no-results-message"> Bummer, no buyers for that... yet.</p>
+    <p class="no-results-message"> Anything else you want to sell? </p>
   </div>
 </div>

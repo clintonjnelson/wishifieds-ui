@@ -29,6 +29,7 @@ export class ListingFullComponent implements OnInit {
   msgCorrespondants = [];
   unreadMessages: number;
   showingMessagesOfUserId: string = '0';
+  defaultPicUrl = '/assets/profile.png'; // FIXME: Make this a config value set single place elsewhere
   public carouselConfig = {
     grid: {xs: 1, sm: 1, md: 1, lg: 1, all: 0},
     slide: 1,
@@ -138,6 +139,20 @@ export class ListingFullComponent implements OnInit {
     // TODO: Should have a saved page that the user came from
     // TODO: Go back to that previously loaded page
     this.toggleEditing(false);
+    // If know where came from, send back there (likely case)
+    console.log("BACKURL is: ", this.backUrl);
+    if(window.history.length > 1) {
+      window.history.back();
+    }
+    // If owner is viewing own listing & closes, go back to their withlistings home
+    else if(this.isOwner) {
+      console.log("username from auth is: ", this.authService.auth.username);
+      this.router.navigate([this.authService.auth.username], { queryParams: { tab: 'wishlistings' }});
+    }
+    // If viewing someone else's listing, go to listings search page
+    else {
+      this.router.navigate([''])
+    }
   }
 
   private scrollToLatestMsg() {
