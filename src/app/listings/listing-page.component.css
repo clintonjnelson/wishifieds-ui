@@ -1,4 +1,4 @@
-.listing-page-main-container {
+.listing-page-main-container, .listing-full-container {
   display: flex;
   flex-direction: column;
   align-items: center;
