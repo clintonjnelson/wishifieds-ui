@@ -1,0 +1,14 @@
+<div id="modal-container">
+  <!-- Close Button -->
+  <i (click)="closeListing()" class="close-button {{ buildIconClass('times', '3') }}"></i>
+
+  <!-- Image Section -->
+  <div class="images-carousel">
+    <img-carousel [images]="listing.images" [link]="listingLink"></img-carousel>
+  </div>
+
+
+  <!-- Info Section -->
+  <h2 id="title" class="modal-content">{{listing.title}}</h2>
+  <p id="msg" class="modal-content">{{listing.description}}</p>
+</div>

@@ -58,7 +58,7 @@ import { ListingsSearchResultsComponent }   from './listings/search/listings-sea
 import { UserMessagesComponent }            from './messages/user-messages.component';
 import { ListingMessagesSelectorComponent } from './messages/listing-messages-selector.component';
 import { ListingAvatarMessagesComponent }   from './messages/listing-avatar-messages.component';
-import { UnreadMessagesByListingComponent } from './messages/unread-messages-by-listing.component';
+import { MessagesByListingComponent }       from './messages/messages-by-listing.component';
 import { MessageBubbleComponent }           from './messages/message-bubble.component';
 import { MessageBubbleAvatarComponent }     from './messages/message-bubble-avatar.component';
 
@@ -171,7 +171,7 @@ export function HttpFactory(backend: XHRBackend,
                   MessageBubbleComponent,
                   MessageBubbleAvatarComponent,
                   ListingAvatarMessagesComponent,
-                  UnreadMessagesByListingComponent,
+                  MessagesByListingComponent,
 
                   ImgCarouselComponent,
                   HoverColorDirective,

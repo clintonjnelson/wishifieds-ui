@@ -43,7 +43,7 @@ body {
   align-items: stretch;
   flex-direction: column;
   margin-bottom: 0px;
-  background-color: #808080;
+  background-color: #737373;
   max-width: calc(100% - 16px);  /* Full width without margins */
 
   /*background-image: url('assets/my_site_background.png');*/

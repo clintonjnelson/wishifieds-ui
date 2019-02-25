@@ -105,6 +105,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
         });
   }
 
+  // Get total unread messages so can display on the Messages tab
   getTotalUnreadMsgs() {
     const that = this;
     this.messagesApi

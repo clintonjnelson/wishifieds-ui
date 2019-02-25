@@ -1,15 +1,20 @@
-.message-bubble-avatar-header {
+.message-bubble-avatar-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center; /* horizontally center */
+  align-items: center; /* vertically center */
+  min-height: 80px;
+  min-width: 80px;
 }
-
 
 .profile-pic-img {
   height: 40px;
+  max-height: 40px;
   width: 40px;
+  max-width: 40px;
   border-radius: 20px;
   background: white;
+  overflow: hidden;
 }
 
 /deep/ message-bubble {

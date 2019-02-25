@@ -29,10 +29,15 @@ import { Subscription, Subject } from 'rxjs';
   // If seller is viewing this, we don't need to be passed info, we will use listing owner's as recipient
   // If owner is viewing this, we will need to be passed SELLER"S info, so we also know how to query.
 
+
+
+// Component that displays the user's correspondence with another user
+// Always between a "viewer" user and another correspondant user (viewer may be owner or cprrespondant).
+// Similar layout to normal messenging services with newest at bottom
 export class UserMessagesComponent implements OnInit {
   @Input() listingId: string;
   @Input() listingOwnerId: string;
-  @Input() correspondantId: string;  // Needed to track seller correspondant when not avail as auth
+  @Input() correspondantId: string;  // Needed to track seller correspondant when not avail as auth; optional!
   currentViewerId: string;  // WHO is viewing - get from auth. Enables logic to tell how to display stuff.
 
   viewerIsOwner: boolean;
@@ -149,10 +154,12 @@ export class UserMessagesComponent implements OnInit {
     return this.helpers.isEqualStrInt(this.currentViewerId, message.senderId);
   }
 
+  // Is the listing owener ID equal to current viewer ID?
   setIsOwner() {
     this.viewerIsOwner = this.helpers.isEqualStrInt(this.currentViewerId, this.listingOwnerId);
   }
 
+  // Recipient is either owner/viewer OR other correspondant
   setRecipient() {
     this.recipientId = (this.currentViewerId == this.listingOwnerId ? this.correspondantId : this.listingOwnerId);
   }

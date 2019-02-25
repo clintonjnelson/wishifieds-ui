@@ -1,16 +1,29 @@
 
 <!-- Listing Image that links to the listing -->
-<div class="listing-avatar-message-container">
-  <div class="listing-image" matBadge="{{listingMessage.messages.length}}" matBadgeOverlap="true">
-    <a [routerLink]="['/', listingMessage.listingOwnerUsername, 'listings', listingMessage.listingId]" href="" class="message-link">
-      <img src="{{ listingMessage.listingHeroImgUrl }}" alt="Image for a listing with response message(s)." class="listing-image">
-    </a>
-  </div>
+<div>
+  <mat-card>
+    <div class="listing-avatar-message-container">
+      <!-- Listing Image (links to listing) -->
+      <div class="listing-image" matBadge="{{listingMessage.messages.length}}" matBadgeOverlap="true">
+        <a [routerLink]="['/', listingMessage.listingOwnerUsername, 'listings', listingMessage.listingId]" href="" class="message-link">
+          <img src="{{ listingMessage.listingHeroImgUrl }}" alt="Image for a listing with response message(s)." class="listing-image">
+        </a>
+      </div>
 
-  <!-- Unread messages listed out that link back to the listing message chain -->
-  <div *ngFor="let msg of listingMessage.messages">
-    <a [routerLink]="['/', listingMessage.listingOwnerUsername, 'listings', listingMessage.listingId]" href="" class="message-link">
-      <message-bubble-avatar [message]="msg" [viewerIsSender]="false"></message-bubble-avatar>
-    </a>
-  </div>
+      <!-- Unread Messages (By User) -->
+      <div *ngFor="let msg of listingMessage.messages">
+        <!-- <a [routerLink]="['/', listingMessage.listingOwnerUsername, 'listings', listingMessage.listingId]" href="" class="message-link"> -->
+          <message-bubble-avatar [message]="msg" [viewerIsSender]="false" [toggleByAvatar]="true"></message-bubble-avatar>
+        <!-- </a> -->
+      </div>
+    </div>
+
+    <!-- SubCard of SELECTED User's Listing Messages -->
+    <mat-card>
+      Populate the user's image here
+      If new message, highlight in green
+      Populate the back-forth messages
+      <user-messages listingId="" listingOwnerId="" correspondantId=""></user-messages>
+    </mat-card>
+  </mat-card>
 </div>

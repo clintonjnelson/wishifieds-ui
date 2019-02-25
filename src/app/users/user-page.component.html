@@ -11,7 +11,7 @@
         <ng-template matTabLabel>
           <div class="user-tabs-icon">
             <p class="{{ buildIconClass('cart-arrow-down', '3') }}"></p>
-            <p>wishlistings (buying)</p>
+            <p>my wishifieds</p>
           </div>
         </ng-template>
 
@@ -21,14 +21,14 @@
       </mat-tab>
 
 
-      <!-- Messages (Selling) Tab Section -->
+      <!-- Messages Tab Section -->
       <mat-tab>
 
         <!-- Label -->
         <ng-template matTabLabel>
           <div class="user-tabs-icon">
             <p class="{{ buildIconClass('hand-holding-usd', '3') }}"></p>
-            <p>messages (selling)</p>
+            <p>messages</p>
           </div>
           <!-- Unread Messages Count Indicator -->
           <span matBadge="{{totalUnreadMsgs}}" matBadgeOverlap="false" [matBadgeHidden]="!totalUnreadMsgs" class="messages-tab-label">
@@ -40,7 +40,7 @@
           <a routerLink="/search">find buyers for my stuff</a>
         </div> -->
 
-        <unread-messages-by-listing></unread-messages-by-listing>
+        <messages-by-listing></messages-by-listing>
       </mat-tab>
 
     </mat-tab-group>

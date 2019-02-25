@@ -14,7 +14,9 @@ import { Message } from './message.model';
 export class MessageBubbleAvatarComponent implements OnInit{
   @Input() message: Message;
   @Input() viewerIsSender: boolean;  // Triggers recipient bubble style
+  @Input() toggleByAvatar: boolean = false;
   picUrl: string;
+  showMessage: boolean = false;
 
   constructor(private helpers: HelpersService,
               private usersApi: ApiUsersService) {}
@@ -34,5 +36,9 @@ export class MessageBubbleAvatarComponent implements OnInit{
 
   displayTime(timestampString: string): string {
     return this.helpers.userDisplayTimeAgo(timestampString);
+  }
+
+  toggleShowMessage() {
+    this.showMessage = !this.showMessage;
   }
 }

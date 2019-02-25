@@ -8,7 +8,7 @@
 
 unread-messages-by-listing {
   display: flex;
-  justify-content: center;
+  justify-content: left;
 }
 
 add-listing {
@@ -41,7 +41,7 @@ listing-cards {
   font-size: 1rem;
   font-weight: bold;
   /*color: lightgreen;*/
-  color: #65FF00;
+  color: #220B38;
 }
 
 ::ng-deep .user-tabs-icon {

@@ -4,18 +4,20 @@ import { ApiMessagesService } from '../core/api/api-messages.service';
 
 @Component({
   moduleId: module.id,
-  selector: 'unread-messages-by-listing',
-  templateUrl: 'unread-messages-by-listing.component.html',
-  styleUrls: ['unread-messages-by-listing.component.css']
+  selector: 'messages-by-listing',
+  templateUrl: 'messages-by-listing.component.html',
+  styleUrls: ['messages-by-listing.component.css']
 })
 
-export class UnreadMessagesByListingComponent implements OnInit {
+export class MessagesByListingComponent implements OnInit {
   listingMessages = []; // Array of complex objects
 
   constructor(private helpers: HelpersService,
               private messagesApi: ApiMessagesService) {}
 
   ngOnInit() {
+
+    // TODO: NEED TO ALSO GET THE READ MESSAGES & APPEND THOSE TO DISPLAY LIST.
     this.messagesApi
       .getUnreadUserListingsMessages()
       .subscribe(

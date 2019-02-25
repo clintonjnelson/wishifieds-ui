@@ -11,7 +11,7 @@ import { MatBadgeModule } from '@angular/material';
 })
 
 export class ListingAvatarMessagesComponent implements OnInit {
-  @Input() listingMessage: any; // Array of complex objects
+  @Input() listingMessage: any[]; // Array of complex objects
 
   constructor(private helpers: HelpersService) {}
 
