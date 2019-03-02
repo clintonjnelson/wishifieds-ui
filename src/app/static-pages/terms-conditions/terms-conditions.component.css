@@ -1,19 +1,19 @@
 h1 {
   font-size: 1.2em;
   color: white;
-  font-family: helvetica, sans-serif;
+  font-family: cinzel, helvetica, sans-serif;
   text-align: center;
 }
 
 h2, h3, h4, h5, p {
   color: white;
-  font-family: helvetica, sans-serif;
+  font-family: cinzel, helvetica, sans-serif;
   font-size: 1em;
 }
 
 .privacy-notice-link {
   color: white;
-  font-family: helvetica, sans-serif;
+  font-family: cinzel, helvetica, sans-serif;
   font-size: 1em;
   text-decoration: none;
   border-bottom: 1px solid blue;

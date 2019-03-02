@@ -48,7 +48,7 @@
 .login-text {
   bottom: 5px;
   color: white;
-  font-family: helvetica;
+  font-family: cinzel, helvetica;
   font-size: 1.1em;
   font-weight: bold;
   position: relative;
@@ -141,7 +141,7 @@
 .signout-text {
   color: white;
   display: inline;
-  font-family: helvetica, sans-serif;
+  font-family: cinzel, helvetica, sans-serif;
 }
 
 

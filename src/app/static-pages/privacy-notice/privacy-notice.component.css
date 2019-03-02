@@ -1,12 +1,12 @@
 h1 {
   font-size: 1.2em;
   color: white;
-  font-family: helvetica, sans-serif;
+  font-family: cinzel, helvetica, sans-serif;
   text-align: center;
 }
 
 h2, h3, h4, h5, p, li {
   color: white;
-  font-family: helvetica, sans-serif;
+  font-family: cinzel, helvetica, sans-serif;
   font-size: 1em;
 }
