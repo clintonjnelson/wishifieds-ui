@@ -1,11 +1,12 @@
 @import url('icons.css');
-/*alegreya-regular, buda, cinzeldecorative, marcellus, montaga, tangerine*/
+/*alegreya-regular, buda, defaultfontdecorative, marcellus, montaga, tangerine*/
 @font-face {
-  font-family: cinzel;
+  font-family: defaultfont;
   src: url('assets/fonts/CinzelDecorative-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 };
+
 /*CREATE DYNAMIC HOVER COLORS BY mAKING THE HOVER COLOR CLASS BUILT FROM ICON NAME*/
 /*
 http://www.color-hex.com/color/a6a6a6
@@ -30,7 +31,7 @@ ff680b    Etsy
 
 /*Font Defaults*/
 * {
-  font-family: cinzel, cinzel, helvetica;
+  font-family: defaultfont, defaultfont, helvetica;
   color: white;
 }
 
@@ -83,7 +84,7 @@ input[type=number] {
 }
 
 .site-white-text {
-  font-family: cinzel, helvetica;
+  font-family: defaultfont, helvetica;
   color: white;
 }
 

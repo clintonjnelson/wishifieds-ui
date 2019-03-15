@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, IterableDiffers, NgZone, OnChanges, SimpleChanges } from '@angular/core';
 import { NgForm, FormControl, FormsModule }   from '@angular/forms';   // TODO: Remove if no validation logic
 import { IconService }         from '../core/services/icon.service';
 import { ApiMessagesService }  from '../core/api/api-messages.service';
@@ -38,11 +38,12 @@ export class UserMessagesComponent implements OnInit {
   @Input() listingId: string;
   @Input() listingOwnerId: string;
   @Input() correspondantId: string;  // Needed to track seller correspondant when not avail as auth; optional!
+  @Input() messages: Message[] = []; // Allow sending it in, but also allow nothing
   currentViewerId: string;  // WHO is viewing - get from auth. Enables logic to tell how to display stuff.
+  iterableDiffer;
 
   viewerIsOwner: boolean;
   recipientId: string;   // CORRESPONDANT_ID?????
-  messages: Message[];
   msgSubscription: Subscription;
   msgsEmit: Subject<Message[]> = new Subject<Message[]>();
 
@@ -56,13 +57,26 @@ export class UserMessagesComponent implements OnInit {
   constructor( private icons: IconService,
                private helpers: HelpersService,
                private messagesApi: ApiMessagesService,
-               private authService: AuthService) {
+               private authService: AuthService,
+               private _differ: IterableDiffers,  // Detect inner-array changes
+               private _zone: NgZone) {  // re-render component manually
+    this.iterableDiffer = this._differ.find([]).create(null);
   }
 
   ngOnInit() {
      // Should call the API to get the messages information for this viewer
      console.log("CORRESPONDANT IN LISTING IS: ", this.correspondantId);
-     this.getMessages();
+     // Messages? Filter as needed. No messages? Call directly
+     if(!this.messages || this.messages.length < 1) {
+       this.getMessages();
+     }
+     // Need subscription for catching any updates
+     this.msgSubscription = this.msgsEmit.subscribe((newMsgs: Message[]) => {
+       console.log("CHANGING MESSAGES... supposedly. With new messages: ", newMsgs);
+       if(newMsgs && newMsgs.length) {
+         this.messages = newMsgs;
+       }
+     });
      this.currentViewerId = this.authService.auth.userId;
      this.setIsOwner();
      this.setRecipient();
@@ -76,16 +90,28 @@ export class UserMessagesComponent implements OnInit {
        createdAt: ''
      };
      this.notifyImmediately = true;  // TODO: Hook feature up to SMS messaging notification, controlled by user settings as to whether to show or not
-
-     this.messages = [];
-     this.msgSubscription = this.msgsEmit.subscribe((newMsgs: Message[]) => {
-       console.log("CHANGING MESSAGES... supposedly. With new messages: ", newMsgs);
-       if(newMsgs && newMsgs.length) {
-         this.messages = newMsgs;
-       }
-     });
   }
 
+  // ngOnChanges(changes: SimpleChanges) {
+  //   if(changes.messages.currentValue) {
+  //     console.log("ATTEMPTING TO RE-RENDER THE COMPONENT...");
+  //     this.msgsEmit.next(changes.messages.currentValue);
+  //     this._zone.run(() => { console.log("RE-RENDERING!"); });
+  //   }
+  // }
+
+  // Check for inner array changes & force re-render if so.
+  // ngDoCheck() {
+  //   const that = this;
+  //   let changes = this.iterableDiffer.diff(that.messages);
+  //   if(changes) {
+  //     console.log("CHANGES DETECTED!!!");
+  //     this.msgsEmit.next(that.messages);
+  //     // this._zone.run(() => { console.log("RE-RENDERING!"); });
+  //   }
+  // }
+
+  // Note: ONLY called if no messages passed in with @Input (if already have, no need to re-get)
   getMessages() {
     const that = this;
 
@@ -99,7 +125,6 @@ export class UserMessagesComponent implements OnInit {
             let msgs = listingMessages.map(msg => {
               return that.mapMessageModel(msg);
             });
-            console.log("MSGS TO EMIT IS: ")
             that.msgsEmit.next(msgs);
 
             // Set the loaded UNREAD messages to READ
@@ -147,10 +172,6 @@ export class UserMessagesComponent implements OnInit {
   }
 
   isViewerSentMessage(message: Message) {
-    // Sender == CurrentViewer? Display CurrentViewer's messages on LEFT
-    // Sender != CurrentViewer? Display Other Person's message on RIGHT
-    // console.log("MESSAGE BEFORE SETTING isViewerSentMessage is: ", message);
-    // console.log("ARE THEY THE SAME? First, Second, Compare: ", this.currentViewerId, message.senderId, this.helpers.isEqualStrInt(this.currentViewerId, message.senderId));
     return this.helpers.isEqualStrInt(this.currentViewerId, message.senderId);
   }
 
@@ -188,7 +209,7 @@ export class UserMessagesComponent implements OnInit {
 
 
   // TODO: CAN WE MOVE THIS TO THE MESSAGE CLASS ITSELF?????
-  mapMessageModel(rawMsg) {
+  private mapMessageModel(rawMsg) {
     return {
       id: rawMsg.id,
       senderId: rawMsg.senderId,

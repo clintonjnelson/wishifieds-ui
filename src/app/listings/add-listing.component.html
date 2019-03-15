@@ -1,4 +1,4 @@
-<div class="add-listing-container">
+<div class="add-listing-container" [ngClass]="{'form-border': isEditing}">
   <!-- Add-Sign Icon -->
   <div *ngIf="!isEditing" class="add-listing-icon-container">
     <i (click)="toggleIsEditing()" mdTooltip="[add a listing]" mdTooltipPosition="above" class="{{buildIconClass('plus', '2')}}"></i>

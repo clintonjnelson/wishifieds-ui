@@ -3,17 +3,22 @@
   flex-direction: row;
   justify-content: center; /* horizontally center */
   align-items: center; /* vertically center */
-  min-height: 80px;
-  min-width: 80px;
+  min-height: 65px;
+  min-width: 65px;
+
+  /*Hacky display stuff - refine if doesn't work out*/
+  margin-left: 5px;
+  margin-top: 10px;
 }
 
 .profile-pic-img {
-  height: 40px;
-  max-height: 40px;
-  width: 40px;
-  max-width: 40px;
+  height: 60px;
+  max-height: 60px;
+  width: 60px;
+  max-width: 60px;
   border-radius: 20px;
-  background: white;
+  /*background: white;   doesn't work with a white icon*/
+  border: 1px solid white;
   overflow: hidden;
 }
 

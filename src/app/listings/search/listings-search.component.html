@@ -8,16 +8,17 @@
       </mat-form-field>
 
       <button (click)="search($event)" type="submit" class="search-btn-icon">
-          <i class="fa fa-search fa-3x sp-hover"></i>
-        </button>
+        <i class="fa fa-search fa-3x sp-hover"></i>
+      </button>
     </form>
+    <p *ngIf="!hasSearched">Be a genie - find some wishes to fulfill!</p>
   </div>
 
   <div class="results-box" *ngIf="!!(listings && listings.length)">
     <listings-search-results [listings]="listings"></listings-search-results>
   </div>
   <div class="results-box" *ngIf="hasSearched && !(listings && listings.length)">
-    <p class="no-results-message"> Bummer, no buyers for that... yet.</p>
+    <p class="no-results-message"> Bummer, no wishers for that... yet.</p>
     <p class="no-results-message"> Anything else you want to sell? </p>
     <p class="no-results-message"> You can also use this to research demand. </p>
   </div>

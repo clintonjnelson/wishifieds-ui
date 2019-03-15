@@ -43,6 +43,7 @@ const ROUTES = {
   getUnreadUserListingsMessages: '/api/messages/unreads',
 
   // Messages
+  getUserMessages: '/api/messages',
   createMessage: '/api/messages',
   updateUnreadMessagesToRead: '/api/messages/markread',
   getUserTotalUnreadMessages: '/api/messages/totalunread',

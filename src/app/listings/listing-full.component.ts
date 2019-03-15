@@ -29,7 +29,7 @@ export class ListingFullComponent implements OnInit {
   msgCorrespondants = [];
   unreadMessages: number;
   showingMessagesOfUserId: string = '0';
-  defaultPicUrl = '/assets/profile.png'; // FIXME: Make this a config value set single place elsewhere
+  defaultPicUrl = '/assets/profile_default.png'; // FIXME: Make this a config value set single place elsewhere
   listingLink: string;
   public carouselConfig = {
     grid: {xs: 1, sm: 1, md: 1, lg: 1, all: 0},

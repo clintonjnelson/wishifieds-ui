@@ -1,7 +1,7 @@
 <div class="messages-tab-main-container">
-  <div *ngFor="let listingMsg of listingMessages">
+  <div *ngFor="let listingMsg of listingsWithMessages">
 
     <!-- Display listing as a card with messages selectable by user -->
-    <listing-avatar-messages [listingMessage]="listingMsg" ></listing-avatar-messages>
+    <listing-avatar-messages [listingWithMessages]="listingMsg" ></listing-avatar-messages>
   </div>
 </div>

@@ -1,29 +1,35 @@
 
-<!-- Listing Image that links to the listing -->
+<!--
+This is a component that shows a listing and any respondants to it.
+Each respondant's correspondance is hidden until clickeed, then show below in a card.
+
+Flow:
+  - The component receives the listing with its list of messages attached
+  - UNSURE IF THESE MESSAGES CAN BE USED. WILL AT LEAST NEED TO FILTER OUT OWNER & DEDUP CORRESPONDANTS.
+  - Calls should be made to get
+-->
 <div>
   <mat-card>
+    <!-- Header (Listing & Correspondants) -->
     <div class="listing-avatar-message-container">
+
       <!-- Listing Image (links to listing) -->
-      <div class="listing-image" matBadge="{{listingMessage.messages.length}}" matBadgeOverlap="true">
-        <a [routerLink]="['/', listingMessage.listingOwnerUsername, 'listings', listingMessage.listingId]" href="" class="message-link">
-          <img src="{{ listingMessage.listingHeroImgUrl }}" alt="Image for a listing with response message(s)." class="listing-image">
+      <div class="listing-image" matBadge="{{countUnreads(listingWithMessages.messages)}}" matBadgeOverlap="true">
+        <a [routerLink]="['/', listingWithMessages.listingOwnerUsername, 'listings', listingWithMessages.listingId]" href="" class="message-link">
+          <img src="{{ listingWithMessages.listingHeroImgUrl }}" alt="Image for a listing with response message(s)." class="listing-image">
         </a>
       </div>
 
-      <!-- Unread Messages (By User) -->
-      <div *ngFor="let msg of listingMessage.messages">
-        <!-- <a [routerLink]="['/', listingMessage.listingOwnerUsername, 'listings', listingMessage.listingId]" href="" class="message-link"> -->
-          <message-bubble-avatar [message]="msg" [viewerIsSender]="false" [toggleByAvatar]="true"></message-bubble-avatar>
-        <!-- </a> -->
+      <!-- Unread Messages (Displays by User Avatar) -->
+      <div *ngFor="let msg of uniqueSenderIds; index as i">
+        <!-- <message-bubble-avatar [message]="msg" [viewerIsSender]="false" [toggleByAvatar]="true"></message-bubble-avatar> -->
+        <img src="/assets/profile_default.png" alt="Sender pic" class="avatar-for-messages-selector" (click)="showSelectedMessages(i)">
       </div>
     </div>
 
-    <!-- SubCard of SELECTED User's Listing Messages -->
+    <!-- SubCard of SELECTED User's Listing Messages; inner component filters msgs to only correspondant/owner -->
     <mat-card>
-      Populate the user's image here
-      If new message, highlight in green
-      Populate the back-forth messages
-      <user-messages listingId="" listingOwnerId="" correspondantId=""></user-messages>
+      <user-messages *ngIf="!!selectedUserId" [listingId]="listingWithMessages.listingId" [listingOwnerId]="listingWithMessages.listingOwnerId" [correspondantId]="selectedUserId" [messages]="selectedMessages"></user-messages>
     </mat-card>
   </mat-card>
 </div>

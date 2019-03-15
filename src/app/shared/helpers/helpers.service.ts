@@ -115,8 +115,8 @@ export class HelpersService {
       const stamp = new Date(timestampString)
       const stampMillis = stamp.getTime();
 
-      console.log("timestamp coming in is: ", timestampString);
-      console.log("TIME now is: ", now, "msg timestamp is: ", stamp);
+      // console.log("timestamp coming in is: ", timestampString);
+      // console.log("TIME now is: ", now, "msg timestamp is: ", stamp);
 
       const nowDays = nowMillis / 86400000;
       const stampDays = stampMillis / 86400000;

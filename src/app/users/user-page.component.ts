@@ -112,7 +112,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
       .getUserTotalUnreadMessages()
       .subscribe(
         res => {
-          console.log("TOTAL MESSAGES OBJECT: ", res);
+          console.log("TOTAL UNREAD MESSAGES OBJECT: ", res);
           that.totalUnreadMsgs = res.totalUnreads;
         },
         error => {

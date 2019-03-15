@@ -1,7 +1,7 @@
 .notification-message {
   position: relative;
 
-  font-family: cinzel, helvetica, sans-serif;
+  font-family: defaultfont, helvetica, sans-serif;
   text-align: center;
 
   margin-left: -8px;

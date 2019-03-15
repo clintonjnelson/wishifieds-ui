@@ -56,7 +56,7 @@ form {
 
 .no-results-message {
   color: white;
-  font-family: cinzel, helvetica, sans-serif;
+  font-family: defaultfont, helvetica, sans-serif;
   text-align: center;
   font-weight: normal;
   margin: 0;

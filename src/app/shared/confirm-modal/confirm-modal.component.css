@@ -7,7 +7,7 @@
   max-height: 400px;
   z-index: 9999;
   background-color: #676767;
-  font-family: cinzel, helvetica;
+  font-family: defaultfont, helvetica;
   color: white;
   opacity: 1;
 }
@@ -18,7 +18,7 @@
   font-size: 1.5em;
 }
 .modal-content {
-  font-family: cinzel, helvetica;
+  font-family: defaultfont, helvetica;
   color: white;
 }
 #msg {
@@ -39,7 +39,7 @@
 
 .model-button {
   color: white;
-  font-family: cinzel, helvetica;
+  font-family: defaultfont, helvetica;
   font-size: 1.5em;
   margin: 0px 20px 0px 0px;
 }

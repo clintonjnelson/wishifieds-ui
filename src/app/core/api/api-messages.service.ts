@@ -31,6 +31,24 @@ export class ApiMessagesService {
                );
   }
 
+  // Gets ALL messages for requesting user
+  getUserMessages(): Observable<any> {
+    const getUserMessagesUrl = this.wishifiedsApi.routes.getUserMessages;
+    const options = this.wishifiedsApi.getRequestOptionWithEatHeader();
+
+    return this.http
+               .get(getUserMessagesUrl, options)
+               .pipe(
+                 map( res => {
+                   console.log("SUCCESS GET Messages: ", res);
+                   return res.json();  // Array of basic listing info with array of messages attached
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
+  }
+
   // listingId may be String or Int
   getListingMessages(listingId: any,  correspondantId: any): Observable<any> {
     const getListingMessagesUrl = this.wishifiedsApi.buildUrl('getListingMessages',

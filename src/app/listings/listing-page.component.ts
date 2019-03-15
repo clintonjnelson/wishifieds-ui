@@ -53,7 +53,7 @@ export class ListingPageComponent implements OnInit, OnDestroy{
       const listingId = params['listingId'];
       console.log("TRIGGERED SUBSCRIPTION THAT WATCHES PARAMS: ", params);
       that.getListing(listingId);
-    })
+    });
   }
 
   ngOnDestroy() {

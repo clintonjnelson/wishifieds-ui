@@ -4,6 +4,11 @@
   max-width: 600px;
 }
 
+.form-border {
+  padding: 20px;
+  border: 1px solid gray; /* With padding, provides a light border around form */
+}
+
 .add-sign-icon-container {
   display: flex;
   flex: 1 1 auto;
@@ -26,7 +31,7 @@
 
 p.heading {
   color: white;
-  font-family: cinzel, helvetica, sans-serif;
+  font-family: defaultfont, helvetica, sans-serif;
   text-align: center;
 }
 

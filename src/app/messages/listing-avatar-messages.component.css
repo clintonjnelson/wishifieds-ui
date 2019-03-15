@@ -1,11 +1,21 @@
 .listing-avatar-message-container {
   display: flex;
   flex-direction: row;
-  margin-bottom: 2em;
+  /*margin-bottom: 2em;*/
+}
+
+img.avatar-for-messages-selector {
+  height: 60px;
+  width: 60px;
+  max-height: 60px;
+  max-width: 60px;
+  margin-top: 10px;
+  margin-left: 5px;
 }
 
 .listing-image {
   align-self: center;
+  margin-right: 1em;  /* Space between picture & correspondant icons */
   width: 6em;
   background: #616161;
 }

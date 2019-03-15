@@ -10,7 +10,7 @@
 
 .login-signup-instructions {
   color: white;
-  font-family: cinzel, helvetica, sans-serif;
+  font-family: defaultfont, helvetica, sans-serif;
   margin: 0px;
   font-size: 0.8em;
 }
@@ -24,7 +24,7 @@
 
 .error {
   color: pink;
-  font-family: cinzel, helvetica, sans-serif;
+  font-family: defaultfont, helvetica, sans-serif;
   word-wrap: normal;
 }
 
@@ -39,25 +39,25 @@
 }
 .login-signup-checkbox {
   color: white;
-  font-family: cinzel, helvetica, sans-serif;
+  font-family: defaultfont, helvetica, sans-serif;
   display: block;
 }
 .checkbox-link-shared-line {
   display: flex;
   flex-direction: row;
   color: white;
-  font-family: cinzel, helvetica, sans-serif;
+  font-family: defaultfont, helvetica, sans-serif;
   font-size: 1em;
 }
 .forgot-password-link {
   color: white;
-  font-family: cinzel, helvetica, sans-serif;
+  font-family: defaultfont, helvetica, sans-serif;
   font-size: 1em;
   margin-left: 1em;
 }
 .terms-cond-link {
   color: white;
-  font-family: cinzel, helvetica, sans-serif;
+  font-family: defaultfont, helvetica, sans-serif;
   font-size: 1em;
   margin-left: 0.2em;
 }
