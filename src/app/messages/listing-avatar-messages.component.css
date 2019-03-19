@@ -25,10 +25,15 @@ div.listing-image {
 }
 
 ::ng-deep div.listing-image span {
-  background-color: rgba(128, 128, 128, 1.0);  /* 0 opacity = transparent except text */
+  background-color: black;
   font-size: 1.1rem;
   font-weight: bold;
-  color: lightgreen;
+  color: white;
+}
+
+::ng-deep div.listing-response-avatar span {
+  background-color: black;
+  color: white;
 }
 
 

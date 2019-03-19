@@ -37,11 +37,10 @@ listing-cards {
 }
 
 ::ng-deep span.messages-tab-label span {
-  background-color: rgba(128, 128, 128, 1.0);  /* 0 opacity = transparent except text */
+  background-color: black;  /* 0 opacity = transparent except text */
   font-size: 1rem;
   font-weight: bold;
-  /*color: lightgreen;*/
-  color: #220B38;
+  color: white;
 }
 
 ::ng-deep .user-tabs-icon {

@@ -7,23 +7,48 @@ Flow:
   - The component receives the listing with its list of messages attached
   - UNSURE IF THESE MESSAGES CAN BE USED. WILL AT LEAST NEED TO FILTER OUT OWNER & DEDUP CORRESPONDANTS.
   - Calls should be made to get
+
+TODOs:
+  - Refactor to combine ngIf's to use #else, so that less calcs being done continuously
 -->
 <div>
   <mat-card>
     <!-- Header (Listing & Correspondants) -->
     <div class="listing-avatar-message-container">
 
-      <!-- Listing Image (links to listing) -->
-      <div class="listing-image" matBadge="{{countUnreads(listingWithMessages.messages)}}" matBadgeOverlap="true">
+      <!-- If listing has NO unread messages, display nothing -->
+      <div *ngIf="countUnreads(listingWithMessages.messages) < 1" class="listing-image">
         <a [routerLink]="['/', listingWithMessages.listingOwnerUsername, 'listings', listingWithMessages.listingId]" href="" class="message-link">
           <img src="{{ listingWithMessages.listingHeroImgUrl }}" alt="Image for a listing with response message(s)." class="listing-image">
         </a>
       </div>
 
+      <!-- If listing has unread messages, display count -->
+      <div *ngIf="countUnreads(listingWithMessages.messages) > 0" class="listing-image" matBadge="{{countUnreads(listingWithMessages.messages)}}" matBadgeOverlap="true">
+        <a [routerLink]="['/', listingWithMessages.listingOwnerUsername, 'listings', listingWithMessages.listingId]" href="" class="message-link">
+          <img src="{{ listingWithMessages.listingHeroImgUrl }}" alt="Image for a listing with response message(s)." class="listing-image">
+        </a>
+      </div>
+
+
       <!-- Unread Messages (Displays by User Avatar) -->
-      <div *ngFor="let msg of uniqueSenderIds; index as i">
+      <div *ngFor="let id of uniqueSenderIds; index as i">
         <!-- <message-bubble-avatar [message]="msg" [viewerIsSender]="false" [toggleByAvatar]="true"></message-bubble-avatar> -->
-        <img src="/assets/profile_default.png" alt="Sender pic" class="avatar-for-messages-selector" (click)="showSelectedMessages(i)">
+
+        <!-- If not listing owner, don't show unreads on user icon (only on listing icon) -->
+        <div *ngIf="!viewerIsOwner" matBadge="you" matBadgeOverlap="true" class="listing-response-avatar">
+          <img src="/assets/profile_default.png" alt="Sender pic" class="avatar-for-messages-selector" (click)="showSelectedMessages(i)">
+        </div>
+
+        <!-- If unreads, show count above user icon -->
+        <div *ngIf="viewerIsOwner && countUnreadsByUser(id) > 0" matBadge="{{countUnreadsByUser(id)}}" matBadgeOverlap="true" class="listing-response-avatar">
+          <img src="/assets/profile_default.png" alt="Sender pic" class="avatar-for-messages-selector" (click)="showSelectedMessages(i)">
+        </div>
+
+        <!-- No Unreads, no count above -->
+        <div *ngIf="viewerIsOwner && countUnreadsByUser(id) < 1" class="listing-response-avatar">
+          <img src="/assets/profile_default.png" alt="Sender pic" class="avatar-for-messages-selector" (click)="showSelectedMessages(i)">
+        </div>
       </div>
     </div>
 

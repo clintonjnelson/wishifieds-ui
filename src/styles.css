@@ -1,8 +1,11 @@
 @import url('icons.css');
 /*alegreya-regular, buda, defaultfontdecorative, marcellus, montaga, tangerine*/
+/*CinzelDecorative-Regular*/
+/*Mitr-Light*/
+/*RoundedMplus1c-Medium*/
 @font-face {
   font-family: defaultfont;
-  src: url('assets/fonts/CinzelDecorative-Regular.ttf') format('truetype');
+  src: url('assets/fonts/Telex-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 };

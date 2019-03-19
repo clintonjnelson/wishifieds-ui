@@ -25,6 +25,9 @@ export class MessagesByListingComponent implements OnInit {
 
   ngOnInit() {
     const that = this;
+    // !!!!!!!!!!vvvvvvvvvvvvvvvvv!!!!!!!!
+    // !!!! Make this sort the messages by total unreads? Sort by oldest unread? Sort by Newest Unread?
+    // !!!! We will need the sorting algorithm to be variable to filter choices, so pick the best place
     this.listingsMsgsSubscription = this.listingsMsgsEmit.subscribe((listingsMsgs: any[]) => {
       this.listingsWithMessages = listingsMsgs;
     });

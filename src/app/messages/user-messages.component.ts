@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, IterableDiffers, NgZone, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, ViewChild} from '@angular/core';
 import { NgForm, FormControl, FormsModule }   from '@angular/forms';   // TODO: Remove if no validation logic
 import { IconService }         from '../core/services/icon.service';
 import { ApiMessagesService }  from '../core/api/api-messages.service';
@@ -57,10 +57,7 @@ export class UserMessagesComponent implements OnInit {
   constructor( private icons: IconService,
                private helpers: HelpersService,
                private messagesApi: ApiMessagesService,
-               private authService: AuthService,
-               private _differ: IterableDiffers,  // Detect inner-array changes
-               private _zone: NgZone) {  // re-render component manually
-    this.iterableDiffer = this._differ.find([]).create(null);
+               private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -91,25 +88,6 @@ export class UserMessagesComponent implements OnInit {
      };
      this.notifyImmediately = true;  // TODO: Hook feature up to SMS messaging notification, controlled by user settings as to whether to show or not
   }
-
-  // ngOnChanges(changes: SimpleChanges) {
-  //   if(changes.messages.currentValue) {
-  //     console.log("ATTEMPTING TO RE-RENDER THE COMPONENT...");
-  //     this.msgsEmit.next(changes.messages.currentValue);
-  //     this._zone.run(() => { console.log("RE-RENDERING!"); });
-  //   }
-  // }
-
-  // Check for inner array changes & force re-render if so.
-  // ngDoCheck() {
-  //   const that = this;
-  //   let changes = this.iterableDiffer.diff(that.messages);
-  //   if(changes) {
-  //     console.log("CHANGES DETECTED!!!");
-  //     this.msgsEmit.next(that.messages);
-  //     // this._zone.run(() => { console.log("RE-RENDERING!"); });
-  //   }
-  // }
 
   // Note: ONLY called if no messages passed in with @Input (if already have, no need to re-get)
   getMessages() {

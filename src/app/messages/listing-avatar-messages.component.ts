@@ -22,6 +22,7 @@ export class ListingAvatarMessagesComponent implements OnInit {
   selectedUserId: null;
   selectedMessages: [];
   currentViewerId;  // From auth
+  viewerIsOwner: Boolean;
   selectedSub: Subscription;
   selectedEmit: Subject<any> = new Subject<any>();
 
@@ -31,7 +32,8 @@ export class ListingAvatarMessagesComponent implements OnInit {
 
   ngOnInit() {
     const that = this;
-    console.log("IN LISTING AVATAR MESSAGES CONTAINER. INPUT IS: ", this.listingWithMessages);
+
+    // Unique senders to populate the Icons
     this.uniqueSenderIds = Array.from(
       new Set(
         this.listingWithMessages.messages.map(function(msg) {return msg.senderId;})
@@ -39,6 +41,7 @@ export class ListingAvatarMessagesComponent implements OnInit {
     );
     console.log("UNIQUE SENDERS IS: ", this.uniqueSenderIds);
 
+    // Selected Icon Watcher/Control
     this.selectedSub = this.selectedEmit.subscribe((newSelected: any) => {
       console.log("CHANGING User to: ", newSelected);
       if(newSelected == this.selectedUserId) {
@@ -51,12 +54,21 @@ export class ListingAvatarMessagesComponent implements OnInit {
     });
 
     this.currentViewerId = this.authService.auth.userId;
+    this.viewerIsOwner = (this.currentViewerId == this.listingWithMessages.listingOwnerId);
   }
 
+  // Activating selected
   showSelectedMessages(userIndex) {
     this.selectedEmit.next(this.uniqueSenderIds[userIndex]);
   }
 
+  countUnreadsByUser(userId) {
+    return this.listingWithMessages.messages
+      .filter( msg => { return (msg.senderId == userId && msg.status == "UNREAD") })
+      .length;
+  }
+
+  // Counting unreads for
   countUnreads(messages: Message[]) {
     const that = this;
     return messages.reduce(
