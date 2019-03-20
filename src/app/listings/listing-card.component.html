@@ -1,7 +1,7 @@
 <div class="listing-card-container">
 
   <!-- Card Container -->
-  <div class="listing-display-main-container">
+  <div class="listing-display-main-container" matBadge="{{unreadMsgsCount}}" matBadgeOverlap="true" [matBadgeHidden]="unreadMsgsCount && unreadMsgsCount < 1">
 
     <!-- Title Area -->
     <!-- <div class="title-container">

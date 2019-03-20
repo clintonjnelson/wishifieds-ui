@@ -1,9 +1,9 @@
 import { Component, ViewChild, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconService }         from '../core/services/icon.service';
+import { ApiMessagesService }         from '../core/api/api-messages.service';
 import { MatChipInputEvent }   from '@angular/material/chips';
 import { HelpersService }      from '../shared/helpers/helpers.service';
-// import { ImgCarouselComponent } from '../shared/carousel/img-carousel.component';
 import { Listing }             from './listing.model';
 
 export class PriceDisplay {
@@ -24,10 +24,12 @@ export class ListingCardComponent implements OnInit {
   expandedInfo = false;
   price: PriceDisplay;
   listingLink: string;
+  unreadMsgsCount: number = 0;
 
   constructor( private icons: IconService,
                private helpers: HelpersService,
-               private router: Router) {
+               private router: Router,
+               private messagesApi: ApiMessagesService) {
   }
 
   ngOnInit() {
@@ -36,6 +38,21 @@ export class ListingCardComponent implements OnInit {
       this.router,
       this.listing.ownerUsername,
       this.listing.id);
+
+    this.setUnreads();
+  }
+
+  setUnreads() {
+    const that = this;
+    this.messagesApi.getListingMessagesCorrespondants(this.listing.id)
+      .subscribe(
+        messagesData => {
+          console.log("MESSAGES INFO RECEIVED IS: ", messagesData);
+          that.unreadMsgsCount = messagesData.totalUnread;
+        },
+        error => {
+          console.log("ERROR GETTING MESSAGES DATA: ", error);
+        });
   }
 
   buildIconClass(icon: string, size: string = '2') {

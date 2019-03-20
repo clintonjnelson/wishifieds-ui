@@ -73,26 +73,6 @@ export class ListingCardsComponent implements OnInit, OnChanges {
     console.log("FilterIcons at init is: ", this.filterIcons);
   }
 
-  // ngAfterViewInit() {
-  //   this.resizeCards();
-  //   // this.cardContainer.nativeElement.querySelector('.card-container');
-  // }
-  // resizeCards($event) {
-  //   let cards = this.elRef.nativeElement.querySelectorAll('.card-container');
-  //   let matchWidth = 0;
-  //   if(cards && cards.length > 0) {
-  //     matchWidth = cards[0].clientWidth;
-  //     console.log("UPDATE ALL HEIGHTS TO: ", matchWidth);
-  //     // Update alll of the heights to match the width
-  //     cards.forEach((card) => {
-  //       console.log("current card is: ", card);
-  //       console.log("CARD HEIGHT BEFORE IS: ", card.style.height);
-  //       card.style.height = matchWidth;
-  //       console.log("CARD HEIGHT IS NOW: ", card.style.height);
-  //     });
-  //   }
-  // }
-
   ngOnChanges(changes: SimpleChanges) {
     this.listings = changes.listings.currentValue;
     this.resetFilters();

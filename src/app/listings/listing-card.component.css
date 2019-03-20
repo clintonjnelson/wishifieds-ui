@@ -110,3 +110,9 @@ div.listing-display-bubble-sml {
   height: 10px;
 }
 
+::ng-deep div.listing-display-main-container span {
+  background-color: black;
+  color: white;
+  font-size: 1rem;
+  z-index: 9;   /* layer over the image, not hidden behind */
+}
