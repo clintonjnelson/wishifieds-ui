@@ -12,7 +12,7 @@ TODOs:
   - Refactor to combine ngIf's to use #else, so that less calcs being done continuously
 -->
 <div>
-  <mat-card>
+  <mat-card class="listing-avatar-message-card">
     <!-- Header (Listing & Correspondants) -->
     <div class="listing-avatar-message-container">
 
@@ -53,8 +53,8 @@ TODOs:
     </div>
 
     <!-- SubCard of SELECTED User's Listing Messages; inner component filters msgs to only correspondant/owner -->
-    <mat-card>
-      <user-messages *ngIf="!!selectedUserId" [listingId]="listingWithMessages.listingId" [listingOwnerId]="listingWithMessages.listingOwnerId" [correspondantId]="selectedUserId" [messages]="selectedMessages"></user-messages>
+    <mat-card *ngIf="!!selectedUserId">
+      <user-messages [listingId]="listingWithMessages.listingId" [listingOwnerId]="listingWithMessages.listingOwnerId" [correspondantId]="selectedUserId" [messages]="selectedMessages"></user-messages>
     </mat-card>
   </mat-card>
 </div>

@@ -24,9 +24,9 @@ div.card-container {
   height: auto;
   min-height: 90px;
   min-width: 90px;   /*Fix This to EM or Something Responsive?*/
-  max-width: 25vw;  /*Fix This to EM or Something Responsive?*/
+  max-width: 40vw;  /*Fix This to EM or Something Responsive?*/
   /*max-height: 200px;  Set outer size explicitly, so can inherit to inner */
-  max-height: 35vw;  /*Helps with picture proportioning responsively*/
+  max-height: 40vw;  /*Helps with picture proportioning responsively*/
 }
 
 listing-card {

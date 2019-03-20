@@ -1,7 +1,12 @@
 .listing-avatar-message-container {
   display: flex;
   flex-direction: row;
-  /*margin-bottom: 2em;*/
+}
+
+.listing-avatar-message-card {
+  margin-bottom: 0.4em;
+  margin-top: 0.2em;
+  padding: 0.3em 0.3em 0.3em 0.6em;
 }
 
 img.avatar-for-messages-selector {
@@ -34,6 +39,7 @@ div.listing-image {
 ::ng-deep div.listing-response-avatar span {
   background-color: black;
   color: white;
+  margin-top: 1em;
 }
 
 
