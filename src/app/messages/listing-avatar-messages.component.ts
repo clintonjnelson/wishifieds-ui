@@ -13,6 +13,7 @@ import { Subscription, Subject } from 'rxjs';
 })
 
 /*
+This is the logic for a single listing's card on the messages display
 For a given listing with a bunch of messages, display messages by user
 Allow the user avatar to be clicked by the owner to display that user's messages
 */
@@ -32,14 +33,11 @@ export class ListingAvatarMessagesComponent implements OnInit {
 
   ngOnInit() {
     const that = this;
+    this.currentViewerId = this.authService.auth.userId;
+    this.viewerIsOwner = (this.currentViewerId == this.listingWithMessages.listingOwnerId);
 
-    // Unique senders to populate the Icons
-    this.uniqueSenderIds = Array.from(
-      new Set(
-        this.listingWithMessages.messages.map(function(msg) {return msg.senderId;})
-      )
-    );
-    console.log("UNIQUE SENDERS IS: ", this.uniqueSenderIds);
+    // Set unique senders for populating avatars for this listing
+    this.setUniqueSendersForMsgs(this.viewerIsOwner);
 
     // Selected Icon Watcher/Control
     this.selectedSub = this.selectedEmit.subscribe((newSelected: any) => {
@@ -52,9 +50,21 @@ export class ListingAvatarMessagesComponent implements OnInit {
         this.selectedUserId = newSelected;
       }
     });
+  }
 
-    this.currentViewerId = this.authService.auth.userId;
-    this.viewerIsOwner = (this.currentViewerId == this.listingWithMessages.listingOwnerId);
+  setUniqueSendersForMsgs(isOwner) {
+    const that = this;
+    // Unique senders to populate the Icons; filter viewer's own msgs from being a "sender"
+    this.uniqueSenderIds = Array.from(
+      new Set(
+        this.listingWithMessages.messages
+          .map(function(msg) { return msg.senderId; })
+          .filter(function(senderId) {
+            return senderId != that.listingWithMessages.listingOwnerId;
+          })
+      )
+    );
+    // console.log("UNIQUE SENDERS IS: ", this.uniqueSenderIds);
   }
 
   // Activating selected
