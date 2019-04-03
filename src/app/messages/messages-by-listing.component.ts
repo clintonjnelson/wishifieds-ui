@@ -28,6 +28,8 @@ export class MessagesByListingComponent implements OnInit {
     // !!!!!!!!!!vvvvvvvvvvvvvvvvv!!!!!!!!
     // !!!! Make this sort the messages by total unreads? Sort by oldest unread? Sort by Newest Unread?
     // !!!! We will need the sorting algorithm to be variable to filter choices, so pick the best place
+    // Eventually move logic from the server's ordering to the UI's ordering, and
+      // choose the most logical base server order (like by date ordering)
     this.listingsMsgsSubscription = this.listingsMsgsEmit.subscribe((listingsMsgs: any[]) => {
       this.listingsWithMessages = listingsMsgs;
     });

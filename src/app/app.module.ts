@@ -18,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+import { FileUploadModule } from 'ng2-file-upload';
 import { ChartsModule }        from 'ng2-charts/ng2-charts';
 import 'hammerjs';
 
@@ -124,10 +125,11 @@ export function HttpFactory(backend: XHRBackend,
                   MatSelectModule,
                   MatCheckboxModule,
                   MatTooltipModule,
+                  MatBadgeModule,
                   // DragulaModule.forRoot(),  // ROOT means SINGLETON
                   ChartsModule,    // move to child module for dashboard OR REMOVE FOR NOW
                   SwiperModule,
-                  MatBadgeModule,
+                  FileUploadModule
                 ],
   exports:      [
                   MatTabsModule,  // I think this is useless

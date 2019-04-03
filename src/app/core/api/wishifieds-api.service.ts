@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, RequestOptions } from '@angular/http';
+import { HttpHeaders } from '@angular/common/http';
 
 
 // List of Signpost API Routes used in the UI
@@ -21,6 +22,7 @@ const ROUTES = {
   getUserById: '/api/users/:usernameOrId',
   getUsernameByUserId: '/api/users/:id/username',
   getProfilePicByUserId: '/api/users/:id/profile_pic',
+  updateProfilePic: '/api/users/:id/profile_pic',
   updateUser:  '/api/users/:id',
   checkAvailability: '/api/users/available?username=:username&email=:email',
 
@@ -82,9 +84,21 @@ export class WishifiedsApi {
   getHeaderWithEat(): Headers {
     return new Headers({'eat': this.getEatAuthCookie()});
   }
+  // DEPRECATED; USE HttpHeaders instead. https://angular.io/guide/http#adding-headers
   getRequestOptionWithEatHeader() {
     return new RequestOptions({headers: this.getHeaderWithEat()});
   }
+
+  // TODO: This is the NEXT form of the headers when HttpOptions is removed. Use below as template for old.
+  // getFileUploadHeaders() {
+  //   const that = this;
+  //   return {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'multipart/form-data',
+  //       'eat': that.getEatAuthCookie()
+  //       })
+  //   };
+  // }
 
   buildUrl(routeName: string, substitutions: Object[]): string {
     const baseUrl = this.routes[routeName];

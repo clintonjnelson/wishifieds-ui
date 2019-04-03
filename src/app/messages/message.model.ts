@@ -8,3 +8,5 @@ export class Message {
   status: string;
   createdAt: string; // DATESTAMP?????
 }
+
+

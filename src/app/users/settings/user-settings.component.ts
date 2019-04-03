@@ -1,14 +1,18 @@
 import { Component, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
 import { Router }              from '@angular/router';
 import { NgForm, FormControl } from '@angular/forms';
-import { User, UserUpdates }  from "../user.model";
+import { User, UserUpdates }   from "../user.model";
 import { IconService }         from '../../core/services/icon.service';
 import { AuthService }         from '../../core/auth/auth.service';
 import { ApiUsersService }     from '../../core/api/api-users.service';
+import { WishifiedsApi }       from '../../core/api/wishifieds-api.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ModalService }        from '../../core/services/modal.service';
 import { MatInputModule }      from '@angular/material';
+import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
+import { Subscription, Subject } from 'rxjs';
 
+const UPLOAD_URL = 'http://localhost:5000/api/users/3/profile_pic';
 
 @Component({
   moduleId: module.id,
@@ -25,28 +29,48 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
   @ViewChild('userSettingsForm') currentForm: NgForm;
   userSettings: UserUpdates;
   tempSettings: UserUpdates;
+  userPicUrl: string;  // DELETE - UNUSED
+  avatarImageFile: any = [];
+  avatarUploader: FileUploader;
+  userSub: Subscription;
+  userEmit: Subject<any> = new Subject<any>():
+
+
 
   constructor(private icons:           IconService,
               private authService:     AuthService,
               private apiUsersService: ApiUsersService,
               private router:          Router,
               private notifService:    NotificationService,
-              private modalService:    ModalService) {}
+              private modalService:    ModalService,
+              private wishifiedsApi:   WishifiedsApi) {}
 
   ngOnInit() {
     const that = this;
     this.isProcessing = true;
-    console.log("AUTH OBJECT IS: ", this.authService.auth);
+    this.userSub = this.userEmit.subscribe((updatedUser: any) => {
+      that.userSettings = {
+        userId:   updatedUser.userId,
+        username: updatedUser.email,
+        email:    updatedUser.email,
+        picUrl:   updatedUser.profilePicUrl,
+        status:   null
+      };
+    });
+
     this.apiUsersService.getUserById(this.authService.auth.userId)
                         .subscribe(
                           user => {
+                            that.userPicUrl = user.profilePicUrl;
                             console.log("USER RETURNED FROM GET BY ID: ", user);
-                            that.userSettings = {
-                              userId:   user.userId,
-                              username: user.username,
-                              email:    user.email,
-                              picUrl:   user.profilePicUrl,   // UPDATE THESE
-                              status:   null};  // UPDATE THESE
+                            that.userEmit.next(user);
+                            // BRING THIS BACK IF THE EMITTER DOESN"T WORK!!
+                            // that.userSettings = {
+                            //   userId:   user.userId,
+                            //   username: user.username,
+                            //   email:    user.email,
+                            //   picUrl:   user.profilePicUrl,   // UPDATE THESE
+                            //   status:   null};  // UPDATE THESE
                             that.resetSettingsCopy();  // Prep the editable form;
                             that.isProcessing = false;
                             that.isConfirmed = that.setIsConfirmed(user.confirmed);
@@ -55,7 +79,27 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
                             console.log("ERROR GETTING USER SETTINGS: ", error);
                           }
                         );
-    that.resetSettingsCopy();
+
+    // Avatar Uploading Stuff; maybe one-day a service that takes url & returns files
+    const uploaderOptions: FileUploaderOptions = {};
+    uploaderOptions.headers = [{name: 'eat', value: that.wishifiedsApi.getEatAuthCookie()}];
+    console.log("Uploader options is: ", uploaderOptions);
+    this.avatarUploader = new FileUploader({
+      url: this.wishifiedsApi.buildUrl('updateProfilePic', [{':id': this.authService.auth.userId}]),
+      itemAlias: 'avatar'
+    });
+    this.avatarUploader.setOptions(uploaderOptions);
+    // Doesn't always load the Header!
+    console.log("Uploader Options ARE: ", this.avatarUploader.options);
+    this.avatarUploader.onAfterAddingFile = function(file) {file.withCredentials = false;};
+    this.avatarUploader.onCompleteItem = function(item: any, response: any, status: any, headers: any) {
+      console.log("ImageUpload:uploaded:", item, status, response);
+      console.log("Response is: ", response);
+      const user = JSON.parse(response).user;
+      console.log("USER IS: ", user);
+      that.userEmit.next(user);
+    };
+    this.resetSettingsCopy();
   }
 
   setIsConfirmed(value: string) {
@@ -176,7 +220,6 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
   ngAfterViewChecked() {
     this.formChanged();
   }
-
 
   // ********** CONSIDER BREAKING OUT TO A SERVICE - SIMILIAR TO SIGNS *************
   // Resets the buttons that are triggered by changes

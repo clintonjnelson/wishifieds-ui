@@ -57,7 +57,7 @@ export class HttpIntercept extends Http {
   getCustomOrDefaultOptionsArgs(options?: RequestOptionsArgs): RequestOptionsArgs {
     if(!options)                             { options         = new RequestOptions(); }
     if(!options.headers)                     { options.headers = new Headers();        }
-    if(!options.headers.has('Content-Type')) { options.headers.append('Content-Type', 'application/json'); }
+    if(!options.headers.hasOwnProperty('Content-Type')) { options.headers.append('Content-Type', 'application/json'); }
 
     return options;
   }

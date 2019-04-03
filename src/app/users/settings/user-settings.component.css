@@ -80,4 +80,12 @@ i {
   margin-bottom: 2em;
 }
 
+.avatar-settings-card {
+  display: flex;
+  flex-direction: column;
+}
 
+.avatar-settings-img {
+  max-height: 3em;
+  max-width: 3em;
+}

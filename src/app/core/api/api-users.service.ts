@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { WishifiedsApi } from '../api/wishifieds-api.service';
 import { UserCreds, User, UserUpdates } from '../../users/user.model';
 import { map, catchError } from 'rxjs/operators';
@@ -113,17 +113,34 @@ export class ApiUsersService {
     const getProfilePicUrl = this.wishifiedsApi.buildUrl('getProfilePicByUserId', [ {':id': userId} ]);
     const options = this.wishifiedsApi.getRequestOptionWithEatHeader();
     return this.http
-                 .get(getProfilePicUrl, options)
-                 .pipe(
-                   map( response => {
-                     console.log("RESPONSE FROM GET PROFILE_PIC_URL IS: ", response.json());
-                     return response.json();
-                   }),
-                   catchError( (error: Response) => {
-                     return Observable.throw(error);
-                   })
-                 );
+               .get(getProfilePicUrl, options)
+               .pipe(
+                 map( response => {
+                   console.log("RESPONSE FROM GET PROFILE_PIC_URL IS: ", response.json());
+                   return response.json();
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
   }
+
+  // updateProfilePic(userId: string, imageFile: FormData): Observable<boolean> {
+  //   const updateProfilePicUrl = this.wishifiedsApi.buildUrl('updateProfilePic', [{':id': userId}]);
+  //   const headers = this.wishifiedsApi.getHeaderWithEat();
+  //   headers.append('Content-Type', 'multipart/form-data');
+  //   return this.http
+  //              .post(updateProfilePicUrl, imageFile, {headers: headers})
+  //              .pipe(
+  //                map( response => {
+  //                  console.log("RESPONSE FROM PUT PROFILE_PIC_URL IS: ", response.json());
+  //                  return response.json();
+  //                }),
+  //                catchError( (error: Response) => {
+  //                  return throwError(error);
+  //                })
+  //              );
+  // }
 
   // UPDATE THIS TO RETURN THE NEW USER????
   updateUser(userUpdates: UserUpdates): Observable<any> {
