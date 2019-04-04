@@ -1,9 +1,13 @@
 <div class="listing-main-container">
   <mat-card class="listing">
-    <!-- Top Header Bar -->
+    <!-- Listing Top Header Bar -->
     <mat-card-header class="listing-top-header">
-      <div mat-card-avatar class="card-avatar"></div>
-      <mat-card-title>clintonjnelson</mat-card-title>
+
+      <!-- TODO: IF NO SRC, SET A CLASS THAT WILL SET A BACKGROUND DEFAULT IMAGE ON DIV -->
+      <div mat-card-avatar>
+        <img src="{{listing.ownerPicUrl}}" alt="" class="listing-owner-header-image">
+      </div>
+      <mat-card-title>{{listing.ownerUsername}}</mat-card-title>
       <mat-card-subtitle>
         <i class="{{ buildIconClass('star', '1') }}"></i>
         <i class="{{ buildIconClass('star', '1') }}"></i>

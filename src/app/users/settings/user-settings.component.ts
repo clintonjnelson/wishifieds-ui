@@ -33,7 +33,7 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
   avatarImageFile: any = [];
   avatarUploader: FileUploader;
   userSub: Subscription;
-  userEmit: Subject<any> = new Subject<any>():
+  userEmit: Subject<any> = new Subject<any>();
 
 
 
