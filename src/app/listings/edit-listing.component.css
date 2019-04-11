@@ -7,6 +7,14 @@ div.edit-form-container {
 div.listing-content-edit-form-container form {
   display: flex;
   flex-direction: column;
+  padding: 5px;  /*space between contents & dropzone border*/
+}
+/* Dropzone Classes Styling */
+/*.my-drop-zone {
+  border: dotted 3px lightgray;
+}*/
+.nv-file-over {
+  border: dotted 3px lightgreen;
 }
 
 mat-form-field {
@@ -79,7 +87,6 @@ mat-form-field {
 
   /* min/max width set ahove with .mat-form-field-wrapper */
 }
-
 
 .select-images-hint-container {
   max-width: 500px;

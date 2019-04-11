@@ -55,6 +55,7 @@ const ROUTES = {
 
   // Images
   getExternalImages: '/api/external/getimages',
+  uploadListingImages: '/api/images/listings/upload',
 
   // Log Interactions
   userPageVisit:    '/api/interactions/log/userpagevisit?guid=:guid&pageusername=:pageusername&userid=:userid',

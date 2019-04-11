@@ -7,7 +7,7 @@
 
   <div id="listing-edit-container" class="edit-form-container">
     <!-- Listing Edit Form -->
-    <div class="listing-content-edit-form-container">
+    <div ng2FileDrop class="listing-content-edit-form-container my-drop-zone" [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="imagesUploader">
       <form [formGroup]="listingForm" (ngSubmit)="save()" name="listingForm" class="listing-form" layout="column">
 
         <!-- Category -->
@@ -76,7 +76,7 @@
           <input matInput type="text" name="linkUrl" [formControl]="listingForm.controls['linkUrl']" [(ngModel)]="tempListing.linkUrl"/>
           <mat-hint>
             <i (mouseover)="toggleHint('linkUrl')" (mouseleave)="toggleHint('linkUrl')" class="{{buildIconClass('question-circle', '1')}}"></i>
-            <span [hidden]="!hints.linkUrl"> Having a link to the item (or a similar item) can help clarify to others what you're looking for. We also allow you to choose images from this webpage link - they will auto-load (below) after you enter an address. Pick a webpage that will have the helpful pictures & information there well into the future. Good webpages are from online stores, manufacturer sites, blogs, and other pages that don't change over time like: Amazon, Apple, Nordstrom, etc. Bad webpages to use are the pages that come & go constantly like are found on: ebay, craigslist, etc; using these pages may mean that the images & link you intend as useful may point to an empty spot on the interwebs, and you'll have to update it later to a new page. We highly suggest a "good page" that will be reliably there.</span>
+            <span [hidden]="!hints.linkUrl">Paste a link here that points to a great example of what you're looking for. You can select images from that web page to show in your wisified.</span>
           </mat-hint>
           <div *ngIf="displayedValidationErrors.linkUrl" class="input-errors error">
             {{ displayedValidationErrors.linkUrl }}
@@ -94,9 +94,11 @@
 
 
         <!-- Populate a bunch of checkboxes with images linked, but hide the checkboxes. When select the image, select the checkbox. Image could maybe be the label?
-        Images with an index that has been selected get the css attribute of that on-page ID changed to have a border for "selected". -->
-        <div class="images-container" *ngIf="tempListing.linkUrl && tempListing.linkUrl.length > 3">
-          <label class="images-label">Select Images for your Wish Listing</label>
+        Images with an index that has been selected get the css attribute of that on-page ID changed to have a border for "selected".
+         *ngIf="tempListing.linkUrl && tempListing.linkUrl.length > 3"
+        -->
+        <div class="images-container">
+          <label class="images-label">Select Wishlisting Images OR Drag/Drop to Upload Your Own</label>
           <div class="images-selection-container">
             <div layout="row" formArrayName="images" *ngFor="let group of getImageGroup().controls; let ind=index">
               <div [formGroupName]="ind">
@@ -112,10 +114,16 @@
             <p>
               <small class="select-images-hint">
                 <i (mouseover)="toggleHint('images')" (mouseleave)="toggleHint('images')" class="{{buildIconClass('question-circle', '1')}}"></i>
-                <span [hidden]="!hints.images"> These images will be shown with your wish listing to help provide visual clarity of what you're looking for. We load these images from the webpage you provided us above. Pick as many of these images you'd like to use on your unlisting. You can preview your selected ones in the wishlisting preview on this page. Don't be surprised if you see some blank spots among the found images; those are probably just tiny "pixel images" on the webpage - totally normal & can be ignored (maybe someday we'll even get around to filtering them out for you). </span>
+                <span [hidden]="!hints.images">These images come from the web page address you provided above. Select whichever you think will help clarify what you're looking for.</span>
               </small>
             </p>
           </div>
+
+          <!-- Upload Images Button Option -->
+          <input type="file" name="uploadedimages" ng2FileSelect [uploader]="imagesUploader" multiple/>
+          <!-- <button type="button" class="upload-avatar-button" (click)="imagesUploader.uploadAll()" [disabled]="!imagesUploader.getNotUploadedItems().length">
+            Upload Images
+          </button> -->
         </div>
 
 
@@ -131,7 +139,7 @@
           <img [hidden]="!tempListing.heroImage" src="{{tempListing.heroImage}}" height="40px" alt="">
           <mat-hint>
             <i (mouseover)="toggleHint('hero')" (mouseleave)="toggleHint('hero')" class="{{buildIconClass('question-circle', '1')}}"></i>
-            <span [hidden]="!hints.hero"> Of the images you've selected in the section above, pick which one you want to be used as the "primary" image for your listing. This image will be the one shown first in the search results, so it's pretty important to pick a good one if you want your listing to get accurate attention. Please note that this image has to be one of the ones you selected above, so if you don't see the image you want here but do see it above, make sure it is selected above in the images section as well.</span>
+            <span [hidden]="!hints.hero">Select the primary image for this wishified ad.</span>
           </mat-hint>
           <div *ngIf="displayedValidationErrors.category" class="input-errors error">
             {{ displayedValidationErrors.category }}
@@ -145,7 +153,7 @@
           <span matPrefix>$&nbsp;</span>
           <mat-hint>
             <i (mouseover)="toggleHint('price')" (mouseleave)="toggleHint('price')" class="{{buildIconClass('question-circle', '1')}}"></i>
-            <span [hidden]="!hints.price"> Select the price you would be willing to pay for the item. This doesn't necessarily mean you're willing to pay this price for any condition, but are willing to pay up to this price - negotiable based on condition. Be honest here to avoid negative feedback about false price interest.</span>
+            <span [hidden]="!hints.price">Select the price you would be willing to pay for the item. This doesn't mean you're willing to pay this price for any condition, but are willing to pay up to this price - based on condition.</span>
           </mat-hint>
           <div *ngIf="displayedValidationErrors.price" class="input-errors error">
             {{ displayedValidationErrors.price }}
@@ -166,7 +174,7 @@
           </mat-select>
           <mat-hint>
             <i (mouseover)="toggleHint('location')" (mouseleave)="toggleHint('location')" class="{{buildIconClass('question-circle', '1')}}"></i>
-            <span [hidden]="!hints.location"> This is the general location of where you're looking to purchase this item. We recommend using a local chain coffee shop (they have a steady flow of jittery people). We NEVER recommend entering your home address. You can select among your default locations or create a new location. For instance, if you're wanting to get a jetski for your vacation home, you may list a coffee shop near that area instead of one near your home area. This reference location is helpful for sellers and our search algorithm uses it for the search radius.</span>
+            <span [hidden]="!hints.location">The location you would like to purchase this item from. Never put your home address! We suggest a frequented establishment like Starbucks.</span>
           </mat-hint>
           <div *ngIf="displayedValidationErrors.location" class="input-errors error">
             {{ displayedValidationErrors.location }}

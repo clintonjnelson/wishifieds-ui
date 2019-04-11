@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input, Output, OnInit, OnDestroy, EventEmitter } from '@angular/core';
+import { Component, ViewChild, Input, Output, OnInit, AfterViewInit, OnDestroy, EventEmitter } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';   // Remove if no validation logic
 import { IconService } from '../core/services/icon.service';
@@ -6,19 +6,23 @@ import { HelpersService } from '../shared/helpers/helpers.service';
 import { ApiEnumsService } from '../core/api/api-enums.service';
 import { ApiImagesService } from '../core/api/api-images.service';
 import { ApiListingsService } from '../core/api/api-listings.service';
+import { WishifiedsApi }       from '../core/api/wishifieds-api.service';
 import { Category } from '../shared/models/category.model';
 import { Condition } from '../shared/models/condition.model';
+import { FileUploader, FileUploaderOptions, FileDropDirective } from 'ng2-file-upload';
 import { Listing } from './listing.model';
 import { takeUntil } from 'rxjs/operators';
 
 // TODO: The Form structure is losing it's getter correctness, so probably manually setting/pushing in controls instead
-    // of using the proper setters. Look through & fix the direct setting of values so that things align better.
+  // of using the proper setters. Look through & fix the direct setting of values so that things align better.
 
 
-// const UPLOADED_IMAGES = [
-//   'https://cdn.shopify.com/s/files/1/1083/5260/products/Wild_Things_Baby_Shoes_by_by_Sew_Darn_Ezy_for_Twig_and_Tale.jpg?v=1519893991',
-//   'https://cdn.shopify.com/s/files/1/1083/5260/products/Robyn_Deer.jpg?v=1519893991'
-// ];
+// Explain the image management process here
+  // Look for images on the listing. Add them to total & show them as selectable in UI.
+  // Look for images that have been uploaded. Add them as total & show them as selectable in UI.
+  // Look for images at the imageURL endpoint. Load those & make selectable.
+  // Every time a new URL is added, pull in those images & make them selectable.
+  //
 
 export class Location {
   id: string;
@@ -44,7 +48,7 @@ const USER_MEETING_LOCATIONS = [
   templateUrl: 'edit-listing.component.html',
   styleUrls: ['edit-listing.component.css']
 })
-export class EditListingComponent implements OnInit {
+export class EditListingComponent implements OnInit, AfterViewInit {
   listingForm: FormGroup;  // THIS WILL LATER JUST BE THE listingForm. NOTE: Can call .valid on this group to see if any validation errors.
   @ViewChild('listingForm') currentForm: FormGroup;
   @Input() listing: Listing;  // TODO: GET THIS FROM NGONINIT, NOT INPUT
@@ -56,21 +60,31 @@ export class EditListingComponent implements OnInit {
   conditions: Condition[];  // TODO: POPULATE WITH API PROVIDED CATEGORY LIST
   locations = USER_MEETING_LOCATIONS;  // TODO: POPULATE WITH API OF USER"S INPUT LOCATIONS
 
-
-
+  // Dropzone Upload Management
+  hasBaseDropZoneOver: boolean = false;
+  imagesUploader: FileUploader;
+  uploadedImagesSub: Subscription;
+  uploadedImagesEmit: Subject<any> = new Subject<any>();
+  uploadedImageUrls: string[] = [];
+  externalImageUrls: string[] = [];
   allImages: string[] = [];
+
+  allImagesSub: Subscription;
+  allImagesEmit: Subject<any> = new Subject<any>();
+  showImageSpinner: boolean = false;
   hints: any = {};
 
 
   private unsubscribe: Subject<any> = new Subject();
   forListingCreation  = false;  // TODO: CARRYOVER FROM SIGNPOST; DETERMINE IF NEED
 
-  constructor(private icons:       IconService,
-              private helpers:     HelpersService,
-              private formBuilder: FormBuilder,
-              private apiEnums:    ApiEnumsService,
-              private apiImages:   ApiImagesService,
-              private apiListings: ApiListingsService) {
+  constructor(private icons:         IconService,
+              private helpers:       HelpersService,
+              private formBuilder:   FormBuilder,
+              private apiEnums:      ApiEnumsService,
+              private apiImages:     ApiImagesService,
+              private apiListings:   ApiListingsService,
+              private wishifiedsApi: WishifiedsApi) {
     // Creates a FormGroup of k/v pairs that specify the FormControls in the group. Value starts as default value.
     // This FG will get bound to the Form. We can do so in HTML with <form [formGroup]="myForm"
 
@@ -84,27 +98,62 @@ export class EditListingComponent implements OnInit {
   }
 
   ngOnInit() {
+    const that = this;
+    // Takes an object {urls: string[], isSelected: boolean}
+    this.allImagesSub = this.allImagesEmit.subscribe((urlsAndSelected: any) => {
+      const urls = urlsAndSelected.urls;
+      const isSelected = urlsAndSelected.isSelected;
+
+      console.log("NEW IMAGES TO ADD: ", urls, " and isSelected: ", isSelected);
+      // Every image: added to all-list, turned into selectable image
+      that.allImages = this.allImages.concat(urls);
+      that.makeNewImagesSelectable(urls, isSelected);
+      console.log("NEW IMAGES ADDED. allImages is now: ", this.allImages);
+    });
+    // Prep the object - existing or new
     this.resetTempListing();  // FIXME: THIS SHOULD BE BEFORE REFORESH_ALL_IMAGES & BUILD_IMAGES
-    this.refreshAllImages();  // FIXME: VERIFY combined refreshAllImages & buildCheckboxImages OR Break out separately
+    // Prep the form (reset displays, reset errors, etc); removes image selections
     this.resetForm();
+    // Takes the list of allImages and turns them into the form images
+    this.resetAllImages();  // FIXME: VERIFY combined refreshAllImages & buildCheckboxImages OR Break out separately
+    // Get enums for condition, etc. // TODO: MAY REMOVE
     this.getEnums();  // Gets category, condition, etc values.
+    // Bootstrap the Drag/Drop Upload Functionaltiy
+    this.setupImageUploader();
+  }
+
+  ngAfterViewInit() {
+    const that = this;
+    // This subscription updates the images by scraping the example site for its images
+    // Works as an onBlur update of the URL after it's typed in
+    this.listingForm.controls['linkUrl']
+      .valueChanges
+      .pipe(takeUntil(this.unsubscribe))  // Prevents observable leaks
+      .subscribe( (newUrl: string) => {
+        // TODO: Call API to scrape the newly updated address
+        console.log("Changed the url: ", newUrl);
+        if(newUrl && newUrl.trim()) {
+          that.getExternalImages(newUrl);
+        }
+        // this.refreshAllImages();
+      });
   }
 
   ngOnDestroy() {
-    // this._subscription.unsubscribe();
     this.unsubscribe.next();
     this.unsubscribe.complete();
   }
 
+  // Dropzone trigger show file drop class (border)
+  fileOverBase(e: any): void { this.hasBaseDropZoneOver = e; }
+
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);
   }
-
   // For the a-link href generation
   verifyOrAddProtocolToUrl(url: string) {
     if(url) { return this.helpers.verifyOrAddProtocolToUrl(url); }
   }
-
   // For the a-link href display
   urlWithoutPrototol(url: string) {
     if(url) { return this.helpers.urlWithoutProtocol(url); }
@@ -126,21 +175,54 @@ export class EditListingComponent implements OnInit {
       keywords: ['']
     });
     // FIXME? MAY HAVE TO PUT THE LISTING_FORM LINK_URL SUBSCRIPTION DOWN HERE.
-    this.setLinkUrlSubscription();
+    // this.setLinkUrlSubscription();
   }
 
-  setLinkUrlSubscription() {
-    // This subscription updates the images by scraping the example site for its images
-    // Works as an onBlur update of the URL after it's typed in
-    this.listingForm.controls['linkUrl']
-      .valueChanges
-      .pipe(takeUntil(this.unsubscribe))  // Prevents observable leaks
-      .subscribe( (newVal: string) => {
-        // TODO: Call API to scrape the newly updated address
-        console.log("Changed the url: ", newVal);
-        this.refreshAllImages();
-      });
+  // Avatar Uploading Stuff; maybe one-day a service that takes url & returns files
+  setupImageUploader() {
+    const that = this;
+    // Uploader Options (essentially auth headers)
+    const uploaderOptions: FileUploaderOptions = {};
+    uploaderOptions.headers = [{name: 'eat', value: that.wishifiedsApi.getEatAuthCookie()}];
+    console.log("Uploader options is: ", uploaderOptions);
+
+
+    this.imagesUploader = new FileUploader({
+      url: this.wishifiedsApi.routes['uploadListingImages'],
+      itemAlias: 'listingimages',
+      autoUpload: true,
+    });
+    this.imagesUploader.setOptions(uploaderOptions);
+
+    // Handling file loading & uploading
+    console.log("Uploader Options ARE: ", this.imagesUploader.options);
+    this.imagesUploader.onAfterAddingFile = function(file) {file.withCredentials = false;};
+    this.imagesUploader.onCompleteItem = function(item: any, response: any, status: any, headers: any) {
+      console.log("ImageUpload:uploaded:", item, status, response);
+      console.log("Response is: ", response);
+      const savedImages = JSON.parse(response).savedImages;
+      // ??that.uploadedImagesEmit.next({urls: savedImages, isSelected: true}); // Update this array???
+      that.allImagesEmit.next({urls: savedImages, isSelected: true}); // auto-select uploaded images
+    };
   }
+
+  // QUESTION????vvvvvDOES THIS Reset all images with any change in the URL????
+  // setLinkUrlSubscription() {
+  //   const that = this;
+  //   // This subscription updates the images by scraping the example site for its images
+  //   // Works as an onBlur update of the URL after it's typed in
+  //   this.listingForm.controls['linkUrl']
+  //     .valueChanges
+  //     .pipe(takeUntil(this.unsubscribe))  // Prevents observable leaks
+  //     .subscribe( (newUrl: string) => {
+  //       // TODO: Call API to scrape the newly updated address
+  //       console.log("Changed the url: ", newUrl);
+  //       if(newUrl && newUrl.trim()) {
+  //         that.getExternalImages(newUrl);
+  //       }
+  //       // this.refreshAllImages();
+  //     });
+  // }
 
   // Filter for ONLY selected (checked) images; used to filter for hero image options list.
   keepTruthyFilter(item: any) {
@@ -200,6 +282,7 @@ export class EditListingComponent implements OnInit {
         that.listingForm.get('price').value &&
         that.listingForm.get('locationId').value &&
         that.listingForm.get('heroImage').value;
+
 
       console.log("CHECKS IS: ", checks);
       return !!checks;
@@ -310,11 +393,9 @@ export class EditListingComponent implements OnInit {
   }
 
 
-
-
-
   // Reset Functions
   resetForm() {
+    const that = this;
     if(this && this.listingForm) {
       // Set all values to the original listing;
       this.listingForm.patchValue({
@@ -324,66 +405,101 @@ export class EditListingComponent implements OnInit {
         description: this.listing.description,
         linkUrl:     this.listing.linkUrl,
         heroImage:   ( this.listing.images[0] || ''),
+        images:      (this.listing.images || []),
         price:       this.listing.price,
         locationId:  this.listing.locationId,
         keywords:    this.listing.keywords
       });
 
-      this.listingForm.get('images').reset();
+      // this.listingForm.setControl('images', this.formBuilder.array(that.listing.images || []));
       // Reset images as well, but have to do so with built object, so use reset function
+      this.listingForm.get('images').reset();
       this.refreshTempListingImages();
     }
   }
 
-  // This is mostly for the selectable images right now. Maybe change name(s) later.
+  // Creates List of Image Urls from only Selected Images
+  private refreshTempListingImages() {
+    // TODO: ENSURE THE HERO IMAGE IS THE FIRST IMAGE
+    const imagesFormArr = this.listingForm.get('images') as FormArray;
+    console.log("FORMARRAY: ", imagesFormArr.value);
+    console.log("IMAGECONTROLS: ", imagesFormArr.controls);
+    console.log("IMAGECONTROLS LENGTH IS: ", imagesFormArr.controls.length);
+    imagesFormArr.controls.forEach( i => {console.log("ITEM IS: ", i);})
+    const imageUrls = imagesFormArr.controls
+      .filter( imageControl => { return imageControl.get("checked").value; })
+      .map( imageControl => { return imageControl.get("url").value; });
+
+    console.log("IMAGE URLS: ", imageUrls);
+    this.tempListing.images = imageUrls;
+  }
+
+  // This is mostly for the selectable images right now. Maybe change name(s) later?
   // This requests the API to get all images from the linkURL & add them to allImages;
-  refreshAllImages() {
+  // This does the following (WITHOUT duplication)
+      // = RESET Images.
+      // - Gets any images originally on the listing
+      // - Adds all images from the linkUrl
+      // - Adds any uploaded images
+  resetAllImages() {
     const that = this;
-    // Combine all images from all places in here
+    console.log("Resetting All Images...");
+    this.allImages = [];
+    // Add any listing images
+    if(this.listing && this.listing.images) {
+      console.log("Listing images found.... adding:", this.listing.images);
+      this.allImagesEmit.next({urls: this.listing.images, isSelected: true});
+    }
+    // Add any uploaded images
+    if(this.uploadedImageUrls.length) {
+      console.log("Uploaded images found.... adding:", this.uploadedImageUrls);
+      this.allImagesEmit.next({urls: that.uploadedImageUrls, isSelected: true});
+    }
+    // Scrape linkUrl and add those images
     if(this.tempListing && this.tempListing.linkUrl) {
-      this.apiImages.getExternalImages(this.tempListing.linkUrl)
-        .subscribe(
-          urls => {
-            console.log("SUCCESSFUL SIGN CREATION: ", urls);
-            // TODO: DEDUP SIMILAR URLS FROM THE ARRAY
-            that.allImages = urls.concat(that.listing.images);
-            buildCheckboxImages();  // Builds into Checkboxes
-          },
-          error => {
-            console.log("GOT AN ERROR CREATING SIGN. ERROR: ", error);
-          });
+      this.getExternalImages(this.tempListing.linkUrl);
+      console.log("...done resetting allImages");
     }
-    else if(this.tempListing && this.tempListing.images) {
-      this.allImages = this.tempListing.images;
-    }
-    else {
-      this.allImages = [];
-    }
+  }
 
-    // TODO: MAY NEED TO FILTER OUT EMPTY URL VALUES FROM LIST, AS RESET COULD CREATE THIS CONDITION IF NO PICTURES ARE FOUND
-    // This builds the images into FormControls for displaying as checkboxes
-    function buildCheckboxImages() {
-      const imagesControls = that.listingForm.controls['images'] as FormArray;
-      const imgCtrArr = imagesControls.value;
+  private getExternalImages(urlToScrape) {
+    const that = this;
+    this.apiImages.getExternalImages(urlToScrape)
+      .subscribe(
+        newImageUrls => {
+          console.log("EDIT GOT IMAGES: ", newImageUrls);
+          that.allImagesEmit.next({urls: newImageUrls, isSelected: false});
+        },
+        error => {
+          console.log("GOT AN ERROR GETTING LINKURL IMAGES. ERROR: ", error);
+        });
+  }
 
-      // Add all images to the controls
-      that.allImages.forEach( imgUrl => {
-        // Note: "images" is a FormArray, which is an Array of FormGroups, which each has the Control properties we set in addImage
-        if(-1 === imgCtrArr.findIndex(function matchingUrl(elem) {return elem.url === imgUrl; }))  {
-          let images = that.listingForm.controls['images'] as FormArray;
-          images.controls.push(addImage(imgUrl));
-        }
-      });
-    }
+  // TODO: MAY NEED TO FILTER OUT EMPTY URL VALUES FROM LIST, AS RESET COULD CREATE THIS CONDITION IF NO PICTURES ARE FOUND
+  // This builds the images into FormControls for displaying as checkboxes
+  private makeNewImagesSelectable(urls, isSelected) {
+    const imagesControls = this.listingForm.controls['images'] as FormArray;
+    const imgCtrArr = imagesControls.value;
 
-    // Create the form controls for an image
-    function addImage(url: string, checked: boolean = false, hero: boolean = false): FormGroup {
-      return that.formBuilder.group({
-        url: url,
-        checked: checked,
-        hero: hero
-      });
-    }
+    // For the images requested, add the controls that are not already added
+    urls.forEach( imgUrl => {
+      // Note: "images" is a FormArray, which is an Array of FormGroups, which each has the Control properties we set in addImage
+      if(-1 === imgCtrArr.findIndex(function urlExists(elem) {return elem.url === imgUrl; }))  {
+        let images = this.listingForm.controls['images'] as FormArray;
+        images.controls.push(this.createImageFormControl(imgUrl, isSelected));
+      }
+    });
+    console.log("CHECKED SHOULD BE: ", isSelected);
+    console.log("FINAL LISTING FORM GROUP IS: ", this.listingForm.controls['images']);
+  }
+
+  // Create the form controls for an image
+  private createImageFormControl(url: string, checked: boolean = false, hero: boolean = false): FormGroup {
+    return this.formBuilder.group({
+      url: url,
+      checked: checked,
+      hero: hero
+    });
   }
 
   // Resets the buttons that are triggered by changes
@@ -396,22 +512,9 @@ export class EditListingComponent implements OnInit {
     });
   }
 
-  // Creates List of Image Urls from only Selected Images
-  private refreshTempListingImages() {
-    // TODO: ENSURE THE HERO IMAGE IS THE FIRST IMAGE
-
-    const imagesFormArr = this.listingForm.get('images') as FormArray;
-    console.log("IMAGECONTROLS: ", imagesFormArr);
-    const imageUrls = imagesFormArr.controls
-      .filter( imageControl => { return imageControl.get("checked").value; })
-      .map( imageControl => { return imageControl.get("url").value });
-
-    console.log("IMAGE URLS: ", imageUrls);
-    this.tempListing.images = imageUrls;
-  }
-
   private resetTempListing() {
     this.tempListing = Object.assign({}, this.listing);  // Make a copy
+    console.log("TEMP LISTING IS NOW: ", this.tempListing);
     this.resetHints();
   }
 

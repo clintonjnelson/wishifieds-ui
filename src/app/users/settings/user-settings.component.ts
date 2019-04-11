@@ -12,8 +12,6 @@ import { MatInputModule }      from '@angular/material';
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { Subscription, Subject } from 'rxjs';
 
-const UPLOAD_URL = 'http://localhost:5000/api/users/3/profile_pic';
-
 @Component({
   moduleId: module.id,
   selector: 'user-settings',
@@ -29,8 +27,7 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
   @ViewChild('userSettingsForm') currentForm: NgForm;
   userSettings: UserUpdates;
   tempSettings: UserUpdates;
-  userPicUrl: string;  // DELETE - UNUSED
-  avatarImageFile: any = [];
+  // avatarImageFile: any = [];
   avatarUploader: FileUploader;
   userSub: Subscription;
   userEmit: Subject<any> = new Subject<any>();
@@ -61,7 +58,6 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
     this.apiUsersService.getUserById(this.authService.auth.userId)
                         .subscribe(
                           user => {
-                            that.userPicUrl = user.profilePicUrl;
                             console.log("USER RETURNED FROM GET BY ID: ", user);
                             that.userEmit.next(user);
                             // BRING THIS BACK IF THE EMITTER DOESN"T WORK!!
