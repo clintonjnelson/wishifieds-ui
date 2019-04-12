@@ -29,6 +29,10 @@ img.carousel-image {
   max-height: 100%;  /*This will scale the picture down if the height is too big*/
 }
 
+::ng-deep div.swiper-wrapper {
+  align-items: center;
+}
+
 ::ng-deep div.swiper-button-next div.swiper-button-prev {
   background-color: rgb(211,211,211, 0.4);
   border-radius: 12px;

@@ -137,6 +137,8 @@ export class EditListingComponent implements OnInit, AfterViewInit {
         }
         // this.refreshAllImages();
       });
+
+    this.refreshTempListingImages();  // FIXME - SEEMS HACKY. TO ENSURE IMAGES SHOW. EMITTER???????!!!!!
   }
 
   ngOnDestroy() {
@@ -260,7 +262,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
               // this.resetTempListing();  // FIXME: THIS SHOULD BE BEFORE REFORESH_ALL_IMAGES & BUILD_IMAGES
               // this.refreshAllImages();  // FIXME: VERIFY combined refreshAllImages & buildCheckboxImages OR Break out separately
               // this.resetForm();
-              this.saveEE.emit(listing);  // Emit to close add-listing
+              this.saveEE.emit(listing);  // Emit to close add-listing FIXME: DOES NOT FLOW DOWN! Just reloads page currently.
               console.log("emitted to close window")
               // TODO: SHOULD WE BUBBLE UP DATA TO PRIOR PAGES HERE, SO DON'T NEED TO RELOAD? PROBABLY.
             },
@@ -300,10 +302,13 @@ export class EditListingComponent implements OnInit, AfterViewInit {
         .filter(item => item.checked)  // keep only checked ones
         .map(item => item.url)         // get their urls
 
+      console.log("SELECTEDIMAGES before mvoe hero: ", selectedImages);
+      console.log("HERO IS: ", saveObj.heroImage);
       // Set hero image first (could do in one line, but harder to read unless familiar with splice)
       selectedImages.splice(selectedImages.indexOf(saveObj.heroImage), 1);  // Remove hero from list
       selectedImages.splice(0, 0, saveObj.heroImage);  // Set hero first
 
+      console.log("IMAGES AFTER MOVE HERO TO FRONT: ", selectedImages);
       saveObj.images = selectedImages;  // set on the save object
 
       // Set the non-form values
@@ -344,6 +349,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     );
   }
 
+  // Get the image group. Helpful in UI for displaying the selector options
   getImageGroup() {
     return <FormArray>this.listingForm.get('images');
   }
@@ -390,6 +396,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   cancel() {
     this.resetForm();
     this.resetTempListing();
+    this.toggleEditing(false);
   }
 
 
@@ -514,6 +521,9 @@ export class EditListingComponent implements OnInit, AfterViewInit {
 
   private resetTempListing() {
     this.tempListing = Object.assign({}, this.listing);  // Make a copy
+    // FIXME - TEMP FIX BECAUSE OF MISMATCHED FIELD NAMING. FIX "heroImage" to "hero"!!!!!!!!!!!
+    // @ts-ignore: Unreachable code error
+    this.tempListing.heroImage = this.listing.hero;  // FIXME!!! JUST HAVE ONE FIELD - "hero", NOT TWO
     console.log("TEMP LISTING IS NOW: ", this.tempListing);
     this.resetHints();
   }

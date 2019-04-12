@@ -68,6 +68,7 @@ export class ListingFullComponent implements OnInit {
       this.listing.id);
     this.getCorrespondantMessagesInfo();
     console.log("IS OWNER IS, listindOwner, currentViewer: ", this.isOwner, this.listing.userId, this.currentViewerId);
+    console.log("LISTING FULL: Listing object is: ", this.listing);
   }
 
   buildIconClass(icon: string, size: string = '2') {

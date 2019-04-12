@@ -84,19 +84,6 @@
         </mat-form-field>
 
         <!-- TODO: IMPLEMENT A DRAG & DROP PICTURE INPUT WITH DRAGGABLE ORDERING AND ABILITY TO SELECT FROM LINKURL -->
-        <!-- TODO:
-          THIS SHOULD BE A MORE COMPLEX SECTION CONTAINING IMAGE UPLOAD, SITE SCRAPE, ETC.
-          Example site should automatically scrape
-          Additional scrape sites should be allowed. Pictures will be downloaded & saved to cloud.
-          Of all of the images, multiple can be selected to be used.
-          There should be a summery of selected images and from those, hero can be clicked. -->
-        <!-- PHASE1 WILL JUST USE THE EXAMPLE LINK_URL. LATER PHASES WILL ALLOW MORE SITES FOR SCRAPING. -->
-
-
-        <!-- Populate a bunch of checkboxes with images linked, but hide the checkboxes. When select the image, select the checkbox. Image could maybe be the label?
-        Images with an index that has been selected get the css attribute of that on-page ID changed to have a border for "selected".
-         *ngIf="tempListing.linkUrl && tempListing.linkUrl.length > 3"
-        -->
         <div class="images-container">
           <label class="images-label">Select Wishlisting Images OR Drag/Drop to Upload Your Own</label>
           <div class="images-selection-container">
@@ -121,13 +108,10 @@
 
           <!-- Upload Images Button Option -->
           <input type="file" name="uploadedimages" ng2FileSelect [uploader]="imagesUploader" multiple/>
-          <!-- <button type="button" class="upload-avatar-button" (click)="imagesUploader.uploadAll()" [disabled]="!imagesUploader.getNotUploadedItems().length">
-            Upload Images
-          </button> -->
         </div>
 
 
-        <!-- Select Hero Image from Selected Images -->
+        <!-- Hero Image Select from Selected Images -->
         <mat-form-field layout="column" *ngIf="getImageGroup().controls && getImageGroup().controls.length > 0">
           <mat-label>Pick the Primary Image</mat-label>
           <mat-select name="heroImage" [formControl]="listingForm.controls['heroImage']" [(ngModel)]="tempListing.heroImage" [ngStyle]="{'background': 'url(getSelectedHero() ) center contain no-repeat'}" placeholder="Select a Primary from Your Images">
@@ -194,7 +178,6 @@
             {{ displayedValidationErrors.keywords }}
           </div>
         </mat-form-field>
-
 
 
 

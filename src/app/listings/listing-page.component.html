@@ -7,6 +7,6 @@
 
   <!-- Editing (it has its OWN Preview full-listing) -->
   <div *ngIf="listing && isEditing" class="listing-edit-container">
-    <edit-listing [listing]="listing" (editingEE)="toggleEditing($event)"></edit-listing>
+    <edit-listing [listing]="listing" (saveEE)="save($event)" (editingEE)="toggleEditing($event)"></edit-listing>
   </div>
 </div>
