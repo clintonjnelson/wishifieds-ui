@@ -23,8 +23,8 @@ export class ListingPageComponent implements OnInit, OnDestroy{
 
   constructor(
     // private authService:     AuthService,
-               private route:           ActivatedRoute,
-               private listingsApi:     ApiListingsService) {
+    private route:           ActivatedRoute,
+    private listingsApi:     ApiListingsService) {
   }
 
   ngOnInit() {

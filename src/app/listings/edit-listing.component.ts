@@ -171,7 +171,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       description: ['', Validators.required],
       linkUrl: ['', {updateOn: 'blur'}],  // Subscription valueChange triggered only on blur
       images: this.formBuilder.array([]),
-      heroImage: ['', Validators.required],
+      hero: ['', Validators.required],
       price: ['', Validators.required],
       locationId: ['', Validators.required],
       keywords: ['']
@@ -283,7 +283,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
         that.listingForm.get('title').value &&
         that.listingForm.get('price').value &&
         that.listingForm.get('locationId').value &&
-        that.listingForm.get('heroImage').value;
+        that.listingForm.get('hero').value;
 
 
       console.log("CHECKS IS: ", checks);
@@ -303,10 +303,10 @@ export class EditListingComponent implements OnInit, AfterViewInit {
         .map(item => item.url)         // get their urls
 
       console.log("SELECTEDIMAGES before mvoe hero: ", selectedImages);
-      console.log("HERO IS: ", saveObj.heroImage);
+      console.log("HERO IS: ", saveObj.hero);
       // Set hero image first (could do in one line, but harder to read unless familiar with splice)
-      selectedImages.splice(selectedImages.indexOf(saveObj.heroImage), 1);  // Remove hero from list
-      selectedImages.splice(0, 0, saveObj.heroImage);  // Set hero first
+      selectedImages.splice(selectedImages.indexOf(saveObj.hero), 1);  // Remove hero from list
+      selectedImages.splice(0, 0, saveObj.hero);  // Set hero first
 
       console.log("IMAGES AFTER MOVE HERO TO FRONT: ", selectedImages);
       saveObj.images = selectedImages;  // set on the save object
@@ -385,7 +385,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
 
   // THIS IS NOT WORKING< SO PROBABLY NEED TO DO DOM MANIPULAtion OF CSS VIA AN ID ON NG-SELECT
   getSelectedHero() {
-    return this.listingForm.controls['heroImage'].value;
+    return this.listingForm.controls['hero'].value;
   }
 
   // TEMP: USED TO CHECK VALUES OF STUFF
@@ -411,7 +411,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
         title:       this.listing.title,
         description: this.listing.description,
         linkUrl:     this.listing.linkUrl,
-        heroImage:   ( this.listing.images[0] || ''),
+        hero:   ( this.listing.images[0] || ''),
         images:      (this.listing.images || []),
         price:       this.listing.price,
         locationId:  this.listing.locationId,
@@ -521,9 +521,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
 
   private resetTempListing() {
     this.tempListing = Object.assign({}, this.listing);  // Make a copy
-    // FIXME - TEMP FIX BECAUSE OF MISMATCHED FIELD NAMING. FIX "heroImage" to "hero"!!!!!!!!!!!
-    // @ts-ignore: Unreachable code error
-    this.tempListing.heroImage = this.listing.hero;  // FIXME!!! JUST HAVE ONE FIELD - "hero", NOT TWO
+    this.tempListing.hero = this.listing.hero;
     console.log("TEMP LISTING IS NOW: ", this.tempListing);
     this.resetHints();
   }

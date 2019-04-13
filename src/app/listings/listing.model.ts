@@ -11,7 +11,7 @@ export class Listing {
   price:         string;
   locationId:    string;  // TODO: Make into object with various info
   status:        string;
-  heroImage:     string;
+  hero:          string;  // Hero Image
   images:        string[];  // TODO: NOT jUST HERO, HERO WOULD BE FIRST!
   imagesRef:     string;
   slug:          string;

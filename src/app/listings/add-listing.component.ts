@@ -23,7 +23,7 @@ const NEW_LISTING: Listing = {
   price:         "",
   locationId:    "",
   status:        "",
-  heroImage:     "",
+  hero:          "",
   images:        [],
   imagesRef:     "",
   slug:          "",

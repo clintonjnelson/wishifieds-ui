@@ -114,13 +114,13 @@
         <!-- Hero Image Select from Selected Images -->
         <mat-form-field layout="column" *ngIf="getImageGroup().controls && getImageGroup().controls.length > 0">
           <mat-label>Pick the Primary Image</mat-label>
-          <mat-select name="heroImage" [formControl]="listingForm.controls['heroImage']" [(ngModel)]="tempListing.heroImage" [ngStyle]="{'background': 'url(getSelectedHero() ) center contain no-repeat'}" placeholder="Select a Primary from Your Images">
+          <mat-select name="hero" [formControl]="listingForm.controls['hero']" [(ngModel)]="tempListing.hero" [ngStyle]="{'background': 'url(getSelectedHero() ) center contain no-repeat'}" placeholder="Select a Primary from Your Images">
             <mat-option *ngFor="let group of getImageGroup().controls | callback: keepTruthyFilter; let ind=index" [value]="group.controls.url.value">
             <!-- <mat-option *ngFor="let group of listingForm.controls['images'].controls | callback: keepTruthyFilter; let ind=index" [value]="group.controls.url.value"> -->
               <img src="{{ group.controls.url.value }}" alt="Listing Image" height="40px">
             </mat-option>
           </mat-select>
-          <img [hidden]="!tempListing.heroImage" src="{{tempListing.heroImage}}" height="40px" alt="">
+          <img [hidden]="!tempListing.hero" src="{{tempListing.hero}}" height="40px" alt="">
           <mat-hint>
             <i (mouseover)="toggleHint('hero')" (mouseleave)="toggleHint('hero')" class="{{buildIconClass('question-circle', '1')}}"></i>
             <span [hidden]="!hints.hero">Select the primary image for this wishified ad.</span>
