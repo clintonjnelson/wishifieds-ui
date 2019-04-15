@@ -167,9 +167,23 @@ label.upload-file-label-button {
   transform: translateX(-1em);
 }*/
 
+p.advanced-toggle {
+  margin-top: 0;
+  text-decoration: underline;
+}
+
+div.advanced-container {
+  margin-left: 2em;
+}
+
 div#listings-controls {
   display: flex;
   flex-direction: row;
+  margin-top: 2em;
   /*align-self: flex-start;
   justify-content: flex-start;*/
+}
+
+a.listing-saveicon {
+  margin-right: 2em;
 }

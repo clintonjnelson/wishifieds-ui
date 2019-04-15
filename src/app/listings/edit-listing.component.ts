@@ -59,6 +59,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   categories: Category[];  // TODO: POPULATE WITH API PROVIDED CATEGORY LIST
   conditions: Condition[];  // TODO: POPULATE WITH API PROVIDED CATEGORY LIST
   locations = USER_MEETING_LOCATIONS;  // TODO: POPULATE WITH API OF USER"S INPUT LOCATIONS
+  showAdvanced: boolean = false;
 
   // Dropzone Upload Management
   hasBaseDropZoneOver: boolean = false;
@@ -165,8 +166,8 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   buildForm() {
     const that = this;
     this.listingForm = this.formBuilder.group({  // FUTURE: LISTINGFORM
-      categoryId: ['', Validators.required],
-      conditionId: [''],
+      categoryId: ['1', Validators.required],  // TODO: Default to 1 here? On API?
+      conditionId: ['1', Validators.required],  // TODO: Default to 1 here? On API?
       title: ['', Validators.required],
       description: ['', Validators.required],
       linkUrl: ['', {updateOn: 'blur'}],  // Subscription valueChange triggered only on blur
@@ -279,11 +280,11 @@ export class EditListingComponent implements OnInit, AfterViewInit {
 
     // Critical pre-save checks
     function passesCriticalValidations() {
-      const checks = that.listingForm.get('categoryId').value &&
-        that.listingForm.get('title').value &&
+      const checks = that.listingForm.get('title').value &&
         that.listingForm.get('price').value &&
         that.listingForm.get('locationId').value &&
         that.listingForm.get('hero').value;
+        // that.listingForm.get('categoryId').value &&
 
 
       console.log("CHECKS IS: ", checks);
@@ -379,8 +380,13 @@ export class EditListingComponent implements OnInit, AfterViewInit {
 
   toggleEditing(event: any) {
     console.log("IN edit-listing. BUBBLING editingEE up with this event: ", event);
-
     this.editingEE.emit(event);
+  }
+
+  toggleAdvanced(input: any = null): void {
+    // If setting value directly, do that. Else, just toggle the value
+    if(typeof(input) === 'boolean') { this.showAdvanced = input; }
+    else { this.showAdvanced = !this.showAdvanced; }
   }
 
   // THIS IS NOT WORKING< SO PROBABLY NEED TO DO DOM MANIPULAtion OF CSS VIA AN ID ON NG-SELECT

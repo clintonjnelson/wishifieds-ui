@@ -10,7 +10,7 @@
     <div ng2FileDrop class="listing-content-edit-form-container my-drop-zone" [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="imagesUploader">
       <form [formGroup]="listingForm" (ngSubmit)="save()" name="listingForm" class="listing-form" layout="column">
 
-        <!-- Category -->
+        <!-- Category
         <mat-form-field layout="column">
           <mat-label>Choose a Category</mat-label>
           <mat-select name="category" [formControl]="listingForm.controls['categoryId']" [(ngModel)]="tempListing.categoryId" placeholder="Choose a Category" required>
@@ -27,7 +27,7 @@
           </div>
         </mat-form-field>
 
-        <!-- Condition -->
+        Condition
         <mat-form-field layout="column" *ngIf="tempListing.categoryId">
           <mat-label>Desired Condition</mat-label>
           <mat-select name="condition" [formControl]="listingForm.controls['conditionId']" [(ngModel)]="tempListing.conditionId" placeholder="Choose a Condition" required>
@@ -42,7 +42,7 @@
           <div *ngIf="displayedValidationErrors.condition" class="input-errors error">
             {{ displayedValidationErrors.condition }}
           </div>
-        </mat-form-field>
+        </mat-form-field> -->
 
         <!-- Title -->
         <mat-form-field>
@@ -148,40 +148,81 @@
           </div>
         </mat-form-field>
 
+        <!-- Advanced Options -->
+        <p class="advanced-toggle" (click)="toggleAdvanced()">
+          Advanced
+          <i *ngIf="!showAdvanced" class="{{buildIconClass('chevron-down', '1')}}"></i>
+          <i *ngIf="showAdvanced" class="{{buildIconClass('chevron-up', '1')}}"></i>
+        </p>
+        <div *ngIf="showAdvanced" class="advanced-container">
+          <!-- Category -->
+          <mat-form-field layout="column">
+            <mat-label>Choose a Category</mat-label>
+            <mat-select name="category" [formControl]="listingForm.controls['categoryId']" [(ngModel)]="tempListing.categoryId" placeholder="Choose a Category" required>
+              <mat-option *ngFor="let category of categories" [value]="category.id">
+                {{ category.name }}
+              </mat-option>
+            </mat-select>
+            <mat-hint>
+              <i (mouseover)="toggleHint('category')" (mouseleave)="toggleHint('category')" class="{{buildIconClass('question-circle', '1')}}"></i>
+              <span [hidden]="!hints.category"> Category is what you think the general grouping is of item you're wishing for. Keep in mind, when someone is searching to sell an item, they may limit the results to specific categories - that may or may not matter for you.</span>
+            </mat-hint>
+            <div *ngIf="displayedValidationErrors.category" class="input-errors error">
+              {{ displayedValidationErrors.category }}
+            </div>
+          </mat-form-field>
 
-        <!-- TODO: COME UP WITH A WAY TO INPUT THE FULL LOCATION HERE. City/State or Zip? MAYBE GOOGLE MAPS INTEGRATION? -->
-        <!-- TODO: USER'S LOCATIONS OR OPTIONAL "+ ADD NEW LOCATION" THAT UN-HIDES A SET OF
-        LOCATION FIELDS THAT OTHERWISE ARE POPULATED BEHIND THE SCENES WITH THE SAVED VALUES. -->
-        <!-- Location -->
-        <mat-form-field layout="row">
-          <mat-label>Purchase Location</mat-label>
-          <mat-select name="location" [formControl]="listingForm.controls['locationId']"  [(ngModel)]="tempListing.locationId" placeholder="Choose a Location (eg: meeting location for purchase)" required>
-            <mat-option *ngFor="let location of locations" [value]="location.id">
-              {{ location.description }}
-            </mat-option>
-          </mat-select>
-          <mat-hint>
-            <i (mouseover)="toggleHint('location')" (mouseleave)="toggleHint('location')" class="{{buildIconClass('question-circle', '1')}}"></i>
-            <span [hidden]="!hints.location">The location you would like to purchase this item from. Never put your home address! We suggest a frequented establishment like Starbucks.</span>
-          </mat-hint>
-          <div *ngIf="displayedValidationErrors.location" class="input-errors error">
-            {{ displayedValidationErrors.location }}
-          </div>
-        </mat-form-field>
+          <!-- Condition -->
+          <mat-form-field layout="column" *ngIf="tempListing.categoryId">
+            <mat-label>Desired Condition</mat-label>
+            <mat-select name="condition" [formControl]="listingForm.controls['conditionId']" [(ngModel)]="tempListing.conditionId" placeholder="Choose a Condition" required>
+              <mat-option *ngFor="let condition of conditions" [value]="condition.id">
+                {{ condition.name }}
+              </mat-option>
+            </mat-select>
+            <mat-hint>
+              <i (mouseover)="toggleHint('condition')" (mouseleave)="toggleHint('condition')" class="{{buildIconClass('question-circle', '1')}}"></i>
+              <span [hidden]="!hints.condition"> If you're looking for a specific condition, you can select that here. It is recommended to choose the lowest condition you would be interested in, such as selecting "good" when interested in "good or better" condition items.</span>
+            </mat-hint>
+            <div *ngIf="displayedValidationErrors.condition" class="input-errors error">
+              {{ displayedValidationErrors.condition }}
+            </div>
+          </mat-form-field>
 
-        <!-- TODO: ADD A LIST OF CHIPS HERE FOR KEYWORDS? ADD SOMETHING. TEXT INPUTS WITH OPTIONAL ADD ANOTHER. -->
-        <!-- Keywords -->
-        <mat-form-field layout="row">
-          <mat-label>Keywords</mat-label>
-          <input matInput type="text" name="keywords" [formControl]="listingForm.controls['keywords']" [(ngModel)]="tempListing.keywords" placeholder="Description of what you're looking for..." mat-maxlength="2000"/>
-          <mat-hint>
-            <i (mouseenter)="toggleHint('keywords')" (mouseleave)="toggleHint('keywords')" class="{{buildIconClass('info-circle', '1')}}"></i>
-            <span [hidden]="!hints.keywords"> We give you four keywords that help supplement the search algorithm for search results. This helps you keep your title wording helpful, instead of you feeling pressure to cram all of your keywords into it.</span>
-          </mat-hint>
-          <div *ngIf="displayedValidationErrors.keywords" class="input-errors error">
-            {{ displayedValidationErrors.keywords }}
-          </div>
-        </mat-form-field>
+          <!-- TODO: COME UP WITH A WAY TO INPUT THE FULL LOCATION HERE. City/State or Zip? MAYBE GOOGLE MAPS INTEGRATION? -->
+          <!-- TODO: USER'S LOCATIONS OR OPTIONAL "+ ADD NEW LOCATION" THAT UN-HIDES A SET OF
+          LOCATION FIELDS THAT OTHERWISE ARE POPULATED BEHIND THE SCENES WITH THE SAVED VALUES. -->
+          <!-- Location -->
+          <mat-form-field layout="row">
+            <mat-label>Purchase Location</mat-label>
+            <mat-select name="location" [formControl]="listingForm.controls['locationId']"  [(ngModel)]="tempListing.locationId" placeholder="Choose a Location (eg: meeting location for purchase)" required>
+              <mat-option *ngFor="let location of locations" [value]="location.id">
+                {{ location.description }}
+              </mat-option>
+            </mat-select>
+            <mat-hint>
+              <i (mouseover)="toggleHint('location')" (mouseleave)="toggleHint('location')" class="{{buildIconClass('question-circle', '1')}}"></i>
+              <span [hidden]="!hints.location">The location you would like to purchase this item from. Never put your home address! We suggest a frequented establishment like Starbucks.</span>
+            </mat-hint>
+            <div *ngIf="displayedValidationErrors.location" class="input-errors error">
+              {{ displayedValidationErrors.location }}
+            </div>
+          </mat-form-field>
+
+          <!-- TODO: ADD A LIST OF CHIPS HERE FOR KEYWORDS? ADD SOMETHING. TEXT INPUTS WITH OPTIONAL ADD ANOTHER. -->
+          <!-- Keywords -->
+          <mat-form-field layout="row">
+            <mat-label>Keywords</mat-label>
+            <input matInput type="text" name="keywords" [formControl]="listingForm.controls['keywords']" [(ngModel)]="tempListing.keywords" placeholder="Description of what you're looking for..." mat-maxlength="2000"/>
+            <mat-hint>
+              <i (mouseenter)="toggleHint('keywords')" (mouseleave)="toggleHint('keywords')" class="{{buildIconClass('info-circle', '1')}}"></i>
+              <span [hidden]="!hints.keywords"> We give you four keywords that help supplement the search algorithm for search results. This helps you keep your title wording helpful, instead of you feeling pressure to cram all of your keywords into it.</span>
+            </mat-hint>
+            <div *ngIf="displayedValidationErrors.keywords" class="input-errors error">
+              {{ displayedValidationErrors.keywords }}
+            </div>
+          </mat-form-field>
+        </div>
 
 
 
