@@ -85,7 +85,14 @@
 
         <!-- TODO: IMPLEMENT A DRAG & DROP PICTURE INPUT WITH DRAGGABLE ORDERING AND ABILITY TO SELECT FROM LINKURL -->
         <div class="images-container">
-          <label class="images-label">Select Wishlisting Images OR Drag/Drop to Upload Your Own</label>
+          <div class="images-label">
+            <p class="images-container-label">Select Wishlisting Images OR Drag/Drop to Upload Your Own</p>
+            <label for="uploadfile" class="upload-file-label-button">
+              <i class="{{buildIconClass('cloud-upload-alt', '1')}}"></i> OR Click Here to Upload
+            </label>
+            <!-- Upload Images Button Option -->
+            <input id="uploadfile" type="file" name="uploadedimages" ng2FileSelect [uploader]="imagesUploader" multiple/>
+          </div>
           <div class="images-selection-container">
             <div layout="row" formArrayName="images" *ngFor="let group of getImageGroup().controls; let ind=index">
               <div [formGroupName]="ind">
@@ -105,14 +112,11 @@
               </small>
             </p>
           </div>
-
-          <!-- Upload Images Button Option -->
-          <input type="file" name="uploadedimages" ng2FileSelect [uploader]="imagesUploader" multiple/>
         </div>
 
 
         <!-- Hero Image Select from Selected Images -->
-        <mat-form-field layout="column" *ngIf="getImageGroup().controls && getImageGroup().controls.length > 0">
+        <mat-form-field class="hero-image-container" layout="column" *ngIf="getImageGroup().controls && getImageGroup().controls.length > 0">
           <mat-label>Pick the Primary Image</mat-label>
           <mat-select name="hero" [formControl]="listingForm.controls['hero']" [(ngModel)]="tempListing.hero" [ngStyle]="{'background': 'url(getSelectedHero() ) center contain no-repeat'}" placeholder="Select a Primary from Your Images">
             <mat-option *ngFor="let group of getImageGroup().controls | callback: keepTruthyFilter; let ind=index" [value]="group.controls.url.value">

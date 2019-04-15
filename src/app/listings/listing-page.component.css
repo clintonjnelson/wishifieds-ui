@@ -6,6 +6,19 @@
   width: 100%;
 }
 
+.listing-edit-container {
+  display: flex;
+  width: 100%;
+}
+
+edit-listing {
+  display: flex;
+  /*justify-content: center;*/
+  width: 100%;
+}
+
 listing-full {
+  display: flex;
+  justify-content: center;
   width: 100%;  /* Fit the page, not too wide. */
 }

@@ -1,5 +1,20 @@
 
+div.edit-listing-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+div.preview-listing-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 div.edit-form-container {
+  display:flex;
+  justify-content: center;
   margin-top: 1em;  /* space between preview & form */
   margin-bottom: 2em;
 }
@@ -77,6 +92,26 @@ mat-form-field {
 .images-container {
   position: relative;
   text-align: left;
+  margin-left: 2em;
+}
+
+.images-container-label {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+label.upload-file-label-button {
+  border: 1px solid white;
+  border-radius: 3px;
+  background-color: gray;
+  color: white;
+  margin-top: 5px;
+  padding: 2px;
+}
+
+#uploadfile {
+  width: 0.1px;
+  height: 0.1px;
 }
 
 .images-selection-container {
@@ -117,10 +152,20 @@ mat-form-field {
   border: solid 1px white;
 }
 
+.hero-image-container {
+  margin-left: 2em;
+}
+
 
 ::ng-deep mat-label.price-input-label:parent:parent:parent {
   margin-left: -2em;
 }
+/*::ng-deep div.mat-form-field-infix {
+  transform: translateX(-1em);
+}*/
+/*::ng-deep div.mat-form-field-prefix {
+  transform: translateX(-1em);
+}*/
 
 div#listings-controls {
   display: flex;
