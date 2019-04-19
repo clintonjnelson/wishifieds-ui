@@ -25,6 +25,9 @@ export class UserPageComponent implements OnInit, OnDestroy {
   pageSubscription: Subscription;
   tabsSubscription: Subscription;
   listingsSubscription: Subscription;
+  favorites: Listing[] = [];
+  favoritesSub: Subscription;
+  favoritesEmit: Subject<Listing[]> = new Subject<Listing[]>();
 
   isOwner = false;
   isProcessing: boolean;
@@ -52,6 +55,12 @@ export class UserPageComponent implements OnInit, OnDestroy {
         this.listings = this.listings.concat(newListings);  // Concat & SET
       }
     });
+    this.favoritesSub = this.favoritesEmit.subscribe((newFavs: Listing[]) => {
+      if(newFavs && newFavs.length) {
+        // Initial GET listings may get lots; saving a listing adds only one.
+        this.favorites = this.favorites.concat(newFavs);  // Concat & SET
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -69,6 +78,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
       console.log("TRIGGERED SUBSCRIPTION THAT WATCHES PARAMS: ", params);
       that.updateUsernameBasedData(username);
       this.getListings();
+      this.getFavorites();
     });
     // Update the page tab based on the URL specified tab
     this.tabsSubscription = this.route.queryParams.subscribe( params => {
@@ -78,7 +88,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
         that.currentTabIndex = tabIndex;
       }
     });
-    this.getTotalUnreadMsgs();
+    this.getTotalUnreadMsgs();  // TODO: WHY IS THIS NOT IN THE PAGE SUBSCRIPTION??
   }
 
   buildIconClass(icon: string, size: string = '2') {
@@ -99,6 +109,20 @@ export class UserPageComponent implements OnInit, OnDestroy {
         listings => {
           console.log("LISTINGS FOUND: ", listings);
           that.listingsEmit.next(listings);  // Add these via observer
+        },
+        error => {
+          console.log("ERROR GETTING LISTINGS: ", error);
+        });
+  }
+
+  getFavorites() {
+    const that = this;
+    this.listingsApi
+      .getFavoriteListingsByUser()
+      .subscribe(
+        favs => {
+          console.log("FAVORITES FOUND: ", favs);
+          that.favoritesEmit.next(favs);  // Add these via observer
         },
         error => {
           console.log("ERROR GETTING LISTINGS: ", error);

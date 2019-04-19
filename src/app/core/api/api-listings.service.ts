@@ -43,6 +43,23 @@ export class ApiListingsService {
                );
   }
 
+  // Gets the favorites for the requesting user, so no explicit ID needed at this time
+  getFavoriteListingsByUser(): Observable<Listing[]> {
+    const getFavListingsByUserUrl = this.wishifiedsApi.routes.getFavoriteListingsByUser;
+    const options = this.wishifiedsApi.getRequestOptionWithEatHeader();
+
+    return this.http
+               .get(getFavListingsByUserUrl, options)
+               .pipe(
+                 map(res => {
+                   return res.json().listings as Listing[];
+                 }),
+                 catchError( (error: Response) => {
+                   return Observable.throw(error);
+                 })
+               );
+  }
+
   createListing(listingData: any): Observable<Listing> {
     const createListingUrl = this.wishifiedsApi.routes.createListing;
     const options = this.wishifiedsApi.getRequestOptionWithEatHeader();

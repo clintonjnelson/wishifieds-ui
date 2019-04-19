@@ -39,6 +39,21 @@
         <messages-by-listing></messages-by-listing>
       </mat-tab>
 
+      <!-- Favorites Tab Section -->
+      <mat-tab>
+
+        <!-- Label -->
+        <ng-template matTabLabel>
+          <div class="user-tabs-icon">
+            <p class="{{ buildIconClass('heart', '3') }}"></p>
+            <p>favorites</p>
+          </div>
+        </ng-template>
+
+        <!-- For all listings that have messages (owner & correspondant), display here -->
+        <listing-cards [listings]="favorites"></listing-cards>
+      </mat-tab>
+
     </mat-tab-group>
   </div>
 

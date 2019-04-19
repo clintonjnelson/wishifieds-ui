@@ -34,6 +34,7 @@ const ROUTES = {
 
   // Listings & listing-based resources
   getListingsByUser: '/api/listings/user/:usernameOrId',
+  getFavoriteListingsByUser: '/api/listings/favorites',  // favorites for requesting user
   getListing: '/api/listings/:id',
   createListing: '/api/listings',
   updateListing: '/api/listings/:id',
