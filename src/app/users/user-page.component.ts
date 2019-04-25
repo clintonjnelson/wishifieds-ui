@@ -34,7 +34,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
   usernameFromRoute: string;
   currentTabIndex: number;
-  tabMap = ['wishlistings', 'selling-messages'];
+  tabMap = ['wishlistings', 'messages', 'favorites'];
 
   totalUnreadMsgs: string;
   listings: Listing[] = [];  // SOMEDAY GET THIS FROM API CALL FOR USER"S LISTINGS

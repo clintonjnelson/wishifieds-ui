@@ -4,8 +4,10 @@ import { IconService } from '../core/services/icon.service';
 import { HelpersService } from '../shared/helpers/helpers.service';
 import { AuthService } from '../core/auth/auth.service';
 import { ApiMessagesService } from '../core/api/api-messages.service';
+import { ApiFavoritesService } from '../core/api/api-favorites.service';
 import { Listing } from './listing.model';
 import { MatBadgeModule } from '@angular/material';
+import { Subject, Subscription } from 'rxjs';
 // import { ImgCarouselComponent } from '../shared/carousel/img-carousel.component';  // NOT SURE IF NEED. TRY DELETING LATER. VERIFY IN PROD BUILD.
 
 
@@ -31,6 +33,11 @@ export class ListingFullComponent implements OnInit {
   showingMessagesOfUserId: string = '0';
   defaultPicUrl = '/assets/profile_default.png'; // FIXME: Make this a config value set single place elsewhere
   listingLink: string;
+
+  isFavorite: boolean = false;
+  favSub: Subscription;
+  favEmit: Subject<boolean> = new Subject<boolean>();
+
   public carouselConfig = {
     grid: {xs: 1, sm: 1, md: 1, lg: 1, all: 0},
     slide: 1,
@@ -52,7 +59,8 @@ export class ListingFullComponent implements OnInit {
               private helpers: HelpersService,
               private router: Router,
               private authService: AuthService,
-              private messagesApi: ApiMessagesService) {
+              private messagesApi: ApiMessagesService,
+              private favoritesApi: ApiFavoritesService) {
 
   }
 
@@ -60,6 +68,7 @@ export class ListingFullComponent implements OnInit {
   // Determine if isOwner for owner-only related parts & logic (msgs & such)
   // Get the listingLink, so can link to the listing
   ngOnInit() {
+    const that = this;
     this.currentViewerId = this.authService.auth.userId;
     this.isOwner = this.helpers.isEqualStrInt(this.listing.userId, this.currentViewerId);
     this.listingLink = this.helpers.buildUserListingLink(
@@ -67,12 +76,27 @@ export class ListingFullComponent implements OnInit {
       this.listing.ownerUsername,
       this.listing.id);
     this.getCorrespondantMessagesInfo();
+    this.favEmit.subscribe(function(newState) {
+      that.isFavorite = newState;
+    });
+    this.favoritesApi.getFavoritesForUser([that.listing.id])
+      .subscribe(
+        res => {
+          // Get the favorite by ID & truthy it (in case it's undefined)
+          console.log("CURRENT STATE OF FAVORITE IS: ", res);
+          this.favEmit.next(!!res.favStatuses[that.listing.id]);  // truthy for undefined
+          console.log("IS FAVORITE IS: ", that.isFavorite)
+        },
+        err => {
+          console.log("Error getting favorites: ", err);
+        }
+    );
     console.log("IS OWNER IS, listindOwner, currentViewer: ", this.isOwner, this.listing.userId, this.currentViewerId);
     console.log("LISTING FULL: Listing object is: ", this.listing);
   }
 
-  buildIconClass(icon: string, size: string = '2') {
-    return this.icons.buildIconClass(icon, size);
+  buildIconClass(icon: string, size: string = '2', type: string) {
+    return this.icons.buildIconClass(icon, size, type);
   }
 
   // For the a-link href generation
@@ -102,6 +126,37 @@ export class ListingFullComponent implements OnInit {
     // Emit the value back up the chain
     console.log("In listing-full. BUBBLING UP editingEE with value: ", this.isEditing);
     this.editingEE.emit(this.isEditing);
+  }
+
+  toggleHeart() {
+    const that = this;
+    console.log("TOGGLING IS FAVORITE...");
+    if(this.isFavorite) {
+      console.log("TOGGLING -- OFF...");
+      this.favoritesApi.removeFavorite(this.listing.id).subscribe(
+        res => {
+          if(res.success) {
+            that.favEmit.next(false);
+            console.log("SUCCESSFULLY TOGGLED OFF.");
+          }
+          else { console.log("Request failed. Doing nothing."); }
+        },
+        err => { console.log('Could not remove favorite.'); }
+      );
+    }
+    else {
+      console.log("TOGGLING -- ON...");
+      this.favoritesApi.addFavorite(this.listing.id).subscribe(
+        res => {
+          if(res.success) {
+            that.favEmit.next(true);
+            console.log("SUCCESSFULLY TOGGLED ON.");
+          }
+          else { console.log("Request failed. Doing nothing."); }
+        },
+        err => { console.log('Could not add favorite.'); }
+      );
+    }
   }
 
   // Load any info needed for passing to messages boxes

@@ -45,6 +45,11 @@ const ROUTES = {
   getListingMessagesCorrespondants: '/api/listings/:id/messages?correspondants_only=true',
   getUnreadUserListingsMessages: '/api/messages/unreads',
 
+  // Favorites
+  getFavoritesForUser: '/api/favorites?listingIds=:listingIds',
+  addFavorite: '/api/favorites/:listingId',
+  removeFavorite: '/api/favorites/:listingId',
+
   // Messages
   getUserMessages: '/api/messages',
   createMessage: '/api/messages',

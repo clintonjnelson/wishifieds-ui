@@ -33,8 +33,12 @@ export class IconService {
     if(this.customIcons[iconName]) {
       return (`icon-${iconName} custom-icon-size-${size}x`);
     }
-    if(type === 'b') {
+    if(type == 'b') {
       return (`fab fa-${iconName} fa-${SIZE_MAP[size]}`);
+    }
+    // r is often used for "hollow"/"outline" versions of icons
+    if(type == 'r') {
+      return (`far fa-${iconName} fa-${SIZE_MAP[size]}`);
     }
     else {
       return (`fas fa-${iconName} fa-${SIZE_MAP[size]}`);
