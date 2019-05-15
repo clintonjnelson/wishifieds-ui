@@ -72,7 +72,7 @@ export class ApiFavoritesService {
   //                  return res.json().listings as Listing[];
   //                }),
   //                catchError( (error: Response) => {
-  //                  return Observable.throw(error);
+  //                  return throwError(error);
   //                })
   //              );
   // }
@@ -89,7 +89,7 @@ export class ApiFavoritesService {
   //                  return res.json().listing as Listing;
   //                }),
   //                catchError( (error: Response) => {
-  //                  return Observable.throw(error);
+  //                  return throwError(error);
   //                })
   //              );
   // }
@@ -106,7 +106,7 @@ export class ApiFavoritesService {
   //                  return res.json().listing as Listing;
   //                }),
   //                catchError( (error: Response) => {
-  //                  return Observable.throw(error);
+  //                  return throwError(error);
   //                })
   //              );
   // }

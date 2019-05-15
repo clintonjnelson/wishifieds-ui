@@ -6,12 +6,14 @@ import { HelpersService } from '../shared/helpers/helpers.service';
 import { ApiEnumsService } from '../core/api/api-enums.service';
 import { ApiImagesService } from '../core/api/api-images.service';
 import { ApiListingsService } from '../core/api/api-listings.service';
+import { ApiUsersService } from '../core/api/api-users.service';
 import { WishifiedsApi }       from '../core/api/wishifieds-api.service';
 import { Category } from '../shared/models/category.model';
 import { Condition } from '../shared/models/condition.model';
 import { FileUploader, FileUploaderOptions, FileDropDirective } from 'ng2-file-upload';
 import { Listing } from './listing.model';
 import { takeUntil } from 'rxjs/operators';
+import { Location } from '../shared/models/location.model';
 
 // TODO: The Form structure is losing it's getter correctness, so probably manually setting/pushing in controls instead
   // of using the proper setters. Look through & fix the direct setting of values so that things align better.
@@ -23,23 +25,6 @@ import { takeUntil } from 'rxjs/operators';
   // Look for images at the imageURL endpoint. Load those & make selectable.
   // Every time a new URL is added, pull in those images & make them selectable.
   //
-
-export class Location {
-  id: string;
-  referenceName: string;
-  description: string;
-  address1: string;
-  address2: string;
-  city: string;
-  location: string;
-  state: string;
-  country: string;
-}
-
-const USER_MEETING_LOCATIONS = [
-  {id: "1", referenceName: "home", description: "Starbucks Meeting Location", address1: "123 1st", address2: "#1", city: "Newcastle", location: "98059", state: "WA", country: "USA"},
-  {id: "2", referenceName: "vacation", description: "Vacation Starbucks Meeting Location", address1: "987 9st", address2: "#9", city: "Bend", location: "97654", state: "OR", country: "USA"}
-];
 
 
 @Component({
@@ -58,8 +43,11 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   tempListing: Listing;
   categories: Category[];  // TODO: POPULATE WITH API PROVIDED CATEGORY LIST
   conditions: Condition[];  // TODO: POPULATE WITH API PROVIDED CATEGORY LIST
-  locations = USER_MEETING_LOCATIONS;  // TODO: POPULATE WITH API OF USER"S INPUT LOCATIONS
-  showAdvanced: boolean = false;
+  hideAdvanced: boolean = true;
+  locations: any;
+  locationsSub: Subscription;
+  locationsEmit: Subject<any> = new Subject<any>();
+
 
   // Dropzone Upload Management
   hasBaseDropZoneOver: boolean = false;
@@ -85,6 +73,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
               private apiEnums:      ApiEnumsService,
               private apiImages:     ApiImagesService,
               private apiListings:   ApiListingsService,
+              private apiUsers:      ApiUsersService,
               private wishifiedsApi: WishifiedsApi) {
     // Creates a FormGroup of k/v pairs that specify the FormControls in the group. Value starts as default value.
     // This FG will get bound to the Form. We can do so in HTML with <form [formGroup]="myForm"
@@ -111,6 +100,15 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       that.makeNewImagesSelectable(urls, isSelected);
       console.log("NEW IMAGES ADDED. allImages is now: ", this.allImages);
     });
+    this.locationsSub = this.locationsEmit.subscribe((newLocs: any) => {
+      // if(that.locations && that.locations.length == 1 && that.tempListing.userLocationId) {
+      //   that.tempListing.userLocationId = newLocs[0][userLocationId];
+      // }
+      // else {
+        that.locations = newLocs;
+      // }
+    });
+    this.getUserLocations();
     // Prep the object - existing or new
     this.resetTempListing();  // FIXME: THIS SHOULD BE BEFORE REFORESH_ALL_IMAGES & BUILD_IMAGES
     // Prep the form (reset displays, reset errors, etc); removes image selections
@@ -174,7 +172,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       images: this.formBuilder.array([]),
       hero: ['', Validators.required],
       price: ['', Validators.required],
-      locationId: ['', Validators.required],
+      userLocationId: ['', Validators.required],
       keywords: ['']
     });
     // FIXME? MAY HAVE TO PUT THE LISTING_FORM LINK_URL SUBSCRIPTION DOWN HERE.
@@ -236,6 +234,13 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   save() {
     const that = this;
 
+    // Find & set user's default location
+    if(!that.listingForm.get('userLocationId').value) {
+      const defaultLocation = that.locations.find(function(loc) { return loc.isDefault; });
+      that.listingForm.patchValue({ userLocationId: defaultLocation.userLocationId });
+      that.tempListing.userLocationId = defaultLocation.userLocationId;
+    }
+
     // Final Form Data Check
     if(passesCriticalValidations()) {
 
@@ -282,10 +287,9 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     function passesCriticalValidations() {
       const checks = that.listingForm.get('title').value &&
         that.listingForm.get('price').value &&
-        that.listingForm.get('locationId').value &&
-        that.listingForm.get('hero').value;
-        // that.listingForm.get('categoryId').value &&
-
+        that.listingForm.get('userLocationId').value &&
+        that.listingForm.get('hero').value &&
+        that.listingForm.get('images')['length'];
 
       console.log("CHECKS IS: ", checks);
       return !!checks;
@@ -323,6 +327,21 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     }
   }
 
+  getUserLocations() {
+    const that = this;
+    this.apiUsers.getLocationsByUserId(that.listing.userId)
+      .subscribe(
+        res => {
+          // console.log("Respons with locations returned is: ", res);
+          console.log("Respons with locations returned is: ", res.locations);
+
+          that.locationsEmit.next(res.locations);  // May need subscription for different load times....
+        },
+        error => {
+          console.log("ERROR GETTING LOCATIONS: ", error);
+        }
+      )
+  }
   // Getting stuff like Categories & Conditions from Api
   getEnums() {
     const that = this;
@@ -385,8 +404,8 @@ export class EditListingComponent implements OnInit, AfterViewInit {
 
   toggleAdvanced(input: any = null): void {
     // If setting value directly, do that. Else, just toggle the value
-    if(typeof(input) === 'boolean') { this.showAdvanced = input; }
-    else { this.showAdvanced = !this.showAdvanced; }
+    if(typeof(input) === 'boolean') { this.hideAdvanced = input; }
+    else { this.hideAdvanced = !this.hideAdvanced; }
   }
 
   // THIS IS NOT WORKING< SO PROBABLY NEED TO DO DOM MANIPULAtion OF CSS VIA AN ID ON NG-SELECT
@@ -420,7 +439,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
         hero:   ( this.listing.images[0] || ''),
         images:      (this.listing.images || []),
         price:       this.listing.price,
-        locationId:  this.listing.locationId,
+        userLocationId:  this.listing.userLocationId,
         keywords:    this.listing.keywords
       });
 
@@ -435,9 +454,9 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   private refreshTempListingImages() {
     // TODO: ENSURE THE HERO IMAGE IS THE FIRST IMAGE
     const imagesFormArr = this.listingForm.get('images') as FormArray;
-    console.log("FORMARRAY: ", imagesFormArr.value);
-    console.log("IMAGECONTROLS: ", imagesFormArr.controls);
-    console.log("IMAGECONTROLS LENGTH IS: ", imagesFormArr.controls.length);
+    // console.log("FORMARRAY: ", imagesFormArr.value);
+    // console.log("IMAGECONTROLS: ", imagesFormArr.controls);
+    // console.log("IMAGECONTROLS LENGTH IS: ", imagesFormArr.controls.length);
     imagesFormArr.controls.forEach( i => {console.log("ITEM IS: ", i);})
     const imageUrls = imagesFormArr.controls
       .filter( imageControl => { return imageControl.get("checked").value; })

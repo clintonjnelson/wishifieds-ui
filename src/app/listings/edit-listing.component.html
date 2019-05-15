@@ -46,7 +46,7 @@
 
         <!-- Title -->
         <mat-form-field>
-          <mat-label>Wish Listing Title</mat-label>
+          <mat-label>Title</mat-label>
           <input matInput type="text" name="title" [formControl]="listingForm.controls['title']" [(ngModel)]="tempListing.title" placeholder="Title of what you're looking for..." required/>
           <mat-hint>
             <i (mouseover)="toggleHint('title')" (mouseleave)="toggleHint('title')" class="{{buildIconClass('question-circle', '1')}}"></i>
@@ -59,7 +59,7 @@
 
         <!-- Description -->
         <mat-form-field layout="row">
-          <mat-label>Wish Listing Description</mat-label>
+          <mat-label>Description</mat-label>
           <textarea class="listing-textarea" matInput matTextareaAutosize matAutosizeMinRows="6" matAutosizeMaxRows="20" name="description" [formControl]="listingForm.controls['description']" [(ngModel)]="tempListing.description" placeholder="Description of what you're looking for..." mat-maxlength="2000"></textarea>
           <mat-hint>
             <i (mouseover)="toggleHint('description')" (mouseleave)="toggleHint('description')" class="{{buildIconClass('question-circle', '1')}}"></i>
@@ -86,7 +86,7 @@
         <!-- TODO: IMPLEMENT A DRAG & DROP PICTURE INPUT WITH DRAGGABLE ORDERING AND ABILITY TO SELECT FROM LINKURL -->
         <div class="images-container">
           <div class="images-label">
-            <p class="images-container-label">Select Wishlisting Images OR Drag/Drop to Upload Your Own</p>
+            <p class="images-container-label">Select Images OR Drag/Drop Your Own</p>
             <label for="uploadfile" class="upload-file-label-button">
               <i class="{{buildIconClass('cloud-upload-alt', '1')}}"></i> OR Click Here to Upload
             </label>
@@ -108,7 +108,7 @@
             <p>
               <small class="select-images-hint">
                 <i (mouseover)="toggleHint('images')" (mouseleave)="toggleHint('images')" class="{{buildIconClass('question-circle', '1')}}"></i>
-                <span [hidden]="!hints.images">These images come from the web page address you provided above. Select whichever you think will help clarify what you're looking for.</span>
+                <span [hidden]="!hints.images">These images come from the example web page address you provided above. Select whichever you think will show what you're looking for.</span>
               </small>
             </p>
           </div>
@@ -117,7 +117,7 @@
 
         <!-- Hero Image Select from Selected Images -->
         <mat-form-field class="hero-image-container" layout="column" *ngIf="getImageGroup().controls && getImageGroup().controls.length > 0">
-          <mat-label>Pick the Primary Image</mat-label>
+          <mat-label>Choose Primary Image</mat-label>
           <mat-select name="hero" [formControl]="listingForm.controls['hero']" [(ngModel)]="tempListing.hero" [ngStyle]="{'background': 'url(getSelectedHero() ) center contain no-repeat'}" placeholder="Select a Primary from Your Images">
             <mat-option *ngFor="let group of getImageGroup().controls | callback: keepTruthyFilter; let ind=index" [value]="group.controls.url.value">
             <!-- <mat-option *ngFor="let group of listingForm.controls['images'].controls | callback: keepTruthyFilter; let ind=index" [value]="group.controls.url.value"> -->
@@ -151,10 +151,10 @@
         <!-- Advanced Options -->
         <p class="advanced-toggle" (click)="toggleAdvanced()">
           Advanced
-          <i *ngIf="!showAdvanced" class="{{buildIconClass('chevron-down', '1')}}"></i>
-          <i *ngIf="showAdvanced" class="{{buildIconClass('chevron-up', '1')}}"></i>
+          <i *ngIf="hideAdvanced" class="{{buildIconClass('chevron-down', '1')}}"></i>
+          <i *ngIf="!hideAdvanced" class="{{buildIconClass('chevron-up', '1')}}"></i>
         </p>
-        <div *ngIf="showAdvanced" class="advanced-container">
+        <div [hidden]="hideAdvanced" class="advanced-container">
           <!-- Category -->
           <mat-form-field layout="column">
             <mat-label>Choose a Category</mat-label>
@@ -195,9 +195,9 @@
           <!-- Location -->
           <mat-form-field layout="row">
             <mat-label>Purchase Location</mat-label>
-            <mat-select name="location" [formControl]="listingForm.controls['locationId']"  [(ngModel)]="tempListing.locationId" placeholder="Choose a Location (eg: meeting location for purchase)" required>
-              <mat-option *ngFor="let location of locations" [value]="location.id">
-                {{ location.description }}
+            <mat-select name="location" [formControl]="listingForm.controls['userLocationId']"  [(ngModel)]="tempListing.userLocationId" placeholder="Choose a Location (eg: meeting location for purchase)" required>
+              <mat-option *ngFor="let loc of locations" [value]="loc.userLocationId">
+                {{ loc.description }}
               </mat-option>
             </mat-select>
             <mat-hint>

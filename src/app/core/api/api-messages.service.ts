@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { WishifiedsApi } from '../api/wishifieds-api.service';
 import { Message } from '../../messages/message.model';
 import { map, catchError } from 'rxjs/operators';
@@ -26,7 +26,7 @@ export class ApiMessagesService {
                  }),
                  catchError( (error: Response) => {
                    console.log("ERROR CREATING MESSAGE: ", error);
-                   return Observable.throw(error);
+                   return throwError(error);
                  })
                );
   }
@@ -44,7 +44,7 @@ export class ApiMessagesService {
                    return res.json();  // Array of basic listing info with array of messages attached
                  }),
                  catchError( (error: Response) => {
-                   return Observable.throw(error);
+                   return throwError(error);
                  })
                );
   }
@@ -64,7 +64,7 @@ export class ApiMessagesService {
                    return res.json();  // {listingMessages: Message[], unreadCounts: Object[Int, Int]}
                  }),
                  catchError( (error: Response) => {
-                   return Observable.throw(error);
+                   return throwError(error);
                  })
                );
   }
@@ -83,7 +83,7 @@ export class ApiMessagesService {
                    return res.json();  // {correspondants: String[], unreadCounts: Object[Int, Int]}
                  }),
                  catchError( (error: Response) => {
-                   return Observable.throw(error);
+                   return throwError(error);
                  })
                );
   }
@@ -100,7 +100,7 @@ export class ApiMessagesService {
                    return res.json();
                  }),
                  catchError( (error: Response ) => {
-                   return Observable.throw(error);
+                   return throwError(error);
                  })
                );
   }
@@ -117,7 +117,7 @@ export class ApiMessagesService {
                    return res.json();
                  }),
                  catchError( (error: Response ) => {
-                   return Observable.throw(error);
+                   return throwError(error);
                  })
                );
   }
@@ -135,7 +135,7 @@ export class ApiMessagesService {
                    return res.json();  // { success: true/false }
                  }),
                  catchError( (error: Response) => {
-                   return Observable.throw(error);
+                   return throwError(error);
                  })
                );
   }

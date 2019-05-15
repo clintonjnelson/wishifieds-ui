@@ -63,48 +63,53 @@
     </div>
   </form>
 
-
+  <!-- TODO: COULD TOTALLY BREAK THIS INTO A COMPONENT -->
   <!-- Change User Avatar -->
   <div>
     <mat-card *ngIf="!isProcessing" class="avatar-settings-card">
-      <label for="">Avatar: (click to change)</label>
+      <label for="">Avatar</label>
       <img src="{{userSettings.picUrl}}" alt="" class="avatar-settings-img">
 
       <input type="file" name="avatar" ng2FileSelect [uploader]="avatarUploader"/>
       <button type="button" class="upload-avatar-button" (click)="avatarUploader.uploadAll()" [disabled]="!avatarUploader.getNotUploadedItems().length">
-        Upload Avatar
+        Save Avatar
       </button>
+    </mat-card>
+  </div>
 
+  <br>
+  <br>
 
-      <!-- <form name="avatarSettingsForm" class="avatar-settings-form" #avatarSettingsForm="ngForm">
-
-        Avatar Image
-        <div class="settings-input-error-container">
-          <mat-form-field class="user-settings-input">
-            <input matInput type="file" name="profilePicUrl" [(ngModel)]="temp" placeholder="choose profile pic" required/>
-          </mat-form-field>
-          Show errors only if exist and input has been modified
-          <div *ngIf="displayedValidationErrors.username" class="input-errors error">
-            {{ displayedValidationErrors.username }}
-          </div>
+  <!-- TODO: COULD TOTALLY BREAK THIS INTO A COMPONENT -->
+  <!-- Manage User Locations -->
+  <div>
+    <label for="">Manage Your Locations</label>
+    <mat-card *ngIf="!userLocsProcessing" class="user-locations-card">
+      <div class="existing-user-locations" *ngFor="let loc of userLocations">
+        <div (click)="setDefaultUserLocation(loc.userLocationId)">
+          <mat-card class="location-card" [ngClass]="{'default-user-location': loc.isDefault}">
+            <p> {{ loc.postal }}: <small>{{ loc.description }}</small> </p>
+            <i (click)="deleteUserLocation(loc.userLocationId); $event.stopPropagation()" class="{{buildIconClass('times', 1)}} delete-user-location-icon"></i>
+          </mat-card>
         </div>
 
-        Save/Cancel Buttons
-        <div class="save-cancel-buttons">
-          Save button - show only if for modified & dirty; hide if any part is not valid
-          <a (click)="saveAvatar()" type="submit" class="user-settings-saveicon" [hidden]="!avatarSettingsForm.form.valid || !userSettingsForm.form.dirty" [attr.disabled]="!userSettingsForm.form.valid">
-            <i class="{{buildIconClass('check', 2)}}"></i>
-          </a>
-          Cancel button
-          <a (click)="cancelAvatar()" class="user-settings-cancelicon" [hidden]="!avatarSettingsForm.form.dirty">
-            <i class="{{buildIconClass('times', 2)}}"></i>
-          </a>
-          Default button
-          <a (click)="cancel()" class="user-settings-cancelicon" [hidden]="!userSettingsForm.form.dirty">
-            Use Default
-          </a>
-        </div>
-      </form> -->
+      </div>
+
+      <br>
+      <br>
+      <form #userLocationsForm="ngForm" *ngIf="!isProcessingLocations" class="user-locations-form" layout="column">
+        <mat-form-field class="input-location-zipcode">
+          <mat-label for="postal">New Zipcode</mat-label>
+          <input matInput id="postal" type="text" name="postal" [(ngModel)]="newUserLocation.postal" placeholder="zipcode" minlength="1" maxlength="20" required/>
+        </mat-form-field>
+
+        <mat-form-field class="input-location-description">
+          <mat-label for="description">Description</mat-label>
+          <input matInput id="description" type="text" name="description" [(ngModel)]="newUserLocation.description" placeholder="location description" minlength="1" maxlength="20" required/>
+        </mat-form-field>
+
+        <button mat-icon-button type="button" class="create-location-button" (click)="createUserLocation()">Save</button>
+      </form>
     </mat-card>
   </div>
 

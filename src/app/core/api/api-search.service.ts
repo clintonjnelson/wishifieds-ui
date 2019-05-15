@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { WishifiedsApi } from '../api/wishifieds-api.service';
 import { Listing } from '../../listings/listing.model';
 import { map, catchError } from 'rxjs/operators';
@@ -23,7 +23,7 @@ export class ApiSearchService {
                    return res.json().listings as Listing[];
                  }),
                  catchError( (error: Response) => {
-                   return Observable.throw(error);
+                   return throwError(error);
                  })
                );
   }

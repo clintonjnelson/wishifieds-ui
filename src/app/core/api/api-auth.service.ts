@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { WishifiedsApi } from '../api/wishifieds-api.service';
 import { map, catchError } from 'rxjs/operators';
 
@@ -24,7 +24,7 @@ export class ApiAuthService {
                    return res.json();
                  }),
                  catchError( (error: Response) => {
-                   return Observable.throw(error);
+                   return throwError(error);
                  })
                );
   }
@@ -41,7 +41,7 @@ export class ApiAuthService {
                    return res.json();
                  }),
                  catchError( (error: Response) => {
-                   return Observable.throw(error);
+                   return throwError(error);
                  })
                );
   }
@@ -58,7 +58,7 @@ export class ApiAuthService {
                    return res.json();
                  }),
                  catchError( (error: Response) => {
-                   return Observable.throw(error);
+                   return throwError(error);
                  })
                );
   }

@@ -61,15 +61,20 @@ h2.settings-page-heading {
   color: white;
 }
 /* Keeps label from overlapping the icon */
-/deep/ label.mat-input-placeholder.mat-empty {
+::ng-deep label.mat-input-placeholder.mat-empty {
   margin-left: 20px;
 }
-/deep/ .mat-input-wrapper {
+::ng-deep .mat-input-wrapper {
   width: 100%;
 }
-/deep/ div.mat-input-infix {
+::ng-deep div.mat-input-infix {
   display: flex !important;
 }
+/*Set the underline color to white*/
+::ng-deep .mat-form-field-underline {
+  background: white !important;
+}
+
 i {
   margin-right: 5px;
 }
@@ -88,4 +93,29 @@ i {
 .avatar-settings-img {
   max-height: 3em;
   max-width: 3em;
+}
+
+.user-locations-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-location-zipcode {
+  width: 50%;
+}
+
+.location-card {
+  margin-bottom: 0.5em;
+}
+
+.default-user-location {
+  box-shadow: 0 8px 8px 8px rgba(0,0,0,.2), 0 8px 8px 0 rgba(0,0,0,.14), 0 8px 8px 0 rgba(0,0,0,.12) !important;
+  transform: translate3d(0,0,0);
+  transition: background .4s cubic-bezier(.25,.8,.25,1),box-shadow 280ms cubic-bezier(.4,0,.2,1);
+}
+
+.delete-user-location-icon {
+  position: absolute;
+  right: 0;
+  top: 0;
 }

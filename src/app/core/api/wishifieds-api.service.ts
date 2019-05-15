@@ -45,6 +45,12 @@ const ROUTES = {
   getListingMessagesCorrespondants: '/api/listings/:id/messages?correspondants_only=true',
   getUnreadUserListingsMessages: '/api/messages/unreads',
 
+  // Locations
+  getLocationsByUserId: '/api/users/:id/locations',
+  createUserLocation: '/api/users/:id/locations',
+  setDefaultUserLocation: '/api/users/:id/locations',  // PATCH
+  deleteUserLocation: '/api/users/:id/locations/:userLocationId',
+
   // Favorites
   getFavoritesForUser: '/api/favorites?listingIds=:listingIds',
   addFavorite: '/api/favorites/:listingId',

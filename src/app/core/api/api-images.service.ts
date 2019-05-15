@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { WishifiedsApi } from '../api/wishifieds-api.service';
 import { map, catchError } from 'rxjs/operators';
 
@@ -21,7 +21,7 @@ export class ApiImagesService {
                    return res.json().urls as string[];
                  }),
                  catchError( (error: Response) => {
-                   return Observable.throw(error);
+                   return throwError(error);
                  })
                );
   }

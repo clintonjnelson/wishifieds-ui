@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { WishifiedsApi } from '../api/wishifieds-api.service';
 import { Category } from '../../shared/models/category.model';
 import { Condition } from '../../shared/models/condition.model';
@@ -24,7 +24,7 @@ export class ApiEnumsService {
                    return res.json().categories as Category[];
                  }),
                  catchError( (error: Response) => {
-                   return Observable.throw(error);
+                   return throwError(error);
                  })
                );
   }
@@ -40,7 +40,7 @@ export class ApiEnumsService {
                    return res.json().conditions as Condition[];
                  }),
                  catchError( (error: Response) => {
-                   return Observable.throw(error);
+                   return throwError(error);
                  })
                );
   }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { WishifiedsApi } from '../api/wishifieds-api.service';
 import { User } from '../../users/user.model';
 import { map, catchError } from 'rxjs/operators';
@@ -24,7 +24,7 @@ export class ApiAdminService {
                    return res.json().users as User[];
                  }),
                  catchError( (error: Response) => {
-                   return Observable.throw(error);
+                   return throwError(error);
                  })
                );
   }
@@ -41,7 +41,7 @@ export class ApiAdminService {
                    return res.json();
                  }),
                  catchError( (error: Response) => {
-                   return Observable.throw(error);
+                   return throwError(error);
                  })
                );
   }
@@ -57,7 +57,7 @@ export class ApiAdminService {
   //                return res.json();
   //              })
   //              .catch( (error: Response) => {
-  //                return Observable.throw(error);
+  //                return throwError(error);
   //              });
   // }
 }
