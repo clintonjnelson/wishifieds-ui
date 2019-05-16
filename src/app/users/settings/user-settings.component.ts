@@ -28,18 +28,10 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
   @ViewChild('userSettingsForm') currentForm: NgForm;
   userSettings: UserUpdates;
   tempSettings: UserUpdates;
-  // avatarImageFile: any = [];
   avatarUploader: FileUploader;
   userSub: Subscription;
   userEmit: Subject<any> = new Subject<any>();
 
-  // NEED TO GET THESE & ALSO DEFINE Location
-  userLocations: Location[] = [];
-  userLocationsForm: NgForm;
-  newUserLocation: any;
-  userLocsSub: Subscription;
-  userLocsEmit: Subject<any> = new Subject<any>();
-  userLocsProcessing: Boolean = false;
 
   constructor(private icons:           IconService,
               private authService:     AuthService,
@@ -60,14 +52,6 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
         picUrl:   updatedUser.profilePicUrl,
         status:   null
       };
-    });
-    this.userLocsSub = this.userLocsEmit.subscribe((locsObj: any) => {
-      if(locsObj.reset) {
-        that.userLocations = locsObj['userLocs'];
-      }
-      else {
-        that.userLocations = that.userLocations.concat(locsObj['userLocs']);
-      }
     });
 
     this.apiUsersService.getUserById(this.authService.auth.userId)
@@ -104,9 +88,6 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
       that.userEmit.next(user);
     };
     this.resetSettingsCopy();
-    this.resetNewUserLocation();
-    this.userLocsProcessing = true;
-    this.getUserLocations();
   }
 
   setIsConfirmed(value: string) {
@@ -116,104 +97,6 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);
   }
-
-  resetNewUserLocation() {
-    this.newUserLocation = { postal: '', description: '' };
-  }
-
-  getUserLocations() {
-    const that = this;
-    this.apiUsersService
-        .getLocationsByUserId(this.authService.auth.userId)
-        .subscribe(
-          res => {
-            console.log("Retrieved user locations: ", res.locations);
-            that.userLocsEmit.next({userLocs: res.locations, reset: true});
-            that.userLocsProcessing = false;
-          },
-          error => {
-            console.log("Error retrieving user locations: ", error);
-            that.userLocsProcessing = false;
-          });
-  }
-
-  createUserLocation() {
-    const that = this;
-    console.log("About to create user location...");
-    this.apiUsersService
-      .createUserLocation(this.authService.auth.userId, this.newUserLocation)
-      .subscribe(
-        success => {
-          console.log("Newly created user location result is: ", success);
-          that.userLocsEmit.next({userLocs: that.newUserLocation, reset: false});
-          that.resetNewUserLocation();
-          this.userLocationsForm.form.markAsPristine();
-        },
-        error => {
-          console.log("SHOULD USE STATUS FOR LOGIC. ERROR AVAIL IS: ", error);
-          switch(error.json().msg) {
-            case('not-found'): console.log("MAKE COMPONENT WITH OWN ERRORS FOR THIS...");
-          }
-          console.log("Error creating new user location: ", error);
-        });
-  }
-
-  setDefaultUserLocation(userLocationId) {
-    const that = this;
-    console.log("About to set user location as default...", userLocationId);
-    this.apiUsersService
-      .setDefaultUserLocation(this.authService.auth.userId, userLocationId)
-      .subscribe(
-        success => {
-          console.log("Newly created user location result is: ", success);
-          console.log("USER LOCATIONS BEFORE UPDATE IS:", that.userLocations);
-          const updatedUserLocs = that.userLocations.map(function(usrloc) {
-            let copyUserLoc = Object.assign({}, usrloc);
-            // Deactivate old default
-            if(usrloc.isDefault) {
-              copyUserLoc['isDefault'] = false;
-            }
-            // Activate new default
-            if(usrloc.userLocationId == userLocationId) {
-              copyUserLoc['isDefault'] = true;
-            }
-
-            return copyUserLoc;
-          });
-          console.log("USER LOCATIONS AFTER UPDATE IS:", updatedUserLocs);
-          that.userLocsEmit.next({userLocs: updatedUserLocs, reset: true});
-        },
-        error => {
-          console.log("SHOULD USE STATUS TO HANDLE THIS ERROR CODE. See below for hint. ERROR AVAIL IS: ", error);
-          switch(error.json().msg) {
-            case('not-found'): console.log("MAKE COMPONENT WITH OWN ERRORS FOR THIS...");
-          }
-          console.log("Error creating new user location: ", error);
-        });
-  }
-
-  deleteUserLocation(userLocationId) {
-    const that = this;
-    console.log("about to DELETE user location: ", userLocationId);
-    this.apiUsersService
-        .deleteUserLocation(this.authService.auth.userId, userLocationId)
-        .subscribe(
-          success => {
-            console.log("Successfully deleted user location with response: ", success);
-            that.userLocations.splice(that.userLocations.findIndex(function(elem) {
-              // Remove the deleted user location from UI list
-              return elem.userLocationId == userLocationId;
-            }), 1);
-            that.userLocsEmit.next({userLocs: that.userLocations, reset: true});
-            that.userLocationsForm.form.markAsPristine();
-          },
-          error => {
-            console.log("Error deleting user location.");
-            // TODO: BANNER THAT COULD NOT DELETE THE USER LCOATION
-            console.log("PUT UP A BANNER TO NOTIFY COULD NOT DELETE!!");
-          });
-  }
-
 
   resendConfirmationEmail(event: any = null) {
     if(event) { event.preventDefault(); }

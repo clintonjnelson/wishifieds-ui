@@ -39,6 +39,7 @@ import { HomeComponent }                 from './home/home.component';
 import { LoginSignupFormComponent }      from './users/login-signup-form/login-signup-form.component';
 import { UserPageComponent }             from './users/user-page.component';
 import { UserSettingsComponent }         from './users/settings/user-settings.component';
+import { UserLocationsManagerComponent } from './users/settings/user-locations-manager.component';
 
 import { RequestPasswordResetComponent } from './password-reset/request-password-reset.component';
 import { PasswordResetComponent }        from './password-reset/password-reset.component';
@@ -89,6 +90,7 @@ import { ApiFavoritesService }                from './core/api/api-favorites.ser
 import { ApiMessagesService }                from './core/api/api-messages.service';
 import { ApiSearchService }                  from './core/api/api-search.service';
 import { ApiUsersService }                   from './core/api/api-users.service';
+import { ApiUsersLocationsService }          from './core/api/api-users-locations.service';
 import { HelpersService }                    from './shared/helpers/helpers.service';
 import { IconService }                       from './core/services/icon.service';
 import { UserConfirmationRedirectComponent } from './core/redirects/user-confirmation-redirect.component';
@@ -153,6 +155,7 @@ export function HttpFactory(backend: XHRBackend,
 
                   UserPageComponent,
                   UserSettingsComponent,         // move to child module for dashboard?
+                  UserLocationsManagerComponent,
 
                   RequestPasswordResetComponent,
                   PasswordResetComponent,
@@ -212,6 +215,7 @@ export function HttpFactory(backend: XHRBackend,
                   ApiMessagesService,
                   ApiSearchService,
                   ApiUsersService,
+                  ApiUsersLocationsService,
                   {provide: Http,
                     useFactory: HttpFactory,
                     deps: [XHRBackend, RequestOptions, AuthService]

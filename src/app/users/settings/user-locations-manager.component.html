@@ -1,0 +1,35 @@
+<div>
+  <label for="">Manage Your Locations</label>
+  <mat-card *ngIf="!userLocsProcessing" class="user-locations-card">
+
+    <!-- Locations Display, Setting Default, Deletion -->
+    <div class="existing-user-locations" *ngFor="let loc of userLocations">
+      <div (click)="setDefaultUserLocation(loc.userLocationId)">
+        <mat-card class="location-card" [ngClass]="{'default-user-location': loc.isDefault}">
+          <p> {{ loc.postal }}: <small>{{ loc.description }}</small> </p>
+          <i (click)="deleteUserLocation(loc.userLocationId); $event.stopPropagation()" class="{{buildIconClass('times', 1)}} delete-user-location-icon"></i>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Icon to toggle adding more locations -->
+    <div *ngIf="!isEditingUserLocations" class="add-user-locations-icon-container">
+      <i (click)="toggleEditingUserLocations()" mdTooltip="[add a listing]" mdTooltipPosition="above" class="{{buildIconClass('plus', '2')}}"></i>
+    </div>
+
+    <!-- Location Creation Section -->
+    <form #userLocationsForm="ngForm" *ngIf="!isProcessingLocations && isEditingUserLocations" class="user-locations-form" layout="column">
+      <mat-form-field class="input-location-zipcode">
+        <mat-label for="postal">New Zipcode</mat-label>
+        <input matInput id="postal" type="text" name="postal" [(ngModel)]="newUserLocation.postal" placeholder="zipcode" minlength="1" maxlength="20" required/>
+      </mat-form-field>
+
+      <mat-form-field class="input-location-description">
+        <mat-label for="description">Description</mat-label>
+        <input matInput id="description" type="text" name="description" [(ngModel)]="newUserLocation.description" placeholder="location description" minlength="1" maxlength="20" required/>
+      </mat-form-field>
+
+      <button mat-icon-button type="button" class="create-location-button" (click)="createUserLocation()">Save</button>
+    </form>
+  </mat-card>
+</div>
