@@ -12,11 +12,18 @@ export class ApiSearchService {
   constructor(private http:          Http,
               private wishifiedsApi: WishifiedsApi) {}
 
-  searchListings(searchStr: string): Observable<Listing[]> {
-    const searchListingsUrl = this.wishifiedsApi.buildUrl('searchListings', [{':searchStr': searchStr}]);
+  // Default empty query params so that will still populate properly
+  searchListings(searchStr: string, distance: string = '', postal: string = '', locationId: string = ''): Observable<Listing[]> {
+    const searchListingsUrl = this.wishifiedsApi.buildUrl('searchListings', [
+      {':searchStr': searchStr},
+      {':distance': distance},
+      {':postal': postal},
+      {':locationId': locationId}
+    ]);
+    const options = this.wishifiedsApi.getRequestOptionWithEatHeader();
 
     return this.http
-               .get(searchListingsUrl)
+               .get(searchListingsUrl, options)
                .pipe(
                  map( res => {
                    console.log("SUCCESS GET (search) Listings: ", res);

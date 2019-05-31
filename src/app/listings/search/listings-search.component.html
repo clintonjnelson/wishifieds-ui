@@ -4,15 +4,53 @@
   <div class="search-box">
     <form #searchForm="ngForm" name="searchForm" (ngSubmit)="search($event)" class="search-box-form">
       <mat-form-field mat-float [ngStyle]="{'color': 'white'}" layout="row" class="search-box-input-container">
-        <input matInput type="text" [(ngModel)]="searchStr" placeholder="what are you selling?" name="search">
+        <input matInput type="text" [(ngModel)]="searchInfo.searchStr" placeholder="what are you selling?" name="searchStr">
       </mat-form-field>
 
       <button (click)="search($event)" type="submit" class="search-btn-icon">
         <i class="fa fa-search fa-3x sp-hover"></i>
       </button>
+
+      <!-- Search Distance -->
+      <div class="radius-select">
+        <mat-form-field>
+          <mat-label>Radius (miles)</mat-label>
+          <mat-select [(ngModel)]="searchInfo.distance" name="distance">
+            <mat-option *ngFor="let dist of distances" [value]="dist">{{dist}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Search Center -->
+      <div *ngIf="!isLoggedIn" class="search-center">
+        <mat-form-field>
+          <input matInput type="text" [(ngModel)]="searchInfo.postal" placeholder="98101" name="postal">
+        </mat-form-field>
+      </div>
+      <div *ngIf="isLoggedIn" class="search-center">
+        <mat-form-field>
+          <mat-label>Search Location</mat-label>
+          <mat-select [(ngModel)]="searchInfo.locationId" name="location">
+            <mat-option *ngFor="let loc of userLocations" [value]="loc.userLocationId">{{loc.description}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
     </form>
     <p *ngIf="!hasSearched">Be a genie - find some wishes to fulfill!</p>
   </div>
+
+
+  <!-- <div class="wrap">
+    <div class="search2">
+      <input type="text" class="search2-term">
+      <button class="search2-button">
+        <i class="fa fa-search fa-1x sp-hover"></i>
+      </button>
+    </div>
+  </div> -->
+
+
 
   <div class="results-box" *ngIf="!!(listings && listings.length)">
     <listings-search-results [listings]="listings"></listings-search-results>

@@ -46,6 +46,7 @@ const CATEGORY_LIST = {
 
 
 
+
 @Component({
   moduleId: module.id,
   selector: 'listings-search-results',

@@ -41,8 +41,8 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   @Output() destroyEE = new EventEmitter<any>();
   @Output() editingEE = new EventEmitter<boolean>();
   tempListing: Listing;
-  categories: Category[];  // TODO: POPULATE WITH API PROVIDED CATEGORY LIST
-  conditions: Condition[];  // TODO: POPULATE WITH API PROVIDED CATEGORY LIST
+  categories: Category[];
+  conditions: Condition[];
   hideAdvanced: boolean = true;
   locations: any;
   locationsSub: Subscription;
