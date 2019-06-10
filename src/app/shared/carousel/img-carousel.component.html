@@ -1,5 +1,5 @@
 <swiper [config]="config" [(index)]="index">
   <div *ngFor="let image of images" class="img-container">
-    <img class="carousel-image" src="{{image}}" alt="" (click)="clickRedirect()">
+    <img class="carousel-image" src="{{image}}" alt="" (click)="clickedImage()">
   </div>
 </swiper>

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 // import { Observable } from 'rxjs/Rx';
 import { Observable } from 'rxjs';
-import { ConfirmModalComponent } from '../../shared/confirm-modal/confirm-modal.component';
+import { ConfirmModalComponent } from './confirm-modal.component';
 import { MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
 
 @Injectable()
 
-export class ModalService {
+export class ConfirmModalService {
 
   constructor(private dialog: MatDialog) {}
 

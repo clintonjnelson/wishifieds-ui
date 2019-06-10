@@ -21,19 +21,22 @@
         </mat-form-field>
       </div>
 
-      <!-- Search Center -->
-      <div *ngIf="!isLoggedIn" class="search-center">
-        <mat-form-field>
-          <input matInput type="text" [(ngModel)]="searchInfo.postal" placeholder="98101" name="postal">
-        </mat-form-field>
-      </div>
-      <div *ngIf="isLoggedIn" class="search-center">
-        <mat-form-field>
-          <mat-label>Search Location</mat-label>
-          <mat-select [(ngModel)]="searchInfo.locationId" name="location">
-            <mat-option *ngFor="let loc of userLocations" [value]="loc.userLocationId">{{loc.description}}</mat-option>
-          </mat-select>
-        </mat-form-field>
+      <!-- Search Center Location -->
+      <!-- TODO: MAYBE HIDING THIS WILL GO AWAY WITH STYLE REFACTOR -->
+      <div *ngIf="searchInfo.distance !== 'any'">
+        <div *ngIf="!isLoggedIn" class="search-center">
+          <mat-form-field>
+            <input matInput type="text" [(ngModel)]="searchInfo.postal" placeholder="98101" name="postal">
+          </mat-form-field>
+        </div>
+        <div *ngIf="isLoggedIn" class="search-center">
+          <mat-form-field>
+            <mat-label>Search Location</mat-label>
+            <mat-select [(ngModel)]="searchInfo.locationId" name="location">
+              <mat-option *ngFor="let loc of userLocations" [value]="loc.userLocationId">{{loc.description}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
 
     </form>

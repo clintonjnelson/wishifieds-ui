@@ -3,21 +3,21 @@
   <!-- Card Container -->
   <div class="listing-display-main-container" matBadge="{{unreadMsgsCount}}" matBadgeOverlap="true" [matBadgeHidden]="!showUnreads && unreadMsgsCount && unreadMsgsCount < 1">
 
-    <!-- Title Area -->
-    <!-- <div class="title-container">
-      <h3 class="listing-card-title">Suuuuuuuuuuuuuuuuuper LONG TITLEeeeeeeeeeeeeeeeee</h3>
-    </div> -->
-
     <!-- Image Carousel -->
     <div class="listing-image-container">
-      <img-carousel [images]="listing.images" [link]="listingLink"></img-carousel>
+      <img-carousel [images]="listing.images" [link]="listingLink" [modal]="false"></img-carousel>
     </div>
   </div>
 
   <!-- Decorative Bubbles -->
-  <div class="listing-display-bubbles">
-    <div class="listing-display-bubble-lrg">{{price.display}}</div>
-    <div class="listing-display-bubble-med">{{price.symbol}}</div>
-    <div class="listing-display-bubble-sml"></div>
+  <div class="card-footer">
+    <div class="listing-display-bubbles">
+      <div class="listing-display-bubble-lrg">{{price.display}}</div>
+      <div class="listing-display-bubble-med">{{price.symbol}}</div>
+      <div class="listing-display-bubble-sml"></div>
+    </div>
+    <div class="footer-icons">
+      <i (click)="fullScreen()" class="expand-icon {{ buildIconClass('expand', '3') }}"></i>
+    </div>
   </div>
 </div>

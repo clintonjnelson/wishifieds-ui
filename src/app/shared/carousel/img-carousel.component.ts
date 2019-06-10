@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { Listing } from '../../listings/listing.model';
 import { SwiperComponent, SwiperDirective, SwiperConfigInterface,
   SwiperScrollbarInterface, SwiperPaginationInterface } from 'ngx-swiper-wrapper';
-
+import { ImageModalService }   from '../../shared/image-modal/image-modal.service';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'img-carousel',
@@ -13,6 +14,7 @@ import { SwiperComponent, SwiperDirective, SwiperConfigInterface,
 export class ImgCarouselComponent {
   @Input() images: string[];
   @Input() link: string;
+  @Input() modal: boolean;
   @ViewChild(SwiperComponent) componentRef?: SwiperComponent;
 
   index = 0;
@@ -27,11 +29,20 @@ export class ImgCarouselComponent {
     pagination: false
   };
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+              private imageModalService: ImageModalService,
+              private allModalDialogRef: MatDialog) {}
 
-  clickRedirect() {
-    // Only redirect for passed link (some carousel images don't link out)
-    if(this.link) {
+  // Check open modal first; open or check for a link if no modal
+  // Only redirect for passed link (some carousel images don't link out)
+  clickedImage() {
+    if(this.modal) {
+      this.imageModalService.view(this.images, this.link);
+    }
+    else if(this.link) {
+      // FIXME: THIS IS RISKY CLOSING ALL!!! GET THIS MOR FINE-GRAINED TO THE CHILD MODAL!!!
+      // VERIFY: COMPONENTS ARE ON AN INSTANCE BASIS INSTEAD OF SERVICE SINGLETON? SO MAYBE
+      this.allModalDialogRef.closeAll();
       this.router.navigateByUrl(this.link);
     }
   }

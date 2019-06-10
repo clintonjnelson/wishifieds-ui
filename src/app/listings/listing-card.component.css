@@ -70,7 +70,15 @@ h3.listing-card-title {
   font-size: calc(12px + 0.5vw);  /* TODO: TRY DOING A CALC OF calc(8px + 1vw) or something; */
 }
 
+div.card-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 40px;
+}
+
 div.listing-display-bubbles {
+  display: flex;
   position: relative;
   height: 40px;
 }
@@ -109,6 +117,16 @@ div.listing-display-bubble-sml {
   width: 10px;
   height: 10px;
 }
+
+div.footer-icons {
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+
+/*::ng-deep i.expand-icon {
+  font-size: 10em;
+}*/
 
 ::ng-deep div.listing-display-main-container span {
   background-color: black;

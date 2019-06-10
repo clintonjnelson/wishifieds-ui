@@ -7,7 +7,7 @@ import { Listing }           from '../listing.model';
 import { Location }          from '../../shared/models/location.model';
 import { Subject, Subscription } from 'rxjs';
 
-const DISTANCES = ['10', '25', '50', '75', '100', '200', '500', 'ANY'];
+const DISTANCES = ['10', '25', '50', '75', '100', '200', '500', 'any'];
 
 
 @Component({
@@ -45,7 +45,7 @@ export class ListingsSearchComponent implements OnInit {
     // Set searchQuery to our search, if exists (user clicked 'back'), or set empty
     this.searchInfo.searchStr  = this.route.snapshot.queryParams['search'] || '';
     this.searchInfo.postal     = this.route.snapshot.queryParams['postal'] || '98101';
-    this.searchInfo.distance   = this.route.snapshot.queryParams['distance'] || this.distances[4];
+    this.searchInfo.distance   = this.route.snapshot.queryParams['distance'] || this.distances[7];
     this.searchInfo.locationId = this.route.snapshot.queryParams['locationId'] || '';
     this.isLoggedIn = !!this.authService.auth.isLoggedIn;  // set initial value
 

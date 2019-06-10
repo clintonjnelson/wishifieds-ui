@@ -6,6 +6,8 @@ import { ApiMessagesService }  from '../core/api/api-messages.service';
 import { MatChipInputEvent }   from '@angular/material/chips';
 import { HelpersService }      from '../shared/helpers/helpers.service';
 import { Listing }             from './listing.model';
+import { ImageModalService }   from '../shared/image-modal/image-modal.service';
+
 
 export class PriceDisplay {
   display: string;
@@ -32,7 +34,8 @@ export class ListingCardComponent implements OnInit {
                private helpers: HelpersService,
                private router: Router,
                private messagesApi: ApiMessagesService,
-               private authService: AuthService) {
+               private authService: AuthService,
+               private imageModalService: ImageModalService) {
   }
 
   ngOnInit() {
@@ -81,22 +84,32 @@ export class ListingCardComponent implements OnInit {
     return this.helpers.urlWithoutProtocol(url);
   }
 
-  // Logged OUT Helpers
-  toggleInfoContainerExpand(input: any = null): void {
-    // Trigger GA tracking
-    // this.gaClick('loginsignupexpand');
-
-    console.log("TOGGLING TO: ", !this.expandedInfo);
-
-    // If setting value directly, do that.
-    if(typeof(input) === 'boolean') {
-      this.expandedInfo = input;
-    }
-    // Else, just toggle the value
-    else {
-      this.expandedInfo = !this.expandedInfo;
-    }
+  fullScreen() {
+    this.imageModalService.view(this.listing.images, this.listingLink);
   }
+
+  // FIXME?: ClOSING ALL MODALS COULD CAUSE GATCHAS ELSEWHERE... although IS before a redirect.
+  redirectToListing() {
+    console.log("ABOUT TO REDIRECT TO LISTING...");
+    this.router.navigateByUrl(this.listingLink);
+  }
+
+  // Logged OUT Helpers
+  // toggleInfoContainerExpand(input: any = null): void {
+  //   // Trigger GA tracking
+  //   // this.gaClick('loginsignupexpand');
+
+  //   console.log("TOGGLING TO: ", !this.expandedInfo);
+
+  //   // If setting value directly, do that.
+  //   if(typeof(input) === 'boolean') {
+  //     this.expandedInfo = input;
+  //   }
+  //   // Else, just toggle the value
+  //   else {
+  //     this.expandedInfo = !this.expandedInfo;
+  //   }
+  // }
 }
 
 

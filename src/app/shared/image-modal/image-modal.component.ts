@@ -1,27 +1,34 @@
-// import { Component } from '@angular/core';
-// import { MatDialogRef } from '@angular/material';
-// import { IconService } from '../../core/services/icon.service';
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
+import { IconService } from '../../core/services/icon.service';
+import { Listing } from '../../listings/listing.model';
+import { Router } from '@angular/router';
 
-// @Component({
-//   moduleId: module.id,
-//   selector: 'confirm-modal',
-//   templateUrl: 'confirm-modal.component.html',
-//   styleUrls:  ['confirm-modal.component.css']
-// })
+@Component({
+  moduleId: module.id,
+  selector: 'image-modal',
+  templateUrl: 'image-modal.component.html',
+  styleUrls:  ['image-modal.component.css']
+})
 
-// export class ConfirmModalComponent {
-//   title: string;
-//   msg:   string;
+export class ImageModalComponent {
+  images: string[];
+  link: string;
 
-//   // Oauth deletion
-//   showCheckbox: boolean;
-//   checkboxMsg:  string;
-//   checkboxVal = true;
+  constructor(public dialogRef: MatDialogRef<ImageModalComponent>,
+              private icons: IconService,
+              private router: Router
+              ) {}
 
-//   constructor(public dialogRef: MatDialogRef<ConfirmModalComponent>,
-//               private icons: IconService) {}
+  buildIconClass(icon: string, size: string = '2') {
+    return this.icons.buildIconClass(icon, size);
+  }
 
-//   buildIconClass(icon: string, size: string = '2') {
-//     return this.icons.buildIconClass(icon, size);
-//   }
-// }
+  // clickedModalImage() {
+  //   console.log("MADE IT TO THE MODAL REDIRECT & CLOSE!!")
+  //   if(this.link) {
+  //     this.dialogRef.close();
+  //     this.router.navigateByUrl(this.link);
+  //   }
+  // }
+}

@@ -92,7 +92,6 @@ export class ListingsSearchResultsComponent implements OnInit, OnChanges {
   //   this.gaEvent.emitEvent('searchresults', 'click', label);
   // }
 
-
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);
   }

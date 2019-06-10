@@ -46,6 +46,7 @@ import { PasswordResetComponent }        from './password-reset/password-reset.c
 
 import { NotificationsComponent }        from './notifications/notifications.component';
 import { ConfirmModalComponent }         from './shared/confirm-modal/confirm-modal.component';
+import { ImageModalComponent }           from './shared/image-modal/image-modal.component';
 
 // Custom Components
 import { AddListingComponent }              from './listings/add-listing.component';
@@ -79,7 +80,8 @@ import { AuthService }                       from './core/auth/auth.service';
 import { GuestService }                      from './core/services/guest.service';
 import { GAEventService }                    from './core/services/ga-event.service';
 import { NotificationService }               from './core/services/notification.service';
-import { ModalService }                      from './core/services/modal.service';
+import { ConfirmModalService }               from './shared/confirm-modal/confirm-modal.service';
+import { ImageModalService }                 from './shared/image-modal/image-modal.service';
 import { WishifiedsApi }                     from './core/api/wishifieds-api.service';
 import { ApiAuthService }                    from './core/api/api-auth.service';
 import { ApiAdminService }                   from './core/api/api-admin.service';
@@ -162,6 +164,7 @@ export function HttpFactory(backend: XHRBackend,
 
                   NotificationsComponent,
                   ConfirmModalComponent,
+                  ImageModalComponent,
 
                   // Custom Components
                   AddListingComponent,
@@ -204,7 +207,8 @@ export function HttpFactory(backend: XHRBackend,
                   HelpersService,
                   IconService,
                   NotificationService,
-                  ModalService,
+                  ImageModalService,
+                  ConfirmModalService,
                   WishifiedsApi,
                   ApiAuthService,
                   ApiAdminService,
@@ -227,6 +231,7 @@ export function HttpFactory(backend: XHRBackend,
                 ],
   entryComponents: [
                   ConfirmModalComponent,
+                  ImageModalComponent,
   ]
 })
 export class AppModule { }

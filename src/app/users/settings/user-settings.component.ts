@@ -7,7 +7,7 @@ import { AuthService }         from '../../core/auth/auth.service';
 import { ApiUsersService }     from '../../core/api/api-users.service';
 import { WishifiedsApi }       from '../../core/api/wishifieds-api.service';
 import { NotificationService } from '../../core/services/notification.service';
-import { ModalService }        from '../../core/services/modal.service';
+import { ConfirmModalService } from '../../shared/confirm-modal/confirm-modal.service';
 import { MatInputModule }      from '@angular/material';
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { Subscription, Subject } from 'rxjs';
@@ -38,7 +38,7 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
               private apiUsersService: ApiUsersService,
               private router:          Router,
               private notifService:    NotificationService,
-              private modalService:    ModalService,
+              private modalService:    ConfirmModalService,
               private wishifiedsApi:   WishifiedsApi) {}
 
   ngOnInit() {
