@@ -1,6 +1,8 @@
 <div id="modal-container">
   <!-- Close Button -->
-  <i (click)="dialogRef.close()" class="close-button {{ buildIconClass('times', '2') }}"></i>
+  <div class="modal-header">
+    <i (click)="dialogRef.close()" class="close-button {{ buildIconClass('times', '2') }}"></i>
+  </div>
 
   <!-- Image Section -->
   <div class="images-carousel">
