@@ -55,7 +55,8 @@ import 'core-js/es6/reflect';
  */
 import 'zone.js/dist/zone';  // Included with Angular CLI.
 
-
+// Needed for ng2-dragula functionality.
+(window as any).global = window;
 
 /***************************************************************************************************
  * APPLICATION IMPORTS

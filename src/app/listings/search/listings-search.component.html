@@ -4,11 +4,11 @@
   <div class="search-box">
     <form #searchForm="ngForm" name="searchForm" (ngSubmit)="search($event)" class="search-box-form">
       <mat-form-field mat-float [ngStyle]="{'color': 'white'}" layout="row" class="search-box-input-container">
-        <input matInput type="text" [(ngModel)]="searchInfo.searchStr" placeholder="what are you selling?" name="searchStr">
+        <input matInput type="text" [(ngModel)]="searchInfo.searchStr" placeholder="what are YOU selling?" name="searchStr">
       </mat-form-field>
 
       <button (click)="search($event)" type="submit" class="search-btn-icon">
-        <i class="fa fa-search fa-3x sp-hover"></i>
+        <i class="fa fa-search fa-2x sp-hover"></i>
       </button>
 
       <!-- Search Distance -->
@@ -40,7 +40,7 @@
       </div>
 
     </form>
-    <p *ngIf="!hasSearched">Be a genie - find some wishes to fulfill!</p>
+    <p *ngIf="!hasSearched">Search to find buyers!</p>
   </div>
 
 

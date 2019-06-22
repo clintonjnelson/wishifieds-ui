@@ -180,10 +180,23 @@ div#listings-controls {
   display: flex;
   flex-direction: row;
   margin-top: 2em;
-  /*align-self: flex-start;
-  justify-content: flex-start;*/
 }
 
 a.listing-saveicon {
   margin-right: 2em;
+}
+
+
+/* Form Errors */
+.settings-input-error-container {
+  display: inline-block;
+  float: left;
+  margin-top: 10px;
+}
+.input-errors {
+  margin-top: 15px;
+}
+.error {
+  color: #ff77aa;
+  font-family: helvetica, sans-serif;
 }

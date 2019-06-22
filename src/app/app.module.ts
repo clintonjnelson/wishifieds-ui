@@ -14,7 +14,7 @@ import { MatDialogModule, MatInputModule, MatTooltipModule, MatFormFieldModule,
   MatSelectModule, MatCheckboxModule, MatTabsModule, MatChipsModule, MatCardModule,
   MatBadgeModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { DragulaModule }    from 'ng2-dragula';  // TO USE, SEE NEW DOCS FOR NEW API
+import { DragulaModule }    from 'ng2-dragula';  // TO USE, SEE NEW DOCS FOR NEW API
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
@@ -131,7 +131,7 @@ export function HttpFactory(backend: XHRBackend,
                   MatCheckboxModule,
                   MatTooltipModule,
                   MatBadgeModule,
-                  // DragulaModule.forRoot(),  // ROOT means SINGLETON
+                  DragulaModule.forRoot(),  // ROOT means SINGLETON
                   ChartsModule,    // move to child module for dashboard OR REMOVE FOR NOW
                   SwiperModule,
                   FileUploadModule

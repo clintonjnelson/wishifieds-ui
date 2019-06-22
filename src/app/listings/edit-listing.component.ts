@@ -1,6 +1,6 @@
 import { Component, ViewChild, Input, Output, OnInit, AfterViewInit, OnDestroy, EventEmitter } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
-import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';   // Remove if no validation logic
+import { FormBuilder, FormGroup, FormControl, FormArray, Validators, AbstractControl } from '@angular/forms';   // Remove if no validation logic
 import { IconService } from '../core/services/icon.service';
 import { HelpersService } from '../shared/helpers/helpers.service';
 import { ApiEnumsService } from '../core/api/api-enums.service';
@@ -11,9 +11,11 @@ import { WishifiedsApi }       from '../core/api/wishifieds-api.service';
 import { Category } from '../shared/models/category.model';
 import { Condition } from '../shared/models/condition.model';
 import { FileUploader, FileUploaderOptions, FileDropDirective } from 'ng2-file-upload';
+import { DragulaService } from 'ng2-dragula';
 import { Listing } from './listing.model';
 import { takeUntil } from 'rxjs/operators';
 import { Location } from '../shared/models/location.model';
+import { hasImages } from '../shared/validators/has-images.directive';
 
 // TODO: The Form structure is losing it's getter correctness, so probably manually setting/pushing in controls instead
   // of using the proper setters. Look through & fix the direct setting of values so that things align better.
@@ -31,7 +33,8 @@ import { Location } from '../shared/models/location.model';
   moduleId: module.id,
   selector: 'edit-listing',
   templateUrl: 'edit-listing.component.html',
-  styleUrls: ['edit-listing.component.css']
+  styleUrls: ['edit-listing.component.css'],
+  viewProviders: [DragulaService]
 })
 export class EditListingComponent implements OnInit, AfterViewInit {
   listingForm: FormGroup;  // THIS WILL LATER JUST BE THE listingForm. NOTE: Can call .valid on this group to see if any validation errors.
@@ -60,21 +63,24 @@ export class EditListingComponent implements OnInit, AfterViewInit {
 
   allImagesSub: Subscription;
   allImagesEmit: Subject<any> = new Subject<any>();
-  showImageSpinner: boolean = false;
+  imageLoadingSpinner: boolean = false;
   hints: any = {};
 
+  // dragSub = new Subscription();
+  dragulaImagesIndexes = [0,1,2,3,4,5];
 
   private unsubscribe: Subject<any> = new Subject();
   forListingCreation  = false;  // TODO: CARRYOVER FROM SIGNPOST; DETERMINE IF NEED
 
-  constructor(private icons:         IconService,
-              private helpers:       HelpersService,
-              private formBuilder:   FormBuilder,
-              private apiEnums:      ApiEnumsService,
-              private apiImages:     ApiImagesService,
-              private apiListings:   ApiListingsService,
-              private apiUsers:      ApiUsersService,
-              private wishifiedsApi: WishifiedsApi) {
+  constructor(private icons:          IconService,
+              private helpers:        HelpersService,
+              private formBuilder:    FormBuilder,
+              private apiEnums:       ApiEnumsService,
+              private apiImages:      ApiImagesService,
+              private apiListings:    ApiListingsService,
+              private apiUsers:       ApiUsersService,
+              private wishifiedsApi:  WishifiedsApi,
+              private dragulaService: DragulaService) {
     // Creates a FormGroup of k/v pairs that specify the FormControls in the group. Value starts as default value.
     // This FG will get bound to the Form. We can do so in HTML with <form [formGroup]="myForm"
 
@@ -101,12 +107,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       console.log("NEW IMAGES ADDED. allImages is now: ", this.allImages);
     });
     this.locationsSub = this.locationsEmit.subscribe((newLocs: any) => {
-      // if(that.locations && that.locations.length == 1 && that.tempListing.userLocationId) {
-      //   that.tempListing.userLocationId = newLocs[0][userLocationId];
-      // }
-      // else {
-        that.locations = newLocs;
-      // }
+      that.locations = newLocs;
     });
     this.getUserLocations();
     // Prep the object - existing or new
@@ -169,8 +170,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       title: ['', Validators.required],
       description: ['', Validators.required],
       linkUrl: ['', {updateOn: 'blur'}],  // Subscription valueChange triggered only on blur
-      images: this.formBuilder.array([]),
-      hero: ['', Validators.required],
+      images: this.formBuilder.array([], hasImages),
       price: ['', Validators.required],
       userLocationId: ['', Validators.required],
       keywords: ['']
@@ -207,24 +207,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     };
   }
 
-  // QUESTION????vvvvvDOES THIS Reset all images with any change in the URL????
-  // setLinkUrlSubscription() {
-  //   const that = this;
-  //   // This subscription updates the images by scraping the example site for its images
-  //   // Works as an onBlur update of the URL after it's typed in
-  //   this.listingForm.controls['linkUrl']
-  //     .valueChanges
-  //     .pipe(takeUntil(this.unsubscribe))  // Prevents observable leaks
-  //     .subscribe( (newUrl: string) => {
-  //       // TODO: Call API to scrape the newly updated address
-  //       console.log("Changed the url: ", newUrl);
-  //       if(newUrl && newUrl.trim()) {
-  //         that.getExternalImages(newUrl);
-  //       }
-  //       // this.refreshAllImages();
-  //     });
-  // }
-
   // Filter for ONLY selected (checked) images; used to filter for hero image options list.
   keepTruthyFilter(item: any) {
     return item.controls['checked'].value;  // TODO: Fix? THIS GETS CALLED A L-O-T.
@@ -255,6 +237,8 @@ export class EditListingComponent implements OnInit, AfterViewInit {
             },
             error => {
               console.log("ERROR DURING Update WITH ERROR: ", error);
+              // DO LOGIC TO ADD IT TO THE displayedValidationErrors
+              // OR just trigger an error from the validationErrorMsgs object.
               // TODO: PROPOGATE API ERRORS TO THE UI ERROR MESSAGES
             });
       }
@@ -288,10 +272,8 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       const checks = that.listingForm.get('title').value &&
         that.listingForm.get('price').value &&
         that.listingForm.get('userLocationId').value &&
-        that.listingForm.get('hero').value &&
         that.listingForm.get('images')['length'];
 
-      console.log("CHECKS IS: ", checks);
       return !!checks;
     }
 
@@ -302,18 +284,11 @@ export class EditListingComponent implements OnInit, AfterViewInit {
 
       // Get only selected images
       const correctImages = that.listingForm.get('images') as FormArray;
+      console.log("THE IMAGES FORM ARRAY IS: ", correctImages);
       let selectedImages = correctImages.controls
         .map(item => item.value)       // get all value objects
         .filter(item => item.checked)  // keep only checked ones
         .map(item => item.url)         // get their urls
-
-      console.log("SELECTEDIMAGES before mvoe hero: ", selectedImages);
-      console.log("HERO IS: ", saveObj.hero);
-      // Set hero image first (could do in one line, but harder to read unless familiar with splice)
-      selectedImages.splice(selectedImages.indexOf(saveObj.hero), 1);  // Remove hero from list
-      selectedImages.splice(0, 0, saveObj.hero);  // Set hero first
-
-      console.log("IMAGES AFTER MOVE HERO TO FRONT: ", selectedImages);
       saveObj.images = selectedImages;  // set on the save object
 
       // Set the non-form values
@@ -322,8 +297,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
 
       console.log("THE saveObj IS:", saveObj);
       return saveObj;
-      // console.log("THE ORIG IMAGES ARE: ", correctImages);
-      // console.log("THE FILTERED IMAGES ARE: ", selectedImages);
     }
   }
 
@@ -374,6 +347,54 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     return <FormArray>this.listingForm.get('images');
   }
 
+  imagesDropUpdate(newImagesIndexOrder: any) {
+    const that = this;
+    // [0,1,2,3] --> [3,0,1,2]
+    // [0,1,2,3] --> [1,0,2,3]
+    // If the new index is same as old, go to the next one
+    // If new index is different than the old, take this index FROM the old and insert it here via insert (splices it in)
+    // DONE (because it auto-shifts everything after)
+    // Then reset the total array starting at zero for dragImagesIndexes
+
+    // "insert() is the same as "splice" for form arrays, according to issue desc
+    // Process:
+    //    Do nothing to those before
+    //    Take 3 (moved) & put it in 0
+    //    Increment all after
+    //      Take 0 & put it in 1
+    //      Take 1 & put it in 2
+    //      Take 2 & put it in 3
+    let currImagesFormArray = this.listingForm.get('images') as FormArray;
+    let done = false;
+    if(this.buildBasicIndexList().join(",") == newImagesIndexOrder.join(",")) {
+      return;
+    }
+    else {
+      newImagesIndexOrder.forEach(function(fromIdx, toIdx) {
+        console.log("HERE ARE THE TWO INDEXEs. PROPOSED,ORIG:", fromIdx, toIdx);
+        if(!done && (fromIdx != toIdx)) {
+          done = true;
+
+          console.log("FORM_ARRAY BEFORE MOVE CONTROL: ", currImagesFormArray);
+          let controlToMove = currImagesFormArray.at(fromIdx) as AbstractControl;
+          currImagesFormArray.insert(toIdx, controlToMove);
+          console.log("FORM_ARRAY AFTER INSERT CONTROL: ", currImagesFormArray);
+          currImagesFormArray.removeAt(fromIdx+1);
+          console.log("FORM_ARRAY AFTER REMOVE CONTROL: ", (that.listingForm.get('images') as FormArray));
+        }
+      })
+    }
+
+    this.dragulaImagesIndexes = this.buildBasicIndexList();
+    // Reset the indexes back for current FormArray 0->end
+  }
+
+  // Iterate over array of length to match FormArray length
+  // Example for six images: [0,1,2,3,4,5];
+  buildBasicIndexList() {
+    return Array(this.getImageGroup().length).map(function(elem, ind) {return ind;});
+  }
+
   // TODO: if HERO image becomes unselected, then REMOVE HERO IMAGE URL FROM THE CONTROL VALUE ALSO
   toggleSelectImage(index: number) {
     console.log("INDEX FOR CHECKBOX IS: ", index);
@@ -408,11 +429,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     else { this.hideAdvanced = !this.hideAdvanced; }
   }
 
-  // THIS IS NOT WORKING< SO PROBABLY NEED TO DO DOM MANIPULAtion OF CSS VIA AN ID ON NG-SELECT
-  getSelectedHero() {
-    return this.listingForm.controls['hero'].value;
-  }
-
   // TEMP: USED TO CHECK VALUES OF STUFF
   check() {
     console.log("DID IT SELECT? : ", this.listingForm.controls['images']['controls'].length);
@@ -436,7 +452,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
         title:       this.listing.title,
         description: this.listing.description,
         linkUrl:     this.listing.linkUrl,
-        hero:   ( this.listing.images[0] || ''),
         images:      (this.listing.images || []),
         price:       this.listing.price,
         userLocationId:  this.listing.userLocationId,
@@ -452,12 +467,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
 
   // Creates List of Image Urls from only Selected Images
   private refreshTempListingImages() {
-    // TODO: ENSURE THE HERO IMAGE IS THE FIRST IMAGE
     const imagesFormArr = this.listingForm.get('images') as FormArray;
-    // console.log("FORMARRAY: ", imagesFormArr.value);
-    // console.log("IMAGECONTROLS: ", imagesFormArr.controls);
-    // console.log("IMAGECONTROLS LENGTH IS: ", imagesFormArr.controls.length);
-    imagesFormArr.controls.forEach( i => {console.log("ITEM IS: ", i);})
     const imageUrls = imagesFormArr.controls
       .filter( imageControl => { return imageControl.get("checked").value; })
       .map( imageControl => { return imageControl.get("url").value; });
@@ -496,13 +506,16 @@ export class EditListingComponent implements OnInit, AfterViewInit {
 
   private getExternalImages(urlToScrape) {
     const that = this;
+    that.imageLoadingSpinner = true;
     this.apiImages.getExternalImages(urlToScrape)
       .subscribe(
         newImageUrls => {
+          that.imageLoadingSpinner = false;
           console.log("EDIT GOT IMAGES: ", newImageUrls);
           that.allImagesEmit.next({urls: newImageUrls, isSelected: false});
         },
         error => {
+          that.imageLoadingSpinner = false;
           console.log("GOT AN ERROR GETTING LINKURL IMAGES. ERROR: ", error);
         });
   }
@@ -526,11 +539,10 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   }
 
   // Create the form controls for an image
-  private createImageFormControl(url: string, checked: boolean = false, hero: boolean = false): FormGroup {
+  private createImageFormControl(url: string, checked: boolean = false): FormGroup {
     return this.formBuilder.group({
       url: url,
-      checked: checked,
-      hero: hero
+      checked: checked
     });
   }
 
@@ -546,7 +558,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
 
   private resetTempListing() {
     this.tempListing = Object.assign({}, this.listing);  // Make a copy
-    this.tempListing.hero = this.listing.hero;
     console.log("TEMP LISTING IS NOW: ", this.tempListing);
     this.resetHints();
   }
@@ -559,7 +570,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       description: false,
       linkUrl: false,
       images: false,
-      hero: false,
       price: false,
       location: false,
       keywords: false
@@ -572,26 +582,61 @@ export class EditListingComponent implements OnInit, AfterViewInit {
 
   // ********** CONSIDER BREAKING OUT TO A SERVICE *************
   // ******************** CUSTOM VALIDATIONS HERE **************************
-  // NOTE: validationErrorMessages are implemented in each listing content type
-  validationErrorMessages: any = {};
+  // These are the custom error messages for each type of input > validation error (control.errors)
+  // TODO: There HAS to be a simpler & more scalable way to do this...
+  validationErrorMessages: any = {
+    title: {
+      required: "Title cannot be blank."
+    },
+    description: {
+      required: "Description cannot be blank."
+    },
+    linkUrl: {
+      required: "A website link is needed."
+    },
+    images: {
+      // See has-images.directive.ts to see how this works
+      hasImages: "Images are kind of a big deal, so we require at least one."
+    },
+    price: {
+      required: "Price cannot be left empty."
+    },
+    location: {
+      required: "Gotta have a location."
+    },
+    category: {
+      required: "Category cannot be empty."
+    },
+    condition: {
+      required: "Condition cannot be empty."
+    },
+    keywords: {
+    }
+  };
   displayedValidationErrors: any = {
-    title: '',
-    linkUrl: '',
-    keywords: '',
-    description: '',
-    price: '',
-    location: '',
-    images: ''
+    title: '', //bad title
+    description: '', //bad desc
+    linkUrl: '', //bad url
+    images: '', //bad img
+    price: '', //bad price
+    location: '', //bad loc
+    category: '', //bad cat
+    condition: '', //bad con
+    keywords: '', //bad key
   };
 
   ngAfterViewChecked() {
     this.formChangedCheck();
   }
 
+  // Only trigger EMPTY errors for these inputs
   private triggerEmptyInputValidations() {
     const form = this.listingForm;
-    const inputChecks = ['url', 'title', 'email', 'phone'];
+    const inputChecks = ['title', 'linkUrl', 'images', 'price'];
     inputChecks.forEach(function(input) {
+      if(input == "images") {
+        console.log("IMAGES INPUT IS: ", form.get(input));
+      }
       if(form.get(input) !== null) {
         form.get(input).markAsDirty();
       }
@@ -599,6 +644,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     this.onValueChanged(null);
   }
 
+//
   private formChangedCheck() {
     if(this.currentForm === this.listingForm) { return; }
 
@@ -618,12 +664,12 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       // clear previous error messages
       this.displayedValidationErrors[inputName] = '';
       const control = form.get(inputName);  // get value from input
-
       // If control inputName is dirtied & not valid, show all applicable errors
       if(control && control.dirty && !control.valid) {
-        const msgs = this.validationErrorMessages[inputName];  // get all messages for each type
-        for(const error in control.errors) {
-          this.displayedValidationErrors[inputName] += msgs[error] + ' ';
+        const msgs = this.validationErrorMessages[inputName];  // get custom error messages for each type
+        for(const error in control.errors) {  // example: "required"
+          console.log("ERROR TO DISPLAY IS: ",error);
+          this.displayedValidationErrors[inputName] += msgs[error] + ' '; // Combine total errors
         }
       }
     }

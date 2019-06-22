@@ -10,47 +10,13 @@
     <div ng2FileDrop class="listing-content-edit-form-container my-drop-zone" [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="imagesUploader">
       <form [formGroup]="listingForm" (ngSubmit)="save()" name="listingForm" class="listing-form" layout="column">
 
-        <!-- Category
-        <mat-form-field layout="column">
-          <mat-label>Choose a Category</mat-label>
-          <mat-select name="category" [formControl]="listingForm.controls['categoryId']" [(ngModel)]="tempListing.categoryId" placeholder="Choose a Category" required>
-            <mat-option *ngFor="let category of categories" [value]="category.id">
-              {{ category.name }}
-            </mat-option>
-          </mat-select>
-          <mat-hint>
-            <i (mouseover)="toggleHint('category')" (mouseleave)="toggleHint('category')" class="{{buildIconClass('question-circle', '1')}}"></i>
-            <span [hidden]="!hints.category"> Category is what you think the general grouping is of item you're wishing for. Keep in mind, when someone is searching to sell an item, they may limit the results to specific categories - that may or may not matter for you.</span>
-          </mat-hint>
-          <div *ngIf="displayedValidationErrors.category" class="input-errors error">
-            {{ displayedValidationErrors.category }}
-          </div>
-        </mat-form-field>
-
-        Condition
-        <mat-form-field layout="column" *ngIf="tempListing.categoryId">
-          <mat-label>Desired Condition</mat-label>
-          <mat-select name="condition" [formControl]="listingForm.controls['conditionId']" [(ngModel)]="tempListing.conditionId" placeholder="Choose a Condition" required>
-            <mat-option *ngFor="let condition of conditions" [value]="condition.id">
-              {{ condition.name }}
-            </mat-option>
-          </mat-select>
-          <mat-hint>
-            <i (mouseover)="toggleHint('condition')" (mouseleave)="toggleHint('condition')" class="{{buildIconClass('question-circle', '1')}}"></i>
-            <span [hidden]="!hints.condition"> If you're looking for a specific condition, you can select that here. It is recommended to choose the lowest condition you would be interested in, such as selecting "good" when interested in "good or better" condition items.</span>
-          </mat-hint>
-          <div *ngIf="displayedValidationErrors.condition" class="input-errors error">
-            {{ displayedValidationErrors.condition }}
-          </div>
-        </mat-form-field> -->
-
         <!-- Title -->
         <mat-form-field>
           <mat-label>Title</mat-label>
           <input matInput type="text" name="title" [formControl]="listingForm.controls['title']" [(ngModel)]="tempListing.title" placeholder="Title of what you're looking for..." required/>
           <mat-hint>
             <i (mouseover)="toggleHint('title')" (mouseleave)="toggleHint('title')" class="{{buildIconClass('question-circle', '1')}}"></i>
-            <span [hidden]="!hints.title"> Be clear & short. Search results only show a small amount of the title! This is also a primary factor for the search algorithm to determine search results. Clear and short is best!</span>
+            <span [hidden]="!hints.title"> What are you looking for? Be clear & short in title. Use description for details.</span>
           </mat-hint>
           <div *ngIf="displayedValidationErrors.title" class="input-errors error">
             {{ displayedValidationErrors.title }}
@@ -60,7 +26,7 @@
         <!-- Description -->
         <mat-form-field layout="row">
           <mat-label>Description</mat-label>
-          <textarea class="listing-textarea" matInput matTextareaAutosize matAutosizeMinRows="6" matAutosizeMaxRows="20" name="description" [formControl]="listingForm.controls['description']" [(ngModel)]="tempListing.description" placeholder="Description of what you're looking for..." mat-maxlength="2000"></textarea>
+          <textarea class="listing-textarea" matInput matTextareaAutosize matAutosizeMinRows="6" matAutosizeMaxRows="20" name="description" [formControl]="listingForm.controls['description']" [(ngModel)]="tempListing.description" placeholder="Description of what you're looking for..." mat-maxlength="2000" required></textarea>
           <mat-hint>
             <i (mouseover)="toggleHint('description')" (mouseleave)="toggleHint('description')" class="{{buildIconClass('question-circle', '1')}}"></i>
             <span [hidden]="!hints.description"> Describe what you're looking for here. This is the proper place to get into the details about what you want. </span>
@@ -73,7 +39,7 @@
         <!-- LinkUrl -->
         <mat-form-field layout="row">
           <mat-label>Link to an Example</mat-label>
-          <input matInput type="text" name="linkUrl" [formControl]="listingForm.controls['linkUrl']" [(ngModel)]="tempListing.linkUrl"/>
+          <input matInput type="text" name="linkUrl" [formControl]="listingForm.controls['linkUrl']" [(ngModel)]="tempListing.linkUrl" required/>
           <mat-hint>
             <i (mouseover)="toggleHint('linkUrl')" (mouseleave)="toggleHint('linkUrl')" class="{{buildIconClass('question-circle', '1')}}"></i>
             <span [hidden]="!hints.linkUrl">Paste a link here that points to a great example of what you're looking for. You can select images from that web page to show in your wisified.</span>
@@ -93,9 +59,14 @@
             <!-- Upload Images Button Option -->
             <input id="uploadfile" type="file" name="uploadedimages" ng2FileSelect [uploader]="imagesUploader" multiple/>
           </div>
-          <div class="images-selection-container">
+          <div *ngIf="imageLoadingSpinner">
+
+          </div>
+          <!-- Draggable Image Capability -->
+          <!-- <div class="images-selection-container"  *ngIf="!imageLoadingSpinner" dragula="'images-group'" [dragulaModel]="listingForm.controls['images']" (dragulaModelChange)="imagesDropUpdate($event)"> -->
+          <div class="images-selection-container"  *ngIf="!imageLoadingSpinner" dragula="'images-group'" [dragulaModel]="dragulaImagesIndexes" (dragulaModelChange)="imagesDropUpdate($event)">
             <div layout="row" formArrayName="images" *ngFor="let group of getImageGroup().controls; let ind=index">
-              <div [formGroupName]="ind">
+              <div [formGroupName]="ind" delayDragLift>
                 <input type="checkbox" formControlName="checked" class="images-checkbox"/>
                 <img (click)="toggleSelectImage(ind)" src="{{group.controls.url.value}}" [ngClass]="{'image-selected': group.controls.checked.value}" class="image" alt="" width="60px">
               </div>
@@ -116,11 +87,10 @@
 
 
         <!-- Hero Image Select from Selected Images -->
-        <mat-form-field class="hero-image-container" layout="column" *ngIf="getImageGroup().controls && getImageGroup().controls.length > 0">
+        <!-- <mat-form-field class="hero-image-container" layout="column" *ngIf="getImageGroup().controls && getImageGroup().controls.length > 0">
           <mat-label>Choose Primary Image</mat-label>
           <mat-select name="hero" [formControl]="listingForm.controls['hero']" [(ngModel)]="tempListing.hero" [ngStyle]="{'background': 'url(getSelectedHero() ) center contain no-repeat'}" placeholder="Select a Primary from Your Images">
             <mat-option *ngFor="let group of getImageGroup().controls | callback: keepTruthyFilter; let ind=index" [value]="group.controls.url.value">
-            <!-- <mat-option *ngFor="let group of listingForm.controls['images'].controls | callback: keepTruthyFilter; let ind=index" [value]="group.controls.url.value"> -->
               <img src="{{ group.controls.url.value }}" alt="Listing Image" height="40px">
             </mat-option>
           </mat-select>
@@ -129,15 +99,15 @@
             <i (mouseover)="toggleHint('hero')" (mouseleave)="toggleHint('hero')" class="{{buildIconClass('question-circle', '1')}}"></i>
             <span [hidden]="!hints.hero">Select the primary image for this wishified ad.</span>
           </mat-hint>
-          <div *ngIf="displayedValidationErrors.category" class="input-errors error">
-            {{ displayedValidationErrors.category }}
+          <div *ngIf="displayedValidationErrors.hero" class="input-errors error">
+            {{ displayedValidationErrors.hero }}
           </div>
-        </mat-form-field>
+        </mat-form-field> -->
 
         <!-- Price -->
         <mat-form-field layout="row" class="price-input-container">
           <mat-label class="price-input-label">Willing to Pay</mat-label>
-          <input matInput type="number" name="price" [formControl]="listingForm.controls['price']" [(ngModel)]="tempListing.price" max="99999999"/>
+          <input matInput type="number" name="price" [formControl]="listingForm.controls['price']" [(ngModel)]="tempListing.price" max="99999999" required/>
           <span matPrefix>$&nbsp;</span>
           <mat-hint>
             <i (mouseover)="toggleHint('price')" (mouseleave)="toggleHint('price')" class="{{buildIconClass('question-circle', '1')}}"></i>
@@ -165,7 +135,7 @@
             </mat-select>
             <mat-hint>
               <i (mouseover)="toggleHint('category')" (mouseleave)="toggleHint('category')" class="{{buildIconClass('question-circle', '1')}}"></i>
-              <span [hidden]="!hints.category"> Category is what you think the general grouping is of item you're wishing for. Keep in mind, when someone is searching to sell an item, they may limit the results to specific categories - that may or may not matter for you.</span>
+              <span [hidden]="!hints.category">General grouping of an item. Intended for users to filter results.</span>
             </mat-hint>
             <div *ngIf="displayedValidationErrors.category" class="input-errors error">
               {{ displayedValidationErrors.category }}
@@ -189,9 +159,6 @@
             </div>
           </mat-form-field>
 
-          <!-- TODO: COME UP WITH A WAY TO INPUT THE FULL LOCATION HERE. City/State or Zip? MAYBE GOOGLE MAPS INTEGRATION? -->
-          <!-- TODO: USER'S LOCATIONS OR OPTIONAL "+ ADD NEW LOCATION" THAT UN-HIDES A SET OF
-          LOCATION FIELDS THAT OTHERWISE ARE POPULATED BEHIND THE SCENES WITH THE SAVED VALUES. -->
           <!-- Location -->
           <mat-form-field layout="row">
             <mat-label>Purchase Location</mat-label>
@@ -209,7 +176,8 @@
             </div>
           </mat-form-field>
 
-          <!-- TODO: ADD A LIST OF CHIPS HERE FOR KEYWORDS? ADD SOMETHING. TEXT INPUTS WITH OPTIONAL ADD ANOTHER. -->
+          <!-- TODO:
+            ADD A LIST OF CHIPS HERE FOR KEYWORDS? ADD SOMETHING. TEXT INPUTS WITH OPTIONAL ADD ANOTHER. -->
           <!-- Keywords -->
           <mat-form-field layout="row">
             <mat-label>Keywords</mat-label>
