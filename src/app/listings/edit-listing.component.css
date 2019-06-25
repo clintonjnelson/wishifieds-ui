@@ -4,6 +4,7 @@ div.edit-listing-container {
   flex-direction: column;
   justify-content: center;
   width: 100%;
+  max-width: 50em;
 }
 
 listing-full {
