@@ -15,15 +15,17 @@
   width: 100%;
 }
 
-.results-box {
-  text-align: center;
-  width: 100%;
-}
-
 form {
   width: 90%;
   max-width: 400px;
 }
+
+.advanced-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .mat-form-field {
   width: 100%;
 }
@@ -42,6 +44,15 @@ form {
 
 .search-box-form {
   display: flex;
+  flex-direction: column;
+}
+
+.radius-select, .search-center {
+  width: 10em;
+}
+
+.search-bar {
+  display: flex;
   flex-direction: row;
 }
 
@@ -54,10 +65,10 @@ form {
   padding: 0px;
 }
 
-.radius-select, .search-center {
-  width: 10em;
+.results-box {
+  text-align: center;
+  width: 100%;
 }
-
 
 .no-results-message {
   color: white;

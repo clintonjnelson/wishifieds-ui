@@ -29,6 +29,7 @@ export class ListingsSearchComponent implements OnInit {
     postal: '',
     locationId: ''
   };
+  showAdvanced: boolean = false;
   userLocsSub: Subscription;
   userLocsEmit: Subject<any> = new Subject<any>();
 
@@ -82,6 +83,12 @@ export class ListingsSearchComponent implements OnInit {
         console.log("Setting search default location for user... ", defaultLoc.userLocationId);
         this.searchInfo.locationId = defaultLoc.userLocationId;
     }
+  }
+
+  toggleAdvanced(input: any = null): void {
+    // If setting value directly, do that. Else, just toggle the value
+    if(typeof(input) === 'boolean') { this.showAdvanced = input; }
+    else { this.showAdvanced = !this.showAdvanced; }
   }
 
   search(event: any) {

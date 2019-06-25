@@ -3,42 +3,53 @@
 <div class="search-container">
   <div class="search-box">
     <form #searchForm="ngForm" name="searchForm" (ngSubmit)="search($event)" class="search-box-form">
-      <mat-form-field mat-float [ngStyle]="{'color': 'white'}" layout="row" class="search-box-input-container">
-        <input matInput type="text" [(ngModel)]="searchInfo.searchStr" placeholder="what are YOU selling?" name="searchStr">
-      </mat-form-field>
 
-      <button (click)="search($event)" type="submit" class="search-btn-icon">
-        <i class="fa fa-search fa-2x sp-hover"></i>
-      </button>
+      <!-- Advanced Options-->
+      <div class="advanced-container">
+        <p (click)="toggleAdvanced(true)" *ngIf="!showAdvanced">
+          <small><u>advanced</u></small>
+        </p>
+        <!-- Distance -->
+        <div *ngIf="showAdvanced">
+          <div class="radius-select">
+            <mat-form-field>
+              <mat-label>Radius (miles)</mat-label>
+              <mat-select [(ngModel)]="searchInfo.distance" name="distance">
+                <mat-option *ngFor="let dist of distances" [value]="dist">{{dist}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
 
-      <!-- Search Distance -->
-      <div class="radius-select">
-        <mat-form-field>
-          <mat-label>Radius (miles)</mat-label>
-          <mat-select [(ngModel)]="searchInfo.distance" name="distance">
-            <mat-option *ngFor="let dist of distances" [value]="dist">{{dist}}</mat-option>
-          </mat-select>
+          <!-- Search Center Location -->
+          <!-- TODO: If logged in, should have "custom" option for zip or city/state with typeahead -->
+          <div *ngIf="searchInfo.distance !== 'any'">
+            <div *ngIf="!isLoggedIn" class="search-center">
+              <mat-form-field>
+                <input matInput type="text" [(ngModel)]="searchInfo.postal" placeholder="98101" name="postal">
+              </mat-form-field>
+            </div>
+            <div *ngIf="isLoggedIn" class="search-center">
+              <mat-form-field>
+                <mat-label>Search Location</mat-label>
+                <mat-select [(ngModel)]="searchInfo.locationId" name="location">
+                  <mat-option *ngFor="let loc of userLocations" [value]="loc.userLocationId">{{loc.description}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Primary (non-advanced) -->
+      <div class="search-bar">
+        <mat-form-field mat-float [ngStyle]="{'color': 'white'}" layout="row" class="search-box-input-container">
+          <input matInput type="text" [(ngModel)]="searchInfo.searchStr" placeholder="what are YOU selling?" name="searchStr">
         </mat-form-field>
-      </div>
 
-      <!-- Search Center Location -->
-      <!-- TODO: MAYBE HIDING THIS WILL GO AWAY WITH STYLE REFACTOR -->
-      <div *ngIf="searchInfo.distance !== 'any'">
-        <div *ngIf="!isLoggedIn" class="search-center">
-          <mat-form-field>
-            <input matInput type="text" [(ngModel)]="searchInfo.postal" placeholder="98101" name="postal">
-          </mat-form-field>
-        </div>
-        <div *ngIf="isLoggedIn" class="search-center">
-          <mat-form-field>
-            <mat-label>Search Location</mat-label>
-            <mat-select [(ngModel)]="searchInfo.locationId" name="location">
-              <mat-option *ngFor="let loc of userLocations" [value]="loc.userLocationId">{{loc.description}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
+        <button (click)="search($event)" type="submit" class="search-btn-icon">
+          <i class="fa fa-search fa-2x sp-hover"></i>
+        </button>
       </div>
-
     </form>
     <p *ngIf="!hasSearched">Search to find buyers!</p>
   </div>
