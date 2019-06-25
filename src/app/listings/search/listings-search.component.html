@@ -1,5 +1,4 @@
 <!-- Search -->
-<!-- TODO: Placeholder should be dynamic to a value specified in the class that extends -->
 <div class="search-container">
   <div class="search-box">
     <form #searchForm="ngForm" name="searchForm" (ngSubmit)="search($event)" class="search-box-form">
@@ -55,17 +54,7 @@
   </div>
 
 
-  <!-- <div class="wrap">
-    <div class="search2">
-      <input type="text" class="search2-term">
-      <button class="search2-button">
-        <i class="fa fa-search fa-1x sp-hover"></i>
-      </button>
-    </div>
-  </div> -->
-
-
-
+  <!-- Search Results -->
   <div class="results-box" *ngIf="!!(listings && listings.length)">
     <listings-search-results [listings]="listings"></listings-search-results>
   </div>
