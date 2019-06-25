@@ -6,6 +6,10 @@ div.edit-listing-container {
   width: 100%;
 }
 
+listing-full {
+  width: 100%;
+}
+
 div.preview-listing-container {
   display: flex;
   justify-content: center;
@@ -17,6 +21,10 @@ div.edit-form-container {
   justify-content: center;
   margin-top: 1em;  /* space between preview & form */
   margin-bottom: 2em;
+}
+
+div.listing-content-edit-form-container {
+  width: 100%;
 }
 
 div.listing-content-edit-form-container form {
@@ -53,7 +61,7 @@ mat-form-field {
 
 /*Min/Max width on input lines (to avoid cutting placeholders off or input lines being awkwardly long)*/
 ::ng-deep .mat-form-field-wrapper, .images-container {
-  width: 100%;
+  width: 90%;
   min-width: 280px;
   max-width: 600px;
 }

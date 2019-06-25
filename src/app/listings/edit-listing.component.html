@@ -1,10 +1,12 @@
 <div class="edit-listing-container">
 
-  <!-- TODO: PROVIDE A TAB TO FLIP BETWEEN CARD VIEW & FULL VIEW; DEFAUL TO CARD; -->
+  <!-- Live Preview -->
   <div class="preview-listing-container">
     <listing-full [listing]="tempListing" [isPreview]="true" (editingEE)="toggleEditing($event)"></listing-full>
   </div>
 
+
+  <!-- Listing Form -->
   <div id="listing-edit-container" class="edit-form-container">
     <!-- Listing Edit Form -->
     <div ng2FileDrop class="listing-content-edit-form-container my-drop-zone" [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="imagesUploader">
@@ -63,7 +65,6 @@
 
           </div>
           <!-- Draggable Image Capability -->
-          <!-- <div class="images-selection-container"  *ngIf="!imageLoadingSpinner" dragula="'images-group'" [dragulaModel]="listingForm.controls['images']" (dragulaModelChange)="imagesDropUpdate($event)"> -->
           <div class="images-selection-container"  *ngIf="!imageLoadingSpinner" dragula="'images-group'" [dragulaModel]="dragulaImagesIndexes" (dragulaModelChange)="imagesDropUpdate($event)">
             <div layout="row" formArrayName="images" *ngFor="let group of getImageGroup().controls; let ind=index">
               <div [formGroupName]="ind" delayDragLift>
@@ -84,25 +85,6 @@
             </p>
           </div>
         </div>
-
-
-        <!-- Hero Image Select from Selected Images -->
-        <!-- <mat-form-field class="hero-image-container" layout="column" *ngIf="getImageGroup().controls && getImageGroup().controls.length > 0">
-          <mat-label>Choose Primary Image</mat-label>
-          <mat-select name="hero" [formControl]="listingForm.controls['hero']" [(ngModel)]="tempListing.hero" [ngStyle]="{'background': 'url(getSelectedHero() ) center contain no-repeat'}" placeholder="Select a Primary from Your Images">
-            <mat-option *ngFor="let group of getImageGroup().controls | callback: keepTruthyFilter; let ind=index" [value]="group.controls.url.value">
-              <img src="{{ group.controls.url.value }}" alt="Listing Image" height="40px">
-            </mat-option>
-          </mat-select>
-          <img [hidden]="!tempListing.hero" src="{{tempListing.hero}}" height="40px" alt="">
-          <mat-hint>
-            <i (mouseover)="toggleHint('hero')" (mouseleave)="toggleHint('hero')" class="{{buildIconClass('question-circle', '1')}}"></i>
-            <span [hidden]="!hints.hero">Select the primary image for this wishified ad.</span>
-          </mat-hint>
-          <div *ngIf="displayedValidationErrors.hero" class="input-errors error">
-            {{ displayedValidationErrors.hero }}
-          </div>
-        </mat-form-field> -->
 
         <!-- Price -->
         <mat-form-field layout="row" class="price-input-container">
@@ -191,7 +173,6 @@
             </div>
           </mat-form-field>
         </div>
-
 
 
         <!-- form buttons -->

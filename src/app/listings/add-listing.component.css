@@ -1,12 +1,13 @@
+/*Controls Overall Add Container Size*/
 .add-listing-container {
-  width: 50%;
+  width: 95%;
   min-width: 300px;
   max-width: 600px;
 }
 
 .form-border {
-  padding: 20px;
-  border: 1px solid gray; /* With padding, provides a light border around form */
+  padding: 10px;
+  border: 2px solid gray; /* With padding, provides a light border around form */
 }
 
 .add-sign-icon-container {
