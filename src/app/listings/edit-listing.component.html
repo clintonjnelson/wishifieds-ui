@@ -93,7 +93,7 @@
           <span matPrefix>$&nbsp;</span>
           <mat-hint>
             <i (mouseover)="toggleHint('price')" (mouseleave)="toggleHint('price')" class="{{buildIconClass('question-circle', '1')}}"></i>
-            <span [hidden]="!hints.price">Select the price you would be willing to pay for the item. This doesn't mean you're willing to pay this price for any condition, but are willing to pay up to this price - based on condition.</span>
+            <span [hidden]="!hints.price">Select the price you would be willing to pay for the item. This doesn't mean you're willing to pay this price for any condition, but are willing to pay up to this price.</span>
           </mat-hint>
           <div *ngIf="displayedValidationErrors.price" class="input-errors error">
             {{ displayedValidationErrors.price }}
@@ -107,39 +107,6 @@
           <i *ngIf="!hideAdvanced" class="{{buildIconClass('chevron-up', '1')}}"></i>
         </p>
         <div [hidden]="hideAdvanced" class="advanced-container">
-          <!-- Category -->
-          <mat-form-field layout="column">
-            <mat-label>Choose a Category</mat-label>
-            <mat-select name="category" [formControl]="listingForm.controls['categoryId']" [(ngModel)]="tempListing.categoryId" placeholder="Choose a Category" required>
-              <mat-option *ngFor="let category of categories" [value]="category.id">
-                {{ category.name }}
-              </mat-option>
-            </mat-select>
-            <mat-hint>
-              <i (mouseover)="toggleHint('category')" (mouseleave)="toggleHint('category')" class="{{buildIconClass('question-circle', '1')}}"></i>
-              <span [hidden]="!hints.category">General grouping of an item. Intended for users to filter results.</span>
-            </mat-hint>
-            <div *ngIf="displayedValidationErrors.category" class="input-errors error">
-              {{ displayedValidationErrors.category }}
-            </div>
-          </mat-form-field>
-
-          <!-- Condition -->
-          <mat-form-field layout="column" *ngIf="tempListing.categoryId">
-            <mat-label>Desired Condition</mat-label>
-            <mat-select name="condition" [formControl]="listingForm.controls['conditionId']" [(ngModel)]="tempListing.conditionId" placeholder="Choose a Condition" required>
-              <mat-option *ngFor="let condition of conditions" [value]="condition.id">
-                {{ condition.name }}
-              </mat-option>
-            </mat-select>
-            <mat-hint>
-              <i (mouseover)="toggleHint('condition')" (mouseleave)="toggleHint('condition')" class="{{buildIconClass('question-circle', '1')}}"></i>
-              <span [hidden]="!hints.condition"> If you're looking for a specific condition, you can select that here. It is recommended to choose the lowest condition you would be interested in, such as selecting "good" when interested in "good or better" condition items.</span>
-            </mat-hint>
-            <div *ngIf="displayedValidationErrors.condition" class="input-errors error">
-              {{ displayedValidationErrors.condition }}
-            </div>
-          </mat-form-field>
 
           <!-- Location -->
           <mat-form-field layout="row">

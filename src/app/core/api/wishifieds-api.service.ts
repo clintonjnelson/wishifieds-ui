@@ -26,12 +26,6 @@ const ROUTES = {
   updateUser:  '/api/users/:id',
   checkAvailability: '/api/users/available?username=:username&email=:email',
 
-  // Categories
-  getCategories: '/api/categories',
-
-  // Conditions
-  getConditions: '/api/conditions',
-
   // Listings & listing-based resources
   getListingsByUser: '/api/listings/user/:usernameOrId',
   getFavoriteListingsByUser: '/api/listings/favorites',  // favorites for requesting user
@@ -44,6 +38,10 @@ const ROUTES = {
   getListingMessages: '/api/listings/:id/messages?correspondant=:correspondantId',
   getListingMessagesCorrespondants: '/api/listings/:id/messages?correspondants_only=true',
   getUnreadUserListingsMessages: '/api/messages/unreads',
+
+  // Tags
+  getTagByNameOrId: '/tags/:nameOrId',
+  createTag: '/tags',
 
   // Locations
   getLocationsByUserId: '/api/users/:id/locations',

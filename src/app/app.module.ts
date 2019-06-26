@@ -85,7 +85,7 @@ import { ImageModalService }                 from './shared/image-modal/image-mo
 import { WishifiedsApi }                     from './core/api/wishifieds-api.service';
 import { ApiAuthService }                    from './core/api/api-auth.service';
 import { ApiAdminService }                   from './core/api/api-admin.service';
-import { ApiEnumsService }                   from './core/api/api-enums.service';
+import { ApiTagsService }                   from './core/api/api-tags.service';
 import { ApiImagesService }                  from './core/api/api-images.service';
 import { ApiListingsService }                from './core/api/api-listings.service';
 import { ApiFavoritesService }                from './core/api/api-favorites.service';
@@ -212,7 +212,7 @@ export function HttpFactory(backend: XHRBackend,
                   WishifiedsApi,
                   ApiAuthService,
                   ApiAdminService,
-                  ApiEnumsService,
+                  ApiTagsService,
                   ApiImagesService,
                   ApiListingsService,
                   ApiFavoritesService,

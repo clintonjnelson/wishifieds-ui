@@ -2,8 +2,6 @@ export class Listing {
   id:             string;
   userId:         string;
   ownerUsername:  string;
-  categoryId:     string;  // TODO: Make into categoryId OR object (if also want name)
-  conditionId:    string;  // TODO: Make into conditionId OR object (if also want name)
   title:          string;  // TODO: NOT ID!
   description:    string;
   keywords:       string;

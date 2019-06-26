@@ -3,13 +3,11 @@ import { Subject, Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators, AbstractControl } from '@angular/forms';   // Remove if no validation logic
 import { IconService } from '../core/services/icon.service';
 import { HelpersService } from '../shared/helpers/helpers.service';
-import { ApiEnumsService } from '../core/api/api-enums.service';
+import { ApiTagsService } from '../core/api/api-tags.service';
 import { ApiImagesService } from '../core/api/api-images.service';
 import { ApiListingsService } from '../core/api/api-listings.service';
 import { ApiUsersService } from '../core/api/api-users.service';
 import { WishifiedsApi }       from '../core/api/wishifieds-api.service';
-import { Category } from '../shared/models/category.model';
-import { Condition } from '../shared/models/condition.model';
 import { FileUploader, FileUploaderOptions, FileDropDirective } from 'ng2-file-upload';
 import { DragulaService } from 'ng2-dragula';
 import { Listing } from './listing.model';
@@ -44,8 +42,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   @Output() destroyEE = new EventEmitter<any>();
   @Output() editingEE = new EventEmitter<boolean>();
   tempListing: Listing;
-  categories: Category[];
-  conditions: Condition[];
   hideAdvanced: boolean = true;
   locations: any;
   locationsSub: Subscription;
@@ -75,7 +71,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   constructor(private icons:          IconService,
               private helpers:        HelpersService,
               private formBuilder:    FormBuilder,
-              private apiEnums:       ApiEnumsService,
+              private apiTags:        ApiTagsService,
               private apiImages:      ApiImagesService,
               private apiListings:    ApiListingsService,
               private apiUsers:       ApiUsersService,
@@ -116,8 +112,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     this.resetForm();
     // Takes the list of allImages and turns them into the form images
     this.resetAllImages();  // FIXME: VERIFY combined refreshAllImages & buildCheckboxImages OR Break out separately
-    // Get enums for condition, etc. // TODO: MAY REMOVE
-    this.getEnums();  // Gets category, condition, etc values.
     // Bootstrap the Drag/Drop Upload Functionaltiy
     this.setupImageUploader();
   }
@@ -165,8 +159,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   buildForm() {
     const that = this;
     this.listingForm = this.formBuilder.group({  // FUTURE: LISTINGFORM
-      categoryId: ['1', Validators.required],  // TODO: Default to 1 here? On API?
-      conditionId: ['1', Validators.required],  // TODO: Default to 1 here? On API?
       title: ['', Validators.required],
       description: ['', Validators.required],
       linkUrl: ['', {updateOn: 'blur'}],  // Subscription valueChange triggered only on blur
@@ -315,32 +307,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
         }
       )
   }
-  // Getting stuff like Categories & Conditions from Api
-  getEnums() {
-    const that = this;
-    this.apiEnums.getCategories()
-        .subscribe(
-          categories => {
-            console.log("CATEGORIES RETURNED FROM GET: ", categories);
-            //that.isProcessing = false;
-            that.categories = categories;
-          },
-          error => {
-            console.log("ERROR GETTING CATEGORIES: ", error);
-          }
-        );
-    this.apiEnums.getConditions()
-    .subscribe(
-      conditions => {
-        console.log("CONDITIONS RETURNED FROM GET: ", conditions);
-        //that.isProcessing = false;
-        that.conditions = conditions;
-      },
-      error => {
-        console.log("ERROR GETTING CONDITIONS: ", error);
-      }
-    );
-  }
 
   // Get the image group. Helpful in UI for displaying the selector options
   getImageGroup() {
@@ -447,8 +413,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     if(this && this.listingForm) {
       // Set all values to the original listing;
       this.listingForm.patchValue({
-        categoryId:  this.listing.categoryId,
-        conditionId: this.listing.conditionId,
         title:       this.listing.title,
         description: this.listing.description,
         linkUrl:     this.listing.linkUrl,
@@ -564,8 +528,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
 
   resetHints() {
     this.hints = {
-      category: false,
-      condition: false,
       title: false,
       description: false,
       linkUrl: false,
@@ -604,12 +566,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     location: {
       required: "Gotta have a location."
     },
-    category: {
-      required: "Category cannot be empty."
-    },
-    condition: {
-      required: "Condition cannot be empty."
-    },
     keywords: {
     }
   };
@@ -620,8 +576,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     images: '', //bad img
     price: '', //bad price
     location: '', //bad loc
-    category: '', //bad cat
-    condition: '', //bad con
     keywords: '', //bad key
   };
 

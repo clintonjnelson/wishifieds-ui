@@ -5,48 +5,6 @@ import { ApiUsersService } from '../../core/api/api-users.service';
 import { Listing }         from '../listing.model';
 
 
-// Probably swap this out with a dynamic icon map that also has a local backup hardcoded
-const CATEGORY_LIST = {
-  'antiques':                { icon: 'star' },
-  'art':                     { icon: 'star' },
-  'atv & off-road':          { icon: 'star' },
-  'autoparts':               { icon: 'star' },
-  'autos':                   { icon: 'star' },
-  'baby & kids':             { icon: 'star' },
-  'bicycles & parts':        { icon: 'star' },
-  'boats & watercraft':      { icon: 'star' },
-  'books & magazines':       { icon: 'star' },
-  'camera & video':          { icon: 'star' },
-  'clothing & assessories':  { icon: 'star' },
-  'collectibles':            { icon: 'star' },
-  'computers':               { icon: 'star' },
-  'electronics':             { icon: 'star' },
-  'farm & agriculture':      { icon: 'star' },
-  'furniture':               { icon: 'star' },
-  'games & toys':            { icon: 'star' },
-  'gigs':                    { icon: 'star' },
-  'health & beauty':         { icon: 'star' },
-  'housewares':              { icon: 'star' },
-  'housing & apartments':    { icon: 'star' },
-  'jewelery':                { icon: 'star' },
-  'lawn & garden':           { icon: 'star' },
-  'materials':               { icon: 'star' },
-  'motorcycles & scooters':  { icon: 'star' },
-  'musical goods':           { icon: 'star' },
-  'other':                   { icon: 'star' },
-  'real estate':             { icon: 'star' },
-  'rentals':                 { icon: 'star' },
-  'services & consulting':   { icon: 'star' },
-  'sporting goods':          { icon: 'star' },
-  'tickets & events':        { icon: 'star' },
-  'tools & equipment':       { icon: 'star' },
-  'travel & accommodations': { icon: 'star' }
-};
-
-
-
-
-
 @Component({
   moduleId: module.id,
   selector: 'listings-search-results',

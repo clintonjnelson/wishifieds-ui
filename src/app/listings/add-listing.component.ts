@@ -6,16 +6,11 @@ import { AuthService }     from '../core/auth/auth.service';
 // import { GAEventService }  from '../../core/services/ga-event.service';
 import { Listing }            from './listing.model';
 
-export class Category{
-}
-
 
 const NEW_LISTING: Listing = {
   id:             undefined,
   userId:         "1", // Fill this in with the requesting user information
   ownerUsername:  "",
-  categoryId:     "",  // TODO:
-  conditionId:    "",  // TODO: Decide if UI does the name conversion or the API
   title:          "",
   description:    "",
   keywords:       "",
@@ -40,16 +35,12 @@ const NEW_LISTING: Listing = {
 })
 
 // TODO: NEED AN EDIT FORM. PROBABLY SEPARATE FOR FROM THE CARD. TRY TO COME UP WITH ONE
-// GENERIC ENOUGH TO BE USED FOR ALL TYPES OF CATEGORIES.
 // BUT for RE listings, maybe we do need different types...
 // RE would show a map & outline of the area interested in
 // Normal listings are just a picture
 // Maybe other types as well??
 
 export class AddListingComponent implements OnInit{
-  categories: Category[];
-  selectedCategory: Category;
-  showAddCategoryIcons = false;
   newListing = NEW_LISTING;
   @Input() isEditing = false;
   @Output() saveEE  = new EventEmitter<any>();
@@ -67,13 +58,6 @@ export class AddListingComponent implements OnInit{
 
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);
-  }
-
-  setCategory(category: Category) {
-    this.selectedCategory = category;
-    this.toggleShowAddCategoryIcons(false);
-    // this.gaClick('addcustomsign', sign.icon);
-    console.log("SETTING CATEGORY TO: ", category);
   }
 
   // Functions for Bubbling Up
@@ -95,12 +79,6 @@ export class AddListingComponent implements OnInit{
     this.saveEE.emit(newListing);    // keep passing the sign up
   }
 
-  toggleShowAddCategoryIcons(input: any = null): void {
-    // If setting value directly, do that. Else, just toggle the value
-    if(typeof(input) === 'boolean') { this.showAddCategoryIcons = input; }
-    else { this.showAddCategoryIcons = !this.showAddCategoryIcons; }
-  }
-
   toggleIsEditing(input: any = null):void {
     // If setting value directly, do that. Else, just toggle the value
     if(typeof(input) === 'boolean') { this.isEditing = input; }
@@ -109,7 +87,6 @@ export class AddListingComponent implements OnInit{
 
   // Toggle Control Functions
   private closeForms() {
-    this.toggleShowAddCategoryIcons(false);
     this.toggleIsEditing(false);
   }
 }
