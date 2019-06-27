@@ -1,0 +1,30 @@
+<mat-form-field class="example-chip-list">
+
+  <!-- Combo of Tags List & Input -->
+  <mat-chip-list #chipList aria-label="Tag selection">
+    <mat-chip
+      *ngFor="let tag of tags"
+      [selectable]="tagConfig.selectable"
+      [removable]="tagConfig.removable"
+      (removed)="remove(tag.name)">
+      {{tag.name}}
+      <i matChipRemove *ngIf="tagConfig.removable" class="{{ buildIconClass('times', '2') }}"></i>
+    </mat-chip>
+    <input
+      placeholder="New tag..."
+      #tagInput
+      [formControl]="tagCtrl"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="tagConfig.separatorKeysCodes"
+      [matChipInputAddOnBlur]="tagConfig.addOnBlur"
+      (matChipInputTokenEnd)="add($event)">
+  </mat-chip-list>
+
+  <!-- Autocomplete Options (dropdown) with optionSelected listener to add tag -->
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <mat-option *ngFor="let tag of typeaheadTags" [value]="tag.name">
+      {{tag.name}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

@@ -62,9 +62,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   imageLoadingSpinner: boolean = false;
   hints: any = {};
 
-  // dragSub = new Subscription();
-  dragulaImagesIndexes = [0,1,2,3,4,5];
-
   private unsubscribe: Subject<any> = new Subject();
   forListingCreation  = false;  // TODO: CARRYOVER FROM SIGNPOST; DETERMINE IF NEED
 
@@ -351,7 +348,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       })
     }
 
-    this.dragulaImagesIndexes = this.buildBasicIndexList();
+    // this.dragulaImagesIndexes = this.buildBasicIndexList();
     // Reset the indexes back for current FormArray 0->end
   }
 
@@ -359,6 +356,11 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   // Example for six images: [0,1,2,3,4,5];
   buildBasicIndexList() {
     return Array(this.getImageGroup().length).map(function(elem, ind) {return ind;});
+  }
+
+  updateTags(event: any) {
+    console.log("HIT THE TAGS UPDATE FUNCTION...");
+    console.log("...WILL WANT TO UPDATE THE FORM ARRAY FOR TAGS SOMEHOW. Received: ", event);
   }
 
   // TODO: if HERO image becomes unselected, then REMOVE HERO IMAGE URL FROM THE CONTROL VALUE ALSO

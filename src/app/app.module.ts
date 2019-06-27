@@ -12,7 +12,7 @@ import { FormsModule, ReactiveFormsModule }     from '@angular/forms';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { MatDialogModule, MatInputModule, MatTooltipModule, MatFormFieldModule,
   MatSelectModule, MatCheckboxModule, MatTabsModule, MatChipsModule, MatCardModule,
-  MatBadgeModule } from '@angular/material';
+  MatBadgeModule, MatIconModule, MatAutocompleteModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragulaModule }    from 'ng2-dragula';  // TO USE, SEE NEW DOCS FOR NEW API
 import { SwiperModule } from 'ngx-swiper-wrapper';
@@ -57,6 +57,8 @@ import { ListingCardComponent }             from './listings/listing-card.compon
 import { ListingCardsComponent }            from './listings/listing-cards.component';
 import { ListingsSearchComponent }          from './listings/search/listings-search.component';
 import { ListingsSearchResultsComponent }   from './listings/search/listings-search-results.component';
+
+import { AddTagsComponent }                 from './tags/add-tags.component';
 
 import { UserMessagesComponent }            from './messages/user-messages.component';
 import { ListingMessagesSelectorComponent } from './messages/listing-messages-selector.component';
@@ -126,11 +128,13 @@ export function HttpFactory(backend: XHRBackend,
                   MatChipsModule,
                   MatTabsModule,
                   MatCardModule,
+                  MatIconModule,
                   MatFormFieldModule,
                   MatSelectModule,
                   MatCheckboxModule,
                   MatTooltipModule,
                   MatBadgeModule,
+                  MatAutocompleteModule,
                   DragulaModule.forRoot(),  // ROOT means SINGLETON
                   ChartsModule,    // move to child module for dashboard OR REMOVE FOR NOW
                   SwiperModule,
@@ -175,6 +179,7 @@ export function HttpFactory(backend: XHRBackend,
                   ListingCardsComponent,
                   ListingsSearchComponent,
                   ListingsSearchResultsComponent,
+                  AddTagsComponent,
 
                   UserMessagesComponent,
                   MessageBubbleComponent,

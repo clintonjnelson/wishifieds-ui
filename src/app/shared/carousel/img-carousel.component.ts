@@ -21,6 +21,7 @@ export class ImgCarouselComponent {
   config: SwiperConfigInterface = {
     a11y: true,
     direction: 'horizontal',
+    // threshold: 5,
     slidesPerView: 1,
     keyboard: true,
     mousewheel: true,

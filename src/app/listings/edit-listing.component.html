@@ -139,6 +139,8 @@
               {{ displayedValidationErrors.keywords }}
             </div>
           </mat-form-field>
+
+          <add-tags (selectedTagsEE)="updateTags($event)"></add-tags>
         </div>
 
 

@@ -40,8 +40,9 @@ const ROUTES = {
   getUnreadUserListingsMessages: '/api/messages/unreads',
 
   // Tags
-  getTagByNameOrId: '/tags/:nameOrId',
-  createTag: '/tags',
+  getTagByNameOrId: '/api/tags/:nameOrId',
+  createTag: '/api/tags',
+  searchTags: '/api/tags/search?query=:query&max=:maxresults',
 
   // Locations
   getLocationsByUserId: '/api/users/:id/locations',

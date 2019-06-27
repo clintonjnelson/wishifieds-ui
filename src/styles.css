@@ -62,6 +62,10 @@ body {
   background-repeat: no-repeat;
 }
 
+/*I guess this is needed for material icons*/
+md-icon, mat-icon {
+  font-family: 'Material Icons' !important;
+}
 
 site-main {
   display: flex;

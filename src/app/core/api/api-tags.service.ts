@@ -27,6 +27,22 @@ export class ApiTagsService {
                );
   }
 
+  searchTags(query: string, maxresults: string = '7'): Observable<any> {
+    const searchTagsUrl = this.wishifiedsApi.buildUrl('searchTags', [ {':query': query}, {':maxresults': maxresults} ] );
+
+    return this.http
+               .get(searchTagsUrl)
+               .pipe(
+                 map( res => {
+                   console.log("SUCCESS SEARCH TAGS: ", res);
+                   return res.json();
+                 }),
+                 catchError( (error: Response) => {
+                   return throwError(error);
+                 })
+               );
+  }
+
   createTag(tagName: string): Observable<any> {
     const createTagUrl = this.wishifiedsApi.routes.createTag;
     const options    = this.wishifiedsApi.getRequestOptionWithEatHeader();
