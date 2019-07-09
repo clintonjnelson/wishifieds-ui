@@ -14,6 +14,7 @@ import { Listing } from './listing.model';
 import { takeUntil } from 'rxjs/operators';
 import { Location } from '../shared/models/location.model';
 import { hasImages } from '../shared/validators/has-images.directive';
+import { Tag } from '../tags/tag.model';
 
 // TODO: The Form structure is losing it's getter correctness, so probably manually setting/pushing in controls instead
   // of using the proper setters. Look through & fix the direct setting of values so that things align better.
@@ -162,7 +163,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       images: this.formBuilder.array([], hasImages),
       price: ['', Validators.required],
       userLocationId: ['', Validators.required],
-      keywords: ['']
+      tags: this.formBuilder.array([])
     });
     // FIXME? MAY HAVE TO PUT THE LISTING_FORM LINK_URL SUBSCRIPTION DOWN HERE.
     // this.setLinkUrlSubscription();
@@ -205,7 +206,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   save() {
     const that = this;
 
-    // Find & set user's default location
+    // Find or set user's default location
     if(!that.listingForm.get('userLocationId').value) {
       const defaultLocation = that.locations.find(function(loc) { return loc.isDefault; });
       that.listingForm.patchValue({ userLocationId: defaultLocation.userLocationId });
@@ -347,20 +348,22 @@ export class EditListingComponent implements OnInit, AfterViewInit {
         }
       })
     }
-
-    // this.dragulaImagesIndexes = this.buildBasicIndexList();
-    // Reset the indexes back for current FormArray 0->end
   }
 
   // Iterate over array of length to match FormArray length
   // Example for six images: [0,1,2,3,4,5];
-  buildBasicIndexList() {
+  private buildBasicIndexList() {
     return Array(this.getImageGroup().length).map(function(elem, ind) {return ind;});
   }
 
-  updateTags(event: any) {
+  updateTags(allTags: Tag[]) {
+    const that = this;
     console.log("HIT THE TAGS UPDATE FUNCTION...");
-    console.log("...WILL WANT TO UPDATE THE FORM ARRAY FOR TAGS SOMEHOW. Received: ", event);
+    console.log("...WILL WANT TO UPDATE THE FORM ARRAY FOR TAGS SOMEHOW. Received: ", allTags);
+    // const updatedFormArr = this.formBuilder.array(allTags)};
+    // console.log("new array is ", updatedFormArr);
+    this.listingForm.setControl('tags', that.formBuilder.array(allTags));
+    console.log("LISTING FORM AFTER TAGS UPATE IS NOW: ", this.listingForm);
   }
 
   // TODO: if HERO image becomes unselected, then REMOVE HERO IMAGE URL FROM THE CONTROL VALUE ALSO
@@ -421,7 +424,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
         images:      (this.listing.images || []),
         price:       this.listing.price,
         userLocationId:  this.listing.userLocationId,
-        keywords:    this.listing.keywords
+        tags:        (this.listing.tags || [])
       });
 
       // this.listingForm.setControl('images', this.formBuilder.array(that.listing.images || []));
@@ -536,7 +539,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       images: false,
       price: false,
       location: false,
-      keywords: false
     };
     console.log("HINTS REST TO: ", this.hints);
   }
@@ -568,8 +570,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     location: {
       required: "Gotta have a location."
     },
-    keywords: {
-    }
   };
   displayedValidationErrors: any = {
     title: '', //bad title
@@ -578,7 +578,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     images: '', //bad img
     price: '', //bad price
     location: '', //bad loc
-    keywords: '', //bad key
   };
 
   ngAfterViewChecked() {

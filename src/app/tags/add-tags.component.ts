@@ -73,17 +73,37 @@ export class AddTagsComponent implements OnInit {
   }
 
   add(event: MatChipInputEvent): void {
+    const that = this;
+    console.log("EVENT WOULD BE NICE TO KNWO IF TRIGGERED: ", event);
+    console.log("AUTOCOMPLETE MAY HAVE SOME INFO?:", this.matAutocomplete);
     // Add tag only when MatAutocomplete is not open
     // To make sure this does not conflict with OptionSelected Event
     console.log("MAT AUTOCOMPLETE OPEN BEFORE ADDING IS: ", this.matAutocomplete.isOpen);
     if (!this.matAutocomplete.isOpen) {
       const input = event.input;
-      const value = event.value;
+      const tagName = (event.value || '').trim();
 
       // Add our tag
-      if ((value || '').trim()) {
-        this.tags.push( { id: '-1', name: value.trim() } );
-        this.selectedTagsEE.emit(this.tags);
+      console.log("TAG NAME WILL SOON BE CREATED: ", tagName);
+      if (tagName) {
+        // Create (or find) the typed tag
+        console.log("ABOUT TO CREATE TAG NAME OF: ", tagName);
+        this.tagsService.createTag(tagName)
+          .subscribe(
+            res => {
+              console.log("SUCCESSFUL TAG CREATION. RES IS: ", res);
+              if(res.tag) {
+                let tag = {id: res.tag.id, name: res.tag.name}
+                that.tags.push(tag);
+                that.selectedTagsEE.emit(that.tags);  // Send only the IDs to the listing
+              }
+              else {
+                console.log("NO TAG FOUND IN RES!");
+              }
+            },
+            error => {
+              console.log("Error creating tag. Error is: ", error);
+            });
       }
 
       // Reset the input value

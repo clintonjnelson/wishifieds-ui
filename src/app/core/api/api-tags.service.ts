@@ -48,7 +48,7 @@ export class ApiTagsService {
     const options    = this.wishifiedsApi.getRequestOptionWithEatHeader();
 
     return this.http
-               .post(createTagUrl, JSON.stringify({name: tagName}), options)
+               .post(createTagUrl, JSON.stringify({tagName: tagName}), options)
                .pipe(
                  map( res => {
                    console.log("SUCCESS CREATING TAG", res);

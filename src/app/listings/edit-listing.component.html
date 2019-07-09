@@ -12,32 +12,6 @@
     <div ng2FileDrop class="listing-content-edit-form-container my-drop-zone" [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="imagesUploader">
       <form [formGroup]="listingForm" (ngSubmit)="save()" name="listingForm" class="listing-form" layout="column">
 
-        <!-- Title -->
-        <mat-form-field>
-          <mat-label>Title</mat-label>
-          <input matInput type="text" name="title" [formControl]="listingForm.controls['title']" [(ngModel)]="tempListing.title" placeholder="Title of what you're looking for..." required/>
-          <mat-hint>
-            <i (mouseover)="toggleHint('title')" (mouseleave)="toggleHint('title')" class="{{buildIconClass('question-circle', '1')}}"></i>
-            <span [hidden]="!hints.title"> What are you looking for? Be clear & short in title. Use description for details.</span>
-          </mat-hint>
-          <div *ngIf="displayedValidationErrors.title" class="input-errors error">
-            {{ displayedValidationErrors.title }}
-          </div>
-        </mat-form-field>
-
-        <!-- Description -->
-        <mat-form-field layout="row">
-          <mat-label>Description</mat-label>
-          <textarea class="listing-textarea" matInput matTextareaAutosize matAutosizeMinRows="6" matAutosizeMaxRows="20" name="description" [formControl]="listingForm.controls['description']" [(ngModel)]="tempListing.description" placeholder="Description of what you're looking for..." mat-maxlength="2000" required></textarea>
-          <mat-hint>
-            <i (mouseover)="toggleHint('description')" (mouseleave)="toggleHint('description')" class="{{buildIconClass('question-circle', '1')}}"></i>
-            <span [hidden]="!hints.description"> Describe what you're looking for here. This is the proper place to get into the details about what you want. </span>
-          </mat-hint>
-          <div *ngIf="displayedValidationErrors.description" class="input-errors error">
-            {{ displayedValidationErrors.description }}
-          </div>
-        </mat-form-field>
-
         <!-- LinkUrl -->
         <mat-form-field layout="row">
           <mat-label>Link to an Example</mat-label>
@@ -86,6 +60,32 @@
           </div>
         </div>
 
+        <!-- Title -->
+        <mat-form-field>
+          <mat-label>Title</mat-label>
+          <input matInput type="text" name="title" [formControl]="listingForm.controls['title']" [(ngModel)]="tempListing.title" placeholder="Title of what you're looking for..." required/>
+          <mat-hint>
+            <i (mouseover)="toggleHint('title')" (mouseleave)="toggleHint('title')" class="{{buildIconClass('question-circle', '1')}}"></i>
+            <span [hidden]="!hints.title"> What are you looking for? Be clear & short in title. Use description for details.</span>
+          </mat-hint>
+          <div *ngIf="displayedValidationErrors.title" class="input-errors error">
+            {{ displayedValidationErrors.title }}
+          </div>
+        </mat-form-field>
+
+        <!-- Description -->
+        <mat-form-field layout="row">
+          <mat-label>Description</mat-label>
+          <textarea class="listing-textarea" matInput matTextareaAutosize matAutosizeMinRows="6" matAutosizeMaxRows="20" name="description" [formControl]="listingForm.controls['description']" [(ngModel)]="tempListing.description" placeholder="Description of what you're looking for..." mat-maxlength="2000" required></textarea>
+          <mat-hint>
+            <i (mouseover)="toggleHint('description')" (mouseleave)="toggleHint('description')" class="{{buildIconClass('question-circle', '1')}}"></i>
+            <span [hidden]="!hints.description"> Describe what you're looking for here. This is the proper place to get into the details about what you want. </span>
+          </mat-hint>
+          <div *ngIf="displayedValidationErrors.description" class="input-errors error">
+            {{ displayedValidationErrors.description }}
+          </div>
+        </mat-form-field>
+
         <!-- Price -->
         <mat-form-field layout="row" class="price-input-container">
           <mat-label class="price-input-label">Willing to Pay</mat-label>
@@ -100,13 +100,17 @@
           </div>
         </mat-form-field>
 
+
         <!-- Advanced Options -->
         <p class="advanced-toggle" (click)="toggleAdvanced()">
           Advanced
           <i *ngIf="hideAdvanced" class="{{buildIconClass('chevron-down', '1')}}"></i>
           <i *ngIf="!hideAdvanced" class="{{buildIconClass('chevron-up', '1')}}"></i>
         </p>
+
         <div [hidden]="hideAdvanced" class="advanced-container">
+          <!-- Tags -->
+          <add-tags (selectedTagsEE)="updateTags($event)"></add-tags>
 
           <!-- Location -->
           <mat-form-field layout="row">
@@ -124,23 +128,6 @@
               {{ displayedValidationErrors.location }}
             </div>
           </mat-form-field>
-
-          <!-- TODO:
-            ADD A LIST OF CHIPS HERE FOR KEYWORDS? ADD SOMETHING. TEXT INPUTS WITH OPTIONAL ADD ANOTHER. -->
-          <!-- Keywords -->
-          <mat-form-field layout="row">
-            <mat-label>Keywords</mat-label>
-            <input matInput type="text" name="keywords" [formControl]="listingForm.controls['keywords']" [(ngModel)]="tempListing.keywords" placeholder="Description of what you're looking for..." mat-maxlength="2000"/>
-            <mat-hint>
-              <i (mouseenter)="toggleHint('keywords')" (mouseleave)="toggleHint('keywords')" class="{{buildIconClass('info-circle', '1')}}"></i>
-              <span [hidden]="!hints.keywords"> We give you four keywords that help supplement the search algorithm for search results. This helps you keep your title wording helpful, instead of you feeling pressure to cram all of your keywords into it.</span>
-            </mat-hint>
-            <div *ngIf="displayedValidationErrors.keywords" class="input-errors error">
-              {{ displayedValidationErrors.keywords }}
-            </div>
-          </mat-form-field>
-
-          <add-tags (selectedTagsEE)="updateTags($event)"></add-tags>
         </div>
 
 

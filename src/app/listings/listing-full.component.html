@@ -132,5 +132,14 @@
       </div>
     </div>
 
+    <!-- Tags Section -->
+    <div *ngIf="listing.tags && listing.tags.length" class="listing-tags-container">
+        <mat-chip-list #chipList aria-label="Listing tags">
+          <mat-chip *ngFor="let tag of listing.tags" selectable="false" removable="false">
+            {{tag.name}}
+          </mat-chip>
+        </mat-chip-list>
+    </div>
+
   </mat-card>
 </div>
