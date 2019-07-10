@@ -167,3 +167,8 @@ div.listing-contact-buyer-container {
   text-align: center;
 }
 
+/* Prevents the strange blue box around tags when clicked on (aka: focus) */
+::ng-deep mat-chip-list:focus {
+  outline: none;
+  border: 0;
+ };

@@ -363,6 +363,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     // const updatedFormArr = this.formBuilder.array(allTags)};
     // console.log("new array is ", updatedFormArr);
     this.listingForm.setControl('tags', that.formBuilder.array(allTags));
+    this.tempListing.tags = allTags;  // TODO: Make sure this is accurate
     console.log("LISTING FORM AFTER TAGS UPATE IS NOW: ", this.listingForm);
   }
 

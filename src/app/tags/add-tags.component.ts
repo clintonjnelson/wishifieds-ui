@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, EventEmitter, Output, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -18,6 +18,7 @@ import { Tag } from './tag.model';
   styleUrls: ['add-tags.component.css'],
 })
 export class AddTagsComponent implements OnInit {
+  @Input() existingTags: Tag[];
   @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;  // , {static: false}
   @ViewChild('auto') matAutocomplete: MatAutocomplete;  // , {static: false}
   @Output() selectedTagsEE = new EventEmitter<Tag[]>();  // FIXME: CHANGE TO EMIT TAGS!!!!
@@ -46,6 +47,8 @@ export class AddTagsComponent implements OnInit {
       that.typeaheadTags = newTags;
       console.log("TYPEAHEAD TAGS IS NOW", this.typeaheadTags);
     });
+    this.resetTags();
+
     this.tagCtrl.valueChanges
       .pipe(
         startWith(null),  // initial value of our input to compare against
@@ -82,6 +85,8 @@ export class AddTagsComponent implements OnInit {
     if (!this.matAutocomplete.isOpen) {
       const input = event.input;
       const tagName = (event.value || '').trim();
+
+      if(this.isDuplicate(tagName)) { return; }
 
       // Add our tag
       console.log("TAG NAME WILL SOON BE CREATED: ", tagName);
@@ -124,9 +129,23 @@ export class AddTagsComponent implements OnInit {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
+    if(this.isDuplicate(event.option.viewValue)) { return; }
+
     this.tags.push(this.typeaheadTags.find(tag => tag.name === event.option.viewValue));
     this.tagInput.nativeElement.value = '';
     this.tagCtrl.setValue(null);
+    this.selectedTagsEE.emit(this.tags);  // Send updated tags
+  }
+
+  private resetTags() {
+    this.tags = this.existingTags;
+  }
+
+  private isDuplicate(name) {
+    const lcName = name.toLowerCase();
+    return this.tags
+      .map(function(tag) {return tag['name'].toLowerCase();})
+      .indexOf(lcName) != -1;
   }
 }
 

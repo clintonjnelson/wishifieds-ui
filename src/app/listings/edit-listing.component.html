@@ -110,7 +110,7 @@
 
         <div [hidden]="hideAdvanced" class="advanced-container">
           <!-- Tags -->
-          <add-tags (selectedTagsEE)="updateTags($event)"></add-tags>
+          <add-tags (selectedTagsEE)="updateTags($event)" [existingTags]="listing.tags"></add-tags>
 
           <!-- Location -->
           <mat-form-field layout="row">
