@@ -1,9 +1,9 @@
-/*
-NOTE: parent must be styled with this to enable proper width:
-listings-search {
+.search-filters {
   display: flex;
+  flex-direction: row;
   width: 100%;
-}*/
+  justify-content: center;
+}
 
 div.listings-search-container {
   display: flex;

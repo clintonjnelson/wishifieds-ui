@@ -15,21 +15,17 @@ export class ListingsSearchResultsComponent implements OnInit, OnChanges {
   @Input() listings: Listing[] = [];
 
   filteredListings: Listing[];
-  filters: Object;        // Object of icon names {name: Boolean} false=show true=hide
-  filterIcons: string[];  // Selected filters
+  filters: Object; // Object filter display state by name {mint: false, antiques: false, nintendo: true} false=show true=hide
+  filterDisplayIcons: string[];  // Selectable filters for displaying (eg: [mint, antiques, nintendo])
   filtersCount:  number;  // Used to trigger search results reset
-
 
   constructor(private icons:           IconService,
               private apiUsersService: ApiUsersService,
               private router:          Router) {}
-              // private gaEvent:         GAEventService) {}  TODO: GOOGLE ANALYTICS
+
 
   ngOnInit() {
     this.resetFilters();
-    console.log("Filters init is: ", this.filters);
-    console.log("Filtered Listings init is: ", this.filteredListings);
-    console.log("FilterIcons at init is: ", this.filterIcons);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -37,85 +33,78 @@ export class ListingsSearchResultsComponent implements OnInit, OnChanges {
     this.resetFilters();
   }
 
-  filter(icon: string) {
-    // this.gaEvent.emitEvent('searchresultsfilter', 'click', filterIcon.icon);
-    // this.toggleFilterByIcon(icon);
+  toggleFilter(tagName: string) {
+    this.updateFilters(tagName);  // update the filter state object
     this.updateDisplayedResults();  // update displayed results
-    console.log("Filters final is: ", this.filters);
-    console.log("Filtered Listings after update is: ", this.filteredListings);
   }
-
-  // TODO: GOOGLE ANALYTICS TRACKING
-  // gaClick(label: string) {
-  //   this.gaEvent.emitEvent('searchresults', 'click', label);
-  // }
 
   buildIconClass(icon: string, size: string = '2') {
     return this.icons.buildIconClass(icon, size);
   }
 
-  // TODO: MAY NOT NEED THIS. DEPENDS ON IF WANT THIS FUNCTIONALITY.
-  // goToUserPage(userId: string, event: any) {
-  //   event.preventDefault();
-  //   this.gaClick('userpagelink');
-  //   this.apiUsersService.getUsernameByUserId(userId)
-  //       .subscribe(
-  //         res => {
-  //           console.log("RESPONSE FROM GETUSERNAMEBYUSERID IS: ", res);
-  //           this.router.navigate(['/', res.username]);
-  //         },
-  //         error => {
 
-  //         });
-  // }
-
-  // *********** HELPERS *************
-  private generateFiltersAndIcons() {
-    // const that = this;
-    // this.listings.forEach((listing) => {
-    //   // If already added, break. Else add to filters & displayIcons
-    //   var icon = CATEGORY_LIST[listing.category]['icon'];
-    //   if(that.filters[icon] !== undefined) { return; }  // VERIFY THAT THIS SHOULDN"T BE SEARCHING FILTERICONS
-    //   else {
-    //     that.filters[icon] = false;   // addToFilters(icon);
-    //     that.filterIcons.push(icon);  // addDisplayIcon(icon); TODO: TRY TO GET RID OF THIS ARRAY!!!!!!! USE JUST THE FILTERS ARRAY.
-    //   }
-    // });
-  }
-
-  private toggleFilterByIcon(icon: string) {
-    // this.filters[icon] = !this.filters[icon];
-    // // THIS LINE SHOULD BE TESTED, AS AN EDGE CASE COULD CAUSE ISSUE....
-    // console.log("Filter count before is: ", this.filtersCount);
-    // this.filters[icon] ? this.filtersCount++ : this.filtersCount--;  // adjust count
-    // console.log("Filter count after is: ", this.filtersCount);
-  }
-
-  private updateDisplayedResults() {
-    // if(this.filtersCount === 0) {
-    //   this.resetListings();
-    // }
-    // else {
-    //   const that = this;
-    //   // If compare sign icon to filter list to see if allow or not
-    //   this.filteredListings = this.listings.filter((listing) => {
-    //     // var icon = CATEGORY_LIST[listing.category]['icon'];
-    //     return that.filters[icon];  // true will keep
-    //   });
-    // }
-  }
-
+  // ********************** HELPERS ************************
   private resetFilters() {
     this.filters      = {};
-    this.filterIcons  = [];
+    this.filterDisplayIcons  = [];
     this.filtersCount = 0;
-    this.generateFiltersAndIcons();
+    this.extractFiltersFromListings();
     this.resetListings();
+  }
+
+  private extractFiltersFromListings() {
+    const that = this;
+    this.listings.forEach((listing) => {
+      listing.tags.forEach((tag) => {
+        let name = tag.name;
+        // If already added, break. Else add to filters & displayIcons
+        if(that.filters.hasOwnProperty(name)) { return; }
+        else {
+          addToFilters(name);
+          addDisplayIcon(name);
+        }
+      });
+    });
+
+    function addToFilters(tagName: string) {
+      that.filters[tagName] = false;  // Initially add without filtering
+    }
+    function addDisplayIcon(tagName: string) {
+      that.filterDisplayIcons.push(tagName);
+    }
   }
 
   private resetListings() {
     if(this.listings) {
       this.filteredListings = this.listings.slice();  // Copy orig array to reset the display array
+      console.log("FILTERED LISTINGS ARE: ", this.filteredListings);
+      console.log("FILTERS ARE: ", this.filters);
+      console.log("FILTERS COUNT IS: ", this.filtersCount);
+      console.log("FILTERS DISPLAY LISTINGS IS: ", this.filtersCount);
+    }
+  }
+
+  private updateFilters(name: string) {
+    console.log("Filters state is before: ", this.filters[name]);
+    this.filters[name] = !this.filters[name]; // toggle
+    console.log("Filters state is after: ", this.filters[name]);
+    console.log("Filter count before is: ", this.filtersCount);
+    this.filters[name] ? this.filtersCount++ : this.filtersCount--;  // adjust count
+    console.log("Filter count after is: ", this.filtersCount);
+  }
+
+  private updateDisplayedResults() {
+    const that = this;
+
+    if(this.filtersCount === 0) {
+      this.resetListings();
+    }
+    else {
+      this.filteredListings = this.listings.filter(function(listing) {
+        let tags = listing.tags.map(t => t.name);
+        // Check to see if one or more of the listing's tags supports it being shown
+        return tags.some(tag => that.filters[tag]);
+      });
     }
   }
 }

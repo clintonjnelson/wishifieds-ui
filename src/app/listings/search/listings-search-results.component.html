@@ -1,31 +1,17 @@
 <div class="listings-search-container">
-  <!-- Search Bar Section -->
-  <div>
-    <!-- Search Options Area -->
-    <!-- TODO: CURRENTLY PERMANENTLY TURNED OFF WITH ngIf=false. HOOK UP OR REMOVE. -->
-    <!-- <div id="search-filters" *ngIf="false">
-      <ul>
-        <li *ngFor="let icon of filterIcons">
-          <i class="{{buildIconClass(icon, '1')}}"
-             (click)="filter(icon)">
-             [style.color]="filters[icon] ? icon.bgColor : 'white'">
-          </i>
-        </li>
-      </ul>
-    </div> -->
+
+  <!-- Search Options Area -->
+  <div id="search-filters-container">
+    <mat-chip-list #chipList class="search-filters">
+      <mat-chip *ngFor="let name of filterDisplayIcons" selectable="true" removable="false" disabled="false" (click)="toggleFilter(name)">
+        {{name}}
+        <i (click)="toggleFilter(name); $event.stopPropagation()" *ngIf="filters[name]" class="{{ buildIconClass('times', '2') }}"></i>
+      </mat-chip>
+    </mat-chip-list>
   </div>
 
   <!-- Listing Results Found -->
-  <listing-cards [listings]="listings"></listing-cards>
-  <!-- <section class="results-container" *ngIf="listings && listings.length > 0">
-    <div class="listing-result-container" *ngFor="let listing of filteredListings">
-      <listing-card [listing]="listing"></listing-card>
-    </div>
-    <div class="filler"></div>
-    <div class="filler"></div>
-    <div class="filler"></div>
-    <div class="filler"></div>
-    <div class="filler"></div>
-    <div class="filler"></div>
-  </section> -->
+  <!-- <div *ngIf="filteredListings"> -->
+  <listing-cards [listings]="filteredListings"></listing-cards>
+  <!-- </div> -->
 </div>
