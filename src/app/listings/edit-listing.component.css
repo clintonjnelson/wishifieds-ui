@@ -165,6 +165,23 @@ label.upload-file-label-button {
   margin-left: 2em;
 }
 
+.images-loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.spinner-img {
+  display: flex;
+  align-self: center;
+}
+
+.load-more-button {
+  background-color: white;
+  color: gray;
+}
+
 
 ::ng-deep mat-label.price-input-label:parent:parent:parent {
   margin-left: -2em;
@@ -208,4 +225,19 @@ a.listing-saveicon {
 .error {
   color: #ff77aa;
   font-family: helvetica, sans-serif;
+}
+
+
+
+
+/*This creates a bunch of listing-card wide divs that have no height,
+so they can stack on eachother infinitely, but when there is space to go wide
+they will fill the width. Amazing & genius. This keeps it looking like the cards
+are left-aligned with space-between when in reality they CANNOT be left aligned.*/
+div.filler {
+  /* have to match the width AND the margins to stay aligned */
+  margin-left: 0.4em;
+  margin-right: 0.4em;
+  width: 28%;  /* same as width of one listing-card */
+  height: 0;     /* height should be zero, so won't ever wrap */
 }

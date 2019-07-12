@@ -47,6 +47,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   locations: any;
   locationsSub: Subscription;
   locationsEmit: Subject<any> = new Subject<any>();
+  imagesLoadPageSize = 10;
 
 
   // Dropzone Upload Management
@@ -56,6 +57,8 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   uploadedImagesEmit: Subject<any> = new Subject<any>();
   uploadedImageUrls: string[] = [];
   externalImageUrls: string[] = [];
+  paginatedImageUrls: string[] = [];  // Temporary holder for image urls
+  showLoadMoreImages: boolean = false;
   allImages: string[] = [];
 
   allImagesSub: Subscription;
@@ -306,9 +309,30 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       )
   }
 
+
   // Get the image group. Helpful in UI for displaying the selector options
   getImageGroup() {
     return <FormArray>this.listingForm.get('images');
+  }
+
+  // Grabs images & loads into the images array in paginated batches
+  // Note: Slice has an inclusive start & exclusive end, so ending at index 10 will really grab 10 (0-9);
+  loadMoreImages() {
+    const that = this;
+    // >10, load just 10 more images
+    if(this.paginatedImageUrls.length >= this.imagesLoadPageSize) {
+      this.allImagesEmit.next(
+        { urls: that.paginatedImageUrls.slice(0, this.imagesLoadPageSize), isSelected: false }
+      );
+      this.paginatedImageUrls = this.paginatedImageUrls.slice(this.imagesLoadPageSize);
+      this.showLoadMoreImages = true;
+    }
+    // Load the rest
+    else {
+      this.allImagesEmit.next({urls: that.paginatedImageUrls.slice(0), isSelected: false});
+      this.paginatedImageUrls = [];
+      this.showLoadMoreImages = false;
+    }
   }
 
   imagesDropUpdate(newImagesIndexOrder: any) {
@@ -482,7 +506,8 @@ export class EditListingComponent implements OnInit, AfterViewInit {
         newImageUrls => {
           that.imageLoadingSpinner = false;
           console.log("EDIT GOT IMAGES: ", newImageUrls);
-          that.allImagesEmit.next({urls: newImageUrls, isSelected: false});
+          that.paginatedImageUrls = newImageUrls;
+          that.loadMoreImages();
         },
         error => {
           that.imageLoadingSpinner = false;

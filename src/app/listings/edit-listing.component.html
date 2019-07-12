@@ -25,7 +25,6 @@
           </div>
         </mat-form-field>
 
-        <!-- TODO: IMPLEMENT A DRAG & DROP PICTURE INPUT WITH DRAGGABLE ORDERING AND ABILITY TO SELECT FROM LINKURL -->
         <div class="images-container">
           <div class="images-label">
             <p class="images-container-label">Select Images OR Drag/Drop Your Own</p>
@@ -35,10 +34,8 @@
             <!-- Upload Images Button Option -->
             <input id="uploadfile" type="file" name="uploadedimages" ng2FileSelect [uploader]="imagesUploader" multiple/>
           </div>
-          <div *ngIf="imageLoadingSpinner">
 
-          </div>
-          <!-- Draggable Image Capability -->
+          <!-- Images Container (Draggable) -->
           <div class="images-selection-container"  *ngIf="!imageLoadingSpinner" dragula="'images-group'" [dragulaModel]="dragulaImagesIndexes" (dragulaModelChange)="imagesDropUpdate($event)">
             <div layout="row" formArrayName="images" *ngFor="let group of getImageGroup().controls; let ind=index">
               <div [formGroupName]="ind" delayDragLift>
@@ -46,7 +43,20 @@
                 <img (click)="toggleSelectImage(ind)" src="{{group.controls.url.value}}" [ngClass]="{'image-selected': group.controls.checked.value}" class="image" alt="" width="60px">
               </div>
             </div>
+            <div class="filler"></div>
+            <div class="filler"></div>
+            <div class="filler"></div>
+            <div class="images-loading-container">
+              <button *ngIf="showLoadMoreImages" type="button" class="load-more-button" (click)="loadMoreImages()">
+                load more images
+              </button>
+            </div>
           </div>
+          <!-- Spinner -->
+          <div *ngIf="imageLoadingSpinner" class="images-loading-container">
+            <img class="spinner-img" src="/assets/loading2.gif" alt="loading images" width="190px" height="140px">
+          </div>
+
           <div *ngIf="displayedValidationErrors.images" class="input-errors error">
             {{ displayedValidationErrors.images }}
           </div>
