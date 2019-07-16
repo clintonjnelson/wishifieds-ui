@@ -38,6 +38,15 @@ form {
   background-color: white;
 }
 
+/*Dropdown for Typeahead, any mat select in the form*/
+::ng-deep span.mat-option-text{
+  color: gray;
+}
+/*Make the labels not as bold when input has content*/
+::ng-deep mat-label, mat-label i{
+  color: lightgray;
+}
+
 .mat-input-element {
   color: white;
 }

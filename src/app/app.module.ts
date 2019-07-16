@@ -87,10 +87,11 @@ import { ImageModalService }                 from './shared/image-modal/image-mo
 import { WishifiedsApi }                     from './core/api/wishifieds-api.service';
 import { ApiAuthService }                    from './core/api/api-auth.service';
 import { ApiAdminService }                   from './core/api/api-admin.service';
-import { ApiTagsService }                   from './core/api/api-tags.service';
+import { ApiTagsService }                    from './core/api/api-tags.service';
 import { ApiImagesService }                  from './core/api/api-images.service';
 import { ApiListingsService }                from './core/api/api-listings.service';
-import { ApiFavoritesService }                from './core/api/api-favorites.service';
+import { ApiLocationsService }               from './core/api/api-locations.service';
+import { ApiFavoritesService }               from './core/api/api-favorites.service';
 import { ApiMessagesService }                from './core/api/api-messages.service';
 import { ApiSearchService }                  from './core/api/api-search.service';
 import { ApiUsersService }                   from './core/api/api-users.service';
@@ -220,6 +221,7 @@ export function HttpFactory(backend: XHRBackend,
                   ApiTagsService,
                   ApiImagesService,
                   ApiListingsService,
+                  ApiLocationsService,
                   ApiFavoritesService,
                   ApiMessagesService,
                   ApiSearchService,

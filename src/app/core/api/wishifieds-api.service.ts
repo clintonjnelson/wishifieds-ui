@@ -45,6 +45,7 @@ const ROUTES = {
   searchTags: '/api/tags/search?query=:query&max=:maxresults',
 
   // Locations
+  locationTypeahead: '/api/locations/typeahead?postal=:postal&city=:city&statecode=:statecode&maxresults=:maxresults',
   getLocationsByUserId: '/api/users/:id/locations',
   createUserLocation: '/api/users/:id/locations',
   setDefaultUserLocation: '/api/users/:id/locations',  // PATCH

@@ -19,22 +19,41 @@
             </mat-form-field>
           </div>
 
+          <!-- CityState Search -->
+          <!-- <div class="city-state">
+            <mat-form-field>
+              <input matInput type="text" [(ngModel)]="searchInfo.citystate" placeholder="Seattle, WA" name="citystate">
+            </mat-form-field>
+
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let ta of citystateTypeaheads" [value]="ta.citystate">
+                {{ta.citystate}}
+              </mat-option>
+            </mat-autocomplete>
+          </div> -->
+
           <!-- Search Center Location -->
           <!-- TODO: If logged in, should have "custom" option for zip or city/state with typeahead -->
           <div *ngIf="searchInfo.distance !== 'any'">
-            <div *ngIf="!isLoggedIn" class="search-center">
+            <div class="search-center">
               <mat-form-field>
-                <input matInput type="text" [(ngModel)]="searchInfo.postal" placeholder="98101" name="postal">
+                <input matInput type="text" [(ngModel)]="searchInfo.location" (ngModelChange)="getTypeaheads()" [matAutocomplete]="auto" placeholder="City, ST (Seattle, WA) or Zipcode (98101)" name="location">
               </mat-form-field>
+
+              <mat-autocomplete #auto="matAutocomplete"> <!-- (optionSelected)="selected($event)"> -->
+                <mat-option *ngFor="let ta of typeaheads" [value]="ta.typeaheadText">
+                  {{ta.typeaheadText}}
+                </mat-option>
+              </mat-autocomplete>
             </div>
-            <div *ngIf="isLoggedIn" class="search-center">
+            <!-- <div *ngIf="isLoggedIn" class="search-center">
               <mat-form-field>
                 <mat-label>Search Location</mat-label>
                 <mat-select [(ngModel)]="searchInfo.locationId" name="location">
                   <mat-option *ngFor="let loc of userLocations" [value]="loc.userLocationId">{{loc.description}}</mat-option>
                 </mat-select>
               </mat-form-field>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

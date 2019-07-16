@@ -148,13 +148,3 @@ export class AddTagsComponent implements OnInit {
       .indexOf(lcName) != -1;
   }
 }
-
-
-// WHY DOES THIS RETURN A FULL ARRAY OF STRINGS & NOT JUST ONE?
-  // OH, IS IT FILTERING THE MAIN ARRAY FOR EACH ONE PASSED???
-  // SO IT ITERATES THE ENTIRE ARRAY FOR EACH VALUE PASSED???? DUMB.
-  // private filterDupTags(tagName: string): string[] {
-  //   const name = tagName.toLowerCase();
-
-  //   return this.typeaheadTags.filter(tag => tag.toLowerCase().indexOf(name) === 0);
-  // }
