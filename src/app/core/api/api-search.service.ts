@@ -13,11 +13,13 @@ export class ApiSearchService {
               private wishifiedsApi: WishifiedsApi) {}
 
   // Default empty query params so that will still populate properly
-  searchListings(searchStr: string, distance: string = '', postal: string = '', locationId: string = ''): Observable<Listing[]> {
+  searchListings(searchStr: string, distance: string = '', postal: string = '', city: string = '', stateCode: string = '', locationId: string = ''): Observable<Listing[]> {
     const searchListingsUrl = this.wishifiedsApi.buildUrl('searchListings', [
       {':searchStr': searchStr},
       {':distance': distance},
       {':postal': postal},
+      {':city': city},
+      {':stateCode': stateCode},
       {':locationId': locationId}
     ]);
     const options = this.wishifiedsApi.getRequestOptionWithEatHeader();

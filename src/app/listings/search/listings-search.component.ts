@@ -29,10 +29,11 @@ export class ListingsSearchComponent implements OnInit {
   searchInfo: any = {
     searchStr: '',  // Listings search text
     distance: '',
-    postal: '',     // If location is numbers = populate this
-    locationId: '', // If location text does not exist = populate this
-    citystate: '',  // If location is not just numbers - populate this
-    location: ''
+    location: '',   // This is the typeahead location text; could be postal or city/state
+    // postal: '',     // If location is numbers = populate this
+    // city: '',  // If location is not just numbers - populate this
+    // stateCode: '',  // If location is not just numbers - populate this
+    locationId: '', // If user is logged in; use this unless specified otherwise
   };
   typeaheads: any[];
   typeaheadSub: Subscription;
@@ -54,17 +55,13 @@ export class ListingsSearchComponent implements OnInit {
     const that = this;
     // Set searchQuery to our search, if exists (user clicked 'back'), or set empty
     this.searchInfo.searchStr  = this.route.snapshot.queryParams['search'] || '';
-    this.searchInfo.postal     = this.route.snapshot.queryParams['postal'];
+    // this.searchInfo.postal     = this.route.snapshot.queryParams['postal'];
     this.searchInfo.distance   = this.route.snapshot.queryParams['distance'] || this.distances[7];
+    this.searchInfo.location   = this.route.snapshot.queryParams['location'] || '';
     this.searchInfo.locationId = this.route.snapshot.queryParams['locationId'] || '';
-    this.searchInfo.citystate  = this.route.snapshot.queryParams['citystate'] || '';
+    // this.searchInfo.city  = this.route.snapshot.queryParams['city'] || '';
+    // this.searchInfo.state  = this.route.snapshot.queryParams['state'] || '';
     this.isLoggedIn = !!this.authService.auth.isLoggedIn;  // set initial value
-
-    // Used for getting/setting loggedIn user's default location; Update locations & the search location if needed
-    // this.userLocsSub = this.userLocsEmit.subscribe((newLocs) => {
-    //   that.userLocations = newLocs;
-    //   this.setLocation();
-    // });
 
     this.typeaheadSub = this.typeaheadEmit.subscribe( (newTypeaheads: any[]) => {
       console.log("SETTING TYPEAHEAD Locations: ", newTypeaheads);
@@ -72,34 +69,28 @@ export class ListingsSearchComponent implements OnInit {
       console.log("TYPEAHEADS IS NOW", this.typeaheads);
     });
 
-    // if(this.isLoggedIn) {
-    //   // NOTE: THIS COULD HAVE PROBLEMS IF USERID IS NOT AVAIL BUT ISLOGGEDIN IS TRUE SOMEHOW
-    //   this.usersLocsService.getLocationsByUserId(this.authService.auth.userId)
-    //       .subscribe(
-    //         results => {
-    //           console.log("USER LOCATIONS FOUND ARE: ", results);
-    //           // NOTE: MAY NEED A SUBSCRIPTION HERE FOR THE UPDATE
-    //           that.userLocsEmit.next(results.locations);
-    //         },
-    //         error => {
-    //           console.log("ERROR GETTING USER LOCATIONS: ", error);
-    //         });
-    // }
+    // If logged in & no search location, use the user's default location until select otherwise
+    if(this.isLoggedIn) {
+      // Used for updating default location for logged in users; Update locations & the search location if needed
+      this.userLocsSub = this.userLocsEmit.subscribe((newLocs) => {
+        that.userLocations = newLocs;
+        this.setLoggedInUserLocation();
+      });
 
-    // ???????
+      this.usersLocsService.getLocationsByUserId(this.authService.auth.userId)
+          .subscribe(
+            results => {
+              console.log("USER LOCATIONS FOUND ARE: ", results);
+              // NOTE: MAY NEED A SUBSCRIPTION HERE FOR THE UPDATE
+              that.userLocsEmit.next(results.locations);
+            },
+            error => {
+              console.log("ERROR GETTING USER LOCATIONS: ", error);
+            });
+    }
+
     if(this.searchInfo.searchStr) { this.search(null); }
   }
-
-  // setLocation() {
-  //   let defaultLoc = this.userLocations.find(function(elem) { return !!elem.isDefault; });
-  //   console.log("DEFAULT LOC IS: ", defaultLoc);
-
-  //   // HAS to assign the same referenced value, else will think it's a different one & not auto-populate existing dropdown value
-  //   if(this.isLoggedIn && defaultLoc && (this.searchInfo.locationId == '' || this.searchInfo.locationId == defaultLoc.userLocationId)) {
-  //       console.log("Setting search default location for user... ", defaultLoc.userLocationId);
-  //       this.searchInfo.locationId = defaultLoc.userLocationId;
-  //   }
-  // }
 
   toggleAdvanced(input: any = null): void {
     // If setting value directly, do that. Else, just toggle the value
@@ -127,53 +118,35 @@ export class ListingsSearchComponent implements OnInit {
     }
   }
 
-  private parseLocation() {
-    const cityStatePostal: any = {};
-
-    try {
-      const postal = parseInt(this.searchInfo['postal']);
-      // Postal NOT an int? Use city/state
-      if(Number.isNaN(postal)) {
-        const parsedCityState = this.searchInfo['location'].split(',');
-        cityStatePostal['city'] = parsedCityState[0];
-        cityStatePostal['stateCode'] = (parsedCityState.length > 1 ? parsedCityState[1] : '');
-      }
-      // Postal is an int - use it
-      else {
-        cityStatePostal['postal'] = postal;
-      }
-    }
-    catch(e) {
-      console.log("Could not use provided location. Error: ", e);
-    }
-
-    return cityStatePostal;
-  }
-
   search(event: any) {
     if(event) { event.preventDefault(); }  // if get here with form submit
     if(this.searchInfo.searchStr && history.pushState) {
       this.updateExistingUrl(
         this.searchInfo.searchStr,
         this.searchInfo.distance,
-        this.searchInfo.postal,
+        this.searchInfo.location,
         this.searchInfo.locationId,
-        this.searchInfo.citystate
       );
     }
     const that = this;
     console.log("SEARCHING CLICKED!");
     console.log("Search string is: ", this.searchInfo.searchStr);
-    console.log("Postal is: ", this.searchInfo.postal);
+    // console.log("Postal is: ", this.searchInfo.postal);
     console.log("Distance is: ", this.searchInfo.distance);
+    console.log("Location is: ", this.searchInfo.location);
     console.log("LocationId is: ", this.searchInfo.locationId);
 
+    const locationInfo = this.parseLocation();
+    console.log("Parsed location info is: ", locationInfo);
     // FIXME: THIS NEEDS TO BE UPDATED TO SEND THESE VALUES DOWN TO THE API
     this.apiSearchService.searchListings(
       this.searchInfo.searchStr,
       this.searchInfo.distance,
-      this.searchInfo.postal,
-      this.searchInfo.locationId)
+      locationInfo['postal'],
+      locationInfo['city'],
+      locationInfo['stateCode']
+      this.searchInfo.locationId
+      )
         .subscribe(
           results => {
             console.log("SEARCH RESULTS FOUND ARE: ", results);
@@ -188,16 +161,51 @@ export class ListingsSearchComponent implements OnInit {
 
   // TODO: ? Maybe break this out into a shared method in Helpers or a Utils file
   // Updates history of current page, so can come back to with window.history.back();
-  private updateExistingUrl(searchStr: string, distance: string = '100', postal: string = '98101', locationId: string = '', citystate: string = '') {
+  private updateExistingUrl(searchStr: string, distance: string = 'any', location: string = '', locationId: string = '') {
     const updatedSearchUrl = window.location.protocol + '//' +  // https://
                              window.location.host +             // www.syynpost.com
                              window.location.pathname +         // /
                              '?search=' + searchStr +  // ?search=Superman
-                             '&distance=' + distance + // ?search=Superman&distance=any
-                             '&postal=' + postal +  // ?search=Superman&distance=100&postal=98101
-                             '&locationId=' + locationId +
-                             '&citystate=' + citystate;  // ?search=Superman&distance=100&postal=98101
+                             (distance ? '&distance=' + distance : '')+ // ?search=Superman&distance=any
+                             (location ? '&location=' + location : '')+  // ?search=Superman&distance=100&location=98101
+                             (locationId ? '&locationId=' + locationId : ''); // ?search=Superman&distance=100&location=98101,locationId=33
     // Update the existing history for page (don't pushState, replaceState)
+    console.log("UPDATING THE URL WITH: ", updatedSearchUrl);
     window.history.replaceState({path: updatedSearchUrl}, '', updatedSearchUrl);
+  }
+
+  // Setting location for logged in users
+  private setLoggedInUserLocation() {
+    let defaultLoc = this.userLocations.find(function(elem) { return !!elem.isDefault; });
+    console.log("DEFAULT LOC IS: ", defaultLoc);
+
+    // HAS to assign the same referenced value, else will think it's a different one & not auto-populate existing dropdown value
+    if(this.isLoggedIn && defaultLoc && (this.searchInfo.locationId == '' || this.searchInfo.locationId == defaultLoc.userLocationId)) {
+        console.log("Setting search default location for user... ", defaultLoc.userLocationId);
+        this.searchInfo.locationId = defaultLoc.userLocationId;
+    }
+  }
+
+  private parseLocation() {
+    const cityStatePostal: any = {};
+
+    try {
+      const postal = parseInt(this.searchInfo['location']);
+      // Postal NOT an int? Use city/state
+      if(Number.isNaN(postal)) {
+        const parsedCityState = this.searchInfo['location'].split(',');
+        cityStatePostal['city'] = parsedCityState[0];
+        cityStatePostal['stateCode'] = (parsedCityState.length > 1 ? parsedCityState[1].trim() : '');
+      }
+      // Postal is an int - use it
+      else {
+        cityStatePostal['postal'] = postal;
+      }
+    }
+    catch(e) {
+      console.log("Could not use provided location. Error: ", e);
+    }
+
+    return cityStatePostal;
   }
 }

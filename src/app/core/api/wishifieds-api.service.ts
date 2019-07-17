@@ -33,7 +33,7 @@ const ROUTES = {
   createListing: '/api/listings',
   updateListing: '/api/listings/:id',
   deleteListing: '/api/listings/:id',
-  searchListings: '/api/listings/search?search=:searchStr&distance=:distance&postal=:postal&locationId=:locationId',
+  searchListings: '/api/listings/search?search=:searchStr&distance=:distance&postal=:postal&city=:city&statecode=:stateCode&locationId=:locationId',
   // TODO: We also need ?filtertype=user,filter=<user_id>, so we can filter for specific listings
   getListingMessages: '/api/listings/:id/messages?correspondant=:correspondantId',
   getListingMessagesCorrespondants: '/api/listings/:id/messages?correspondants_only=true',
