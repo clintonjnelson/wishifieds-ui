@@ -30,6 +30,14 @@ img.listing-owner-header-image {
   height: 100%;
 }
 
+span.facebook-badge {
+  font-size: 0.5em;
+  margin-left: 0.5em;
+}
+i.facebook-icon {
+  color: #3B5998;
+}
+
 .mat-card-header > i {
   padding-left: 0.5em;
 }

@@ -11,6 +11,11 @@
       </div>
       <mat-card-title>
         <a [routerLink]="['/', listing.ownerUsername, 'listings']" class="user-header-title-link">{{listing.ownerUsername}}</a>
+        <!-- Facebook Integration Badge -->
+        <!-- <span class="facebook-badge fa-stack fa-2x">
+          <i class="fas fa-certificate fa-stack-2x"></i>
+          <i class="facebook-icon fab fa-facebook-f fa-stack-1x"></i>
+        </span> -->
       </mat-card-title>
       <mat-card-subtitle>
         <i class="{{ buildIconClass('star', '1') }}"></i>
