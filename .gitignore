@@ -1,5 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+#Security
+**/environment.ts
+
 # compiled output
 /dist
 /tmp
@@ -24,6 +27,7 @@
 !.vscode/extensions.json
 
 # misc
+.env
 /.sass-cache
 /connect.lock
 /coverage/*
