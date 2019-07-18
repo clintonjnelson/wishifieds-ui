@@ -5,9 +5,13 @@
 
       <!-- TODO: IF NO SRC, SET A CLASS THAT WILL SET A BACKGROUND DEFAULT IMAGE ON DIV -->
       <div mat-card-avatar>
-        <img src="{{listing.ownerPicUrl}}" alt="" class="listing-owner-header-image">
+          <a [routerLink]="['/', listing.ownerUsername, 'listings']">
+            <img src="{{listing.ownerPicUrl}}" alt="" class="listing-owner-header-image">
+          </a>
       </div>
-      <mat-card-title>{{listing.ownerUsername}}</mat-card-title>
+      <mat-card-title>
+        <a [routerLink]="['/', listing.ownerUsername, 'listings']" class="user-header-title-link">{{listing.ownerUsername}}</a>
+      </mat-card-title>
       <mat-card-subtitle>
         <i class="{{ buildIconClass('star', '1') }}"></i>
         <i class="{{ buildIconClass('star', '1') }}"></i>
@@ -15,11 +19,11 @@
         <i class="{{ buildIconClass('star', '1') }}"></i>
         <i class="{{ buildIconClass('star', '1') }}"> &nbsp;(12)</i>
       </mat-card-subtitle>
-      <i *ngIf="isOwner && !isPreview" (click)="toggleEditing()" class="{{ buildIconClass('edit', '3') }}"></i>
+      <i *ngIf="isLoggedIn && isOwner && !isPreview" (click)="toggleEditing()" class="{{ buildIconClass('edit', '3') }}"></i>
       <!-- <i *ngIf="!isOwner" class="{{ buildIconClass('broken-heart', '3') }}"></i> -->
-      <i *ngIf="!isOwner && isFavorite" class="{{ buildIconClass('heart', '3') }}" (click)="toggleHeart()"></i>
-      <i *ngIf="!isOwner && !isFavorite" class="{{ buildIconClass('heart', '3', 'r') }}" (click)="toggleHeart()"></i>
-      <i *ngIf="isOwner" (click)="closeListing()" class="{{ buildIconClass('times', '3') }}"></i>
+      <i *ngIf="isLoggedIn && !isOwner && isFavorite" class="{{ buildIconClass('heart', '3') }}" (click)="toggleHeart()"></i>
+      <i *ngIf="isLoggedIn && !isOwner && !isFavorite" class="{{ buildIconClass('heart', '3', 'r') }}" (click)="toggleHeart()"></i>
+      <i (click)="closeListing()" class="{{ buildIconClass('times', '3') }}"></i>
     </mat-card-header>
 
     <!-- Images Section -->
@@ -107,7 +111,7 @@
       </div>
 
       <!-- Non-Owner Messages Section -->
-      <div *ngIf="!isOwner">
+      <div *ngIf="isLoggedIn && !isOwner">
 
         <i class="{{ buildIconClass('comments', '3') }} messages-icon" [ngClass]="{'unread-msgs-color': !!unreadMessages }">
         </i>

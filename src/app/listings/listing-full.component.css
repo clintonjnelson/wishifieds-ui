@@ -34,6 +34,10 @@ img.listing-owner-header-image {
   padding-left: 0.5em;
 }
 
+.user-header-title-link {
+  text-decoration: none;
+}
+
 ngu-item.bannerStyle {
   /* Horizontal & Vertical Centering */
   text-align: center;

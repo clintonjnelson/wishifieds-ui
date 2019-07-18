@@ -27,6 +27,7 @@ export class ListingFullComponent implements OnInit {
   showMessages: boolean = false;    // MAKE THIS TOGGLED PER THE MESSAGES ICON
   showLocationMap: boolean = false;
   currentViewerId: string;
+  isLoggedIn: boolean = false;
   isOwner: boolean = true;  // TODO: HOOK THIS UP; NEEDED FOR BUTTONS & SUCH.
   msgCorrespondants = [];
   unreadMessages: number;
@@ -54,7 +55,6 @@ export class ListingFullComponent implements OnInit {
     easing: 'cubic-bezier(0, 0, 0.2, 1)'
   };
 
-
   constructor(private icons: IconService,
               private helpers: HelpersService,
               private router: Router,
@@ -69,6 +69,7 @@ export class ListingFullComponent implements OnInit {
   // Get the listingLink, so can link to the listing
   ngOnInit() {
     const that = this;
+    this.isLoggedIn = this.authService.auth.isLoggedIn;
     this.currentViewerId = this.authService.auth.userId;
     this.isOwner = this.helpers.isEqualStrInt(this.listing.userId, this.currentViewerId);
     this.listingLink = this.helpers.buildUserListingLink(
@@ -79,18 +80,7 @@ export class ListingFullComponent implements OnInit {
     this.favEmit.subscribe(function(newState) {
       that.isFavorite = newState;
     });
-    this.favoritesApi.getFavoritesForUser([that.listing.id])
-      .subscribe(
-        res => {
-          // Get the favorite by ID & truthy it (in case it's undefined)
-          console.log("CURRENT STATE OF FAVORITE IS: ", res);
-          this.favEmit.next(!!res.favStatuses[that.listing.id]);  // truthy for undefined
-          console.log("IS FAVORITE IS: ", that.isFavorite)
-        },
-        err => {
-          console.log("Error getting favorites: ", err);
-        }
-    );
+    this.getFavorites();
     console.log("IS OWNER IS, listindOwner, currentViewer: ", this.isOwner, this.listing.userId, this.currentViewerId);
     console.log("LISTING FULL: Listing object is: ", this.listing);
   }
@@ -159,11 +149,29 @@ export class ListingFullComponent implements OnInit {
     }
   }
 
+  getFavorites() {
+    const that = this;
+    if(this.authService.auth.isLoggedIn) {
+      this.favoritesApi.getFavoritesForUser([that.listing.id])
+        .subscribe(
+          res => {
+            // Get the favorite by ID & truthy it (in case it's undefined)
+            console.log("CURRENT STATE OF FAVORITE IS: ", res);
+            that.favEmit.next(!!res.favStatuses[that.listing.id]);  // truthy for undefined
+            console.log("IS FAVORITE IS: ", that.isFavorite)
+          },
+          err => {
+            console.log("Error getting favorites: ", err);
+          }
+      );
+    }
+  }
   // Load any info needed for passing to messages boxes
     // If viewer is owner, then get ALL users on listing
     // If viewer is NOT owner, then VIEWER is only user needed & already have them!
   getCorrespondantMessagesInfo() {
     const that = this;
+    console.log("IS OWNER IS: ", this.isOwner);
     if(this.isOwner) {
       console.log("THIS IS THE OWNER OF THE LISTING: ", this.isOwner);
       // Listing owner may be talking with many people

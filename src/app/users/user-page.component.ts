@@ -117,6 +117,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
   getFavorites() {
     const that = this;
+    if(!this.auth.isLoggedIn && !this.isOwner) { return; }
+
     this.listingsApi
       .getFavoriteListingsByUser()
       .subscribe(
@@ -132,6 +134,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
   // Get total unread messages so can display on the Messages tab
   getTotalUnreadMsgs() {
     const that = this;
+    if(!this.auth.isLoggedIn && !this.isOwner) { return; }
+
     this.messagesApi
       .getUserTotalUnreadMessages()
       .subscribe(

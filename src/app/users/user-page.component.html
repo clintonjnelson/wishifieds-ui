@@ -60,6 +60,11 @@
 
   <!-- Guest: Listings -->
   <div *ngIf="!isOwner">
+    <!-- User Header -->
+    <!-- TODO: Better with image, but will have to call user image service to get URL -->
+    <h2>{{usernameFromRoute}}</h2>
+
+    <!-- Wishlistings Cards -->
     <listing-cards [listings]="listings"></listing-cards>
   </div>
 </div>

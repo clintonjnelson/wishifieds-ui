@@ -27,9 +27,9 @@ export class ApiListingsService {
                );
   }
 
+  // Used by guests also to get listings of a user
   getListingsByUser(usernameOrId: any): Observable<Listing[]> {
     const getListingsByUserUrl = this.wishifiedsApi.buildUrl('getListingsByUser', [{':usernameOrId': usernameOrId}]);
-    // const options = this.wishifiedsApi.getRequestOptionWithEatHeader();
 
     return this.http
                .get(getListingsByUserUrl)

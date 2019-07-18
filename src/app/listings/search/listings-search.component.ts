@@ -144,7 +144,7 @@ export class ListingsSearchComponent implements OnInit {
       this.searchInfo.distance,
       locationInfo['postal'],
       locationInfo['city'],
-      locationInfo['stateCode']
+      locationInfo['stateCode'],
       this.searchInfo.locationId
       )
         .subscribe(
