@@ -167,6 +167,11 @@ div.grouped-items-container {
   color: lightgreen;
 }
 
+.listing-map-container {
+  display: flex;
+  justify-content: center;
+}
+
 div.listing-location-map {
   text-align: center;
 }

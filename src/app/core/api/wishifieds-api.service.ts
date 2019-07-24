@@ -5,6 +5,9 @@ import { HttpHeaders } from '@angular/common/http';
 
 // List of Signpost API Routes used in the UI
 const ROUTES = {
+  // Maps Api
+  mapsApi: 'http://127.0.0.1:80/tile/{z}/{x}/{y}.png',  // Better as an environment variable or config
+
   // Auth
   login:  '/api/login',
   logout: '/api/logout',

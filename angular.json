@@ -19,18 +19,25 @@
             "assets": [
               "src/assets",
               "src/favicon.ico",
-              "src/robots.txt"
+              "src/robots.txt",
+              "src/assets/leaflet/images/layers.png",
+              "src/assets/leaflet/images/layers-2x.png",
+              "src/assets/leaflet/images/marker-icon.png",
+              "src/assets/leaflet/images/marker-icon-2x.png",
+              "src/assets/leaflet/images/marker-shadow.png"
             ],
             "styles": [
               "src/styles.css",
               "src/wishifieds-theme.scss",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/font-awesome/css/font-awesome.min.css",
-              "node_modules/dragula/dist/dragula.min.css"
+              "node_modules/dragula/dist/dragula.min.css",
+              "src/assets/leaflet/leaflet.css"
             ],
             "scripts": [
               "node_modules/moment/min/moment.min.js",
-              "node_modules/chart.js/dist/Chart.min.js"
+              "node_modules/chart.js/dist/Chart.min.js",
+              "src/assets/leaflet/leaflet.js"
             ]
           },
           "configurations": {

@@ -68,6 +68,7 @@ import { MessageBubbleComponent }           from './messages/message-bubble.comp
 import { MessageBubbleAvatarComponent }     from './messages/message-bubble-avatar.component';
 
 import { ImgCarouselComponent }             from './shared/carousel/img-carousel.component';
+import { MarkerMapComponent }               from './shared/maps/marker-map.component';
 
 // Directives
 import { HoverColorDirective }              from './shared/hover-color/hover-color.directive';
@@ -170,6 +171,7 @@ export function HttpFactory(backend: XHRBackend,
                   NotificationsComponent,
                   ConfirmModalComponent,
                   ImageModalComponent,
+                  MarkerMapComponent,
 
                   // Custom Components
                   AddListingComponent,

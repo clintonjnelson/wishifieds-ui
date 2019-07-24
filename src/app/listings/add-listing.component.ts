@@ -9,7 +9,7 @@ import { Listing }            from './listing.model';
 
 const NEW_LISTING: Listing = {
   id:             undefined,
-  userId:         "1", // Fill this in with the requesting user information
+  userId:         "-1", // Fill this in with the requesting user information
   ownerUsername:  "",
   title:          "",
   description:    "",
@@ -21,6 +21,7 @@ const NEW_LISTING: Listing = {
   images:         [],
   tags:           [],
   slug:           "",
+  geoInfo:        undefined,
   createdAt:      "",
   updatedAt:      ""
 };
