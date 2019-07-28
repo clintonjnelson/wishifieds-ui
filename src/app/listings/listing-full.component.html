@@ -133,9 +133,8 @@
       <div class="listing-location-map">
         <i class="{{ buildIconClass('map-marker', '3') }}" (click)="toggleShowLocationMap()"></i>
         <div *ngIf="showLocationMap" class="listing-map-container">
-          <marker-map [geoInfo]="listing.geoInfo" [readOnly]="true"></marker-map>
+          <marker-map [geoInfo]="listing.location['geoInfo']" [readOnly]="true"></marker-map>
         </div>
-        <p> {{ listing.location }} </p>
       </div>
     </div>
 

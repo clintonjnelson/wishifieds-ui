@@ -14,6 +14,7 @@ import { Listing } from './listing.model';
 import { takeUntil } from 'rxjs/operators';
 import { Location } from '../shared/models/location.model';
 import { hasImages } from '../shared/validators/has-images.directive';
+import { hasLocation } from '../shared/validators/has-location.directive';
 import { Tag } from '../tags/tag.model';
 
 // TODO: The Form structure is losing it's getter correctness, so probably manually setting/pushing in controls instead
@@ -44,11 +45,10 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   @Output() editingEE = new EventEmitter<boolean>();
   tempListing: Listing;
   hideAdvanced: boolean = true;
-  locations: any;
-  locationsSub: Subscription;
-  locationsEmit: Subject<any> = new Subject<any>();
-  imagesLoadPageSize = 10;
-
+  userLocations: any;
+  userLocationsSub: Subscription;
+  userLocationsEmit: Subject<any> = new Subject<any>();
+  location: any = {};  // This is NOT managed by the form controls. Ensured by marker & default.
 
   // Dropzone Upload Management
   hasBaseDropZoneOver: boolean = false;
@@ -60,6 +60,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   paginatedImageUrls: string[] = [];  // Temporary holder for image urls
   showLoadMoreImages: boolean = false;
   allImages: string[] = [];
+  imagesLoadPageSize = 10;
 
   allImagesSub: Subscription;
   allImagesEmit: Subject<any> = new Subject<any>();
@@ -103,8 +104,8 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       that.makeNewImagesSelectable(urls, isSelected);
       console.log("NEW IMAGES ADDED. allImages is now: ", this.allImages);
     });
-    this.locationsSub = this.locationsEmit.subscribe((newLocs: any) => {
-      that.locations = newLocs;
+    this.userLocationsSub = this.userLocationsEmit.subscribe((newLocs: any) => {
+      that.userLocations = newLocs;  // These are the queried user userLocations for dropdown selector
     });
     this.getUserLocations();
     // Prep the object - existing or new
@@ -165,7 +166,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       linkUrl: ['', {updateOn: 'blur'}],  // Subscription valueChange triggered only on blur
       images: this.formBuilder.array([], hasImages),
       price: ['', Validators.required],
-      userLocationId: ['', Validators.required],
       tags: this.formBuilder.array([])
     });
     // FIXME? MAY HAVE TO PUT THE LISTING_FORM LINK_URL SUBSCRIPTION DOWN HERE.
@@ -209,11 +209,18 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   save() {
     const that = this;
 
-    // Find or set user's default location
-    if(!that.listingForm.get('userLocationId').value) {
-      const defaultLocation = that.locations.find(function(loc) { return loc.isDefault; });
-      that.listingForm.patchValue({ userLocationId: defaultLocation.userLocationId });
-      that.tempListing.userLocationId = defaultLocation.userLocationId;
+    // Set location info if not already set to a valid value
+    if(!hasLocationInfo()) {
+      const defaultUserLocation = that.userLocations.find(function(loc) { return loc.isDefault; });
+      const defaultLocation = {
+        locationId:  defaultUserLocation.locationId,
+        geoInfo:     defaultUserLocation.geoInfo,
+        description: defaultUserLocation.description,
+        postal:      defaultUserLocation.postal,
+        status:      defaultUserLocation.status,
+        isDefault:   defaultUserLocation.isDefault,
+      };
+      that.location = defaultLocation;
     }
 
     // Final Form Data Check
@@ -260,11 +267,25 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       this.triggerEmptyInputValidations();
     }
 
+    function hasLocationInfo() {
+      try {
+        return ( that.location['locationId'] > 0) ||
+          (
+            that.location.geoInfo &&
+            that.location['geoInfo']['latitude'] &&
+            that.location['geoInfo']['longitude']
+          );
+      } catch (e) {
+        return false;
+      }
+
+    }
+
     // Critical pre-save checks
     function passesCriticalValidations() {
       const checks = that.listingForm.get('title').value &&
         that.listingForm.get('price').value &&
-        that.listingForm.get('userLocationId').value &&
+        hasLocationInfo() &&  // Should have it by now - custom or default
         that.listingForm.get('images')['length'];
 
       return !!checks;
@@ -272,7 +293,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
 
     function buildListingSaveObject() {
       let saveObj = Object.assign({}, that.listingForm.value);
-
+      console.log("THE INITIAL SAVEOBJECT FROM LISTINGFORM IS: ", saveObj);
       console.log("THE FORM MODEL IS: ", that.tempListing);
 
       // Get only selected images
@@ -287,6 +308,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       // Set the non-form values
       saveObj.id = that.listing.id;
       saveObj.userId = that.listing.userId;  // TODO: UPDATE TO GET OFF OF THE AUTH OBJECT????
+      saveObj.location = that.location;  // Add this, as NOT part of form
 
       console.log("THE saveObj IS:", saveObj);
       return saveObj;
@@ -298,10 +320,10 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     this.apiUsers.getLocationsByUserId(that.listing.userId)
       .subscribe(
         res => {
-          // console.log("Respons with locations returned is: ", res);
-          console.log("Respons with locations returned is: ", res.locations);
+          // console.log("Respons with userLocations returned is: ", res);
+          console.log("Respons with userLocations returned is: ", res.locations);
 
-          that.locationsEmit.next(res.locations);  // May need subscription for different load times....
+          that.userLocationsEmit.next(res.locations);  // May need subscription for different load times....
         },
         error => {
           console.log("ERROR GETTING LOCATIONS: ", error);
@@ -391,6 +413,22 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     console.log("LISTING FORM AFTER TAGS UPATE IS NOW: ", this.listingForm);
   }
 
+  updateLocationViaMarker(geoInfo) {
+    console.log("UPDATE LOCATION COORDS WAS HIT WITH: ", geoInfo);
+    this.location = {
+      locationId: "-1",  // Set to invalid, so API triggers creation of new Location
+      description: '',
+      postal: undefined,
+      status: undefined,
+      isDefault: undefined,
+      geoInfo: {
+        latitude: geoInfo.lat,
+        longitude: geoInfo.lng,
+      }
+    };
+    this.tempListing.location = this.location;
+  }
+
   // TODO: if HERO image becomes unselected, then REMOVE HERO IMAGE URL FROM THE CONTROL VALUE ALSO
   toggleSelectImage(index: number) {
     console.log("INDEX FOR CHECKBOX IS: ", index);
@@ -448,10 +486,9 @@ export class EditListingComponent implements OnInit, AfterViewInit {
         linkUrl:     this.listing.linkUrl,
         images:      (this.listing.images || []),
         price:       this.listing.price,
-        userLocationId:  this.listing.userLocationId,
-        tags:        (this.listing.tags || [])
+        // tags:        (this.listing.tags || [])
       });
-
+      this.listingForm.setControl('tags', that.formBuilder.array(this.listing.tags));
       // this.listingForm.setControl('images', this.formBuilder.array(that.listing.images || []));
       // Reset images as well, but have to do so with built object, so use reset function
       this.listingForm.get('images').reset();
@@ -594,7 +631,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       required: "Price cannot be left empty."
     },
     location: {
-      required: "Gotta have a location."
+      required: "Gotta pick a location... quantom particles have a hard time purchasing."
     },
   };
   displayedValidationErrors: any = {

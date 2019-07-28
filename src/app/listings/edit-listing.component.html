@@ -123,21 +123,22 @@
           <add-tags (selectedTagsEE)="updateTags($event)" [existingTags]="listing.tags"></add-tags>
 
           <!-- Location -->
-          <mat-form-field layout="row">
+          <div class="map-update-container">
             <mat-label>Purchase Location</mat-label>
-            <mat-select name="location" [formControl]="listingForm.controls['userLocationId']"  [(ngModel)]="tempListing.userLocationId" placeholder="Choose a Location (eg: meeting location for purchase)" required>
+            <marker-map [geoInfo]="listing.location['geoInfo']" [readOnly]="false" (markerEE)="updateLocationViaMarker($event)"></marker-map>
+            <!-- <mat-select name="location" [formControl]="listingForm.controls['userLocationId']"  [(ngModel)]="tempListing.userLocationId" placeholder="Choose a Location (eg: meeting location for purchase)" required>
               <mat-option *ngFor="let loc of locations" [value]="loc.userLocationId">
                 {{ loc.description }}
               </mat-option>
-            </mat-select>
+            </mat-select> -->
             <mat-hint>
               <i (mouseover)="toggleHint('location')" (mouseleave)="toggleHint('location')" class="{{buildIconClass('question-circle', '1')}}"></i>
-              <span [hidden]="!hints.location">The location you would like to purchase this item from. Never put your home address! We suggest a frequented establishment like Starbucks.</span>
+              <span [hidden]="!hints.location">The location you would like to purchase this item from. Never put your home address! We suggest a frequented establishment like a nearby Starbucks or other restaurant.</span>
             </mat-hint>
             <div *ngIf="displayedValidationErrors.location" class="input-errors error">
               {{ displayedValidationErrors.location }}
             </div>
-          </mat-form-field>
+          </div>
         </div>
 
 

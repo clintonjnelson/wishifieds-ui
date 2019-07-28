@@ -15,13 +15,12 @@ const NEW_LISTING: Listing = {
   description:    "",
   linkUrl:        "",
   price:          "",
-  userLocationId: "",
   status:         "",
   hero:           "",
   images:         [],
   tags:           [],
   slug:           "",
-  geoInfo:        undefined,
+  location:       undefined,
   createdAt:      "",
   updatedAt:      ""
 };
@@ -43,7 +42,7 @@ const NEW_LISTING: Listing = {
 export class AddListingComponent implements OnInit{
   newListing = NEW_LISTING;
   @Input() isEditing = false;
-  @Output() saveEE  = new EventEmitter<any>();
+  @Output() saveEE = new EventEmitter<any>();
   @Output() destroyEE = new EventEmitter<any>();
 
   constructor(private helpers: HelpersService,

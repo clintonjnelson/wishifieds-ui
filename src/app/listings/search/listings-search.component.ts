@@ -6,7 +6,7 @@ import { ApiSearchService }  from '../../core/api/api-search.service';
 import { ApiUsersLocationsService }  from '../../core/api/api-users-locations.service';
 import { ApiLocationsService }  from '../../core/api/api-locations.service';
 import { Listing }           from '../listing.model';
-import { Location }          from '../../shared/models/location.model';
+import { UserLocation }          from '../../shared/models/location.model';
 import { Subject, Subscription } from 'rxjs';
 
 const DISTANCES = ['10', '25', '50', '75', '100', '200', '500', 'any'];
@@ -23,7 +23,7 @@ export class ListingsSearchComponent implements OnInit {
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   listings: Listing[];    // Allow variable search type
   distances: any[] = DISTANCES;
-  userLocations: Location[] = [];
+  userLocations: UserLocation[] = [];
   hasSearched = false;  // dont show "0 results" before a search
   isLoggedIn: boolean = false;
   searchInfo: any = {
@@ -91,6 +91,25 @@ export class ListingsSearchComponent implements OnInit {
 
     if(this.searchInfo.searchStr) { this.search(null); }
   }
+
+  // TODO: USE THIS TYPE OF LOGIC ON THE SEARCH RESULTS
+  // L.marker([47.6040, -122.3233])
+  //    .addTo(map)
+  //    .bindPopup(popup)
+  //    .openPopup();
+  // const popup = L.popup().setContent('<p>Hello world!<br />This is a nice popup.</p>')
+  // buildPopup(heroImgUrl, listingLink, price, title) {
+  //   const html = `
+  //     <div class="listing-marker-popup-info" style="text-align:center;">
+  //       <a href="/${listingLink}">
+  //         <img src="${heroImgUrl}" alt="picture of the ${title}" width="60px" height="60px"/>
+  //       </a>
+  //       <p><strong style="color:black">%{price}</strong></p>
+  //     </div>
+  //    `;
+  //   console.log("POPUP HTML IS: ", html);
+  //   return html;
+  // }
 
   toggleAdvanced(input: any = null): void {
     // If setting value directly, do that. Else, just toggle the value

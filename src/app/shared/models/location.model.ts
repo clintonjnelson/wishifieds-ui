@@ -1,9 +1,14 @@
+import { GeoInfo } from './geo-info.model';
+
 export class Location {
-  userLocationId: string;
+  locationId: string;
   description: string;
   postal: string;
   status: string;
   isDefault: boolean;
-  latitude: string;
-  longitude: string;
+  geoInfo: GeoInfo;
+}
+
+export class UserLocation extends Location {
+  userLocationId: string;
 }

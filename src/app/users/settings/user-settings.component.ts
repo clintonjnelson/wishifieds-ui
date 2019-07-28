@@ -11,7 +11,7 @@ import { ConfirmModalService } from '../../shared/confirm-modal/confirm-modal.se
 import { MatInputModule }      from '@angular/material';
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { Subscription, Subject } from 'rxjs';
-import { Location } from '../../shared/models/location.model';
+// import { UserLocation } from '../../shared/models/location.model';
 
 @Component({
   moduleId: module.id,

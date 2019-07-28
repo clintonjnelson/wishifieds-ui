@@ -8,7 +8,7 @@ import { WishifiedsApi }       from '../../core/api/wishifieds-api.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { MatInputModule }      from '@angular/material';
 import { Subscription, Subject } from 'rxjs';
-import { Location } from '../../shared/models/location.model';
+import { UserLocation } from '../../shared/models/location.model';
 
 @Component({
   moduleId: module.id,
@@ -19,7 +19,7 @@ import { Location } from '../../shared/models/location.model';
 
 export class UserLocationsManagerComponent implements OnInit {
   @ViewChild('userLocationsForm') userLocationsForm: NgForm;
-  userLocations: Location[] = [];
+  userLocations: UserLocation[] = [];
   newUserLocation: any;
   isEditingUserLocations = false;
   userLocsSub: Subscription;

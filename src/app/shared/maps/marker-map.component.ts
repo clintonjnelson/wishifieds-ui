@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { WishifiedsApi } from '../../core/api/wishifieds-api.service';
 import { GeoInfo } from '../../shared/models/geo-info.model';
 declare let L;
@@ -10,49 +10,48 @@ declare let L;
   styleUrls:  ['marker-map.component.css']
 })
 
-export class MarkerMapComponent implements OnInit {
+export class MarkerMapComponent implements OnInit, OnDestroy {
+  @ViewChild('mapDiv') mapCont;
   @Input() geoInfo: GeoInfo;
   @Input() readOnly: boolean = true;
-  // @Output() markerEE = new EventEmitter<any>();
+  @Output() markerEE = new EventEmitter<any>();
   origMarkerInfo: any;
   defaultMapHeight: number = 13;
+  map: any;
+  marker: any;
 
   constructor(private wishifiedsApi: WishifiedsApi) {}
 
   // TODO:  CREATE A MAPS SERVICE THAT USES THE ROUTE & CAN DO MOST OF THESE ACTIONS EASILY VIA FUNCTION
   ngOnInit() {
     const that = this;
-    console.log("GEOINFO OBJECT IS: ", this.geoInfo);
-    // origMarkerInfo = Object.assign({}, markerInfo);
     const geoPair = [this.geoInfo.latitude, this.geoInfo.longitude];
-    const map = L.map('map').setView(geoPair, this.defaultMapHeight);
-    // const map = L.map('map').setView([markerInfo.geo.lat, marker.geo.long], defaultHeight);
+
+    // Build map
+    this.map = L.map(this.mapCont.nativeElement).setView(geoPair, this.defaultMapHeight);
     L.tileLayer(that.wishifiedsApi.routes['mapsApi'], {
         attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       })
-     .addTo(map);
+     .addTo(this.map);
 
-    L.marker(geoPair)
-     .addTo(map)
-     .openPopup();
+    // Add Marker
+    this.marker = new L.marker(geoPair, this.getMarkerSettings()).addTo(this.map);  //.openPopup()
+    this.marker.on("dragend", this.sendUpdatedMarkerGeoInfo.bind(this));  // TMYK: Won't have access to "this" if don't bind its context!!!
   }
 
-  // TODO: USE THIS TYPE OF LOGIC ON THE SEARCH RESULTS
-  // L.marker([47.6040, -122.3233])
-  //    .addTo(map)
-  //    .bindPopup(popup)
-  //    .openPopup();
-  // const popup = L.popup().setContent('<p>Hello world!<br />This is a nice popup.</p>')
-  // buildPopup(heroImgUrl, listingLink, price, title) {
-  //   const html = `
-  //     <div class="listing-marker-popup-info" style="text-align:center;">
-  //       <a href="/${listingLink}">
-  //         <img src="${heroImgUrl}" alt="picture of the ${title}" width="60px" height="60px"/>
-  //       </a>
-  //       <p><strong style="color:black">%{price}</strong></p>
-  //     </div>
-  //    `;
-  //   console.log("POPUP HTML IS: ", html);
-  //   return html;
-  // }
+  ngOnDestroy() {
+    if(this.marker) {this.map.removeLayer(this.marker); }
+    if(this.map) { this.map.remove(); }
+  }
+
+  // We "bind" our "this" context when call this function, because otherwise will have different "this" context
+  sendUpdatedMarkerGeoInfo(event) {
+    console.log("New Marker Location is: ", event.target.getLatLng());
+    this.markerEE.emit(event.target.getLatLng());  // Can also get geoJson POINT with toGeoJSON()
+  }
+
+  private getMarkerSettings() {
+    console.log("About to get settings for ReadOnly: ", this.readOnly);
+    return (this.readOnly ? {} : {draggable: true, autoPan: true} );
+  }
 }
