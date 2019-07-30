@@ -14,7 +14,6 @@ import { Listing } from './listing.model';
 import { takeUntil } from 'rxjs/operators';
 import { Location } from '../shared/models/location.model';
 import { hasImages } from '../shared/validators/has-images.directive';
-import { hasLocation } from '../shared/validators/has-location.directive';
 import { Tag } from '../tags/tag.model';
 
 // TODO: The Form structure is losing it's getter correctness, so probably manually setting/pushing in controls instead
