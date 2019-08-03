@@ -4,6 +4,7 @@ import { GeoInfo } from '../../shared/models/geo-info.model';
 import { Listing } from '../listing.model';
 import { ApiLocationsService } from '../../core/api/api-locations.service';
 declare let L;
+declare let OverlappingMarkerSpiderfier;
 
 // NOTE: objects are not directly added to the map, but are added to a featureGroup and then
 //     the feature group is added to the map. This is for easy clearing using <group>.clearLayers();
@@ -31,7 +32,7 @@ export class ListingsSearchMapComponent implements OnInit, OnChanges, OnDestroy 
   ready: boolean = false;
   radiusCircle: any;
   circleGroup: any;
-  // overlappingMarkerSpiderfier: any;
+  overlappingMarkerSpiderfier: any;
 
   constructor(private wishifiedsApi: WishifiedsApi,
               private locationService: ApiLocationsService) {
@@ -56,7 +57,10 @@ export class ListingsSearchMapComponent implements OnInit, OnChanges, OnDestroy 
      .addTo(this.map);
 
      // Prep the spiderifier
-     // this.overlappingMarkerSpiderfier = new OverlappingMarkerSpiderfier(this.map);
+     this.overlappingMarkerSpiderfier = new OverlappingMarkerSpiderfier(this.map, {keepSpiderfied: true});
+     this.overlappingMarkerSpiderfier.addListener('spiderfy', function(markers) {
+       that.map.closePopup();
+     });
 
      // L.circle([47.6155, -122.2072], {radius: (25*1609.34), color:'yellow',opacity:1,fillColor: 'blue',fillOpacity:.4})
      // .addTo(that.map);
@@ -116,7 +120,7 @@ export class ListingsSearchMapComponent implements OnInit, OnChanges, OnDestroy 
         let popup = buildPopup(listing.hero, listingLink, listing.price, listing.title);
         let newMarker = new L.marker([geoInfo.latitude, geoInfo.longitude], {riseOnHover: true}).bindPopup(popup);
         that.markers.push(newMarker);
-        // that.overlappingMarkerSpiderfier.addMarker(newMarker);
+        that.overlappingMarkerSpiderfier.addMarker(newMarker);
       }
     });
 

@@ -37,7 +37,8 @@
             "scripts": [
               "node_modules/moment/min/moment.min.js",
               "node_modules/chart.js/dist/Chart.min.js",
-              "src/assets/leaflet/leaflet.js"
+              "src/assets/leaflet/leaflet.js",
+              "src/assets/leaflet/oms.min.js"
             ]
           },
           "configurations": {
