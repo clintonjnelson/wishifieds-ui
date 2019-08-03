@@ -13,6 +13,7 @@ import { Listing }         from '../listing.model';
 })
 export class ListingsSearchResultsComponent implements OnInit, OnChanges {
   @Input() listings: Listing[] = [];
+  @Input() searchInfo: any;
 
   filteredListings: Listing[];
   filters: Object; // Object filter display state by name {mint: false, antiques: false, nintendo: true} false=show true=hide

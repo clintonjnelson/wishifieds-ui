@@ -30,14 +30,19 @@ export class ListingsSearchComponent implements OnInit {
     searchStr: '',  // Listings search text
     distance: '',
     location: '',   // This is the typeahead location text; could be postal or city/state
-    // postal: '',     // If location is numbers = populate this
+    // zipcode= '',     // If location is numbers = populate this
     // city: '',  // If location is not just numbers - populate this
     // stateCode: '',  // If location is not just numbers - populate this
     locationId: '', // If user is logged in; use this unless specified otherwise
+    showExtentsOnMap: false,  // show the map radius circle?
+    centerCoords: []  // center lat/lng coords (ie: geoInfo)
   };
   typeaheads: any[];
   typeaheadSub: Subscription;
   typeaheadEmit: Subject<any[]> = new Subject<any[]>();
+
+  searchInfoSub: Subscription;
+  searchInfoEmit: Subject<any> = new Subject<any>();
 
   showAdvanced: boolean = false;
   userLocsSub: Subscription;
@@ -55,13 +60,13 @@ export class ListingsSearchComponent implements OnInit {
     const that = this;
     // Set searchQuery to our search, if exists (user clicked 'back'), or set empty
     this.searchInfo.searchStr  = this.route.snapshot.queryParams['search'] || '';
-    // this.searchInfo.postal     = this.route.snapshot.queryParams['postal'];
     this.searchInfo.distance   = this.route.snapshot.queryParams['distance'] || this.distances[7];
     this.searchInfo.location   = this.route.snapshot.queryParams['location'] || '';
     this.searchInfo.locationId = this.route.snapshot.queryParams['locationId'] || '';
-    // this.searchInfo.city  = this.route.snapshot.queryParams['city'] || '';
-    // this.searchInfo.state  = this.route.snapshot.queryParams['state'] || '';
     this.isLoggedIn = !!this.authService.auth.isLoggedIn;  // set initial value
+    this.searchInfoSub = this.searchInfoEmit.subscribe( (wasApiCallMade: any[]) => {
+      console.log("Did location need to be retrieved from API: ", wasApiCallMade);
+    });
 
     this.typeaheadSub = this.typeaheadEmit.subscribe( (newTypeaheads: any[]) => {
       console.log("SETTING TYPEAHEAD Locations: ", newTypeaheads);
@@ -92,25 +97,6 @@ export class ListingsSearchComponent implements OnInit {
     if(this.searchInfo.searchStr) { this.search(null); }
   }
 
-  // TODO: USE THIS TYPE OF LOGIC ON THE SEARCH RESULTS
-  // L.marker([47.6040, -122.3233])
-  //    .addTo(map)
-  //    .bindPopup(popup)
-  //    .openPopup();
-  // const popup = L.popup().setContent('<p>Hello world!<br />This is a nice popup.</p>')
-  // buildPopup(heroImgUrl, listingLink, price, title) {
-  //   const html = `
-  //     <div class="listing-marker-popup-info" style="text-align:center;">
-  //       <a href="/${listingLink}">
-  //         <img src="${heroImgUrl}" alt="picture of the ${title}" width="60px" height="60px"/>
-  //       </a>
-  //       <p><strong style="color:black">%{price}</strong></p>
-  //     </div>
-  //    `;
-  //   console.log("POPUP HTML IS: ", html);
-  //   return html;
-  // }
-
   toggleAdvanced(input: any = null): void {
     // If setting value directly, do that. Else, just toggle the value
     if(typeof(input) === 'boolean') { this.showAdvanced = input; }
@@ -137,6 +123,23 @@ export class ListingsSearchComponent implements OnInit {
     }
   }
 
+  selectDistance(event) {
+    const that = this;
+
+    // Only reload with changes AFTER initial search
+    if(this.hasSearched) { this.search(null); }
+  }
+
+  selectLocationTA(event) {
+    const that = this;
+    // Only reload with changes AFTER initial search
+    const selectedTypeahead = this.typeaheads.find(function(ta) {
+        return (ta.locationId = that.searchInfo['locationId']);
+      });  // get the geoInfo object off of the result. Worst case is null.
+    this.searchInfo['centerCoords'] = (selectedTypeahead ? selectedTypeahead['geoInfo'] : []);
+    if(this.hasSearched) { this.search(null); }
+  }
+
   search(event: any) {
     if(event) { event.preventDefault(); }  // if get here with form submit
     if(this.searchInfo.searchStr && history.pushState) {
@@ -157,7 +160,8 @@ export class ListingsSearchComponent implements OnInit {
 
     const locationInfo = this.parseLocation();
     console.log("Parsed location info is: ", locationInfo);
-    // FIXME: THIS NEEDS TO BE UPDATED TO SEND THESE VALUES DOWN TO THE API
+
+    // Get/Search for the listings
     this.apiSearchService.searchListings(
       this.searchInfo.searchStr,
       this.searchInfo.distance,
@@ -169,14 +173,17 @@ export class ListingsSearchComponent implements OnInit {
         .subscribe(
           results => {
             console.log("SEARCH RESULTS FOUND ARE: ", results);
+            that.searchInfo = Object.assign({}, that.searchInfo);  // Force trigger change detection (update @Input downstream)
             that.listings  = results;
             that.hasSearched = true;
           },
           error => {
             console.log("SEARCH ERROR RETURNED: ", error);
           });
-    // this.gaClick('searchsubmit');
   }
+
+
+
 
   // TODO: ? Maybe break this out into a shared method in Helpers or a Utils file
   // Updates history of current page, so can come back to with window.history.back();

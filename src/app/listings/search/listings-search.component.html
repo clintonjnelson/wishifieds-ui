@@ -13,47 +13,25 @@
           <div class="radius-select">
             <mat-form-field>
               <mat-label>Radius (miles)</mat-label>
-              <mat-select [(ngModel)]="searchInfo.distance" name="distance">
+              <mat-select [(ngModel)]="searchInfo.distance" name="distance" (ngModelChange)='selectDistance($event)'>
                 <mat-option *ngFor="let dist of distances" [value]="dist">{{dist}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
 
           <!-- CityState Search -->
-          <!-- <div class="city-state">
-            <mat-form-field>
-              <input matInput type="text" [(ngModel)]="searchInfo.citystate" placeholder="Seattle, WA" name="citystate">
-            </mat-form-field>
-
-            <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let ta of citystateTypeaheads" [value]="ta.citystate">
-                {{ta.citystate}}
-              </mat-option>
-            </mat-autocomplete>
-          </div> -->
-
-          <!-- Search Center Location -->
-          <!-- TODO: If logged in, should have "custom" option for zip or city/state with typeahead -->
           <div *ngIf="searchInfo.distance !== 'any'">
             <div class="search-center">
               <mat-form-field>
                 <input matInput type="text" [(ngModel)]="searchInfo.location" (ngModelChange)="getTypeaheads()" [matAutocomplete]="auto" placeholder="City, ST (Seattle, WA) or Zipcode (98101)" name="location">
               </mat-form-field>
 
-              <mat-autocomplete #auto="matAutocomplete"> <!-- (optionSelected)="selected($event)"> -->
+              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectLocationTA($event)"> <!-- (optionSelected)="selected($event)"> -->
                 <mat-option *ngFor="let ta of typeaheads" [value]="ta.typeaheadText">
                   {{ta.typeaheadText}}
                 </mat-option>
               </mat-autocomplete>
             </div>
-            <!-- <div *ngIf="isLoggedIn" class="search-center">
-              <mat-form-field>
-                <mat-label>Search Location</mat-label>
-                <mat-select [(ngModel)]="searchInfo.locationId" name="location">
-                  <mat-option *ngFor="let loc of userLocations" [value]="loc.userLocationId">{{loc.description}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div> -->
           </div>
         </div>
       </div>
@@ -75,7 +53,7 @@
 
   <!-- Search Results -->
   <div class="results-box" *ngIf="!!(listings && listings.length)">
-    <listings-search-results [listings]="listings"></listings-search-results>
+    <listings-search-results [listings]="listings" [searchInfo]="searchInfo"></listings-search-results>
   </div>
   <div class="results-box" *ngIf="hasSearched && !(listings && listings.length)">
     <p class="no-results-message"> Bummer, no wishers for that... yet.</p>
