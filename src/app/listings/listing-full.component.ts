@@ -121,37 +121,39 @@ export class ListingFullComponent implements OnInit {
   toggleHeart() {
     const that = this;
     console.log("TOGGLING IS FAVORITE...");
-    if(this.isFavorite) {
-      console.log("TOGGLING -- OFF...");
-      this.favoritesApi.removeFavorite(this.listing.id).subscribe(
-        res => {
-          if(res.success) {
-            that.favEmit.next(false);
-            console.log("SUCCESSFULLY TOGGLED OFF.");
-          }
-          else { console.log("Request failed. Doing nothing."); }
-        },
-        err => { console.log('Could not remove favorite.'); }
-      );
-    }
-    else {
-      console.log("TOGGLING -- ON...");
-      this.favoritesApi.addFavorite(this.listing.id).subscribe(
-        res => {
-          if(res.success) {
-            that.favEmit.next(true);
-            console.log("SUCCESSFULLY TOGGLED ON.");
-          }
-          else { console.log("Request failed. Doing nothing."); }
-        },
-        err => { console.log('Could not add favorite.'); }
-      );
+    if(!this.isPreview) {
+      if(this.isFavorite) {
+        console.log("TOGGLING -- OFF...");
+        this.favoritesApi.removeFavorite(this.listing.id).subscribe(
+          res => {
+            if(res.success) {
+              that.favEmit.next(false);
+              console.log("SUCCESSFULLY TOGGLED OFF.");
+            }
+            else { console.log("Request failed. Doing nothing."); }
+          },
+          err => { console.log('Could not remove favorite.'); }
+        );
+      }
+      else {
+        console.log("TOGGLING -- ON...");
+        this.favoritesApi.addFavorite(this.listing.id).subscribe(
+          res => {
+            if(res.success) {
+              that.favEmit.next(true);
+              console.log("SUCCESSFULLY TOGGLED ON.");
+            }
+            else { console.log("Request failed. Doing nothing."); }
+          },
+          err => { console.log('Could not add favorite.'); }
+        );
+      }
     }
   }
 
   getFavorites() {
     const that = this;
-    if(this.authService.auth.isLoggedIn) {
+    if(this.authService.auth.isLoggedIn && !this.isPreview) {
       this.favoritesApi.getFavoritesForUser([that.listing.id])
         .subscribe(
           res => {
@@ -172,25 +174,27 @@ export class ListingFullComponent implements OnInit {
   getCorrespondantMessagesInfo() {
     const that = this;
     console.log("IS OWNER IS: ", this.isOwner);
-    if(this.isOwner) {
-      console.log("THIS IS THE OWNER OF THE LISTING: ", this.isOwner);
-      // Listing owner may be talking with many people
-      this.messagesApi.getListingMessagesCorrespondants(this.listing.id)
-        .subscribe(
-          res => {
-            console.log("CORRESPONDANTS RETURNED ARE: ", res.correspondants);
-            that.msgCorrespondants = res.correspondants;
-            console.log("CORRESPONDANTS ARE: ", that.msgCorrespondants);
-            // Total unread messages for Listing
-            that.unreadMessages = res.totalUnread;
-          },
-          error => {
-            console.log("Error getting message correspondants: ", error);
-          });
-    }
-    else {
-      // If not owner, then owner should be only correspondant
-      this.msgCorrespondants = [that.listing.userId];
+    if(!this.isPreview) {
+      if(this.isOwner) {
+        console.log("THIS IS THE OWNER OF THE LISTING: ", this.isOwner);
+        // Listing owner may be talking with many people
+        this.messagesApi.getListingMessagesCorrespondants(this.listing.id)
+          .subscribe(
+            res => {
+              console.log("CORRESPONDANTS RETURNED ARE: ", res.correspondants);
+              that.msgCorrespondants = res.correspondants;
+              console.log("CORRESPONDANTS ARE: ", that.msgCorrespondants);
+              // Total unread messages for Listing
+              that.unreadMessages = res.totalUnread;
+            },
+            error => {
+              console.log("Error getting message correspondants: ", error);
+            });
+      }
+      else {
+        // If not owner, then owner should be only correspondant
+        this.msgCorrespondants = [that.listing.userId];
+      }
     }
   }
 
