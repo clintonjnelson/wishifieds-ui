@@ -24,11 +24,11 @@
         <i class="{{ buildIconClass('star', '1') }}"></i>
         <i class="{{ buildIconClass('star', '1') }}"> &nbsp;(12)</i>
       </mat-card-subtitle>
-      <i *ngIf="isLoggedIn && isOwner && !isPreview" (click)="toggleEditing()" class="{{ buildIconClass('edit', '3') }}"></i>
+      <i *ngIf="!isPreview && isLoggedIn && isOwner" (click)="toggleEditing()" class="{{ buildIconClass('edit', '3') }}"></i>
       <!-- <i *ngIf="!isOwner" class="{{ buildIconClass('broken-heart', '3') }}"></i> -->
       <i *ngIf="isLoggedIn && !isOwner && isFavorite" class="{{ buildIconClass('heart', '3') }}" (click)="toggleHeart()"></i>
       <i *ngIf="isLoggedIn && !isOwner && !isFavorite" class="{{ buildIconClass('heart', '3', 'r') }}" (click)="toggleHeart()"></i>
-      <i (click)="closeListing()" class="{{ buildIconClass('times', '3') }}"></i>
+      <i *ngIf="!isPreview" (click)="closeListing()" class="{{ buildIconClass('times', '3') }}"></i>
     </mat-card-header>
 
     <!-- Images Section -->

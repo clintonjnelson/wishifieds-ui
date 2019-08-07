@@ -94,6 +94,9 @@ export class EditListingComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     const that = this;
+    // Prep the object - existing or new
+    this.resetTempListing();  // FIXME: THIS SHOULD BE BEFORE REFORESH_ALL_IMAGES & BUILD_IMAGES
+
     // Takes an object {urls: string[], isSelected: boolean}
     this.allImagesSub = this.allImagesEmit.subscribe((urlsAndSelected: any) => {
       const urls = urlsAndSelected.urls;
@@ -110,16 +113,15 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       that.defaultUserLocation = newLocs.find(function(loc) { return loc.isDefault; });
       // Set the default found or the listing value that came in.
       if(!that.listing.location) {
-        that.location = that.defaultUserLocation;
-        that.location.geoInfo = that.location.geoInfo as GeoInfo;
+        that.tempListing.location = that.defaultUserLocation;
+        that.tempListing.location.geoInfo = that.tempListing.location.geoInfo as GeoInfo;
       }
       else {
-        that.location = that.listing.location;
+        that.tempListing.location = that.listing.location;
       }
     });
+
     this.getUserLocations();
-    // Prep the object - existing or new
-    this.resetTempListing();  // FIXME: THIS SHOULD BE BEFORE REFORESH_ALL_IMAGES & BUILD_IMAGES
     // Prep the form (reset displays, reset errors, etc); removes image selections
     this.resetForm();
     // Takes the list of allImages and turns them into the form images
@@ -220,7 +222,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     const that = this;
 
     // Set location info if not already set to a valid value
-    if(!hasLocationInfo()) { that.location = this.defaultUserLocation; }
+    if(!hasLocationInfo()) { that.tempListing.location = this.defaultUserLocation; }
 
     // Final Form Data Check
     if(passesCriticalValidations()) {
@@ -269,13 +271,14 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     function hasLocationInfo() {
       try {
         return (
-            that.location['locationId'] &&
-            that.location['locationId'] > 0
+            that.tempListing['location']['locationId'] &&
+            Number(that.tempListing['location']['locationId']) &&
+            Number(that.tempListing['location']['locationId']) > 0
           ) ||
           (
-            that.location.geoInfo &&
-            that.location['geoInfo']['latitude'] &&
-            that.location['geoInfo']['longitude']
+            that.tempListing['location']['geoInfo'] &&
+            that.tempListing['location']['geoInfo']['latitude'] &&
+            that.tempListing['location']['geoInfo']['longitude']
           );
       } catch (e) {
         return false;
@@ -309,7 +312,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       // Set the non-form values
       saveObj.id = that.listing.id;
       saveObj.userId = that.listing.userId;  // TODO: UPDATE TO GET OFF OF THE AUTH OBJECT????
-      saveObj.location = that.location;  // Add this, as NOT part of form
+      saveObj.location = that.tempListing.location;  // Add this, as NOT part of form
 
       console.log("THE saveObj IS:", saveObj);
       return saveObj;
@@ -414,7 +417,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
 
   updateLocationViaMarker(geoInfo) {
     console.log("UPDATE LOCATION COORDS WAS HIT WITH: ", geoInfo);
-    this.location = {
+    this.tempListing.location = {
       locationId: "-1",  // Set to invalid, so API triggers creation of new Location
       description: '',
       postal: undefined,
@@ -425,7 +428,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
         longitude: geoInfo.lng,
       }
     };
-    this.tempListing.location = this.location;
   }
 
   // TODO: if HERO image becomes unselected, then REMOVE HERO IMAGE URL FROM THE CONTROL VALUE ALSO

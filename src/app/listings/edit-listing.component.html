@@ -123,9 +123,9 @@
           <add-tags (selectedTagsEE)="updateTags($event)" [existingTags]="listing.tags"></add-tags>
 
           <!-- Location -->
-          <div class="location-map-container" *ngIf="location && location['geoInfo'] && location['geoInfo']['latitude'] && location['geoInfo']['longitude']">
+          <div class="location-map-container" *ngIf="tempListing && tempListing['location'] && tempListing['location']['geoInfo'] && tempListing['location']['geoInfo']['latitude'] && tempListing['location']['geoInfo']['longitude']">
             <mat-label>Purchase Location</mat-label>
-            <marker-map [geoInfo]="location['geoInfo']" [readOnly]="false" (markerEE)="updateLocationViaMarker($event)"></marker-map>
+            <marker-map [geoInfo]="tempListing.location['geoInfo']" [readOnly]="false" (markerEE)="updateLocationViaMarker($event)"></marker-map>
             <!-- <mat-select name="location" [formControl]="listingForm.controls['userLocationId']"  [(ngModel)]="tempListing.userLocationId" placeholder="Choose a Location (eg: meeting location for purchase)" required>
               <mat-option *ngFor="let loc of locations" [value]="loc.userLocationId">
                 {{ loc.description }}
