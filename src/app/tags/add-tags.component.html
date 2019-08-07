@@ -11,7 +11,7 @@
       <i matChipRemove *ngIf="tagConfig.removable" class="{{ buildIconClass('times', '2') }}"></i>
     </mat-chip>
     <input
-      placeholder="New tag..."
+      placeholder="Tags (eg: condition, categories, etc.)"
       #tagInput
       [formControl]="tagCtrl"
       [matAutocomplete]="auto"

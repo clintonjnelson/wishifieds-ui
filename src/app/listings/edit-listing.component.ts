@@ -13,6 +13,7 @@ import { DragulaService } from 'ng2-dragula';
 import { Listing } from './listing.model';
 import { takeUntil } from 'rxjs/operators';
 import { Location } from '../shared/models/location.model';
+import { GeoInfo } from '../shared/models/geo-info.model';
 import { hasImages } from '../shared/validators/has-images.directive';
 import { Tag } from '../tags/tag.model';
 
@@ -45,9 +46,10 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   tempListing: Listing;
   hideAdvanced: boolean = true;
   userLocations: any;
+  defaultUserLocation: any;  // Stores the user's default location
   userLocationsSub: Subscription;
   userLocationsEmit: Subject<any> = new Subject<any>();
-  location: any = {};  // This is NOT managed by the form controls. Ensured by marker & default.
+  location: any = {};  // Not managed by form controls. FIXME: Should be tempListing.location
 
   // Dropzone Upload Management
   hasBaseDropZoneOver: boolean = false;
@@ -105,6 +107,15 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     });
     this.userLocationsSub = this.userLocationsEmit.subscribe((newLocs: any) => {
       that.userLocations = newLocs;  // These are the queried user userLocations for dropdown selector
+      that.defaultUserLocation = newLocs.find(function(loc) { return loc.isDefault; });
+      // Set the default found or the listing value that came in.
+      if(!that.listing.location) {
+        that.location = that.defaultUserLocation;
+        that.location.geoInfo = that.location.geoInfo as GeoInfo;
+      }
+      else {
+        that.location = that.listing.location;
+      }
     });
     this.getUserLocations();
     // Prep the object - existing or new
@@ -209,18 +220,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     const that = this;
 
     // Set location info if not already set to a valid value
-    if(!hasLocationInfo()) {
-      const defaultUserLocation = that.userLocations.find(function(loc) { return loc.isDefault; });
-      const defaultLocation = {
-        locationId:  defaultUserLocation.locationId,
-        geoInfo:     defaultUserLocation.geoInfo,
-        description: defaultUserLocation.description,
-        postal:      defaultUserLocation.postal,
-        status:      defaultUserLocation.status,
-        isDefault:   defaultUserLocation.isDefault,
-      };
-      that.location = defaultLocation;
-    }
+    if(!hasLocationInfo()) { that.location = this.defaultUserLocation; }
 
     // Final Form Data Check
     if(passesCriticalValidations()) {
@@ -268,7 +268,10 @@ export class EditListingComponent implements OnInit, AfterViewInit {
 
     function hasLocationInfo() {
       try {
-        return ( that.location['locationId'] > 0) ||
+        return (
+            that.location['locationId'] &&
+            that.location['locationId'] > 0
+          ) ||
           (
             that.location.geoInfo &&
             that.location['geoInfo']['latitude'] &&
@@ -277,7 +280,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       } catch (e) {
         return false;
       }
-
     }
 
     // Critical pre-save checks
@@ -321,7 +323,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
         res => {
           // console.log("Respons with userLocations returned is: ", res);
           console.log("Respons with userLocations returned is: ", res.locations);
-
           that.userLocationsEmit.next(res.locations);  // May need subscription for different load times....
         },
         error => {
@@ -329,7 +330,6 @@ export class EditListingComponent implements OnInit, AfterViewInit {
         }
       )
   }
-
 
   // Get the image group. Helpful in UI for displaying the selector options
   getImageGroup() {
