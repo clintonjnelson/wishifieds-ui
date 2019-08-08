@@ -125,12 +125,25 @@
           <!-- Location -->
           <div class="location-map-container" *ngIf="tempListing && tempListing['location'] && tempListing['location']['geoInfo'] && tempListing['location']['geoInfo']['latitude'] && tempListing['location']['geoInfo']['longitude']">
             <mat-label>Purchase Location</mat-label>
+
+            <!-- Map -->
             <marker-map [geoInfo]="tempListing.location['geoInfo']" [readOnly]="false" (markerEE)="updateLocationViaMarker($event)"></marker-map>
-            <!-- <mat-select name="location" [formControl]="listingForm.controls['userLocationId']"  [(ngModel)]="tempListing.userLocationId" placeholder="Choose a Location (eg: meeting location for purchase)" required>
-              <mat-option *ngFor="let loc of locations" [value]="loc.userLocationId">
-                {{ loc.description }}
-              </mat-option>
-            </mat-select> -->
+
+            <!-- CityState Search Typeahead-->
+            <div>
+              <div class="search-center">
+                <mat-form-field>
+                  <input matInput type="text" [(ngModel)]="locationTASearch" [ngModelOptions]="{standalone: true}" (ngModelChange)="getLocationTypeaheads()" [matAutocomplete]="auto" placeholder="City, ST (Seattle, WA) or Zipcode (98101)" name="location">
+                </mat-form-field>
+
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectLocationTA($event)">
+                  <mat-option *ngFor="let ta of locationTypeaheads" [value]="ta.id">
+                    {{ta.typeaheadText}}
+                  </mat-option>
+                </mat-autocomplete>
+              </div>
+            </div>
+
             <mat-hint>
               <i (mouseover)="toggleHint('location')" (mouseleave)="toggleHint('location')" class="{{buildIconClass('question-circle', '1')}}"></i>
               <span [hidden]="!hints.location">The location you would like to purchase this item from. Never put your home address! We suggest a frequented establishment like a nearby Starbucks or other restaurant.</span>

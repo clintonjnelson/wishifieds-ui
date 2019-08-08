@@ -93,23 +93,6 @@ export class ListingCardComponent implements OnInit {
     console.log("ABOUT TO REDIRECT TO LISTING...");
     this.router.navigateByUrl(this.listingLink);
   }
-
-  // Logged OUT Helpers
-  // toggleInfoContainerExpand(input: any = null): void {
-  //   // Trigger GA tracking
-  //   // this.gaClick('loginsignupexpand');
-
-  //   console.log("TOGGLING TO: ", !this.expandedInfo);
-
-  //   // If setting value directly, do that.
-  //   if(typeof(input) === 'boolean') {
-  //     this.expandedInfo = input;
-  //   }
-  //   // Else, just toggle the value
-  //   else {
-  //     this.expandedInfo = !this.expandedInfo;
-  //   }
-  // }
 }
 
 

@@ -1,11 +1,13 @@
 import { Component, ViewChild, Input, Output, OnInit, AfterViewInit, OnDestroy, EventEmitter } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators, AbstractControl } from '@angular/forms';   // Remove if no validation logic
+import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';  // USING EVENT??? IF NO, REMOVE IT. KEPT JUST IN CASE NEED DURING CODING.
 import { IconService } from '../core/services/icon.service';
 import { HelpersService } from '../shared/helpers/helpers.service';
 import { ApiTagsService } from '../core/api/api-tags.service';
 import { ApiImagesService } from '../core/api/api-images.service';
 import { ApiListingsService } from '../core/api/api-listings.service';
+import { ApiLocationsService }  from '../core/api/api-locations.service';
 import { ApiUsersService } from '../core/api/api-users.service';
 import { WishifiedsApi }       from '../core/api/wishifieds-api.service';
 import { FileUploader, FileUploaderOptions, FileDropDirective } from 'ng2-file-upload';
@@ -39,17 +41,25 @@ import { Tag } from '../tags/tag.model';
 export class EditListingComponent implements OnInit, AfterViewInit {
   listingForm: FormGroup;  // THIS WILL LATER JUST BE THE listingForm. NOTE: Can call .valid on this group to see if any validation errors.
   @ViewChild('listingForm') currentForm: FormGroup;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
   @Input() listing: Listing;  // TODO: GET THIS FROM NGONINIT, NOT INPUT
   @Output() saveEE    = new EventEmitter<any>();
   @Output() destroyEE = new EventEmitter<any>();
   @Output() editingEE = new EventEmitter<boolean>();
   tempListing: Listing;
   hideAdvanced: boolean = true;
+
   userLocations: any;
   defaultUserLocation: any;  // Stores the user's default location
   userLocationsSub: Subscription;
   userLocationsEmit: Subject<any> = new Subject<any>();
-  location: any = {};  // Not managed by form controls. FIXME: Should be tempListing.location
+
+  locationTASearch: string = '';  // The search string for the typeahead
+  locationTAId: string = '';
+  locationTypeaheads: any[];
+  locTypeaheadSub: Subscription;
+  locTypeaheadEmit: Subject<any[]> = new Subject<any[]>();
+  // location: any = {};  // Not managed by form controls. FIXME: Should be tempListing.location
 
   // Dropzone Upload Management
   hasBaseDropZoneOver: boolean = false;
@@ -79,7 +89,8 @@ export class EditListingComponent implements OnInit, AfterViewInit {
               private apiListings:    ApiListingsService,
               private apiUsers:       ApiUsersService,
               private wishifiedsApi:  WishifiedsApi,
-              private dragulaService: DragulaService) {
+              private dragulaService: DragulaService,
+              private locationService:ApiLocationsService,) {
     // Creates a FormGroup of k/v pairs that specify the FormControls in the group. Value starts as default value.
     // This FG will get bound to the Form. We can do so in HTML with <form [formGroup]="myForm"
 
@@ -119,6 +130,11 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       else {
         that.tempListing.location = that.listing.location;
       }
+    });
+    this.locTypeaheadSub = this.locTypeaheadEmit.subscribe( (newTypeaheads: any[]) => {
+      console.log("SETTING TYPEAHEAD Locations: ", newTypeaheads);
+      that.locationTypeaheads = newTypeaheads;
+      console.log("TYPEAHEADS IS NOW", this.locationTypeaheads);
     });
 
     this.getUserLocations();
@@ -334,6 +350,48 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       )
   }
 
+  // TODO: EXTRACT THESE OUT TO A SINGLE COMPONENT FOR LOCATION TYPEAHEAD
+  getLocationTypeaheads() {
+    const that = this;
+    var cityStatePostal = this.parseLocation(); // {postal: '', city: '', stateCode: ''};
+
+    console.log("INPUT TRIGGERED TYPEAHEAD CHANGES TO GET NEW RESULTS: ", cityStatePostal);
+    if(this.locationTASearch.length > 2) {
+      const maxResults = '7';
+      this.locationService
+        .locationTypeahead(cityStatePostal['postal'], cityStatePostal['city'], cityStatePostal['stateCode'], maxResults)
+        .subscribe(
+          results => {
+            console.log("SUCCESS GETTING TYPEAHEAD RESULTS: ", results);
+            that.locTypeaheadEmit.next(results.locations);
+          },
+          error => {
+            console.log("ERROR GETTING TYPEAHEAD RESULTS: ", error);
+          });
+    }
+  }
+  selectLocationTA(event) {
+    const that = this;
+    // Only reload with changes AFTER initial search
+    const selectedTypeahead = this.locationTypeaheads.find(function(ta) {
+        return (ta['id'] == (event['option'] && event['option']['value']));  //
+      });  // get the geoInfo object off of the result. Worst case is null.
+    if(selectedTypeahead && selectedTypeahead['geoInfo']) {
+      this.tempListing['location'] = {
+        locationId: selectedTypeahead['id'],
+        description: '',
+        postal: selectedTypeahead['postal'],
+        status: undefined,
+        isDefault: undefined,
+        geoInfo: {
+          latitude: selectedTypeahead['geoInfo'][0],
+          longitude: selectedTypeahead['geoInfo'][1],
+        }
+      };
+      this.locationTASearch = selectedTypeahead['typeaheadText'];
+    }
+  }
+
   // Get the image group. Helpful in UI for displaying the selector options
   getImageGroup() {
     return <FormArray>this.listingForm.get('images');
@@ -428,6 +486,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
         longitude: geoInfo.lng,
       }
     };
+    this.locationTASearch = '';  // reset the textbox
   }
 
   // TODO: if HERO image becomes unselected, then REMOVE HERO IMAGE URL FROM THE CONTROL VALUE ALSO
@@ -534,6 +593,30 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       this.getExternalImages(this.tempListing.linkUrl);
       console.log("...done resetting allImages");
     }
+  }
+
+  // Used by Location Typeahead
+  private parseLocation() {
+    const cityStatePostal: any = {};
+
+    try {
+      const postal = parseInt(this.locationTASearch);
+      // Postal NOT an int? Use city/state
+      if(Number.isNaN(postal)) {
+        const parsedCityState = this.locationTASearch.split(',');
+        cityStatePostal['city'] = parsedCityState[0];
+        cityStatePostal['stateCode'] = (parsedCityState.length > 1 ? parsedCityState[1].trim() : '');
+      }
+      // Postal is an int - use it
+      else {
+        cityStatePostal['postal'] = postal;
+      }
+    }
+    catch(e) {
+      console.log("Could not use provided location. Error: ", e);
+    }
+
+    return cityStatePostal;
   }
 
   private getExternalImages(urlToScrape) {

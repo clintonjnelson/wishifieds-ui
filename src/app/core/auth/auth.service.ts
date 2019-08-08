@@ -29,7 +29,6 @@ export class AuthService {
   }
 
   isOwner(usernameOrId: string) {
-    console.log("OWNER USER ID IS: ", usernameOrId, ". AND VIEWING USER ID IS: ", this.auth.userId);
     // Check both userId and username
     return (usernameOrId === this.auth.userId ||
             usernameOrId === this.auth.username);

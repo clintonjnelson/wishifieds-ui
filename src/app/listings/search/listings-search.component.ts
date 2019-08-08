@@ -94,7 +94,7 @@ export class ListingsSearchComponent implements OnInit {
             });
     }
 
-    if(this.searchInfo.searchStr) { this.search(null); }
+    if(this.searchInfo.searchStr) { this.search(null); }  // Trigger search, no typ event
   }
 
   toggleAdvanced(input: any = null): void {
