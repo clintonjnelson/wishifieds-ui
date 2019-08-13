@@ -1,0 +1,8 @@
+
+::ng-deep span.mat-option-text {
+  color: gray;
+}
+
+::ng-deep label.mat-form-field-label.ng-star-inserted {
+  color: white;
+}
