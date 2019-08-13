@@ -1,8 +1,18 @@
 <div>
   <label for="">Manage Your Locations</label>
   <mat-card *ngIf="!userLocsProcessing" class="user-locations-card">
+    <!--
+      We want to load the user's default location in here & show it on the map
+      Allow user to adjust the user location
+      Adjusting the location will pop up a modal confirming before saving
+        Choosing OK will save the new location, update the default UserLocation to the new location ID
+        Choosing CANCEL will roll back the location to the original (reset the child component)
+    -->
 
-    <!-- Locations Display, Setting Default, Deletion -->
+
+    <location-ta-marker-map [userId]="userId" [providedLocation]="" [isMarkerDraggable]="true" (locationEE)="updateDefaultUserLocation($event)"></location-ta-marker-map>
+
+    <!-- Locations Display, Setting Default, Deletion
     <div class="existing-user-locations" *ngFor="let loc of userLocations">
       <div (click)="setDefaultUserLocation(loc.userLocationId)">
         <mat-card class="location-card" [ngClass]="{'default-user-location': loc.isDefault}">
@@ -12,12 +22,12 @@
       </div>
     </div>
 
-    <!-- Icon to toggle adding more locations -->
+    Icon to toggle adding more locations
     <div *ngIf="!isEditingUserLocations" class="add-user-locations-icon-container">
       <i (click)="toggleEditingUserLocations()" mdTooltip="[add a listing]" mdTooltipPosition="above" class="{{buildIconClass('plus', '2')}}"></i>
     </div>
 
-    <!-- Location Creation Section -->
+    Location Creation Section
     <form #userLocationsForm="ngForm" *ngIf="!isProcessingLocations && isEditingUserLocations" class="user-locations-form" layout="column">
       <mat-form-field class="input-location-zipcode">
         <mat-label for="postal">New Zipcode</mat-label>
@@ -30,6 +40,6 @@
       </mat-form-field>
 
       <button mat-icon-button type="button" class="create-location-button" (click)="createUserLocation()">Save</button>
-    </form>
+    </form> -->
   </mat-card>
 </div>

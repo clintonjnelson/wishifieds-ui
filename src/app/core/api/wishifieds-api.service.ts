@@ -52,6 +52,7 @@ const ROUTES = {
   getLocationsByUserId: '/api/users/:id/locations',
   createUserLocation: '/api/users/:id/locations',
   setDefaultUserLocation: '/api/users/:id/locations',  // PATCH
+  updateUserDefaultLocation: '/api/users/:userId/default_location',  // PATCH
   deleteUserLocation: '/api/users/:id/locations/:userLocationId',
 
   // Favorites

@@ -47,6 +47,7 @@ export class ApiUsersLocationsService {
                );
   }
 
+  // This creates a new one, inactivates old, and sets the new. Maybe deprecate this?
   setDefaultUserLocation(userId: string, userLocationId): Observable<any> {
     const setDefaultUserLocationUrl = this.wishifiedsApi.buildUrl('setDefaultUserLocation', [{':id': userId}] );
     const options = this.wishifiedsApi.getRequestOptionWithEatHeader();
@@ -59,6 +60,22 @@ export class ApiUsersLocationsService {
                  }),
                  catchError( (error: Response) => {
                    return throwError(error);
+                 })
+               );
+  }
+
+  updateUserDefaultLocation(userId: string, locationInfo: any): Observable<any> {
+    const updateDefaultUserLocationUrl = this.wishifiedsApi.buildUrl('updateUserDefaultLocation', [{':userId': userId}]);
+    const options = this.wishifiedsApi.getRequestOptionWithEatHeader();
+    return this.http
+               .patch(updateDefaultUserLocationUrl, JSON.stringify({locationInfo: locationInfo}), options)
+               .pipe(
+                 map( res => {
+                    console.log("RESPONSE FROM UPDATING USER DEFAULT LOCATION IS: ", res);
+                    return res.json();
+                 }),
+                 catchError( (error: Response) => {
+                    return throwError(error);
                  })
                );
   }

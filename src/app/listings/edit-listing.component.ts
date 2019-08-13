@@ -49,11 +49,13 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   tempListing: Listing;
   hideAdvanced: boolean = true;
 
+  // DELETE
   userLocations: any;
   defaultUserLocation: any;  // Stores the user's default location
   userLocationsSub: Subscription;
   userLocationsEmit: Subject<any> = new Subject<any>();
 
+  // DELETE
   locationTASearch: string = '';  // The search string for the typeahead
   locationTAId: string = '';
   locationTypeaheads: any[];
@@ -119,6 +121,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
       that.makeNewImagesSelectable(urls, isSelected);
       console.log("NEW IMAGES ADDED. allImages is now: ", this.allImages);
     });
+    // DELETE
     this.userLocationsSub = this.userLocationsEmit.subscribe((newLocs: any) => {
       that.userLocations = newLocs;  // These are the queried user userLocations for dropdown selector
       that.defaultUserLocation = newLocs.find(function(loc) { return loc.isDefault; });
@@ -131,6 +134,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
         that.tempListing.location = that.listing.location;
       }
     });
+    // DELETE
     this.locTypeaheadSub = this.locTypeaheadEmit.subscribe( (newTypeaheads: any[]) => {
       console.log("SETTING TYPEAHEAD Locations: ", newTypeaheads);
       that.locationTypeaheads = newTypeaheads;
@@ -335,6 +339,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     }
   }
 
+  // DELETE
   getUserLocations() {
     const that = this;
     this.apiUsers.getLocationsByUserId(that.listing.userId)
@@ -351,6 +356,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   }
 
   // TODO: EXTRACT THESE OUT TO A SINGLE COMPONENT FOR LOCATION TYPEAHEAD
+  // DELETE
   getLocationTypeaheads() {
     const that = this;
     var cityStatePostal = this.parseLocation(); // {postal: '', city: '', stateCode: ''};
@@ -370,6 +376,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
           });
     }
   }
+  // DELETE
   selectLocationTA(event) {
     const that = this;
     // Only reload with changes AFTER initial search
@@ -473,6 +480,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     console.log("LISTING FORM AFTER TAGS UPATE IS NOW: ", this.listingForm);
   }
 
+  // DELETE
   updateLocationViaMarker(geoInfo) {
     console.log("UPDATE LOCATION COORDS WAS HIT WITH: ", geoInfo);
     this.tempListing.location = {
@@ -595,7 +603,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // Used by Location Typeahead
+  // DELETE: Used by Location Typeahead
   private parseLocation() {
     const cityStatePostal: any = {};
 

@@ -1,0 +1,22 @@
+<!-- Location -->
+<div class="location-map-container" *ngIf="location && location['geoInfo'] && location['geoInfo']['latitude'] && location['geoInfo']['longitude']">
+  <mat-label>Purchase Location</mat-label>
+
+  <!-- Map -->
+  <marker-map [geoInfo]="location['geoInfo']" [readOnly]="false" (markerEE)="updateLocationViaMarker($event)"></marker-map>
+
+  <!-- CityState Search Typeahead-->
+  <div>
+    <div class="search-center">
+      <mat-form-field>
+        <input matInput type="text" [(ngModel)]="locationTASearch" [ngModelOptions]="{standalone: true}" (ngModelChange)="getLocationTypeaheads()" [matAutocomplete]="auto" placeholder="City, ST (Seattle, WA) or Zipcode (98101)" name="location">
+      </mat-form-field>
+
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectLocationTA($event)">
+        <mat-option *ngFor="let ta of locationTypeaheads" [value]="ta.id">
+          {{ta.typeaheadText}}
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+  </div>
+</div>
