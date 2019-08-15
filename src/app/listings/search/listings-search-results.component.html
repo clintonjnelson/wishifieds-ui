@@ -12,7 +12,10 @@
   </div>
 
   <!-- Listing Results Found -->
-  <!-- <div *ngIf="filteredListings"> -->
-  <listing-cards [listings]="filteredListings"></listing-cards>
-  <!-- </div> -->
+  <div *ngIf="!showAnalytics">
+    <listing-cards [listings]="filteredListings"></listing-cards>
+  </div>
+  <div *ngIf="showAnalytics" class="listing-search-analytics-container">
+    <listings-search-analytics [listings]="filteredListings"></listings-search-analytics>
+  </div>
 </div>

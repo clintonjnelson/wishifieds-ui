@@ -1,0 +1,34 @@
+<div class="analytics-container">
+  <div class="listing-meta-container">
+    <p class="listing-meta">Total: <small>{{listings.length}}</small></p>
+    <p class="listing-meta">Avg Price: <small>N/A yet..</small></p>
+    <p class="listing-meta">Min Price: <small>N/A yet..</small></p>
+    <p class="listing-meta">Max Price: <small>N/A yet..</small></p>
+  </div>
+
+  <table class="listing-data-table">
+    <thead>
+      <!-- <th><input type="checkbox">all</th> -->
+      <th class="listing-th">Title</th>
+      <th class="listing-th">price</th>
+      <th class="listing-th">tags count</th>
+      <th class="listing-th">images count</th>
+      <th class="listing-th">city</th>
+      <th class="listing-th">state</th>
+      <th class="listing-th">days wished</th>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let listing of listings">
+        <!-- <td><input type="checkbox">all</td> -->
+        <td class="listing-td">{{listing.title}}</td>
+        <td class="listing-td">{{listing.price}}</td>
+        <td class="listing-td">{{listing.tags.length}}</td>
+        <td class="listing-td">{{listing.images.length}}</td>
+        <td class="listing-td">N/A yet..</td>
+        <td class="listing-td">N/A yet..</td>
+        <td class="listing-td">N/A yet...</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

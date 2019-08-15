@@ -71,6 +71,7 @@ import { ImgCarouselComponent }             from './shared/carousel/img-carousel
 import { MarkerMapComponent }               from './shared/maps/marker-map.component';
 import { LocationTAMarkerMapComponent }     from './shared/maps/location-ta-marker-map.component';
 import { ListingsSearchMapComponent }       from './listings/search/listings-search-map.component';
+import { ListingsSearchAnalyticsComponent } from './listings/search/listings-search-analytics.component';
 
 // Directives
 import { HoverColorDirective }              from './shared/hover-color/hover-color.directive';
@@ -176,6 +177,7 @@ export function HttpFactory(backend: XHRBackend,
                   MarkerMapComponent,
                   LocationTAMarkerMapComponent,
                   ListingsSearchMapComponent,
+                  ListingsSearchAnalyticsComponent,
 
                   // Custom Components
                   AddListingComponent,

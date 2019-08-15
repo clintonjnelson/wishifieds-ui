@@ -74,6 +74,10 @@ form {
   padding: 0px;
 }
 
+.analytics-btn-icon {
+  margin-left: 2em;
+}
+
 .results-box {
   text-align: center;
   width: 100%;

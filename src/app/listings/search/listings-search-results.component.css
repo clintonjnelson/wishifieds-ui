@@ -37,6 +37,13 @@ div.listing-result-container {
   margin: 0.5em 0.1em 0.5em 0.1em;
 }
 
+div.listing-search-analytics-container {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  min-width: 300px;
+}
+
 /*This creates a bunch of listing-card wide divs that have no height,
 so they can stack on eachother infinitely, but when there is space to go wide
 they will fill the width. Amazing & genius. This keeps it looking like the cards

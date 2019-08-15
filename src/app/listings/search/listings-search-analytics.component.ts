@@ -7,14 +7,12 @@ import { Listing }         from '../listing.model';
 
 @Component({
   moduleId: module.id,
-  selector: 'listings-search-results',
-  templateUrl: 'listings-search-results.component.html',
-  styleUrls: ['listings-search-results.component.css']
+  selector: 'listings-search-analytics',
+  templateUrl: 'listings-search-analytics.component.html',
+  styleUrls: ['listings-search-analytics.component.css']
 })
-export class ListingsSearchResultsComponent implements OnInit, OnChanges {
+export class ListingsSearchAnalyticsComponent implements OnInit, OnChanges {
   @Input() listings: Listing[] = [];
-  @Input() searchInfo: any;
-  @Input() showAnalytics: boolean = false;
 
   filteredListings: Listing[];
   filters: Object; // Object filter display state by name {mint: false, antiques: false, nintendo: true} false=show true=hide

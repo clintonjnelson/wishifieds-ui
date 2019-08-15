@@ -42,8 +42,14 @@
           <input matInput type="text" [(ngModel)]="searchInfo.searchStr" placeholder="what are YOU selling?" name="searchStr">
         </mat-form-field>
 
+        <!-- Standard Search Button -->
         <button (click)="search($event)" type="submit" class="search-btn-icon">
           <i class="fa fa-search fa-2x sp-hover"></i>
+        </button>
+
+        <!-- Analytics Search Button -->
+        <button *ngIf="showAdvanced" (click)="toggleAnalytics($event)" type="button" class="search-btn-icon analytics-btn-icon">
+          <i class="fa fa-chart-bar fa-2x sp-hover"></i>
         </button>
       </div>
     </form>
@@ -53,7 +59,7 @@
 
   <!-- Search Results -->
   <div class="results-box" *ngIf="!!(listings && listings.length)">
-    <listings-search-results [listings]="listings" [searchInfo]="searchInfo"></listings-search-results>
+    <listings-search-results [listings]="listings" [searchInfo]="searchInfo" [showAnalytics]="showAnalytics"></listings-search-results>
   </div>
   <div class="results-box" *ngIf="hasSearched && !(listings && listings.length)">
     <p class="no-results-message"> Bummer, no wishers for that... yet.</p>

@@ -25,9 +25,9 @@ export class UserPageComponent implements OnInit, OnDestroy {
   pageSubscription: Subscription;
   tabsSubscription: Subscription;
   listingsSubscription: Subscription;
-  favorites: Listing[] = [];
-  favoritesSub: Subscription;
-  favoritesEmit: Subject<Listing[]> = new Subject<Listing[]>();
+  listingsEmit: Subject<Listing[]> = new Subject<Listing[]>();
+  // favoritesSub: Subscription;
+  // favoritesEmit: Subject<Listing[]> = new Subject<Listing[]>();
 
   isOwner = false;
   isProcessing: boolean;
@@ -37,14 +37,15 @@ export class UserPageComponent implements OnInit, OnDestroy {
   tabMap = ['wishlistings', 'messages', 'favorites'];
 
   totalUnreadMsgs: string;
-  listings: Listing[] = [];  // SOMEDAY GET THIS FROM API CALL FOR USER"S LISTINGS
-  listingsEmit: Subject<Listing[]> = new Subject<Listing[]>();
+  favorites: Listing[] = [];
+  listings: Listing[] = [];
 
   constructor( private authService:     AuthService,
                private icons:           IconService,
                private route:           ActivatedRoute,
                private listingsApi:     ApiListingsService,
                private messagesApi:     ApiMessagesService) {
+    // Subscribe to the auth service, so stay updated on changes
     this.auth = authService.auth;
     this.authSubscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => {
       this.auth = newVal;
@@ -55,18 +56,18 @@ export class UserPageComponent implements OnInit, OnDestroy {
         this.listings = this.listings.concat(newListings);  // Concat & SET
       }
     });
-    this.favoritesSub = this.favoritesEmit.subscribe((newFavs: Listing[]) => {
-      if(newFavs && newFavs.length) {
-        // Initial GET listings may get lots; saving a listing adds only one.
-        this.favorites = this.favorites.concat(newFavs);  // Concat & SET
-      }
-    });
+    // this.favoritesSub = this.favoritesEmit.subscribe((newFavs: Listing[]) => {
+    //   if(newFavs && newFavs.length) {
+    //     // Initial GET listings may get lots; saving a listing adds only one.
+    //     this.favorites = this.favorites.concat(newFavs);  // Concat & SET
+    //   }
+    // });
   }
 
   ngOnDestroy() {
     this.authSubscription.unsubscribe();
     this.pageSubscription.unsubscribe();
-    this.listingsSubscription.unsubscribe();
+    // this.listingsSubscription.unsubscribe();
     this.tabsSubscription.unsubscribe();
   }
 
@@ -117,35 +118,39 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
   getFavorites() {
     const that = this;
-    if(!this.auth.isLoggedIn && !this.isOwner) { return; }
-
-    this.listingsApi
-      .getFavoriteListingsByUser()
-      .subscribe(
-        favs => {
-          console.log("FAVORITES FOUND: ", favs);
-          that.favoritesEmit.next(favs);  // Add these via observer
-        },
-        error => {
-          console.log("ERROR GETTING LISTINGS: ", error);
-        });
+    if(this.auth.isLoggedIn && this.isOwner) {
+      this.listingsApi
+        .getFavoriteListingsByUser()
+        .subscribe(
+          favs => {
+            console.log("FAVORITES FOUND: ", favs);
+            // that.favoritesEmit.next(favs);  // Add these via observer
+            if(favs && favs.length) {
+              // Initial GET listings may get lots; saving a listing adds only one.
+              this.favorites = this.favorites.concat(favs);  // Concat & SET
+            }
+          },
+          error => {
+            console.log("ERROR GETTING LISTINGS: ", error);
+          });
+    }
   }
 
   // Get total unread messages so can display on the Messages tab
   getTotalUnreadMsgs() {
     const that = this;
-    if(!this.auth.isLoggedIn && !this.isOwner) { return; }
-
-    this.messagesApi
-      .getUserTotalUnreadMessages()
-      .subscribe(
-        res => {
-          console.log("TOTAL UNREAD MESSAGES OBJECT: ", res);
-          that.totalUnreadMsgs = res.totalUnreads;
-        },
-        error => {
-          console.log("ERROR GETTING TOTAL UNREAD MESSAGES COUNT");
-        });
+    if(this.auth.isLoggedIn && this.isOwner) {
+      this.messagesApi
+        .getUserTotalUnreadMessages()
+        .subscribe(
+          res => {
+            console.log("TOTAL UNREAD MESSAGES OBJECT: ", res);
+            that.totalUnreadMsgs = res.totalUnreads;
+          },
+          error => {
+            console.log("ERROR GETTING TOTAL UNREAD MESSAGES COUNT");
+          });
+    }
   }
 
   save(event: any) {

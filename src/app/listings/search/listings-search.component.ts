@@ -45,6 +45,7 @@ export class ListingsSearchComponent implements OnInit {
   searchInfoEmit: Subject<any> = new Subject<any>();
 
   showAdvanced: boolean = false;
+  showAnalytics: boolean = false;
   userLocsSub: Subscription;
   userLocsEmit: Subject<any> = new Subject<any>();
 
@@ -101,6 +102,12 @@ export class ListingsSearchComponent implements OnInit {
     // If setting value directly, do that. Else, just toggle the value
     if(typeof(input) === 'boolean') { this.showAdvanced = input; }
     else { this.showAdvanced = !this.showAdvanced; }
+  }
+
+  toggleAnalytics(input: any = null): void {
+    // If setting value directly, do that. Else, just toggle the value
+    if(typeof(input) === 'boolean') { this.showAnalytics = input; }
+    else { this.showAnalytics = !this.showAnalytics; }
   }
 
   getTypeaheads() {
