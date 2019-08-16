@@ -13,6 +13,7 @@ import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { MatDialogModule, MatInputModule, MatTooltipModule, MatFormFieldModule,
   MatSelectModule, MatCheckboxModule, MatTabsModule, MatChipsModule, MatCardModule,
   MatBadgeModule, MatIconModule, MatAutocompleteModule } from '@angular/material';
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragulaModule }    from 'ng2-dragula';  // TO USE, SEE NEW DOCS FOR NEW API
 import { SwiperModule } from 'ngx-swiper-wrapper';
@@ -140,6 +141,7 @@ export function HttpFactory(backend: XHRBackend,
                   MatTooltipModule,
                   MatBadgeModule,
                   MatAutocompleteModule,
+                  ScrollDispatchModule,
                   DragulaModule.forRoot(),  // ROOT means SINGLETON
                   ChartsModule,    // move to child module for dashboard OR REMOVE FOR NOW
                   SwiperModule,

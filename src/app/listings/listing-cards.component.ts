@@ -1,4 +1,5 @@
 import { Component, Input, ViewChild, OnInit, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Router }          from '@angular/router';
 import { IconService }     from '../core/services/icon.service';
 import { ApiUsersService } from '../core/api/api-users.service';

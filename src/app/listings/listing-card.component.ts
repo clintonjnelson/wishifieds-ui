@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input, OnInit } from '@angular/core';
+import { Component, ViewChild, Input, OnInit, AfterViewInit } from '@angular/core';
 import { Router }              from '@angular/router';
 import { IconService }         from '../core/services/icon.service';
 import { AuthService }         from '../core/auth/auth.service';
@@ -22,13 +22,14 @@ export class PriceDisplay {
 })
 
 
-export class ListingCardComponent implements OnInit {
+export class ListingCardComponent implements OnInit, AfterViewInit {
   @Input() listing: Listing;
   expandedInfo = false;
   price: PriceDisplay;
   listingLink: string;
   unreadMsgsCount: number = 0;
   showUnreads: boolean = false;
+  ready: boolean = false;  // Page ready? Performance optimizations on what loads when.
 
   constructor( private icons: IconService,
                private helpers: HelpersService,
@@ -49,6 +50,11 @@ export class ListingCardComponent implements OnInit {
     }
 
     this.setUnreads();
+  }
+
+  ngAfterViewInit() {
+    const that = this;
+    setTimeout(function(){this.ready = true;}.bind(that), 250);
   }
 
   setUnreads() {

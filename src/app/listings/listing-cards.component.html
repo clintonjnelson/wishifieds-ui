@@ -3,16 +3,17 @@
   <!-- Search Options Area -->
   <!-- TODO: CURRENTLY PERMANENTLY TURNED OFF BY ngIf=false; HOOK UP IF NEED, ELSE REMOVE -->
   <div>
-    <div id="cards-filters" *ngIf="false">
-      <ul>
-        <li *ngFor="let icon of filterIcons">
+    <cdk-virtual-scroll-viewport itemSize="10" id="cards-filters">
+      <!-- <ul> -->
+        <!-- <li *ngFor="let icon of filterIcons"> -->
+        <li *cdkVirtualFor="let icon of filterIcons">
           <i class="{{buildIconClass(icon, 1)}}"
              (click)="filter(icon)">
              <!-- [style.color]="filters[icon] ? icon.bgColor : 'white'"> -->
           </i>
         </li>
-      </ul>
-    </div>
+      <!-- </ul> -->
+    </cdk-virtual-scroll-viewport>
   </div>
 
   <!-- Listing Results Found -->

@@ -3,8 +3,11 @@
   <!-- Card Container -->
   <div class="listing-display-main-container" matBadge="{{unreadMsgsCount}}" matBadgeOverlap="true" [matBadgeHidden]="!showUnreads && unreadMsgsCount && unreadMsgsCount < 1">
 
-    <!-- Image Carousel -->
-    <div class="listing-image-container">
+    <!-- Hero Pre-PageLoad or Image Carousel Upon PageLoad -->
+    <div *ngIf="!ready || listing.images.length < 2" class="listing-image-container">
+      <img class="preload-hero-image" alt="{{listing.title}}" src="{{listing.hero}}"/>
+    </div>
+    <div *ngIf="ready && listing.images.length >= 2" class="listing-image-container">
       <img-carousel [images]="listing.images" [link]="listingLink" [modal]="false"></img-carousel>
     </div>
   </div>

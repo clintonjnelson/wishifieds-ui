@@ -1,5 +1,4 @@
 
-
 div.listing-cards-container {
   display: flex;
   flex-direction: column;
@@ -12,7 +11,7 @@ section.cards-container {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
-  max-width: 100%;;
+  max-width: 100%;
 }
 
 /*TODO: SPEND SOME TIME HERE & WORKING TO GET THE LISTING SCALING SMOOTH/CONSISTENT WITH SCREEN RESIZE*/
