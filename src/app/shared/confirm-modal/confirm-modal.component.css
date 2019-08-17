@@ -19,7 +19,7 @@
 }
 .modal-content {
   font-family: defaultfont, helvetica;
-  color: white;
+  color: gray;
 }
 #msg {
   font-size: 1em;
@@ -38,7 +38,7 @@
 }
 
 .model-button {
-  color: white;
+  color: gray;
   font-family: defaultfont, helvetica;
   font-size: 1.5em;
   margin: 0px 20px 0px 0px;

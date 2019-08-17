@@ -7,8 +7,12 @@ export class Notification {
   displayTime: number;
 }
 
-@Injectable()
+// This component only needs to live at the app.component.html level for use by all.
+// This component watches the NotificationService for updates & displays them accordingly
+// Use by calling notificationService.notify('error', 'my error message!', 6000);
+// Error types are: error, warning, info, success
 
+@Injectable()
 export class NotificationService {
   display: Notification;
   notifications: Notification[];
@@ -21,7 +25,7 @@ export class NotificationService {
     this.currentlyDisplaying = false;
   }
 
-  // Types are: Error, Warning, Info, Success
+  // Types are: error, warning, info, success
   // Time is the display time
   notify(type: string, msg: string, displayTime: number = 6000) {
     this.addNotification({type, msg, displayTime});

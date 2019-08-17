@@ -6,6 +6,7 @@ import { AuthService }         from '../../core/auth/auth.service';
 import { ApiUsersLocationsService } from '../../core/api/api-users-locations.service';
 import { WishifiedsApi }       from '../../core/api/wishifieds-api.service';
 import { NotificationService } from '../../core/services/notification.service';
+import { ConfirmModalService } from '../../shared/confirm-modal/confirm-modal.service';
 import { MatInputModule }      from '@angular/material';
 import { Subscription, Subject } from 'rxjs';
 import { UserLocation } from '../../shared/models/location.model';
@@ -28,12 +29,6 @@ import { UserLocation } from '../../shared/models/location.model';
 // Management happens from this level & lower - nothing is passed up beyond
 // The child map & search will pass into up to this component for handling in the updating
 
-// Need
-    // 1. Management for ONLY user default location
-    // 2. Confirmation modal that changing this will change the location for all listings that use it.
-
-
-
 
 export class UserLocationsManagerComponent implements OnInit {
   @ViewChild('userLocationsForm') userLocationsForm: NgForm;
@@ -51,7 +46,9 @@ export class UserLocationsManagerComponent implements OnInit {
               private apiUsersLocationsService: ApiUsersLocationsService,
               private router:          Router,
               private notifService:    NotificationService,
-              private wishifiedsApi:   WishifiedsApi) {}
+              private wishifiedsApi:   WishifiedsApi,
+              private modalService:    ConfirmModalService,
+              private notificationService: NotificationService) {}
 
   ngOnInit() {
     const that = this;
@@ -62,12 +59,6 @@ export class UserLocationsManagerComponent implements OnInit {
       that.userLocations = locsObj['userLocs'];
       that.existingDefaultUserLocation = locsObj['userLocs'].find(function(loc) { return loc.isDefault; });
       that.resetTempUserLocation();
-      // if(locsObj.reset) {
-      //   that.userLocations = locsObj['userLocs'];
-      // }
-      // else {
-      //   that.userLocations = that.userLocations.concat(locsObj['userLocs']);
-      // }
     });
 
     this.getUserLocations();
@@ -89,23 +80,34 @@ export class UserLocationsManagerComponent implements OnInit {
   // Listener for event payload from child component; receives a Location object (NOT UserLocation) to update on User;
   // This will update for existing location for user, or create/associate a new location to the user
   updateDefaultUserLocation(event: Location) {
+    const that = this;
     console.log("Updated location coming down!", event);
-    // Need to:
-      // 1) create a new location
-      // 2) replace the location for the user's default UserLocation
-    this.apiUsersLocationsService
-        .updateUserDefaultLocation(this.authService.auth.userId, event)
-        .subscribe(
-          success => {
-            console.log("Newly updates user default location is: ", success);
-            // Make a get request to update the map after update? => FLASHES PAGE UNNERVINGLY
-          }),
-          error => {
-            console.log("Failed to update the user's default location. Error is: ", error);
-            this.getUserLocations();
-            // Make a separate generic service to message about errors in a consistent way?
-              // Maybe like a hash of generic messages with string-sub for resource/etc.
-          }
+
+    const warningTitle = 'NOTICE: Default Location Change Can Effect Listings';
+    const warningMsg   = 'Changes to your default location will be reflected on the location for ALL listings that use it (the default when creating a listing). ' +
+                         'Are you sure you want to change your default location?';
+    console.log("STARTING MODAL NOW...");
+
+    this.modalService
+      .confirm(warningTitle, warningMsg)
+      .subscribe((submit) => {
+        if(submit.response === true) {
+          that.apiUsersLocationsService
+              .updateUserDefaultLocation(that.authService.auth.userId, event)
+              .subscribe(
+                success => {
+                  console.log("Newly updates user default location is: ", success);
+                  that.notificationService.notify('success', 'Your default location has been updated everywhere.', 4000);
+                  // Make a get request to update the map after update? => FLASHES PAGE UNNERVINGLY
+                }),
+                error => {
+                  console.log("Failed to update the user's default location. Error is: ", error);
+                  that.getUserLocations();
+                  // Make a separate generic service to message about errors in a consistent way?
+                    // Maybe like a hash of generic messages with string-sub for resource/etc.
+                }
+        }
+      });
   }
 
   getUserLocations() {
@@ -124,81 +126,4 @@ export class UserLocationsManagerComponent implements OnInit {
             that.userLocsProcessing = false;
           });
   }
-
-
-  // createUserLocation() {
-  //   const that = this;
-  //   console.log("About to create user location...");
-  //   this.apiUsersLocationsService
-  //     .createUserLocation(this.authService.auth.userId, this.tempUserLocation)
-  //     .subscribe(
-  //       success => {
-  //         console.log("Newly created user location result is: ", success);
-  //         that.userLocsEmit.next({userLocs: that.tempUserLocation, reset: false});
-  //         that.resetNewUserLocation();
-  //         this.userLocationsForm.reset();
-  //       },
-  //       error => {
-  //         console.log("SHOULD USE STATUS FOR LOGIC. ERROR AVAIL IS: ", error);
-  //         switch(error.json().msg) {
-  //           case('not-found'): console.log("MAKE COMPONENT WITH OWN ERRORS FOR THIS...");
-  //         }
-  //         console.log("Error creating new user location: ", error);
-  //       });
-  // }
-
-  // setDefaultUserLocation(userLocationId) {
-  //   const that = this;
-  //   console.log("About to set user location as default...", userLocationId);
-  //   this.apiUsersLocationsService
-  //     .setDefaultUserLocation(this.authService.auth.userId, userLocationId)
-  //     .subscribe(
-  //       success => {
-  //         console.log("Newly created user location result is: ", success);
-  //         console.log("USER LOCATIONS BEFORE UPDATE IS:", that.userLocations);
-  //         const updatedUserLocs = that.userLocations.map(function(usrloc) {
-  //           let copyUserLoc = Object.assign({}, usrloc);
-  //           // Deactivate old default
-  //           if(usrloc.isDefault) {
-  //             copyUserLoc['isDefault'] = false;
-  //           }
-  //           // Activate new default
-  //           if(usrloc.userLocationId == userLocationId) {
-  //             copyUserLoc['isDefault'] = true;
-  //           }
-
-  //           return copyUserLoc;
-  //         });
-  //         console.log("USER LOCATIONS AFTER UPDATE IS:", updatedUserLocs);
-  //         that.userLocsEmit.next({userLocs: updatedUserLocs, reset: true});
-  //       },
-  //       error => {
-  //         console.log("SHOULD USE STATUS TO HANDLE THIS ERROR CODE. See below for hint. ERROR AVAIL IS: ", error);
-  //         switch(error.json().msg) {
-  //           case('not-found'): console.log("MAKE COMPONENT WITH OWN ERRORS FOR THIS...");
-  //         }
-  //         console.log("Error creating new user location: ", error);
-  //       });
-  // }
-
-  // deleteUserLocation(userLocationId) {
-  //   const that = this;
-  //   console.log("about to DELETE user location: ", userLocationId);
-  //   this.apiUsersLocationsService
-  //       .deleteUserLocation(this.authService.auth.userId, userLocationId)
-  //       .subscribe(
-  //         success => {
-  //           console.log("Successfully deleted user location with response: ", success);
-  //           that.userLocations.splice(that.userLocations.findIndex(function(elem) {
-  //             // Remove the deleted user location from UI list
-  //             return elem.userLocationId == userLocationId;
-  //           }), 1);
-  //           that.userLocsEmit.next({userLocs: that.userLocations, reset: true});
-  //         },
-  //         error => {
-  //           console.log("Error deleting user location.");
-  //           // TODO: BANNER THAT COULD NOT DELETE THE USER LCOATION
-  //           console.log("PUT UP A BANNER TO NOTIFY COULD NOT DELETE!!");
-  //         });
-  // }
 }

@@ -11,7 +11,6 @@ import { ConfirmModalService } from '../../shared/confirm-modal/confirm-modal.se
 import { MatInputModule }      from '@angular/material';
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { Subscription, Subject } from 'rxjs';
-// import { UserLocation } from '../../shared/models/location.model';
 
 @Component({
   moduleId: module.id,
@@ -166,7 +165,7 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
           // Updates notifications
           that.notifService.notify('success', 'Settings updates saved.');
           if(usernameChange) {
-            const msg = 'Your username changed. Please remember, this has changed the address of your page. ' +
+            const msg = 'Your username changed. Please remember, this has changed the web address url of your page. ' +
                         'If you have any existing links to your page around the interwebs, ' +
                         'they will no longer work until you update them to your new address (ie: with the new username).';
             that.notifService.notify('warning', msg, 12000);

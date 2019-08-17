@@ -4,7 +4,9 @@ import { GuestService } from './core/services/guest.service';
 @Component({
   selector: 'site-main',
   template: `
+    <!-- This is used by ALL of the app for notifications -->
     <notifications></notifications>
+
     <main-navbar></main-navbar>
 
     <router-outlet></router-outlet>

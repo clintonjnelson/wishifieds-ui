@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
   styleUrls:  ['notifications.component.css']
 })
 
+// This component only needs to live at the app.component.html level for use by all.
 // This component watches the NotificationService for updates & displays them accordingly
 // Use by calling notificationService.notify('error', 'my error message!', 6000);
 // Error types are: error, warning, info, success
