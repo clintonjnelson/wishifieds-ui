@@ -18,7 +18,7 @@ export class ListingPageComponent implements OnInit, OnDestroy{
   listing: Listing;
   listingSub: Subscription;
   listingEmit: Subject<Listing> = new Subject<Listing>();
-  pageSubscription: Subscription;
+  pageSub: Subscription;
 
 
   constructor(
@@ -29,7 +29,7 @@ export class ListingPageComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
     const that = this;
-    this.pageSubscription = this.route.params.subscribe( (params: Params) => {
+    this.pageSub = this.route.params.subscribe( (params: Params) => {
       const listingId = params['listingId'];
       console.log("TRIGGERED SUBSCRIPTION THAT WATCHES PARAMS: ", params);
       that.getListing(listingId);
@@ -42,7 +42,8 @@ export class ListingPageComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy() {
-    this.pageSubscription.unsubscribe();
+    this.listingSub.unsubscribe();
+    this.pageSub.unsubscribe();
   }
 
   getListing(listingId) {

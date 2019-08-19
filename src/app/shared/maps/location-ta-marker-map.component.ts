@@ -70,15 +70,6 @@ export class LocationTAMarkerMapComponent implements OnInit, OnDestroy {
     this.locTypeaheadSub.unsubscribe();
   }
 
-  // toggleHint(hint: string) {
-  //   console.log("HINTS IS: ", this.hints);
-  //   console.log("HINT IS: ", hint);
-  //   console.log("HAS OWN PROPERTY ON HINT IS: ", this.hints.hasOwnProperty(hint));
-  //   if(this.hints.hasOwnProperty(hint)) {
-  //     this.hints[hint] = !this.hints[hint];
-  //   }
-  // }
-
   // Used to set the initial location value for the map.
   // First, passed location
   // Second, default userLocation

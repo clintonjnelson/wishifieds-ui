@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { HelpersService } from '../shared/helpers/helpers.service';
 import { Message } from './message.model';
 import { MatBadgeModule } from '@angular/material';
@@ -17,7 +17,7 @@ This is the logic for a single listing's card on the messages display
 For a given listing with a bunch of messages, display messages by user
 Allow the user avatar to be clicked by the owner to display that user's messages
 */
-export class ListingAvatarMessagesComponent implements OnInit {
+export class ListingAvatarMessagesComponent implements OnInit, OnDestroy {
   @Input() listingWithMessages: any; // Partial listing info with messages on it
   uniqueSenderIds: any[];  // Filtered from the list of listing messages
   selectedUserId: null;
@@ -50,6 +50,10 @@ export class ListingAvatarMessagesComponent implements OnInit {
         this.selectedUserId = newSelected;
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.selectedSub.unsubscribe();
   }
 
   setUniqueSendersForMsgs(isOwner) {

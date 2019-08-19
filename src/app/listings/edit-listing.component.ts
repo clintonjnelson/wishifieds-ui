@@ -38,7 +38,7 @@ import { Tag } from '../tags/tag.model';
   styleUrls: ['edit-listing.component.css'],
   viewProviders: [DragulaService]
 })
-export class EditListingComponent implements OnInit, AfterViewInit {
+export class EditListingComponent implements OnInit, AfterViewInit, OnDestroy {
   listingForm: FormGroup;  // THIS WILL LATER JUST BE THE listingForm. NOTE: Can call .valid on this group to see if any validation errors.
   @ViewChild('listingForm') currentForm: FormGroup;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
@@ -80,7 +80,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   imageLoadingSpinner: boolean = false;
   hints: any = {};
 
-  private unsubscribe: Subject<any> = new Subject();
+  private timeToDestroy: Subject<any> = new Subject();
   forListingCreation  = false;  // TODO: CARRYOVER FROM SIGNPOST; DETERMINE IF NEED
 
   constructor(private icons:          IconService,
@@ -156,7 +156,7 @@ export class EditListingComponent implements OnInit, AfterViewInit {
     // Works as an onBlur update of the URL after it's typed in
     this.listingForm.controls['linkUrl']
       .valueChanges
-      .pipe(takeUntil(this.unsubscribe))  // Prevents observable leaks
+      .pipe(takeUntil(this.timeToDestroy))  // Prevents observable leaks
       .subscribe( (newUrl: string) => {
         // TODO: Call API to scrape the newly updated address
         console.log("Changed the url: ", newUrl);
@@ -170,8 +170,12 @@ export class EditListingComponent implements OnInit, AfterViewInit {
   }
 
   ngOnDestroy() {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
+    this.timeToDestroy.next();
+    this.timeToDestroy.complete();
+    this.userLocationsSub.unsubscribe();
+    this.locTypeaheadSub.unsubscribe();
+    this.uploadedImagesSub.unsubscribe();
+    this.allImagesSub.unsubscribe();
   }
 
   // Dropzone trigger show file drop class (border)

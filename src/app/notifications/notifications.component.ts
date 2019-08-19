@@ -17,17 +17,17 @@ import { Subscription } from 'rxjs';
 export class NotificationsComponent implements OnDestroy {
   // notifs: Notification[];
   notification: Notification;
-  _subscription: Subscription;  // Current notification subscription
+  notificationSub: Subscription;  // Current notification subscription
 
   constructor(private notifService: NotificationService) {
     this.notification  = notifService.display;
-    this._subscription = notifService.notifChangeEmit.subscribe((newNotif: Notification) => {
+    this.notificationSub = notifService.notifChangeEmit.subscribe((newNotif: Notification) => {
       console.log("NOTIFICATION CHANGED. RECEIVED: ", newNotif);
       this.notification = newNotif;
     });
   }
 
   ngOnDestroy() {
-    this._subscription.unsubscribe();
+    this.notificationSub.unsubscribe();
   }
 }

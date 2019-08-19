@@ -94,8 +94,8 @@ export class FooterComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.urlSubscription.unsubscribe();
     this.authSubscription.unsubscribe();
+    this.urlSubscription.unsubscribe();
   }
 
   buildIconClass(icon: string, size: string = '2') {

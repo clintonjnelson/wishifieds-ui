@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewChecked, OnDestroy } from '@angular/core';
 import { Router }              from '@angular/router';
 import { NgForm, FormControl } from '@angular/forms';
 import { User, UserUpdates }   from "../user.model";
@@ -19,7 +19,7 @@ import { Subscription, Subject } from 'rxjs';
   styleUrls:  ['user-settings.component.css']
 })
 
-export class UserSettingsComponent implements OnInit, AfterViewChecked {
+export class UserSettingsComponent implements OnInit, AfterViewChecked, OnDestroy {
   isConfirmed:    boolean;
   isProcessing:   boolean;
   emailWasResent = false;
@@ -87,6 +87,10 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked {
       that.userEmit.next(user);
     };
     this.resetSettingsCopy();
+  }
+
+  ngOnDestroy() {
+    this.userSub.unsubscribe();
   }
 
   setIsConfirmed(value: string) {

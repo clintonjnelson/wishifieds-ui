@@ -40,7 +40,7 @@ export class NavbarComponent implements OnDestroy {
   auth: UserAuth;
   isLoggedIn            = false;
   isLoggedOut           = true;
-  _subscription: Subscription;
+  authSub: Subscription;
 
   constructor(
               private icons:         IconService,
@@ -48,13 +48,13 @@ export class NavbarComponent implements OnDestroy {
               private notifications: NotificationService,
               public  gaEvent:       GAEventService) {
     this.auth          = authService.auth;
-    this._subscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => {
+    this.authSub = authService.userAuthEmit.subscribe((newVal: UserAuth) => {
       this.auth = newVal;  // Track & Update these
     });
   }
 
   ngOnDestroy() {
-    this._subscription.unsubscribe();
+    this.authSub.unsubscribe();
   }
 
   gaClick(label: string) {

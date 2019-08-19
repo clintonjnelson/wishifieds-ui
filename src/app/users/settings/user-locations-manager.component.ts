@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Router }              from '@angular/router';
 import { NgForm, FormControl } from '@angular/forms';
 import { IconService }         from '../../core/services/icon.service';
@@ -30,7 +30,7 @@ import { UserLocation } from '../../shared/models/location.model';
 // The child map & search will pass into up to this component for handling in the updating
 
 
-export class UserLocationsManagerComponent implements OnInit {
+export class UserLocationsManagerComponent implements OnInit, OnDestroy {
   @ViewChild('userLocationsForm') userLocationsForm: NgForm;
   userLocations: UserLocation[] = [];
   tempUserLocation: any;  // This is the TEMP one we're creating... MAY NOT NEED THIS SINCE JUST WON"T UPDATE IF CANCEL IT.
@@ -62,6 +62,10 @@ export class UserLocationsManagerComponent implements OnInit {
     });
 
     this.getUserLocations();
+  }
+
+  ngOnDestroy() {
+    this.userLocsSub.unsubscribe();
   }
 
   buildIconClass(icon: string, size: string = '2') {

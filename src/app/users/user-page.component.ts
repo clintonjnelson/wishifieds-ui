@@ -67,8 +67,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.authSubscription.unsubscribe();
     this.pageSubscription.unsubscribe();
-    // this.listingsSubscription.unsubscribe();
     this.tabsSubscription.unsubscribe();
+    this.listingsSubscription.unsubscribe();
   }
 
   ngOnInit(): void {

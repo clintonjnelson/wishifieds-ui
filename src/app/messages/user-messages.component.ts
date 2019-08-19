@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild} from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnDestroy} from '@angular/core';
 import { NgForm, FormControl, FormsModule }   from '@angular/forms';   // TODO: Remove if no validation logic
 import { IconService }         from '../core/services/icon.service';
 import { ApiMessagesService }  from '../core/api/api-messages.service';
@@ -34,7 +34,7 @@ import { Subscription, Subject } from 'rxjs';
 // Component that displays the user's correspondence with another user
 // Always between a "viewer" user and another correspondant user (viewer may be owner or cprrespondant).
 // Similar layout to normal messenging services with newest at bottom
-export class UserMessagesComponent implements OnInit {
+export class UserMessagesComponent implements OnInit, OnDestroy {
   @Input() listingId: string;
   @Input() listingOwnerId: string;
   @Input() correspondantId: string;  // Needed to track seller correspondant when not avail as auth; optional!
@@ -44,7 +44,7 @@ export class UserMessagesComponent implements OnInit {
 
   viewerIsOwner: boolean;
   recipientId: string;   // CORRESPONDANT_ID?????
-  msgSubscription: Subscription;
+  msgSub: Subscription;
   msgsEmit: Subject<Message[]> = new Subject<Message[]>();
 
 
@@ -68,7 +68,7 @@ export class UserMessagesComponent implements OnInit {
        this.getMessages();
      }
      // Need subscription for catching any updates
-     this.msgSubscription = this.msgsEmit.subscribe((newMsgs: Message[]) => {
+     this.msgSub = this.msgsEmit.subscribe((newMsgs: Message[]) => {
        console.log("CHANGING MESSAGES... supposedly. With new messages: ", newMsgs);
        if(newMsgs && newMsgs.length) {
          this.messages = newMsgs;
@@ -87,6 +87,10 @@ export class UserMessagesComponent implements OnInit {
        createdAt: ''
      };
      this.notifyImmediately = true;  // TODO: Hook feature up to SMS messaging notification, controlled by user settings as to whether to show or not
+  }
+
+  ngOnDestroy() {
+    this.msgSub.unsubscribe();
   }
 
   // Note: ONLY called if no messages passed in with @Input (if already have, no need to re-get)

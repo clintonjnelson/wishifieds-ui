@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HelpersService } from '../shared/helpers/helpers.service';
 import { ApiMessagesService } from '../core/api/api-messages.service';
 import { Subscription, Subject } from 'rxjs';
@@ -15,9 +15,9 @@ import { Subscription, Subject } from 'rxjs';
 This component needs to query all listings that the user has been chatting
 Then organize the messages under the appropriate listing.
 */
-export class MessagesByListingComponent implements OnInit {
+export class MessagesByListingComponent implements OnInit, OnDestroy {
   listingsWithMessages = []; // Array of complex objects
-  listingsMsgsSubscription: Subscription;
+  listingsMsgsSub: Subscription;
   listingsMsgsEmit: Subject<any[]> = new Subject<any[]>();
 
   constructor(private helpers: HelpersService,
@@ -30,7 +30,7 @@ export class MessagesByListingComponent implements OnInit {
     // !!!! We will need the sorting algorithm to be variable to filter choices, so pick the best place
     // Eventually move logic from the server's ordering to the UI's ordering, and
       // choose the most logical base server order (like by date ordering)
-    this.listingsMsgsSubscription = this.listingsMsgsEmit.subscribe((listingsMsgs: any[]) => {
+    this.listingsMsgsSub = this.listingsMsgsEmit.subscribe((listingsMsgs: any[]) => {
       this.listingsWithMessages = listingsMsgs;
     });
 
@@ -55,6 +55,10 @@ export class MessagesByListingComponent implements OnInit {
           console.log('ERROR GETTING LISTING MESSAGES: ', error);
         }
       );
+  }
+
+  ngOnDestroy() {
+    this.listingsMsgsSub.unsubscribe();
   }
 
   displayTime(timestampString: string): string {

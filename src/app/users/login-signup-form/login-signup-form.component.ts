@@ -16,7 +16,7 @@ const EMAIL_REGEX = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"
   moduleId: module.id,
   selector: 'login-signup-form',
   templateUrl: 'login-signup-form.component.html',
-  styleUrls:  ['login-signup-form.component.css']
+  styleUrls:  ['login-signup-form.component.css'],
 })
 
 

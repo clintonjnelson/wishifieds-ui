@@ -95,6 +95,11 @@ i {
   max-width: 3em;
 }
 
+button.avatar-upload-button {
+  color: white;
+  background-color: lightgray;
+}
+
 /*.user-locations-form {
   display: flex;
   flex-direction: column;

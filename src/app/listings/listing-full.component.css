@@ -34,8 +34,9 @@ span.facebook-badge {
   font-size: 0.5em;
   margin-left: 0.5em;
 }
-i.facebook-icon {
-  color: #3B5998;
+i.fa-facebook-f {
+  /*opacity: 0;*/
+  /*background-color: #3B5998;*/
 }
 
 .mat-card-header > i {

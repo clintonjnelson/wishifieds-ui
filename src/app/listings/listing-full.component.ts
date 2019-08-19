@@ -1,4 +1,4 @@
-import { Component, Input, Output, ViewChild, OnInit, EventEmitter } from '@angular/core';
+import { Component, Input, Output, ViewChild, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconService } from '../core/services/icon.service';
 import { HelpersService } from '../shared/helpers/helpers.service';
@@ -18,7 +18,7 @@ import { Subject, Subscription } from 'rxjs';
   templateUrl: 'listing-full.component.html',
   styleUrls: ['listing-full.component.css']
 })
-export class ListingFullComponent implements OnInit {
+export class ListingFullComponent implements OnInit, OnDestroy {
   @Input() listing: Listing;
   @Input() isPreview: boolean = false;  // TODO: MAKE THIS SET READONLY CAPABILITIES TO LISTING
   @Input() isEditing: boolean = false;  // TODO: Verify if should default this or Not.
@@ -77,12 +77,16 @@ export class ListingFullComponent implements OnInit {
       this.listing.ownerUsername,
       this.listing.id);
     this.getCorrespondantMessagesInfo();
-    this.favEmit.subscribe(function(newState) {
+    this.favSub = this.favEmit.subscribe(function(newState) {
       that.isFavorite = newState;
     });
     this.getFavorites();
     console.log("IS OWNER IS, listindOwner, currentViewer: ", this.isOwner, this.listing.userId, this.currentViewerId);
     console.log("LISTING FULL: Listing object is: ", this.listing);
+  }
+
+  ngOnDestroy() {
+    this.favSub.unsubscribe();
   }
 
   buildIconClass(icon: string, size: string = '2', type: string) {

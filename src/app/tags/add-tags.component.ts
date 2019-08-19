@@ -1,9 +1,9 @@
-import { Component, ElementRef, ViewChild, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Subscription, Subject, Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, takeUntil } from 'rxjs/operators';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ApiTagsService } from '../core/api/api-tags.service';
 import { IconService }    from '../core/services/icon.service';
@@ -17,7 +17,7 @@ import { Tag } from './tag.model';
   templateUrl: 'add-tags.component.html',
   styleUrls: ['add-tags.component.css'],
 })
-export class AddTagsComponent implements OnInit {
+export class AddTagsComponent implements OnInit, OnDestroy {
   @Input() existingTags: Tag[];
   @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;  // , {static: false}
   @ViewChild('auto') matAutocomplete: MatAutocomplete;  // , {static: false}
@@ -35,6 +35,7 @@ export class AddTagsComponent implements OnInit {
   typeaheadTags: Tag[];  // WOW, can we just update this & updates in UI?? No Sub/Emit stuff??
   typeaheadSub: Subscription;
   typeaheadEmit: Subject<Tag[]> = new Subject<Tag[]>();
+  private timeToDestroy: Subject<any> = new Subject<any>();
 
   constructor(public tagsService: ApiTagsService, public icons: IconService) {
   }
@@ -67,8 +68,15 @@ export class AddTagsComponent implements OnInit {
                   console.log("ERROR GETTING TYPEAHEAD RESULTS: ", error);
                 });
           }
-        }))
+        }),
+        takeUntil(this.timeToDestroy))
       .subscribe();
+  }
+
+  ngOnDestroy() {
+    this.typeaheadSub.unsubscribe();
+    this.timeToDestroy.next();
+    this.timeToDestroy.complete();
   }
 
   buildIconClass(icon: string, size: string = '2') {

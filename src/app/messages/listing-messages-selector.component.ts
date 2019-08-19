@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm, FormControl, FormsModule }   from '@angular/forms';   // TODO: Remove if no validation logic
 import { IconService }         from '../core/services/icon.service';
 import { ApiMessagesService }  from '../core/api/api-messages.service';
@@ -29,7 +29,7 @@ import { Subscription, Subject }        from 'rxjs';
   // If seller is viewing this, we don't need to be passed info, we will use listing owner's as recipient
   // If owner is viewing this, we will need to be passed SELLER"S info, so we also know how to query.
 
-export class ListingMessagesSelectorComponent implements OnInit {
+export class ListingMessagesSelectorComponent implements OnInit, OnDestroy {
   @Input() listingId: string;
   @Input() listingOwnerId: string;
   @Input() correspondantId: string;  // Needed to track seller correspondant when not avail as auth
@@ -38,7 +38,7 @@ export class ListingMessagesSelectorComponent implements OnInit {
   viewerIsOwner: boolean;
   recipientId: string;   // CORRESPONDANT_ID?????
   messages: Message[];
-  msgSubscription: Subscription;
+  msgSub: Subscription;
   msgsEmit: Subject<Message[]> = new Subject<Message[]>();
 
   // TODO: MAYBE BREAK OUT THE FORM PORTION OF MESSAGE TO SEPARATE COMPONENT
@@ -72,11 +72,15 @@ export class ListingMessagesSelectorComponent implements OnInit {
      this.notifyImmediately = true;  // TODO: Hook feature up to SMS messaging notification, controlled by user settings as to whether to show or not
 
      this.messages = [];
-     this.msgSubscription = this.msgsEmit.subscribe((newMsgs: Message[]) => {
+     this.msgSub = this.msgsEmit.subscribe((newMsgs: Message[]) => {
        console.log("CHANGING MESSAGES... supposedly. With new messages: ", newMsgs);
        if(newMsgs && newMsgs.length) {
          this.messages = newMsgs;
        }
      });
+  }
+
+  ngOnDestroy() {
+    this.msgSub.unsubscribe();
   }
 }

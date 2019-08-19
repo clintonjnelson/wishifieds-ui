@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ActivatedRoute }    from '@angular/router';
 import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';  // USING EVENT??? IF NO, REMOVE IT. KEPT JUST IN CASE NEED DURING CODING.
 import { AuthService }       from '../../core/auth/auth.service';
@@ -19,7 +19,7 @@ const DISTANCES = ['10', '25', '50', '75', '100', '200', '500', 'any'];
   styleUrls:  ['listings-search.component.css']
 })
 
-export class ListingsSearchComponent implements OnInit {
+export class ListingsSearchComponent implements OnInit, OnDestroy {
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   listings: Listing[];    // Allow variable search type
   distances: any[] = DISTANCES;
@@ -96,6 +96,12 @@ export class ListingsSearchComponent implements OnInit {
     }
 
     if(this.searchInfo.searchStr) { this.search(null); }  // Trigger search, no typ event
+  }
+
+  ngOnDestroy() {
+    this.typeaheadSub.unsubscribe();
+    this.searchInfoSub.unsubscribe();
+    this.userLocsSub.unsubscribe();
   }
 
   toggleAdvanced(input: any = null): void {
