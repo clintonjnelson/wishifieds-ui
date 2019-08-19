@@ -101,7 +101,7 @@ export class ListingsSearchComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.typeaheadSub.unsubscribe();
     this.searchInfoSub.unsubscribe();
-    this.userLocsSub.unsubscribe();
+    if(this.userLocsSub) { this.userLocsSub.unsubscribe(); }
   }
 
   toggleAdvanced(input: any = null): void {

@@ -4,6 +4,7 @@ import { IconService } from '../../core/services/icon.service';
 import { AuthService, UserAuth } from '../../core/auth/auth.service';
 import { Subscription } from 'rxjs';
 import { NotificationService } from '../../core/services/notification.service';
+import { SlideDownAnimation } from '../../shared/animations/slide-down';
 import { GAEventService } from '../../core/services/ga-event.service';
 
 export class OauthLink {
@@ -23,6 +24,7 @@ const OAUTHS: OauthLink[] = [];
   selector: 'main-navbar',
   templateUrl: 'navbar.component.html',  // trigger: [@visibilityChanged]='showLoginLinks'
   styleUrls:  ['navbar.component.css'],
+  animations: [SlideDownAnimation]
   // animations: [trigger('visibilityChanged', [
   // state('false', style({opacity: 0, transform: 'translateX(0)'})),
   // state('true',  style({opacity: 1, transform: 'translateX(0)'})),
@@ -34,7 +36,7 @@ const OAUTHS: OauthLink[] = [];
 
 export class NavbarComponent implements OnDestroy {
   oauthLinks = OAUTHS;
-  showLoginLinks        = false;
+  showLoginLinks = false;
   showLoginForm = false;
   showUserNavLinks      = true;  // TURNING THIS PERMANENTLY ON FOR NOW
   auth: UserAuth;

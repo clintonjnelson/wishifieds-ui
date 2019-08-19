@@ -81,6 +81,6 @@
 <hr class="navbar-bottom-hr">
 
 <!-- Login/Signup Form -->
-<section *ngIf="showLoginForm" class="navbar-login-signup-form">
+<section *ngIf="showLoginForm" class="navbar-login-signup-form" [@slideDown]>
   <login-signup-form (close)="onCloseLogin($event)"></login-signup-form>
 </section>

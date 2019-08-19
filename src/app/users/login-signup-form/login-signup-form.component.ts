@@ -16,7 +16,7 @@ const EMAIL_REGEX = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"
   moduleId: module.id,
   selector: 'login-signup-form',
   templateUrl: 'login-signup-form.component.html',
-  styleUrls:  ['login-signup-form.component.css'],
+  styleUrls:  ['login-signup-form.component.css']
 })
 
 
@@ -162,7 +162,6 @@ export class LoginSignupFormComponent implements AfterViewChecked {
 
     for(const inputName in this.displayedValidationErrors) {
       // clear previous error messages
-      console.log("INPUT NAME LOOKS LIKE: ", typeof inputName);
       that.displayedValidationErrors[inputName] = '';  // each error unser each inputName, clear it
       const control = form.get(inputName);             // get value from form input
 
