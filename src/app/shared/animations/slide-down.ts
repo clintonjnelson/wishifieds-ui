@@ -9,7 +9,7 @@ export const SlideDownAnimation = [
       ]),
       transition(':leave', [
         style({ height: '*', overflow: 'hidden' }),
-        animate('300ms ease-out', style({ height: 0, overflow: 'hidden' }))
+        animate('200ms ease-out', style({ height: 0, overflow: 'hidden' }))
       ])
     ])
   ]
