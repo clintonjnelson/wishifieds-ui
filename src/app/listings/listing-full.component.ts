@@ -39,6 +39,7 @@ export class ListingFullComponent implements OnInit, OnDestroy {
   favSub: Subscription;
   favEmit: Subject<boolean> = new Subject<boolean>();
 
+  badges: any = {};
   public carouselConfig = {
     grid: {xs: 1, sm: 1, md: 1, lg: 1, all: 0},
     slide: 1,
@@ -61,7 +62,6 @@ export class ListingFullComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private messagesApi: ApiMessagesService,
               private favoritesApi: ApiFavoritesService) {
-
   }
 
   // Determine who viewer is (owner or guest), so can decide content to show
@@ -81,6 +81,9 @@ export class ListingFullComponent implements OnInit, OnDestroy {
       that.isFavorite = newState;
     });
     this.getFavorites();
+
+    this.badges = {};
+    this.loadBadges();
     console.log("IS OWNER IS, listindOwner, currentViewer: ", this.isOwner, this.listing.userId, this.currentViewerId);
     console.log("LISTING FULL: Listing object is: ", this.listing);
   }
@@ -200,6 +203,16 @@ export class ListingFullComponent implements OnInit, OnDestroy {
         this.msgCorrespondants = [that.listing.userId];
       }
     }
+  }
+
+  loadBadges() {
+    const that = this;
+    const badges = this.listing['badges'].forEach(function(badge) {
+      that.badges[badge.badgeType] = {
+          badgeType: badge.badgeType,
+          linkUrl: badge.linkUrl
+        };
+    });
   }
 
   setMessageToShow(msgUserId) {

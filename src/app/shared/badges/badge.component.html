@@ -1,0 +1,7 @@
+<a [href]="linkUrl" [ngSwitch]="badgeType">
+  <span *ngSwitchCase="'FACEBOOK'" class="fa-stack fa-{{size}}x" style="background-color:transparent;font-size:0.6em">
+    <i class="fa fa-certificate fa-stack-{{size+1}}x" style="color:white"></i>
+    <i class="fa fa-square fa-stack-{{size}}x" style="color:transparent"></i>
+    <i class="fa fa-facebook fa-stack-{{size}}x" style="color:#3B5998;font-size:1.2em;margin-top:0.1em"></i>
+  </span>
+</a>

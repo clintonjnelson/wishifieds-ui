@@ -31,6 +31,7 @@ import { FaqComponent }                  from './static-pages/faq/faq.component'
 
 import { FontAwesomeModule }             from '@fortawesome/angular-fontawesome';
 import { IconLinkComponent }             from './shared/icon-links/icon-links.component';
+import { BadgeComponent }                from './shared/badges/badge.component';
 import { NavbarComponent }               from './navigation/navbar/navbar.component';
 import { FooterComponent }               from './footer/footer.component';
 
@@ -91,6 +92,7 @@ import { ConfirmModalService }               from './shared/confirm-modal/confir
 import { ImageModalService }                 from './shared/image-modal/image-modal.service';
 import { WishifiedsApi }                     from './core/api/wishifieds-api.service';
 import { ApiAuthService }                    from './core/api/api-auth.service';
+import { ApiOauthService }                   from './core/api/api-oauth.service';
 import { ApiAdminService }                   from './core/api/api-admin.service';
 import { ApiTagsService }                    from './core/api/api-tags.service';
 import { ApiImagesService }                  from './core/api/api-images.service';
@@ -103,6 +105,7 @@ import { ApiUsersService }                   from './core/api/api-users.service'
 import { ApiUsersLocationsService }          from './core/api/api-users-locations.service';
 import { HelpersService }                    from './shared/helpers/helpers.service';
 import { IconService }                       from './core/services/icon.service';
+import { OauthRedirectComponent }            from './core/redirects/oauth-redirect.component';  // not really a component
 import { UserConfirmationRedirectComponent } from './core/redirects/user-confirmation-redirect.component';
 
 // Guards
@@ -165,6 +168,7 @@ export function HttpFactory(backend: XHRBackend,
                   AdminUserManagementComponent,   // move to child module for dashboard
                   LoginSignupFormComponent,
                   IconLinkComponent,
+                  BadgeComponent,
 
                   UserPageComponent,
                   UserSettingsComponent,         // move to child module for dashboard?
@@ -205,6 +209,7 @@ export function HttpFactory(backend: XHRBackend,
                   DragulaDelayLiftDirective,
                   SquareWidthElementDirective,
 
+                  OauthRedirectComponent,
                   UserConfirmationRedirectComponent,  // Really a service, but built as component
 
                   CallbackPipe,
@@ -227,6 +232,7 @@ export function HttpFactory(backend: XHRBackend,
                   ConfirmModalService,
                   WishifiedsApi,
                   ApiAuthService,
+                  ApiOauthService,
                   ApiAdminService,
                   ApiTagsService,
                   ApiImagesService,
