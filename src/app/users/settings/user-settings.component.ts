@@ -5,6 +5,7 @@ import { User, UserUpdates }   from "../user.model";
 import { IconService }         from '../../core/services/icon.service';
 import { AuthService }         from '../../core/auth/auth.service';
 import { ApiUsersService }     from '../../core/api/api-users.service';
+import { ApiOauthService }     from '../../core/api/api-oauth.service';
 import { WishifiedsApi }       from '../../core/api/wishifieds-api.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ConfirmModalService } from '../../shared/confirm-modal/confirm-modal.service';
@@ -30,11 +31,12 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked, OnDestro
   avatarUploader: FileUploader;
   userSub: Subscription;
   userEmit: Subject<any> = new Subject<any>();
-
+  badges: any = {};
 
   constructor(private icons:           IconService,
               private authService:     AuthService,
               private apiUsersService: ApiUsersService,
+              private apiOauthService: ApiOauthService,
               private router:          Router,
               private notifService:    NotificationService,
               private modalService:    ConfirmModalService,
@@ -42,8 +44,11 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked, OnDestro
 
   ngOnInit() {
     const that = this;
+    this.badges = {};
     this.isProcessing = true;
+
     this.userSub = this.userEmit.subscribe((updatedUser: any) => {
+      console.log("Updating user with newly retrieved user info: ", updatedUser);
       that.userSettings = {
         userId:   updatedUser.userId,
         username: updatedUser.email,
@@ -51,21 +56,9 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked, OnDestro
         picUrl:   updatedUser.profilePicUrl,
         status:   null
       };
+      that.loadBadges(updatedUser);
     });
-
-    this.apiUsersService.getUserById(this.authService.auth.userId)
-                        .subscribe(
-                          user => {
-                            console.log("USER RETURNED FROM GET BY ID: ", user);
-                            that.userEmit.next(user);
-                            that.resetSettingsCopy();  // Prep the editable form;
-                            that.isProcessing = false;
-                            that.isConfirmed = that.setIsConfirmed(user.confirmed);
-                          },
-                          error => {
-                            console.log("ERROR GETTING USER SETTINGS: ", error);
-                          }
-                        );
+    this.getUserForSettings();
 
     // Avatar Uploading Stuff; maybe one-day a service that takes url & returns files
     const uploaderOptions: FileUploaderOptions = {};
@@ -121,6 +114,23 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked, OnDestro
             that.notifService.notify('error', 'Confirmation email could not be sent. Please try again.', 8000);
           });
     }
+  }
+
+  getUserForSettings() {
+    const that = this;
+    this.apiUsersService.getUserById(this.authService.auth.userId)
+                        .subscribe(
+                          user => {
+                            console.log("USER RETURNED FROM GET BY ID: ", user);
+                            that.userEmit.next(user);
+                            that.resetSettingsCopy();  // Prep the editable form;
+                            that.isProcessing = false;
+                            that.isConfirmed = that.setIsConfirmed(user.confirmed);
+                          },
+                          error => {
+                            console.log("ERROR GETTING USER SETTINGS: ", error);
+                          }
+                        );
   }
 
   // Save & Cancel Buttons
@@ -199,6 +209,47 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked, OnDestro
           }
         });
     }
+  }
+
+  loadBadges(userInfo) {
+    const that = this;
+    this.badges = {};
+    try {
+      const badges = userInfo['badges'].forEach(function(badge) {
+        that.badges[badge.badgeType] = {
+            badgeType: badge.badgeType,
+            linkUrl: badge.linkUrl
+          };
+      });
+      console.log("Success loading badges: ", that.badges);
+    } catch (e) { console.log("Error loading badges: ", e); }
+  }
+
+  attemptAddBadge(badgeType: string) {
+    console.log("MADE IT TO FB VALIDATION FUNCTION...");
+    this.apiOauthService.oauthProviderRedirect(badgeType);
+    console.log("THE REQUEST WILL NOT COME BACK HERE, BUT WILL BE REDIRECTED VIA OAUTH");
+  }
+
+  removeBadge(badgeType: string) {
+    const that = this;
+    console.log("MADE IT TO FB BADGE REMOVAL FUNCTION...");
+    this.apiUsersService.deleteBadge(this.authService.auth.userId, badgeType)
+      .subscribe(
+        success => {
+          console.log("SUCCESS DELETING BADGE: ", success);
+          let successMsg = 'We have removed your Facebook credibility badge & all of your facebook credibility info.'
+          that.notifService.notify('success', successMsg);
+          that.getUserForSettings();
+        },
+        error => {
+          console.log("ERROR removing badge for ", badgeType, '. Error: ', error);
+          const errorMsg = 'Oops, something went wrong when attempting to remove your badge. ' +
+            'Please try again (now or later). ' +
+            'If that doesnt work, please refresh the page, just in case it was successful but lost in translation.'
+          that.notifService.notify('error', errorMsg);
+        }
+      );
   }
 
   cancel() {

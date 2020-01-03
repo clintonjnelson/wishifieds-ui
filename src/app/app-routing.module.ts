@@ -11,6 +11,7 @@ import { ListingPageComponent }          from './listings/listing-page.component
 import { EditListingComponent }          from './listings/edit-listing.component';
 import { UserPageComponent }             from './users/user-page.component';
 import { UserSettingsComponent }         from './users/settings/user-settings.component';
+import { OauthRedirectComponent }        from './core/redirects/oauth-redirect.component';
 import { UserConfirmationRedirectComponent } from './core/redirects/user-confirmation-redirect.component';
 import { TermsConditionsComponent }          from './static-pages/terms-conditions/terms-conditions.component';
 import { PrivacyNoticeComponent }            from './static-pages/privacy-notice/privacy-notice.component';
@@ -21,6 +22,8 @@ import { OwnerGuard } from './core/auth/owner-guard.service';
 
 // App Routes
 const rootRoutes: Routes = [
+  { path: 'oauth/errors/:redirecttype',  component: OauthRedirectComponent, pathMatch: 'full'},
+  { path: 'oauth/success/:redirecttype', component: OauthRedirectComponent, pathMatch: 'full'},
   { path: 'user/confirmation', component: UserConfirmationRedirectComponent, pathMatch: 'full'},
 
   { path: 'requestpasswordchange', component: RequestPasswordResetComponent, pathMatch: 'full'},

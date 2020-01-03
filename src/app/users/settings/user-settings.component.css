@@ -85,7 +85,7 @@ i {
   margin-bottom: 2em;
 }
 
-.avatar-settings-card {
+.avatar-settings-card, .settings-card {
   display: flex;
   flex-direction: column;
 }

@@ -193,6 +193,24 @@ export class ApiUsersService {
                );
   }
 
+  deleteBadge(userId: string, badgeType: string): Observable<any> {
+    const deleteUserBadgeUrl = this.wishifiedsApi.buildUrl(
+      'deleteUserBadge', [{':userId': userId}, {':badgeType': badgeType}]
+    );
+    const options = this.wishifiedsApi.getRequestOptionWithEatHeader();
+    return this.http
+               .delete(deleteUserBadgeUrl, options)
+               .pipe(
+                 map( res => {
+                   console.log("RESPONSE FROM Delete USER BADGE: ", res);
+                   return res.json();
+                 }),
+                 catchError( (error: Response) => {
+                   return throwError(error);
+                 })
+               );
+  }
+
   // updateProfilePic(userId: string, imageFile: FormData): Observable<boolean> {
   //   const updateProfilePicUrl = this.wishifiedsApi.buildUrl('updateProfilePic', [{':id': userId}]);
   //   const headers = this.wishifiedsApi.getHeaderWithEat();

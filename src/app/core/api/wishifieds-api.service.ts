@@ -29,6 +29,11 @@ const ROUTES = {
   updateUser:  '/api/users/:id',
   checkAvailability: '/api/users/available?username=:username&email=:email',
 
+  oauth: {
+    facebook: '/api/validate_credibility/facebook',
+  },
+  deleteUserBadge: '/api/users/:userId/badges/:badgeType',
+
   // Listings & listing-based resources
   getListingsByUser: '/api/listings/user/:usernameOrId',
   getFavoriteListingsByUser: '/api/listings/favorites',  // favorites for requesting user

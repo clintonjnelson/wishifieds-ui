@@ -2,6 +2,17 @@
 <div class="user-settings-container">
   <h2 class="settings-page-heading">settings</h2>
 
+  <div>
+    <mat-card>
+      <h1>
+        CREDIBILITY VALIDATION
+        <i *ngIf="badges && badges['FACEBOOK']" class="{{buildIconClass('check', 3)}}"></i>
+      </h1>
+      <button type="button" (click)="attemptAddBadge('facebook')">Add Facebook Credibility</button>
+      <button type="button" (click)="removeBadge('facebook')">Remove Facebook Credibility</button>
+    </mat-card>
+  </div>
+
   <!-- Email but NOT confirmed -->
   <div *ngIf="!isConfirmed && userSettings && !!userSettings.email" class="settings-confirmation-container">
     <h3>You have not yet confirmed your email</h3>
@@ -74,6 +85,17 @@
       <button type="button" class="upload-avatar-button" (click)="avatarUploader.uploadAll()" [disabled]="!avatarUploader.getNotUploadedItems().length">
         Save Avatar
       </button>
+    </mat-card>
+  </div>
+
+  <br>
+  <br>
+
+  <div>
+    <mat-card *ngIf="!isProcessing" class="settings-card">
+      <label for="">Advertise Your Credibility (badge included)</label>
+      <badge class="example-facebook-badge" [badgeType]="'facebook'" [linkUrl]="'www.facebook.com'" [size]="1"></badge>
+      <button type="button" (click)="attemptValidationForBadge('facebook')">Get Badge</button>
     </mat-card>
   </div>
 
