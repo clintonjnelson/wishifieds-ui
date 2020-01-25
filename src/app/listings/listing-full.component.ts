@@ -92,7 +92,7 @@ export class ListingFullComponent implements OnInit, OnDestroy {
     this.favSub.unsubscribe();
   }
 
-  buildIconClass(icon: string, size: string = '2', type: string) {
+  buildIconClass(icon: string, size: string = '2', type: string = "s") {
     return this.icons.buildIconClass(icon, size, type);
   }
 
@@ -223,7 +223,8 @@ export class ListingFullComponent implements OnInit, OnDestroy {
   closeListing(): void {
     this.toggleEditing(false);
 
-    if(window.history.length > 1) {
+    // Came from somewhere linked
+    if(window.history.length > 1 && document.referrer.indexOf(window.location.host) !== -1) {
       window.history.back();
     }
     // If owner is viewing own listing & closes, go back to their withlistings home
