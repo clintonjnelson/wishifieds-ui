@@ -199,6 +199,7 @@ export function HttpFactory(backend: XHRBackend,
                   UserMessagesComponent,
                   MessageBubbleComponent,
                   MessageBubbleAvatarComponent,
+                  ListingMessagesSelectorComponent,
                   ListingAvatarMessagesComponent,
                   MessagesByListingComponent,
 

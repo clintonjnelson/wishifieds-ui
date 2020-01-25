@@ -1,11 +1,11 @@
 <div class="footer-container">
   <!-- Help Link -->
   <div class="faq-link-container">
-    <a routerLink="/faq" matTooltip="help/faq" matTooltipPosition="above" class="faq-icon">
+    <a routerLink="/faq" matTooltip="help/faq" matTooltipPosition="above" class="faq-icon" aria-label="frequently asked questions link">
       <i class="{{buildIconClass('question', '2')}}"></i>
     </a>
   </div>
-  <input name="clipboardUrlEl" #clipboardUrlEl id="clipboardUrlEl" [(ngModel)]="userHomeUrl"/>
+  <input name="clipboardUrlEl" #clipboardUrlEl id="clipboardUrlEl" [(ngModel)]="userHomeUrl" aria-hidden="true"/>
 
   <!-- Social Sharing Links -->
   <div *ngIf="!showSharingLinks" class="sharing-links-container">

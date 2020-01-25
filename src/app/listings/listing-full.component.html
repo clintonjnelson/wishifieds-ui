@@ -6,7 +6,7 @@
       <!-- TODO: IF NO SRC, SET A CLASS THAT WILL SET A BACKGROUND DEFAULT IMAGE ON DIV -->
       <div mat-card-avatar>
           <a [routerLink]="['/', listing.ownerUsername, 'listings']">
-            <img src="{{listing.ownerPicUrl}}" alt="" class="listing-owner-header-image">
+            <img src="{{listing.linkUrl}}" alt="user avatar" class="listing-owner-header-image">
           </a>
       </div>
       <mat-card-title>
@@ -50,7 +50,7 @@
 
     <div class="listing-example-link-container">
       <label class="listing-example-link-label" for="">Here's an example on another site:</label>
-      <a class="listing-example-link" href="{{ verifyOrAddProtocolToUrl(listing.linkUrl) }}" targer="_blank">{{ urlWithoutPrototol(listing.linkUrl) }}</a>
+      <a class="listing-example-link" href="{{ verifyOrAddProtocolToUrl(listing.linkUrl) }}" target="_blank">{{ urlWithoutPrototol(listing.linkUrl) }}</a>
     </div>
 
     <div *ngIf="!isPreview" class="listing-contact-buyer-container">

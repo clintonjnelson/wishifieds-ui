@@ -17,8 +17,8 @@ import { Subscription, Subject }        from 'rxjs';
 @Component({
   moduleId: module.id,
   selector: 'listing-messages-selector',
-  templateUrl: 'listing-messages-selector.html',
-  styleUrls: ['listing-messages-selector.css']
+  templateUrl: 'listing-messages-selector.component.html',
+  styleUrls: ['listing-messages-selector.component.css']
 })
 
 // TODO: In here, messaging is always between a listing owner & a seller/correspondent

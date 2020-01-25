@@ -5,7 +5,9 @@
 
     <!-- Hero Pre-PageLoad or Image Carousel Upon PageLoad -->
     <div *ngIf="!ready || listing.images.length < 2" class="listing-image-container">
-      <img class="preload-hero-image" alt="{{listing.title}}" src="{{listing.hero}}"/>
+      <a [routerLink]="['/', listing.ownerUsername, 'listings', listing.id]">
+        <img class="preload-hero-image" alt="{{listing.title}}" src="{{listing.hero}}"/>
+      </a>
     </div>
     <div *ngIf="ready && listing.images.length >= 2" class="listing-image-container">
       <img-carousel [images]="listing.images" [link]="listingLink" [modal]="false"></img-carousel>
