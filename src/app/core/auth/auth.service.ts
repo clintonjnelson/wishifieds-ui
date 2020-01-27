@@ -9,16 +9,17 @@ export class UserAuth {
   username:    string;
   role:        string;
   userId:      string;
+  profilePicUrl: string;
 };
 
 @Injectable()
 
 export class AuthService {
   // This is for User Authentication Controls
-  auth: UserAuth = {isLoggedIn: false, isLoggedOut: true, username: '', userId: '', role: ''};
+  auth: UserAuth = {isLoggedIn: false, isLoggedOut: true, username: '', userId: '', role: '', profilePicUrl: ''};
   userAuthEmit: Subject<UserAuth> = new Subject<UserAuth>();
   redirectUrl: string;
-  role = 'admin';  // FIX THIS LATER FOR ADMIN AUTH; Should check once & be done so no foulplay
+  role = 'admin';  // FIX THIS LATER FOR ADMIN AUTH; Should check once at login, set, & be done so no foulplay
 
   constructor(private router: Router,) {
     this.auth.isLoggedIn  = !!window.localStorage.getItem('eatAuthToken');
@@ -26,6 +27,7 @@ export class AuthService {
     this.auth.username    = window.localStorage.getItem('username');
     this.auth.role        = window.localStorage.getItem('role');
     this.auth.userId      = window.localStorage.getItem('userId');
+    this.auth.profilePicUrl = window.localStorage.getItem('profilePicUrl');
   }
 
   isOwner(usernameOrId: string) {
@@ -51,6 +53,7 @@ export class AuthService {
     this.auth.username    = window.localStorage.getItem('username');
     this.auth.role        = window.localStorage.getItem('role');
     this.auth.userId      = window.localStorage.getItem('userId');
+    this.auth.profilePicUrl = window.localStorage.getItem('profilePicUrl');
 
     this.userAuthEmit.next(this.auth);
   }
@@ -61,6 +64,7 @@ export class AuthService {
     window.localStorage.setItem('role', '');
     window.localStorage.setItem('email', '');
     window.localStorage.setItem('userId', '');
+    window.localStorage.setItem('profilePicUrl', '');
     this.updateAuthFromCookies();
   }
 
@@ -76,7 +80,8 @@ export class AuthService {
                  username:     string,
                  userId:       string,
                  email:        string = '',
-                 role:         string = '') {
+                 role:         string = '',
+                 profilePicUrl: string = '') {
     // let encodedEat = encodeURIComponent(eatAuthToken);
     // console.log("SETTING THE FOLLOWING COOKIE VALUES...");
     // console.log("EAT: ", eatAuthToken);
@@ -89,6 +94,7 @@ export class AuthService {
     window.localStorage.setItem('userId',       userId);
     window.localStorage.setItem('email',        email);
     window.localStorage.setItem('role',         role);
+    window.localStorage.setItem('profilePicUrl',         profilePicUrl);
 
     // Set cookie on window.cookie for oauth tokens
     // document.cookie = 'eat=' + encodedEat;
