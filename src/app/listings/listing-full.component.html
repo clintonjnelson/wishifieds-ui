@@ -6,7 +6,7 @@
       <!-- TODO: IF NO SRC, SET A CLASS THAT WILL SET A BACKGROUND DEFAULT IMAGE ON DIV -->
       <div mat-card-avatar>
           <a [routerLink]="['/', listing.ownerUsername, 'listings']">
-            <img src="{{listing.linkUrl}}" alt="user avatar" class="listing-owner-header-image">
+            <img src="{{listing.ownerPicUrl}}" alt="" class="listing-owner-header-image" aria-label="owner avatar">
           </a>
       </div>
       <mat-card-title>
@@ -111,7 +111,7 @@
 
         <!-- No Messages -->
         <p *ngIf="!msgCorrespondants || (msgCorrespondants && !msgCorrespondants.length)" class="no-messages">
-          No genies have offered to grant this wish.... yet.
+          No one wishing for that item... yet.
         </p>
       </div>
 

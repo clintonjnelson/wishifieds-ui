@@ -67,7 +67,8 @@ export class ListingMessagesSelectorComponent implements OnInit, OnDestroy {
        listingId: this.listingId,  // COULD get this from the route for user messages
        content: '',
        status: '',
-       createdAt: ''
+       createdAt: '',
+       senderPicUrl: '',
      };
      this.notifyImmediately = true;  // TODO: Hook feature up to SMS messaging notification, controlled by user settings as to whether to show or not
 

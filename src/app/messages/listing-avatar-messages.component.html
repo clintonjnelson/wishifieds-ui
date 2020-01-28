@@ -24,16 +24,15 @@ Flow:
       <!-- Unread Messages (Displays by User Avatar) -->
       <div *ngFor="let id of uniqueSenderIds; index as i">
 
-        <!-- Show the messenger's avatar. For contacts on external wishlistings, only avatar you see if you. -->
-        <!-- If you're not the listing owner, don't show unreads on user icon (only on listing icon) -->
-        <div *ngIf="!viewerIsOwner" matBadge="you" matBadgeOverlap="true" class="listing-response-avatar">
-          <img src="/assets/profile_default.png" alt="Sender pic" class="avatar-for-messages-selector" (click)="showSelectedMessages(i)">
+        <!-- Show the viewer in the correspondance as well [REMOVED AS CONFUSING!]-->
+        <div *ngIf="!viewerIsOwner" matBadgeHidden="true" matBadgeOverlap="true" class="listing-response-avatar">
+          <img src="{{getCorrespondantProfilePic(id)}}" alt="Sender pic" class="avatar-for-messages-selector" (click)="showSelectedMessages(i)">
         </div>
 
         <!-- For your wishlistings, all correspondants will be shown. -->
         <!-- Any unread messages from a correspondant will be shown with a badge & the unreads count -->
         <div *ngIf="viewerIsOwner" class="listing-response-avatar" [matBadgeHidden]="viewerIsOwner && countUnreadsByUser(id) < 1" matBadge="{{countUnreadsByUser(id)}}" matBadgeOverlap="true" class="listing-response-avatar">
-          <img src="/assets/profile_default.png" alt="Sender pic" class="avatar-for-messages-selector" (click)="showSelectedMessages(i)">
+          <img src="{{getCorrespondantProfilePic(id)}}" alt="Sender pic" class="avatar-for-messages-selector" (click)="showSelectedMessages(i)">
         </div>
       </div>
     </div>

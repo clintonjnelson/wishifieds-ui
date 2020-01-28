@@ -98,3 +98,18 @@
   position: absolute;
   left: -2px;  /* Flips the side of the message box */
 }
+
+.msg-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.sender-pic {
+  width: 3em;
+  height: 3em;
+}
+
+.msg-timestamp {
+ margin-top: 0;
+}

@@ -11,6 +11,7 @@ const NEW_LISTING: Listing = {
   id:             undefined,
   userId:         "-1", // Fill this in with the requesting user information
   ownerUsername:  "",
+  ownerPicUrl:    "",
   title:          "",
   description:    "",
   linkUrl:        "",

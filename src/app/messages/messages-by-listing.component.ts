@@ -43,6 +43,7 @@ export class MessagesByListingComponent implements OnInit, OnDestroy {
           if(listingsMsgs && listingsMsgs.length) {
             // Format messages for UI usage
             let lstgMsgs = listingsMsgs.map(listing => {
+              // Replace the messages object list with the UI mapped messages objects list
               listing.messages = listing.messages.map(msg => {
                 return that.mapMessageModel(msg);
               });
@@ -74,7 +75,8 @@ export class MessagesByListingComponent implements OnInit, OnDestroy {
       listingId: rawMsg.listingId,
       content: rawMsg.content,
       status: rawMsg.status,
-      createdAt: rawMsg.createdAt
+      createdAt: rawMsg.createdAt,
+      senderPicUrl: rawMsg.senderPicUrl
     }
   }
 }

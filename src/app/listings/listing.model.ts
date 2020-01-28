@@ -4,6 +4,7 @@ import { Location } from '../shared/models/location.model';
 export class Listing {
   id:            string;
   userId:        string;
+  ownerPicUrl:   string;
   ownerUsername: string;
   title:         string;  // TODO: NOT ID!
   description:   string;

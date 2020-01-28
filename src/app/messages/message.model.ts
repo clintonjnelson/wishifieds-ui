@@ -7,6 +7,7 @@ export class Message {
   content: string;
   status: string;
   createdAt: string; // DATESTAMP?????
+  senderPicUrl: string;
 }
 
 

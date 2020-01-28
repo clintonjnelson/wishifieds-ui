@@ -76,6 +76,19 @@ export class ListingAvatarMessagesComponent implements OnInit, OnDestroy {
     this.selectedEmit.next(this.uniqueSenderIds[userIndex]);
   }
 
+  getCorrespondantProfilePic(userId) {
+    console.log("USER ID FOR COUNTS IS: ", userId);
+    console.log("ListingWithMessages is", this.listingWithMessages);
+    if(userId == this.listingWithMessages.listingOwnerId) {
+      console.log("USE AUTH PIC URL: ", this.authService.auth.profilePicUrl);
+      return this.authService.auth.profilePicUrl;
+    }
+
+    var firstSenderMsg = this.listingWithMessages.messages.find(msg => {return msg.senderId == userId})
+    console.log("FIRST SENDER MESSAGE PROFILE PIC FOUND: ", firstSenderMsg);
+    return firstSenderMsg['senderPicUrl'] || '/assets/profile_default.png';
+  }
+
   countUnreadsByUser(userId) {
     return this.listingWithMessages.messages
       .filter( msg => { return (msg.senderId == userId && msg.status == "UNREAD") })

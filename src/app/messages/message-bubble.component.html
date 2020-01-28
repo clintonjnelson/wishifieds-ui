@@ -2,14 +2,20 @@
 <!-- Recipient Message Bubble -->
 <div *ngIf="!viewerIsSender" class="speech-bubble-ds right-color"
 [ngClass]="{'highlight-unread': message.status === 'UNREAD'}">
-  <p><small>{{ displayTime(message.createdAt) }}</small></p>
+  <div class="msg-header">
+    <img src="{{message.senderPicUrl}}" alt="" aria-label="sender avatar pic" class="sender-pic">
+    <p class="msg-timestamp"><small>{{ displayTime(message.createdAt) }}</small></p>
+  </div>
   <p>{{ message.content }}</p>
   <div class="speech-bubble-ds-arrow-right"></div>
 </div>
 
 <!-- Sender Message Bubble -->
 <div *ngIf="viewerIsSender" class="speech-bubble-ds left-color">
-  <p><small>{{ displayTime(message.createdAt) }}</small></p>
+  <div class="msg-header">
+    <img src="{{message.senderPicUrl}}" alt="" aria-label="sender avatar pic" class="sender-pic">
+    <p class="msg-timestamp"><small>{{ displayTime(message.createdAt) }}</small></p>
+  </div>
   <p>{{ message.content }}</p>
   <div class="speech-bubble-ds-arrow-left"></div>
 </div>
