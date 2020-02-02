@@ -1,10 +1,9 @@
 .user-settings-container {
   display: flex;
   flex-direction: column;
-  /*flex-grow: 2;*/
-  /*width: 100%;*/
   justify-content: space-between;
-  max-width: 400px;
+  margin-bottom: 1em;
+  /*max-width: 400px;*/
 }
 
 h2.settings-page-heading {
@@ -17,7 +16,7 @@ h2.settings-page-heading {
 
 .settings-confirmation-container {
   padding: 10px 10px 10px 10px;
-  border: 1px solid white;
+  /*border: 1px solid white;*/
   border-radius: 3px;
   text-align: center;
 }
@@ -27,11 +26,21 @@ h2.settings-page-heading {
   font-family: defaultfont, helvetica, sans-serif;
 }
 
+.settings-profile{
+  width: 100%;
+}
+
 .user-settings-form {
   display: flex;
   flex: 1 0 auto;
   flex-direction: column;
   /*max-width: 200px;*/
+  width: 100%;
+  max-width: 25em;
+  /*border: 1px solid lightgray;*/
+  background-color: #737373;
+
+  /*padding-left: 1em;*/
 }
 
 /* Container for each input */
@@ -75,6 +84,18 @@ h2.settings-page-heading {
   background: white !important;
 }
 
+::ng-deep .mat-tab-header {
+  margin-bottom: 1em;
+}
+
+::ng-deep .settings-tabs-icon {
+  display: flex;
+  flex-direction: column;
+}
+::ng-deep .settings-tabs-icon p {
+  margin: 0;
+}
+
 i {
   margin-right: 5px;
 }
@@ -85,9 +106,14 @@ i {
   margin-bottom: 2em;
 }
 
-.avatar-settings-card, .settings-card {
+.avatar-settings-card, .settings-card, .user-settings-card, .user-feature-options-card {
   display: flex;
   flex-direction: column;
+  width: 88%;
+  max-width: 25em;
+  border: 1px solid lightgray;
+  background-color: #737373;
+  margin: 0.5em;
 }
 
 .avatar-settings-img {
@@ -95,10 +121,23 @@ i {
   max-width: 3em;
 }
 
-button.avatar-upload-button {
+/*#616161*/
+button.upload-avatar-button {
+  margin-top: 1em;
   color: white;
-  background-color: lightgray;
+  background-color: #616161;
+  width: auto;
+  max-width: 10em;
 }
+
+.badges-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 5em;
+}
+
 
 /*.user-locations-form {
   display: flex;

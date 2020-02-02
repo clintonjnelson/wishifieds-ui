@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild, AfterViewChecked, OnDestroy } from '@angular/core';
-import { Router }              from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NgForm, FormControl } from '@angular/forms';
 import { User, UserUpdates }   from "../user.model";
 import { IconService }         from '../../core/services/icon.service';
-import { AuthService }         from '../../core/auth/auth.service';
+import { AuthService, UserAuth } from '../../core/auth/auth.service';
 import { ApiUsersService }     from '../../core/api/api-users.service';
 import { ApiOauthService }     from '../../core/api/api-oauth.service';
 import { WishifiedsApi }       from '../../core/api/wishifieds-api.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ConfirmModalService } from '../../shared/confirm-modal/confirm-modal.service';
-import { MatInputModule }      from '@angular/material';
+import { MatInputModule, MatTabChangeEvent } from '@angular/material';
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { Subscription, Subject } from 'rxjs';
 
@@ -21,6 +21,9 @@ import { Subscription, Subject } from 'rxjs';
 })
 
 export class UserSettingsComponent implements OnInit, AfterViewChecked, OnDestroy {
+  auth: UserAuth;
+  authSubscription: Subscription;
+  isOwner = false;
   isConfirmed:    boolean;
   isProcessing:   boolean;
   emailWasResent = false;
@@ -33,20 +36,36 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked, OnDestro
   userEmit: Subject<any> = new Subject<any>();
   badges: any = {};
 
+  // Page Tabs
+  pageSubscription: Subscription;
+  tabsSubscription: Subscription;
+  usernameFromRoute: string;
+  currentTabIndex: number;
+  tabMap = ['profile', 'locations', 'credibility'];
+
   constructor(private icons:           IconService,
               private authService:     AuthService,
               private apiUsersService: ApiUsersService,
               private apiOauthService: ApiOauthService,
+              private route:           ActivatedRoute,
               private router:          Router,
               private notifService:    NotificationService,
               private modalService:    ConfirmModalService,
-              private wishifiedsApi:   WishifiedsApi) {}
+              private wishifiedsApi:   WishifiedsApi) {
+
+    // Subscribe to the auth service, so stay updated on changes
+    this.auth = authService.auth;
+    this.authSubscription = authService.userAuthEmit.subscribe((newVal: UserAuth) => {
+      this.auth = newVal;
+    });
+  }
 
   ngOnInit() {
     const that = this;
     this.badges = {};
     this.isProcessing = true;
 
+    // Maintain user settings info
     this.userSub = this.userEmit.subscribe((updatedUser: any) => {
       console.log("Updating user with newly retrieved user info: ", updatedUser);
       that.userSettings = {
@@ -59,6 +78,22 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked, OnDestro
       that.loadBadges(updatedUser);
     });
     this.getUserForSettings();
+
+    // Validate Owner via Unique username (if username changes, this updates the routeParams)
+    this.pageSubscription = this.route.params.subscribe( (params: Params) => {
+      const username = params['username'];
+      console.log("TRIGGERED SUBSCRIPTION THAT WATCHES PARAMS: ", params);
+      that.updateUsernameBasedData(username);
+    });
+
+    // Update the page tab based on the URL specified tab
+    this.tabsSubscription = this.route.queryParams.subscribe( params => {
+      let tabName = params['tab'];
+      if(!!tabName) {
+        let tabIndex = that.tabMap.indexOf(tabName);
+        that.currentTabIndex = tabIndex;
+      }
+    });
 
     // Avatar Uploading Stuff; maybe one-day a service that takes url & returns files
     const uploaderOptions: FileUploaderOptions = {};
@@ -84,14 +119,22 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked, OnDestro
 
   ngOnDestroy() {
     this.userSub.unsubscribe();
+    this.authSubscription.unsubscribe();
+    this.pageSubscription.unsubscribe();
+    this.tabsSubscription.unsubscribe();
+  }
+
+  setCurrentTab(event: MatTabChangeEvent) {
+    const tab = this.tabMap[event.index];
+    this.updateExistingUrl(tab)
   }
 
   setIsConfirmed(value: string) {
     return value === 'true';
   }
 
-  buildIconClass(icon: string, size: string = '2') {
-    return this.icons.buildIconClass(icon, size);
+  buildIconClass(icon: string, size: string = '2', fontType: string = 's') {
+    return this.icons.buildIconClass(icon, size, fontType);
   }
 
   resendConfirmationEmail(event: any = null) {
@@ -262,6 +305,31 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked, OnDestro
   }
 
   // ********** CONSIDER BREAKING OUT TO A SERVICE - SIMILIAR TO SIGNS *************
+  private updateUsernameBasedData(username: string) {
+    this.usernameFromRoute = username;
+    console.log("Username from route is: ", this.usernameFromRoute);
+
+    this.isOwner = this.authService.isOwner(this.usernameFromRoute);
+    console.log("ISOWNER IS: ", this.isOwner);
+  }
+
+  // Ensures tab name alignment
+  private updateExistingUrl(tab: string) {
+    if(window.history.pushState) {
+      const updatedTabUrl = window.location.protocol + '//' +  // https://
+                             window.location.host +             // www.wishifieds.com
+                             window.location.pathname +         // /
+                             '?tab=' + tab;  // ?searchQuery=Superman
+      // Update the existing history
+      window.history.pushState({path: updatedTabUrl}, '', updatedTabUrl);
+    }
+
+    // Trigger resize to fix map only displaying one tile due to hidden tab; reloads map.
+    if(tab == "locations") {
+      window.dispatchEvent(new Event('resize'));
+    }
+  }
+
   // Resets the buttons that are triggered by changes
   private resetFormDisplay() {
     const controls = this.userSettingsForm.controls;

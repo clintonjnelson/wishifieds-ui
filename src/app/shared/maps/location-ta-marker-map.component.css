@@ -1,4 +1,8 @@
 
+.search-input-container {
+  width: 75%;
+}
+
 ::ng-deep span.mat-option-text {
   color: gray;
 }

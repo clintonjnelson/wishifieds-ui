@@ -1,3 +1,13 @@
+.user-locations-card {
+  display: flex;
+  flex-direction: column;
+  width: 88%;
+  max-width: 25em;
+  border: 1px solid lightgray;
+  background-color: #737373;
+  margin: 0.5em;
+}
+
 .user-locations-form {
   display: flex;
   flex-direction: column;

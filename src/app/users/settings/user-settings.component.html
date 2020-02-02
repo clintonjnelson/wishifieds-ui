@@ -1,110 +1,172 @@
 <!-- User Settings Form -->
 <div class="user-settings-container">
-  <h2 class="settings-page-heading">settings</h2>
+  <!-- <h2 class="settings-page-heading">settings</h2> -->
 
-  <div>
-    <mat-card>
-      <h1>
-        CREDIBILITY VALIDATION
-        <i *ngIf="badges && badges['FACEBOOK']" class="{{buildIconClass('check', 3)}}"></i>
-      </h1>
-      <button type="button" (click)="attemptAddBadge('facebook')">Add Facebook Credibility</button>
-      <button type="button" (click)="removeBadge('facebook')">Remove Facebook Credibility</button>
-    </mat-card>
+  <!-- Owner User: Content Tabs -->
+  <div *ngIf="auth.isLoggedIn && isOwner">
+    <mat-tab-group [selectedIndex]="currentTabIndex" (selectedTabChange)="setCurrentTab($event)">
+
+      <!-- Profile Tab Section -->
+      <mat-tab id="settings-profile">
+
+        <!-- Label: Profile Settings-->
+        <ng-template matTabLabel>
+          <div class="settings-tabs-icon">
+            <i class="{{ buildIconClass('user-cog', '3') }}"></i>
+            <p>profile</p>
+          </div>
+        </ng-template>
+
+        <!-- Content: Profile Settings -->
+        <!-- Email but NOT confirmed -->
+        <div *ngIf="!isConfirmed && userSettings && !!userSettings.email" class="settings-confirmation-container">
+          <h3>You have not yet confirmed your email</h3>
+          <p>Please visit your email inbox, and click the link in the Wishifieds Confirmation email.</p>
+          <a *ngIf="!emailWasResent" (click)="resendConfirmationEmail($event)" href="#">Click here to re-send the confirmation email</a>
+          <p *ngIf="emailWasResent">
+            <i class="{{buildIconClass('check', 3)}}"></i>Email Sent!
+          </p>
+          <p *ngIf="displayedValidationErrors.confirmation" class="error">
+            {{ displayedValidationErrors.confirmation }}
+          </p>
+        </div>
+
+        <!-- NO Email + NO confirmation -->
+        <!-- <div *ngIf="!isConfirmed && userSettings && !userSettings.email" class="settings-confirmation-container">
+          <h3>You have not yet entered your email</h3>
+          <p>Please update your email address below.</p>
+        </div> -->
+
+        <!-- Email & Username Change Form -->
+        <mat-card class="settings-card">
+          <form *ngIf="!isProcessing" name="userSettingsForm" class="user-settings-form" #userSettingsForm="ngForm">
+
+            <!-- Contact & Login Email -->
+            <div class="settings-input-error-container">
+              <mat-form-field class="user-settings-input">
+                <i class="{{buildIconClass('envelope', 1)}}"></i>
+                <input matInput type="email" name="email" [(ngModel)]="tempSettings.email" placeholder="your login/contact email" minlength="5" required/>
+              </mat-form-field>
+              <div *ngIf="displayedValidationErrors.email" class="input-errors error">
+                {{ displayedValidationErrors.email }}
+              </div>
+            </div>
+
+            <!-- Username -->
+            <div class="settings-input-error-container">
+              <mat-form-field class="user-settings-input">
+                <i class="{{buildIconClass('user', 1)}}"></i>
+                <input matInput type="text" name="username" [(ngModel)]="tempSettings.username" placeholder="your display username" minlength="1" maxlength="20" required/>
+              </mat-form-field>
+              <!-- Show errors only if exist and input has been modified -->
+              <div *ngIf="displayedValidationErrors.username" class="input-errors error">
+                {{ displayedValidationErrors.username }}
+              </div>
+            </div>
+
+            <!-- General Errors -->
+            <div *ngIf="displayedValidationErrors.main" class="input-errors error">
+              {{ displayedValidationErrors.main }}
+            </div>
+            <!-- Save/Cancel Buttons -->
+            <div *ngIf="userSettingsForm.form.dirty" class="save-cancel-buttons">
+              <!-- Save button - show only if for modified & dirty; hide if any part is not valid -->
+              <a (click)="save()" type="submit" class="user-settings-saveicon" [hidden]="!userSettingsForm.form.valid || !userSettingsForm.form.dirty" [attr.disabled]="!userSettingsForm.form.valid">
+                <i class="{{buildIconClass('check', 2)}}"></i>
+              </a>
+              <!-- Cancel button -->
+              <a (click)="cancel()" class="user-settings-cancelicon" [hidden]="!userSettingsForm.form.dirty">
+                <i class="{{buildIconClass('times', 2)}}"></i>
+              </a>
+            </div>
+          </form>
+        </mat-card>
+
+        <!-- Profile Pic Change -->
+        <div>
+          <mat-card *ngIf="!isProcessing" class="settings-card">
+            <label for="">Avatar</label>
+            <img src="{{userSettings.picUrl}}" alt="" class="avatar-settings-img">
+
+            <input type="file" name="avatar" ng2FileSelect [uploader]="avatarUploader"/>
+            <button *ngIf="avatarUploader.getNotUploadedItems().length" type="button" class="upload-avatar-button" (click)="avatarUploader.uploadAll()" [disabled]="!avatarUploader.getNotUploadedItems().length">
+              Save Avatar
+            </button>
+          </mat-card>
+        </div>
+
+        <mat-card class="user-feature-options-card">
+          <p>Send Email Notifications: true</p>
+          <p>Allow Text Notifications: true</p>
+        </mat-card>
+      </mat-tab>
+
+
+      <!-- Locations Tab Section -->
+      <mat-tab>
+
+        <!-- Label: Locations -->
+        <ng-template matTabLabel>
+          <div class="settings-tabs-icon">
+            <i class="{{ buildIconClass('map-marker-alt', '3') }}"></i>
+            <p>locations</p>
+          </div>
+        </ng-template>
+
+        <!-- Content: Locations -->
+        <user-locations-manager></user-locations-manager>
+      </mat-tab>
+
+
+      <!-- Crediility Tab Section -->
+      <mat-tab>
+
+        <!-- Label: Credibility -->
+        <ng-template matTabLabel>
+          <div class="settings-tabs-icon">
+            <i class="{{ buildIconClass('certificate', '3') }}"></i>
+            <p>credibility</p>
+          </div>
+        </ng-template>
+
+        <!-- Content: Credibility -->
+        <div>
+          <mat-card class="settings-card">
+
+            <h5> Current Credibility Badges </h5>
+            <!-- See/Remove Facebook Badge -->
+            <div *ngIf="badges && badges['FACEBOOK']" class="badges-container">
+              <badge [badgeType]="badges['FACEBOOK']['badgeType']" [linkUrl]="badges['FACEBOOK']['linkUrl']" [size]="3"></badge>
+              <i class="{{buildIconClass('times', 3)}} badge-action" (click)="removeBadge('facebook')"></i>
+            </div>
+
+
+            <h5>Add Badges</h5>
+            <!-- Add Facebook Badge -->
+            <div *ngIf="badges && !badges['FACEBOOK']" class="badges-container">
+              <i class="{{buildIconClass('facebook-f', 4, 'b')}} badge-action" style="color:#3B5998;" (click)="attemptAddBadge('facebook')"></i>
+            </div>
+
+            <!-- TODO: Create a section for badges that the user doesn't have but can get through other means -->
+          </mat-card>
+        </div>
+      </mat-tab>
+
+
+      <!-- Notifications Tab Section -->
+      <!-- <mat-tab>
+
+         Label: Notifications
+        <ng-template matTabLabel>
+          <div class="settings-tabs-icon">
+            <i class="{{ buildIconClass('map-marker-alt', '3') }}"></i>
+            <p>notifications</p>
+          </div>
+        </ng-template>
+
+        Content: notifications
+        <user-locations-manager></user-locations-manager>
+      </mat-tab> -->
+    </mat-tab-group>
   </div>
-
-  <!-- Email but NOT confirmed -->
-  <div *ngIf="!isConfirmed && userSettings && !!userSettings.email" class="settings-confirmation-container">
-    <h3>You have not yet confirmed your email</h3>
-    <p>Please visit your email inbox, and click the link in the Syynpost Confirmation email.</p>
-    <a *ngIf="!emailWasResent" (click)="resendConfirmationEmail($event)" href="#">Click here to re-send the confirmation email</a>
-    <p *ngIf="emailWasResent">
-      <i class="{{buildIconClass('check', 3)}}"></i>Email Sent!
-    </p>
-    <p *ngIf="displayedValidationErrors.confirmation" class="error">
-      {{ displayedValidationErrors.confirmation }}
-    </p>
-  </div>
-
-  <!-- NO Email + NO confirmation -->
-  <div *ngIf="!isConfirmed && userSettings && !userSettings.email" class="settings-confirmation-container">
-    <h3>You have not yet entered your email</h3>
-    <p>Please update your email address below.</p>
-  </div>
-
-  <form *ngIf="!isProcessing" name="userSettingsForm" class="user-settings-form" #userSettingsForm="ngForm">
-
-    <!-- Username -->
-    <div class="settings-input-error-container">
-      <mat-form-field class="user-settings-input">
-        <i class="{{buildIconClass('user', 1)}}"></i>
-        <input matInput type="text" name="username" [(ngModel)]="tempSettings.username" placeholder="your signpost username" minlength="1" maxlength="20" required/>
-      </mat-form-field>
-      <!-- Show errors only if exist and input has been modified -->
-      <div *ngIf="displayedValidationErrors.username" class="input-errors error">
-        {{ displayedValidationErrors.username }}
-      </div>
-    </div>
-
-    <!-- Contact & Login Email -->
-    <div class="settings-input-error-container">
-      <mat-form-field class="user-settings-input">
-        <i class="{{buildIconClass('envelope', 1)}}"></i>
-        <input matInput type="email" name="email" [(ngModel)]="tempSettings.email" placeholder="your login/contact email" minlength="5" required/>
-      </mat-form-field>
-      <div *ngIf="displayedValidationErrors.email" class="input-errors error">
-        {{ displayedValidationErrors.email }}
-      </div>
-    </div>
-
-    <!-- General Errors -->
-    <div *ngIf="displayedValidationErrors.main" class="input-errors error">
-      {{ displayedValidationErrors.main }}
-    </div>
-    <!-- Save/Cancel Buttons -->
-    <div class="save-cancel-buttons">
-      <!-- Save button - show only if for modified & dirty; hide if any part is not valid -->
-      <a (click)="save()" type="submit" class="user-settings-saveicon" [hidden]="!userSettingsForm.form.valid || !userSettingsForm.form.dirty" [attr.disabled]="!userSettingsForm.form.valid">
-        <i class="{{buildIconClass('check', 2)}}"></i>
-      </a>
-      <!-- Cancel button -->
-      <a (click)="cancel()" class="user-settings-cancelicon" [hidden]="!userSettingsForm.form.dirty">
-        <i class="{{buildIconClass('times', 2)}}"></i>
-      </a>
-    </div>
-  </form>
-
-  <!-- TODO: COULD TOTALLY BREAK THIS INTO A COMPONENT -->
-  <!-- Change User Avatar -->
-  <div>
-    <mat-card *ngIf="!isProcessing" class="avatar-settings-card">
-      <label for="">Avatar</label>
-      <img src="{{userSettings.picUrl}}" alt="" class="avatar-settings-img">
-
-      <input type="file" name="avatar" ng2FileSelect [uploader]="avatarUploader"/>
-      <button type="button" class="upload-avatar-button" (click)="avatarUploader.uploadAll()" [disabled]="!avatarUploader.getNotUploadedItems().length">
-        Save Avatar
-      </button>
-    </mat-card>
-  </div>
-
-  <br>
-  <br>
-
-  <div>
-    <mat-card *ngIf="!isProcessing" class="settings-card">
-      <label for="">Advertise Your Credibility (badge included)</label>
-      <badge class="example-facebook-badge" [badgeType]="'facebook'" [linkUrl]="'www.facebook.com'" [size]="1"></badge>
-      <button type="button" (click)="attemptValidationForBadge('facebook')">Get Badge</button>
-    </mat-card>
-  </div>
-
-  <br>
-  <br>
-
-  <!-- Manage User Locations -->
-  <user-locations-manager></user-locations-manager>
-
-  <p>Send Email Notifications: true</p>
-  <p>Allow Text Notifications: true</p>
 </div>
