@@ -16,9 +16,13 @@ listings-search-map {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 80%;
+  width: 100%;
   max-width: 1100px;
   margin-bottom: 1em;
+}
+
+div#listings-map-container {
+  width: 100%;
 }
 
 section.results-container {

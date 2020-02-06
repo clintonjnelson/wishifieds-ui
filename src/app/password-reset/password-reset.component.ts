@@ -35,7 +35,7 @@ export class PasswordResetComponent {
           success => {
             console.log("SUCCESS ON RESET IS: ", success);
             const user = success.user;
-            this.authService.setAuthCookies(user.eat, user.username, user.userId, user.email, user.role);
+            this.authService.setAuthCookies(user.eat, user.username, user.userId, user.email, user.role, user.profilePicUrl);
             this.router.navigate([user.username]);
           },
           error => {

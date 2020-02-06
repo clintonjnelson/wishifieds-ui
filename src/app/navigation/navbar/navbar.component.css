@@ -128,6 +128,10 @@
   justify-content: flex-end;
 }
 
+login-signup-form {
+  margin-bottom: 1em;
+}
+
 .navbar-bottom-hr {
   margin-top: 0px;
 }

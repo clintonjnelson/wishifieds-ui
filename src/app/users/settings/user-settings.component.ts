@@ -216,7 +216,8 @@ export class UserSettingsComponent implements OnInit, AfterViewChecked, OnDestro
                                           user.username,
                                           user.userId,
                                           user.email,
-                                          user.role);
+                                          user.role,
+                                          user.profilePicUrl);
           // Send confirmation email, if necessary
           if(that.didUpdateUnconfirmedEmail(origEmail, user.email)) { that.resendConfirmationEmail(); }
           // Updates notifications

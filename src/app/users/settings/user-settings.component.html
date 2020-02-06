@@ -131,13 +131,14 @@
 
         <!-- Content: Credibility -->
         <div>
+          <!-- TODO: Make these dynamically populating instead of hard-coded -->
           <mat-card class="settings-card">
 
             <h5> Current Credibility Badges </h5>
             <!-- See/Remove Facebook Badge -->
-            <div *ngIf="badges && badges['FACEBOOK']" class="badges-container">
+            <div *ngIf="badges && badges['FACEBOOK']" class="badges-container badge-icon">
               <badge [badgeType]="badges['FACEBOOK']['badgeType']" [linkUrl]="badges['FACEBOOK']['linkUrl']" [size]="3"></badge>
-              <i class="{{buildIconClass('times', 3)}} badge-action" (click)="removeBadge('facebook')"></i>
+              <i class="{{buildIconClass('times', 3)}} badge-remove" (click)="removeBadge('facebook')"></i>
             </div>
 
 

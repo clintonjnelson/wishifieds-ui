@@ -3,7 +3,7 @@
 <div *ngIf="!viewerIsSender" class="speech-bubble-ds right-color"
 [ngClass]="{'highlight-unread': message.status === 'UNREAD'}">
   <div class="msg-header">
-    <img src="{{message.senderPicUrl}}" alt="" aria-label="sender avatar pic" class="sender-pic">
+    <img src="{{ message.senderPicUrl }}" alt="" aria-label="sender avatar pic" class="sender-pic">
     <p class="msg-timestamp"><small>{{ displayTime(message.createdAt) }}</small></p>
   </div>
   <p>{{ message.content }}</p>
@@ -13,7 +13,7 @@
 <!-- Sender Message Bubble -->
 <div *ngIf="viewerIsSender" class="speech-bubble-ds left-color">
   <div class="msg-header">
-    <img src="{{message.senderPicUrl}}" alt="" aria-label="sender avatar pic" class="sender-pic">
+    <img src="{{ message.senderPicUrl }}" alt="" aria-label="sender avatar pic" class="sender-pic">
     <p class="msg-timestamp"><small>{{ displayTime(message.createdAt) }}</small></p>
   </div>
   <p>{{ message.content }}</p>

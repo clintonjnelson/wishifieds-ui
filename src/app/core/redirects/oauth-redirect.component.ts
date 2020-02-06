@@ -31,12 +31,14 @@ export class OauthRedirectComponent implements OnInit {
         const role =     queryParams['role'];
         const email =    queryParams['email'];
         const userId =   queryParams['userId'];
+        const profilePicUrl = queryParams['profilePicUrl'];
         console.log('EAT TOKEN QUERY PARAM IS: ', eatToken);
         console.log('username QUERY PARAM IS: ', username);
         console.log('role QUERY PARAM IS: ', role);
         console.log('email QUERY PARAM IS: ', email);
         console.log('userId QUERY PARAM IS: ', userId);
-        this.authService.setAuthCookies(eatToken, username, userId, email, role);
+        console.log('profilePicUrl QUERY PARAM IS: ', profilePicUrl);
+        this.authService.setAuthCookies(eatToken, username, userId, email, role, profilePicUrl);
         this.router.navigate(['/', username]);
         break;
       }

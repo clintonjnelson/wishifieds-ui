@@ -4,7 +4,7 @@
     <mat-card-header class="listing-top-header">
 
       <!-- TODO: IF NO SRC, SET A CLASS THAT WILL SET A BACKGROUND DEFAULT IMAGE ON DIV -->
-      <div mat-card-avatar>
+      <div mat-card-avatar class="header-avatar">
           <a [routerLink]="['/', listing.ownerUsername, 'listings']">
             <img src="{{listing.ownerPicUrl}}" alt="" class="listing-owner-header-image" aria-label="owner avatar">
           </a>

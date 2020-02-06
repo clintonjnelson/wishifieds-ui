@@ -132,10 +132,18 @@ button.upload-avatar-button {
 
 .badges-container {
   display: flex;
+  align-items: center;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  padding-right: 5em;
+  border: 1px solid white;
+  border-radius: 5px;
+  height: 8em;
+  width: 8em;
+}
+
+.badge-remove {
+  display: flex;
+  align-self: start;
 }
 
 

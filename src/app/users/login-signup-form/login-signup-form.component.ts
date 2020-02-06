@@ -60,7 +60,7 @@ export class LoginSignupFormComponent implements AfterViewChecked {
           .subscribe(
             res => {
               console.log("RESPONSE TO SIGNUP FORM IS: ", res);
-              that.authService.setAuthCookies(res.eat, res.username, res.userId, res.email, res.role);
+              that.authService.setAuthCookies(res.eat, res.username, res.userId, res.email, res.role, res.profilePicUrl);
               that.notification.notify('success', 'Welcome! Start making wishes (wishlistings) so we can help genies (sellers) find & fulfill them.');
               this.close.emit(null);
               that.router.navigate([res.username]);
@@ -97,7 +97,8 @@ export class LoginSignupFormComponent implements AfterViewChecked {
             success.username,
             success.userId,
             success.email,
-            success.role);
+            success.role,
+            success.profilePicUrl);
           that.close.emit(null);
           that.router.navigate(['/', success.username]);
         },

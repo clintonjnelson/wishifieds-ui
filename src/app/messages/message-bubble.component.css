@@ -108,6 +108,7 @@
 .sender-pic {
   width: 3em;
   height: 3em;
+  border-radius: 50%;
 }
 
 .msg-timestamp {

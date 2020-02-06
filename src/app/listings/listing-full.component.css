@@ -16,18 +16,24 @@ div.listing-main-container {
   max-width: 50em;
 }
 
-.card-avatar {
+/*.card-avatar {
   background-image: url("https://static.wixstatic.com/media/e64c14_6ab568ca14924a2ca99be1b1f4641a47.jpg/v1/fill/w_1628,h_1194,al_c,q_85,usm_0.66_1.00_0.01/e64c14_6ab568ca14924a2ca99be1b1f4641a47.webp");
   background-size: cover;
+}*/
+/*TODO: THIS DOES NOT PRESERVE ASPECT RATIO OF AVATAR!!! MAKE A COMPONENT/DIRECTIVE FOR ASPECT-RATIO-PICTURE*/
+.header-avatar {
+  width: 60px;
+  height: 60px;
 }
 
-/deep/ div.mat-card-header-text {
+::ng-deep div.mat-card-header-text {
   margin-right: auto !important;
 }
 
 img.listing-owner-header-image {
   width: 100%;
   height: 100%;
+  border-radius: 50%;
 }
 
 span.facebook-badge {

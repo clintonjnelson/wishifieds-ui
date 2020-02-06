@@ -37,8 +37,9 @@
         <!-- TODO: Placeholder should be worded according to the viewer!!! Seller? Buyer? -->
         <textarea matInput type="textarea" name="content" ngControl="content" [(ngModel)]="tempMessage.content" placeholder="Grant this wish by selling yours. Message here."></textarea>
       </mat-form-field>
-      <mat-checkbox class="notify-checkbox" name="notifyImmediately" [(ngModel)]="notifyImmediately">Notify Buyer Immediately</mat-checkbox>
-      <i class="{{ buildIconClass('paper-plane', '2') }}" (click)="send()"></i>
+      <!-- TODO: BRING THIS BACK ONCE WE HAVE SMS HOOKED UP -->
+      <!-- <mat-checkbox class="notify-checkbox" name="notifyImmediately" [(ngModel)]="notifyImmediately">Notify Buyer Immediately</mat-checkbox> -->
+      <i class="{{ buildIconClass('paper-plane', '3') }}" (click)="send()"></i>
     </form>
   </div>
 

@@ -85,7 +85,7 @@ export class UserMessagesComponent implements OnInit, OnDestroy {
        content: '',
        status: '',
        createdAt: '',
-       senderPicUrl: '',
+       senderPicUrl: this.authService.auth.profilePicUrl,
      };
      this.notifyImmediately = true;  // TODO: Hook feature up to SMS messaging notification, controlled by user settings as to whether to show or not
   }
@@ -200,7 +200,8 @@ export class UserMessagesComponent implements OnInit, OnDestroy {
       listingId: rawMsg.listingId,
       content: rawMsg.content,
       status: rawMsg.status,
-      createdAt: rawMsg.createdAt
+      createdAt: rawMsg.createdAt,
+      senderPicUrl: rawMsg.senderPicUrl,
     }
   }
 }

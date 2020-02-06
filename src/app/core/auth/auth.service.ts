@@ -89,12 +89,13 @@ export class AuthService {
     // console.log("USERID: ", userId);
     // console.log("EMAIL: ", email);
     // console.log("ROLE: ", role);
+    console.log("PROFILE PIC URL: ", profilePicUrl);
     window.localStorage.setItem('eatAuthToken', eatAuthToken);
     window.localStorage.setItem('username',     username);
     window.localStorage.setItem('userId',       userId);
     window.localStorage.setItem('email',        email);
     window.localStorage.setItem('role',         role);
-    window.localStorage.setItem('profilePicUrl',         profilePicUrl);
+    window.localStorage.setItem('profilePicUrl',profilePicUrl);
 
     // Set cookie on window.cookie for oauth tokens
     // document.cookie = 'eat=' + encodedEat;
