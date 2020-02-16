@@ -7,8 +7,7 @@ import { Subscription, Subject }        from 'rxjs';
 import { IconService }                  from '../core/services/icon.service';
 import { Listing }                      from '../listings/listing.model';
 import { switchMap }                    from 'rxjs/operators';
-import { MatBadgeModule }               from '@angular/material';
-import { MatTabChangeEvent }            from '@angular/material';
+import { MatBadgeModule, MatTabChangeEvent }               from '@angular/material';
 
 
 // TODO: Use the end of the route to set the correct tab
@@ -180,7 +179,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
       const updatedTabUrl = window.location.protocol + '//' +  // https://
                              window.location.host +             // www.syynpost.com
                              window.location.pathname +         // /
-                             '?tab=' + tab;  // ?searchQuery=Superman
+                             '?tab=' + tab;  // ?tab=Superman
     // Update the existing history
     window.history.pushState({path: updatedTabUrl}, '', updatedTabUrl);
     }

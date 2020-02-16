@@ -26,6 +26,7 @@ export class ListingAvatarMessagesComponent implements OnInit, OnDestroy {
   viewerIsOwner: Boolean;
   selectedSub: Subscription;
   selectedEmit: Subject<any> = new Subject<any>();
+  profilePicsById = {};
 
   constructor(
     private helpers: HelpersService,
@@ -76,17 +77,24 @@ export class ListingAvatarMessagesComponent implements OnInit, OnDestroy {
     this.selectedEmit.next(this.uniqueSenderIds[userIndex]);
   }
 
+  // Memoize the value to avoid LOTS unnecessary processing
   getCorrespondantProfilePic(userId) {
-    console.log("USER ID FOR COUNTS IS: ", userId);
-    console.log("ListingWithMessages is", this.listingWithMessages);
-    if(userId == this.listingWithMessages.listingOwnerId) {
-      console.log("USE AUTH PIC URL: ", this.authService.auth.profilePicUrl);
-      return this.authService.auth.profilePicUrl;
+    if(this.profilePicsById[userId]) {
+      return this.profilePicsById[userId];
     }
+    else {
+      console.log("USER ID FOR COUNTS IS: ", userId);
+      console.log("ListingWithMessages is", this.listingWithMessages);
+      if(userId == this.listingWithMessages.listingOwnerId) {
+        console.log("USE AUTH PIC URL: ", this.authService.auth.profilePicUrl);
+        return this.authService.auth.profilePicUrl;
+      }
 
-    var firstSenderMsg = this.listingWithMessages.messages.find(msg => {return msg.senderId == userId})
-    console.log("FIRST SENDER MESSAGE PROFILE PIC FOUND: ", firstSenderMsg);
-    return firstSenderMsg['senderPicUrl'] || '/assets/profile_default.png';
+      var firstSenderMsg = this.listingWithMessages.messages.find(msg => {return msg.senderId == userId})
+      console.log("FIRST SENDER MESSAGE PROFILE PIC FOUND: ", firstSenderMsg);
+      this.profilePicsById[userId] = firstSenderMsg['senderPicUrl'] || '/assets/profile_default.png';
+      return this.profilePicsById[userId];
+    }
   }
 
   countUnreadsByUser(userId) {

@@ -1,12 +1,12 @@
-import { Component, Input, Output, ViewChild, OnInit, EventEmitter, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, Output, ViewChild, OnInit, AfterViewInit, EventEmitter, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { IconService } from '../core/services/icon.service';
 import { HelpersService } from '../shared/helpers/helpers.service';
 import { AuthService } from '../core/auth/auth.service';
 import { ApiMessagesService } from '../core/api/api-messages.service';
 import { ApiFavoritesService } from '../core/api/api-favorites.service';
 import { Listing } from './listing.model';
-import { MatBadgeModule } from '@angular/material';
+import { MatBadgeModule, MatTabChangeEvent } from '@angular/material';
 import { Subject, Subscription } from 'rxjs';
 // import { ImgCarouselComponent } from '../shared/carousel/img-carousel.component';  // NOT SURE IF NEED. TRY DELETING LATER. VERIFY IN PROD BUILD.
 
@@ -18,14 +18,17 @@ import { Subject, Subscription } from 'rxjs';
   templateUrl: 'listing-full.component.html',
   styleUrls: ['listing-full.component.css']
 })
-export class ListingFullComponent implements OnInit, OnDestroy {
+export class ListingFullComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() listing: Listing;
   @Input() isPreview: boolean = false;  // TODO: MAKE THIS SET READONLY CAPABILITIES TO LISTING
   @Input() isEditing: boolean = false;  // TODO: Verify if should default this or Not.
-
   @Output() editingEE = new EventEmitter<boolean>();
-  showMessages: boolean = false;    // MAKE THIS TOGGLED PER THE MESSAGES ICON
-  showLocationMap: boolean = false;
+
+  // pageSubscription: Subscription;
+  tabsSubscription: Subscription;
+
+  // showMessages: boolean = false;    // MAKE THIS TOGGLED PER THE MESSAGES ICON
+  // showLocationMap: boolean = false;
   currentViewerId: string;
   isLoggedIn: boolean = false;
   isOwner: boolean = true;  // TODO: HOOK THIS UP; NEEDED FOR BUTTONS & SUCH.
@@ -34,6 +37,10 @@ export class ListingFullComponent implements OnInit, OnDestroy {
   showingMessagesOfUserId: string = '0';
   defaultPicUrl = '/assets/profile_default.png'; // FIXME: Make this a config value set single place elsewhere
   listingLink: string;
+
+  // Tabs
+  currentTabIndex: number;
+  tabMap = ['messages', 'locations'];
 
   isFavorite: boolean = false;
   favSub: Subscription;
@@ -59,6 +66,7 @@ export class ListingFullComponent implements OnInit, OnDestroy {
   constructor(private icons: IconService,
               private helpers: HelpersService,
               private router: Router,
+              private route: ActivatedRoute,
               private authService: AuthService,
               private messagesApi: ApiMessagesService,
               private favoritesApi: ApiFavoritesService) {
@@ -82,10 +90,31 @@ export class ListingFullComponent implements OnInit, OnDestroy {
     });
     this.getFavorites();
 
+    // this.pageSubscription = this.route.params.subscribe( (params: Params) => {
+    //   const username = params['username'];
+    //   console.log("TRIGGERED SUBSCRIPTION THAT WATCHES PARAMS: ", params);
+    //   // that.updateUsernameBasedData(username);
+    //   // this.getListings();
+    //   // this.getFavorites();
+    // });
+    // Update the page tab based on the URL specified tab
+    this.tabsSubscription = this.route.queryParams.subscribe( params => {
+      let tabName = params['tab'];
+      if(!!tabName) {
+        let tabIndex = that.tabMap.indexOf(tabName);
+        that.currentTabIndex = tabIndex;
+      }
+    });
+
     this.badges = {};
     this.loadBadges();
     console.log("IS OWNER IS, listindOwner, currentViewer: ", this.isOwner, this.listing.userId, this.currentViewerId);
     console.log("LISTING FULL: Listing object is: ", this.listing);
+  }
+
+  ngAfterViewInit() {
+    console.log("QUERY PARAM TAG IS: ", this.route.snapshot.queryParams['tab']);
+    this.refreshMap(this.route.snapshot.queryParams['tab']);
   }
 
   ngOnDestroy() {
@@ -94,6 +123,11 @@ export class ListingFullComponent implements OnInit, OnDestroy {
 
   buildIconClass(icon: string, size: string = '2', type: string = "s") {
     return this.icons.buildIconClass(icon, size, type);
+  }
+
+  setCurrentTab(event: MatTabChangeEvent) {
+    const tab = this.tabMap[event.index];
+    this.updateExistingUrl(tab)
   }
 
   // For the a-link href generation
@@ -106,13 +140,13 @@ export class ListingFullComponent implements OnInit, OnDestroy {
     return this.helpers.urlWithoutProtocol(url);
   }
 
-  toggleShowMessages() {
-    this.showMessages = !this.showMessages;
-  }
+  // toggleShowMessages() {
+  //   this.showMessages = !this.showMessages;
+  // }
 
-  toggleShowLocationMap() {
-    this.showLocationMap = !this.showLocationMap;
-  }
+  // toggleShowLocationMap() {
+  //   this.showLocationMap = !this.showLocationMap;
+  // }
 
   toggleEditing(input: any = null): void {
     // Update the value locally
@@ -224,6 +258,9 @@ export class ListingFullComponent implements OnInit, OnDestroy {
     this.toggleEditing(false);
 
     // Came from somewhere linked
+    console.log("HISTORY LENGTH IS: ", window.history.length);
+    console.log("LOCATION HOST IS: ", window.location.host);
+    console.log("CHECK OF HOST INDEX IS: ", document.referrer.indexOf(window.location.host));
     if(window.history.length > 1 && document.referrer.indexOf(window.location.host) !== -1) {
       window.history.back();
     }
@@ -245,6 +282,26 @@ export class ListingFullComponent implements OnInit, OnDestroy {
         console.log("ELEMENT TO SCROLL TO IS: ", previewEl);
         previewEl.scrollIntoView({behavior: 'smooth'});
       }, 200);
+    }
+  }
+
+  private updateExistingUrl(tab: string) {
+    if(window.history.pushState) {
+      const updatedTabUrl = window.location.protocol + '//' +  // https://
+                             window.location.host +             // www.syynpost.com
+                             window.location.pathname +         // /
+                             '?tab=' + tab;  // ?tab=Superman
+      // Update the existing history
+      window.history.pushState({path: updatedTabUrl}, '', updatedTabUrl);
+    }
+
+    // Trigger resize to fix map only displaying one tile due to hidden tab; reloads map.
+    this.refreshMap(tab);
+  }
+
+  private refreshMap(tab) {
+    if(tab && tab == 'locations') {
+      window.dispatchEvent(new Event('resize'));
     }
   }
 }

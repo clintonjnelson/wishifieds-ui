@@ -135,6 +135,10 @@ div.grouped-items-container {
   width: 90%;
 }
 
+.listing-tab-sections-container {
+  margin-top: 1em;
+}
+
 .no-messages {
   text-align: center;
 }
@@ -196,3 +200,19 @@ div.listing-contact-buyer-container {
   outline: none;
   border: 0;
  };
+
+/*Below 3 overrides are needed for this tab pattern support on wishifieds*/
+::ng-deep span.messages-tab-label span {
+  background-color: black;  /* 0 opacity = transparent except text */
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+}
+
+::ng-deep .listing-tabs-icon {
+  display: flex;
+  flex-direction: column;
+}
+::ng-deep .listing-tabs-icon p {
+  margin: 0;
+}
