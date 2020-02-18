@@ -1,5 +1,5 @@
 import { Component, Input, Output, ViewChild, OnInit, AfterViewInit, EventEmitter, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { ActivatedRoute, Router, Params, NavigationEnd } from '@angular/router';
 import { IconService } from '../core/services/icon.service';
 import { HelpersService } from '../shared/helpers/helpers.service';
 import { AuthService } from '../core/auth/auth.service';
@@ -8,6 +8,9 @@ import { ApiFavoritesService } from '../core/api/api-favorites.service';
 import { Listing } from './listing.model';
 import { MatBadgeModule, MatTabChangeEvent } from '@angular/material';
 import { Subject, Subscription } from 'rxjs';
+import { filter, pairwise } from 'rxjs/operators';
+// import 'rxjs/add/operator/filter';
+// import 'rxjs/add/operator/pairwise';
 // import { ImgCarouselComponent } from '../shared/carousel/img-carousel.component';  // NOT SURE IF NEED. TRY DELETING LATER. VERIFY IN PROD BUILD.
 
 
@@ -24,11 +27,7 @@ export class ListingFullComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() isEditing: boolean = false;  // TODO: Verify if should default this or Not.
   @Output() editingEE = new EventEmitter<boolean>();
 
-  // pageSubscription: Subscription;
   tabsSubscription: Subscription;
-
-  // showMessages: boolean = false;    // MAKE THIS TOGGLED PER THE MESSAGES ICON
-  // showLocationMap: boolean = false;
   currentViewerId: string;
   isLoggedIn: boolean = false;
   isOwner: boolean = true;  // TODO: HOOK THIS UP; NEEDED FOR BUTTONS & SUCH.
@@ -70,6 +69,21 @@ export class ListingFullComponent implements OnInit, AfterViewInit, OnDestroy {
               private authService: AuthService,
               private messagesApi: ApiMessagesService,
               private favoritesApi: ApiFavoritesService) {
+    // router.events
+    //   .pipe(
+    //     filter(e => e instanceof NavigationEnd),
+    //     pairwise()
+    //   )
+    //   .subscribe((navEnd: any[]) => {
+    //     // const navEnd = navEnd as instanceof NavigationEnd;
+    //     console.log("BACK urlAfter: ", navEnd[0]['urlAfterRedirects']);
+    //     console.log("BACK string: ", navEnd.toString());
+    //     console.log("BACK url manual: ", navEnd[0]['url']);
+    //     if(navEnd && navEnd[0] && navEnd[0]['url'] && navEnd[0]['url'].startsWith('/')) {
+    //       console.log("SETTING BACK FLAG true...");
+    //       this.hasInternalBackAddress = true;
+    //     }
+    //   });
   }
 
   // Determine who viewer is (owner or guest), so can decide content to show
@@ -90,14 +104,6 @@ export class ListingFullComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.getFavorites();
 
-    // this.pageSubscription = this.route.params.subscribe( (params: Params) => {
-    //   const username = params['username'];
-    //   console.log("TRIGGERED SUBSCRIPTION THAT WATCHES PARAMS: ", params);
-    //   // that.updateUsernameBasedData(username);
-    //   // this.getListings();
-    //   // this.getFavorites();
-    // });
-    // Update the page tab based on the URL specified tab
     this.tabsSubscription = this.route.queryParams.subscribe( params => {
       let tabName = params['tab'];
       if(!!tabName) {
@@ -139,14 +145,6 @@ export class ListingFullComponent implements OnInit, AfterViewInit, OnDestroy {
   urlWithoutPrototol(url: string) {
     return this.helpers.urlWithoutProtocol(url);
   }
-
-  // toggleShowMessages() {
-  //   this.showMessages = !this.showMessages;
-  // }
-
-  // toggleShowLocationMap() {
-  //   this.showLocationMap = !this.showLocationMap;
-  // }
 
   toggleEditing(input: any = null): void {
     // Update the value locally
@@ -258,21 +256,26 @@ export class ListingFullComponent implements OnInit, AfterViewInit, OnDestroy {
     this.toggleEditing(false);
 
     // Came from somewhere linked
-    console.log("HISTORY LENGTH IS: ", window.history.length);
-    console.log("LOCATION HOST IS: ", window.location.host);
-    console.log("CHECK OF HOST INDEX IS: ", document.referrer.indexOf(window.location.host));
-    if(window.history.length > 1 && document.referrer.indexOf(window.location.host) !== -1) {
-      window.history.back();
-    }
-    // If owner is viewing own listing & closes, go back to their withlistings home
-    else if(this.isOwner) {
-      console.log("username from auth is: ", this.authService.auth.username);
-      this.router.navigate([this.authService.auth.username], { queryParams: { tab: 'wishlistings' }});
-    }
-    // If viewing someone else's listing, go to listings search page
-    else {
-      this.router.navigate(['']);
-    }
+    // console.log("HISTORY LENGTH IS: ", window.history.length);
+    // console.log("LOCATION HOST IS: ", window.location.host);
+    // console.log("CHECK OF HOST INDEX IS: ", document.referrer.indexOf(window.location.host));
+    // console.log("HAS INTERNAL ADDRESS: ", this.hasInternalBackAddress);
+
+    window.history.back();
+    // // external history management
+    // if((window.history.length > 1 && document.referrer.indexOf(window.location.host) !== -1)) {
+    //   console.log("GOING STRAIGHT BACK...");
+    //   window.history.back();
+    // }
+    // // If owner is viewing own listing & closes, go back to their withlistings home
+    // else if(this.isOwner) {
+    //   console.log("username from auth is: ", this.authService.auth.username);
+    //   this.router.navigate([this.authService.auth.username], { queryParams: { tab: 'wishlistings' }});
+    // }
+    // // If viewing someone else's listing, go to listings search page
+    // else {
+    //   this.router.navigate(['']);
+    // }
   }
 
   private scrollToLatestMsg() {

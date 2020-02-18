@@ -133,10 +133,6 @@
 
           <!-- Non-Owner Messages Section -->
           <div *ngIf="isLoggedIn && !isOwner">
-
-            <!-- <i class="{{ buildIconClass('comments', '3') }} messages-icon" [ngClass]="{'unread-msgs-color': !!unreadMessages }">
-            </i>
-            <strong *ngIf="!!unreadMessages" class="unread-msgs-color">{{unreadMessages}}</strong> -->
             <div class="listing-chat-container">
               <user-messages [listingId]="listing.id" [listingOwnerId]="listing.userId" [correspondantId]="currentViewerId"></user-messages>
             </div>

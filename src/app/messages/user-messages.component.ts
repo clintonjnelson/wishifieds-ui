@@ -133,7 +133,7 @@ export class UserMessagesComponent implements OnInit, OnDestroy {
         console.log("THIS MESSAGE IS: ", current);
         unreads.push(current.id);  // include only if UNREAD
       }
-      console.log("UNREADS IS NOW: ", unreads);
+      // console.log("UNREADS IS NOW: ", unreads);
       return unreads;
     }, []);
 
