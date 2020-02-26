@@ -17,7 +17,23 @@ export class ApiOauthService {
 
     console.log("CALLING OAUTH2 AUTOSIGN...");
     window.location.href = oauthUrl +
-                           '?eat='      + eatToken +
+                           '?eat=' + eatToken +
                            '&oauthProvider=' + oauthProvider;
+  }
+
+  getDataDeletionStatus(confirmationCode) {
+    const dataDeletionUrl = this.wishifiedsApi.buildUrl('dataDeletionStatus',[{':confirmationCode': confirmationCode}]);
+    return this.http
+               .get(dataDeletionUrl)
+               .pipe(
+                 map(res => {
+                   console.log("DATA DELETION CONFIRMATION IS: ", res);
+                   return res.json();
+                 }),
+                 catchError(error => {
+                   console.log("Error getting data deletion confirmation is: ", error);
+                   return throwError(error);
+                 })
+               );
   }
 }

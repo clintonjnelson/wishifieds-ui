@@ -7,7 +7,7 @@ import { Subscription, Subject }        from 'rxjs';
 import { IconService }                  from '../core/services/icon.service';
 import { Listing }                      from '../listings/listing.model';
 import { switchMap }                    from 'rxjs/operators';
-import { MatBadgeModule, MatTabChangeEvent }               from '@angular/material';
+import { MatBadgeModule, MatTabChangeEvent } from '@angular/material';
 
 
 // TODO: Use the end of the route to set the correct tab
@@ -25,8 +25,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
   tabsSubscription: Subscription;
   listingsSubscription: Subscription;
   listingsEmit: Subject<Listing[]> = new Subject<Listing[]>();
-  // favoritesSub: Subscription;
-  // favoritesEmit: Subject<Listing[]> = new Subject<Listing[]>();
 
   isOwner = false;
   isProcessing: boolean;
@@ -55,12 +53,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
         this.listings = this.listings.concat(newListings);  // Concat & SET
       }
     });
-    // this.favoritesSub = this.favoritesEmit.subscribe((newFavs: Listing[]) => {
-    //   if(newFavs && newFavs.length) {
-    //     // Initial GET listings may get lots; saving a listing adds only one.
-    //     this.favorites = this.favorites.concat(newFavs);  // Concat & SET
-    //   }
-    // });
   }
 
   ngOnDestroy() {
@@ -88,7 +80,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
         that.currentTabIndex = tabIndex;
       }
     });
-    this.getTotalUnreadMsgs();  // TODO: WHY IS THIS NOT IN THE PAGE SUBSCRIPTION??
   }
 
   buildIconClass(icon: string, size: string = '2') {

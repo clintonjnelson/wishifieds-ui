@@ -166,3 +166,7 @@ i.sp-hover:hover {
   filter: alpha(opacity=20);
 }
 
+.default-snackbar {
+  width: 100%;
+}
+

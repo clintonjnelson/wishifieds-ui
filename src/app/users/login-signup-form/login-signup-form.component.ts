@@ -37,7 +37,8 @@ export class LoginSignupFormComponent implements AfterViewChecked {
       email:      '',
       password:   '',
       newAccount: false,
-      termsCond:  null
+      termsCond:  null,
+      dataConsentDate: null,
     };
   };
 
@@ -56,6 +57,13 @@ export class LoginSignupFormComponent implements AfterViewChecked {
     if(this.userCreds.newAccount) {
       if(this.userCreds.termsCond) {
         this.gaEvent.emitEvent('loginsignupform', 'click', 'signupsubmit');
+
+        // If consentDate, load before sending
+        const dataConsentDate = window.localStorage.getItem('consentoken');
+        console.log("CONSENTDATE DURING SIGNUP IS: ", dataConsentDate);
+        if(dataConsentDate) { this.userCreds.dataConsentDate = dataConsentDate; }
+        console.log("USER CREDS IS NOW: ", this.userCreds);
+
         this.apiUsersService.createUser(this.userCreds)
           .subscribe(
             res => {

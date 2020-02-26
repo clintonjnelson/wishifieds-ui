@@ -32,6 +32,7 @@ const ROUTES = {
   oauth: {
     facebook: '/api/validate_credibility/facebook',
   },
+  dataDeletionStatus: '/api/data_deletion/:confirmationCode',
   deleteUserBadge: '/api/users/:userId/badges/:badgeType',
 
   // Listings & listing-based resources

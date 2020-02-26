@@ -19,7 +19,7 @@ export class AuthService {
   auth: UserAuth = {isLoggedIn: false, isLoggedOut: true, username: '', userId: '', role: '', profilePicUrl: ''};
   userAuthEmit: Subject<UserAuth> = new Subject<UserAuth>();
   redirectUrl: string;
-  role = 'admin';  // FIX THIS LATER FOR ADMIN AUTH; Should check once at login, set, & be done so no foulplay
+  role = 'user';  // FIX THIS LATER TO BE DYNAMIC; Should check once at login, set, & be done so no foulplay.
 
   constructor(private router: Router,) {
     this.auth.isLoggedIn  = !!window.localStorage.getItem('eatAuthToken');

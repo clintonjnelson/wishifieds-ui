@@ -13,6 +13,7 @@ import { UserPageComponent }             from './users/user-page.component';
 import { UserSettingsComponent }         from './users/settings/user-settings.component';
 import { OauthRedirectComponent }        from './core/redirects/oauth-redirect.component';
 import { UserConfirmationRedirectComponent } from './core/redirects/user-confirmation-redirect.component';
+import { ConfirmationStatusPageComponent }   from './external/confirmation-status-page.component';
 import { TermsConditionsComponent }          from './static-pages/terms-conditions/terms-conditions.component';
 import { PrivacyNoticeComponent }            from './static-pages/privacy-notice/privacy-notice.component';
 import { FaqComponent }                      from './static-pages/faq/faq.component';
@@ -25,6 +26,7 @@ const rootRoutes: Routes = [
   { path: 'oauth/errors/:redirecttype',  component: OauthRedirectComponent, pathMatch: 'full'},
   { path: 'oauth/success/:redirecttype', component: OauthRedirectComponent, pathMatch: 'full'},
   { path: 'user/confirmation', component: UserConfirmationRedirectComponent, pathMatch: 'full'},
+  { path: 'data_deletion/:confirmationCode', component: ConfirmationStatusPageComponent, pathMatch: 'full'},
 
   { path: 'requestpasswordchange', component: RequestPasswordResetComponent, pathMatch: 'full'},
   { path: 'requestpasswordchange/change', component: PasswordResetComponent, pathMatch: 'full' },

@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GuestService } from './core/services/guest.service';
 
 @Component({
   selector: 'site-main',
   template: `
     <!-- This is used by ALL of the app for notifications -->
-    <notifications></notifications>
+    <!-- <notifications></notifications> -->
 
     <main-navbar></main-navbar>
 
@@ -16,9 +16,11 @@ import { GuestService } from './core/services/guest.service';
 })
 
 
-export class AppComponent  {
-  constructor(private guestService: GuestService) {
+export class AppComponent implements OnInit {
+  constructor(private guestService: GuestService) {}
+
+  ngOnInit() {
+    this.guestService.checkConsent();
     // Ensure guid is set on each visitor for generic metrics info
-    if(!window.localStorage.getItem('guid')) { guestService.createAndSetGuid(); }
   }
 }

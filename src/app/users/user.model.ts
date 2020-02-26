@@ -9,6 +9,7 @@ export class UserCreds {
   password:   string;
   newAccount: boolean;
   termsCond:  boolean;
+  dataConsentDate?: string;
 }
 
 export class UserUpdates extends User {

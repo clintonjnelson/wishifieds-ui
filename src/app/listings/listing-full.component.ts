@@ -69,21 +69,6 @@ export class ListingFullComponent implements OnInit, AfterViewInit, OnDestroy {
               private authService: AuthService,
               private messagesApi: ApiMessagesService,
               private favoritesApi: ApiFavoritesService) {
-    // router.events
-    //   .pipe(
-    //     filter(e => e instanceof NavigationEnd),
-    //     pairwise()
-    //   )
-    //   .subscribe((navEnd: any[]) => {
-    //     // const navEnd = navEnd as instanceof NavigationEnd;
-    //     console.log("BACK urlAfter: ", navEnd[0]['urlAfterRedirects']);
-    //     console.log("BACK string: ", navEnd.toString());
-    //     console.log("BACK url manual: ", navEnd[0]['url']);
-    //     if(navEnd && navEnd[0] && navEnd[0]['url'] && navEnd[0]['url'].startsWith('/')) {
-    //       console.log("SETTING BACK FLAG true...");
-    //       this.hasInternalBackAddress = true;
-    //     }
-    //   });
   }
 
   // Determine who viewer is (owner or guest), so can decide content to show
@@ -254,28 +239,7 @@ export class ListingFullComponent implements OnInit, AfterViewInit, OnDestroy {
 
   closeListing(): void {
     this.toggleEditing(false);
-
-    // Came from somewhere linked
-    // console.log("HISTORY LENGTH IS: ", window.history.length);
-    // console.log("LOCATION HOST IS: ", window.location.host);
-    // console.log("CHECK OF HOST INDEX IS: ", document.referrer.indexOf(window.location.host));
-    // console.log("HAS INTERNAL ADDRESS: ", this.hasInternalBackAddress);
-
     window.history.back();
-    // // external history management
-    // if((window.history.length > 1 && document.referrer.indexOf(window.location.host) !== -1)) {
-    //   console.log("GOING STRAIGHT BACK...");
-    //   window.history.back();
-    // }
-    // // If owner is viewing own listing & closes, go back to their withlistings home
-    // else if(this.isOwner) {
-    //   console.log("username from auth is: ", this.authService.auth.username);
-    //   this.router.navigate([this.authService.auth.username], { queryParams: { tab: 'wishlistings' }});
-    // }
-    // // If viewing someone else's listing, go to listings search page
-    // else {
-    //   this.router.navigate(['']);
-    // }
   }
 
   private scrollToLatestMsg() {

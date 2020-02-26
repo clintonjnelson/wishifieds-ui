@@ -1,0 +1,13 @@
+.accept-button {
+  position: absolute;
+  right: 0.75em;
+  top: 0.75em;
+  background-color: #323232;
+  border: none;
+  border-color: black;
+}
+
+::ng-deep div.cdk-overlay-pane snack-bar-container.mat-snack-bar-container {
+  width: 100%;
+  max-width: 100%;
+};

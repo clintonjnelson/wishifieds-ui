@@ -12,7 +12,7 @@ import { FormsModule, ReactiveFormsModule }     from '@angular/forms';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { MatDialogModule, MatInputModule, MatTooltipModule, MatFormFieldModule,
   MatSelectModule, MatCheckboxModule, MatTabsModule, MatChipsModule, MatCardModule,
-  MatBadgeModule, MatIconModule, MatAutocompleteModule } from '@angular/material';
+  MatBadgeModule, MatIconModule, MatAutocompleteModule, MatSnackBarModule } from '@angular/material';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragulaModule }    from 'ng2-dragula';  // TO USE, SEE NEW DOCS FOR NEW API
@@ -28,6 +28,7 @@ import { AppComponent }                  from './app.component';
 import { TermsConditionsComponent }      from './static-pages/terms-conditions/terms-conditions.component';
 import { PrivacyNoticeComponent }        from './static-pages/privacy-notice/privacy-notice.component';
 import { FaqComponent }                  from './static-pages/faq/faq.component';
+import { ConfirmationStatusPageComponent } from './external/confirmation-status-page.component';
 
 import { FontAwesomeModule }             from '@fortawesome/angular-fontawesome';
 import { IconLinkComponent }             from './shared/icon-links/icon-links.component';
@@ -47,6 +48,8 @@ import { RequestPasswordResetComponent } from './password-reset/request-password
 import { PasswordResetComponent }        from './password-reset/password-reset.component';
 
 import { NotificationsComponent }        from './notifications/notifications.component';
+import { DataConsentBannerComponent }    from './shared/notifications/data-consent-banner.component';
+import { AlertsService }                 from './core/services/alerts.service';
 import { ConfirmModalComponent }         from './shared/confirm-modal/confirm-modal.component';
 import { ImageModalComponent }           from './shared/image-modal/image-modal.component';
 
@@ -143,6 +146,7 @@ export function HttpFactory(backend: XHRBackend,
                   MatCheckboxModule,
                   MatTooltipModule,
                   MatBadgeModule,
+                  MatSnackBarModule,
                   MatAutocompleteModule,
                   ScrollDispatchModule,
                   DragulaModule.forRoot(),  // ROOT means SINGLETON
@@ -161,6 +165,7 @@ export function HttpFactory(backend: XHRBackend,
                   TermsConditionsComponent,
                   PrivacyNoticeComponent,
                   FaqComponent,
+                  ConfirmationStatusPageComponent,
 
                   NavbarComponent,
                   FooterComponent,
@@ -178,6 +183,7 @@ export function HttpFactory(backend: XHRBackend,
                   PasswordResetComponent,
 
                   NotificationsComponent,
+                  DataConsentBannerComponent,
                   ConfirmModalComponent,
                   ImageModalComponent,
                   MarkerMapComponent,
@@ -228,6 +234,7 @@ export function HttpFactory(backend: XHRBackend,
                   AuthService,
                   HelpersService,
                   IconService,
+                  AlertsService,
                   NotificationService,
                   ImageModalService,
                   ConfirmModalService,
@@ -256,6 +263,7 @@ export function HttpFactory(backend: XHRBackend,
   entryComponents: [
                   ConfirmModalComponent,
                   ImageModalComponent,
+                  DataConsentBannerComponent,
   ]
 })
 export class AppModule { }
