@@ -37,8 +37,9 @@
 
           <!-- Images Container (Draggable) -->
           <div class="images-selection-container"  *ngIf="!imageLoadingSpinner" dragula="'images-group'" [dragulaModel]="dragulaImagesIndexes" (dragulaModelChange)="imagesDropUpdate($event)">
-            <div layout="row" formArrayName="images" *ngFor="let group of getImageGroup().controls; let ind=index">
+            <div layout="row" class="image-item-container" formArrayName="images" *ngFor="let group of getImageGroup().controls; let ind=index">
               <div [formGroupName]="ind" delayDragLift>
+                <!-- [matBadge]="ind+1" matBadgeOverlap="true" [matBadgeHidden]="false" class="messages-tab-label" -->
                 <input type="checkbox" formControlName="checked" class="images-checkbox"/>
                 <img (click)="toggleSelectImage(ind)" src="{{group.controls.url.value}}" [ngClass]="{'image-selected': group.controls.checked.value}" class="image" alt="" width="60px">
               </div>

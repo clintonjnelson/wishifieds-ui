@@ -42,6 +42,7 @@ const rootRoutes: Routes = [
   { path: ':username/settings',  component: UserSettingsComponent, canActivate: [OwnerGuard], pathMatch: 'full'},
   // TODO: Update this from listingId to SLUG
   // NO: Instead, just make the /listings go to the same component, but use the "listings" part to set the tab
+  // These following user pages have Owner & Guest versions. DO NOT add gaurd to these user pages.
   { path: ':username/listings/:listingId',  component: ListingPageComponent, pathMatch: 'full'},
   { path: ':username/listings',  component: UserPageComponent, pathMatch: 'full'},
   { path: ':username', component: UserPageComponent, pathMatch: 'full' },

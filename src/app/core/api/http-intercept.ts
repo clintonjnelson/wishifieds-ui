@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, ConnectionBackend, Headers, RequestOptions, RequestOptionsArgs, Request, Response } from '@angular/http';
-// import { Router } from '@angular/router';
 import { Observable, EMPTY } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { AlertsService } from '../services/alerts.service';
 import { map, catchError } from 'rxjs/operators';  // removed throw (throwError)
 
 @Injectable()
@@ -10,13 +10,15 @@ import { map, catchError } from 'rxjs/operators';  // removed throw (throwError)
 export class HttpIntercept extends Http {
   constructor(backend:               ConnectionBackend,
               defaultOptions:        RequestOptions,
-              private authService:   AuthService) {
+              private authService:   AuthService,
+              private alertsService: AlertsService) {
     super(backend, defaultOptions);
   }
 
   // Catches inner Observable first, if nothing then returns full Observable for catching later
   intercept(observable: Observable<Response>): Observable<Response> {
     const that = this;
+    console.log("ALERTS SERVICE IS: ", that.alertsService);
     // Intercept observable before returning it to caller
     return observable.pipe(
       catchError( res => {
@@ -32,6 +34,7 @@ export class HttpIntercept extends Http {
           if(res.status === 401 && body.reset) {
             console.log("RESETTING...");
             that.authService.logout();   // deletes cookies, reset auth values, redirect home
+            that.alertsService.queueAlert("Login has expired. Please log in again.");
             return EMPTY;
           }
           // Continue as normal
@@ -44,6 +47,7 @@ export class HttpIntercept extends Http {
           // In such case, look for SyntaxError & 401 Status => reset intended
           if(e instanceof SyntaxError && res.status === 401) {
             that.authService.logout();
+            that.alertsService.queueAlert("Login has expired. Please log in again.");
             return EMPTY;
           }
           else { return observable; }

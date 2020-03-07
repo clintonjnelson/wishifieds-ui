@@ -66,8 +66,9 @@ export class AlertsService implements OnDestroy {
   }
 
   queueAlert(message: string, configParams?: MatSnackBarConfig) {
+    const configs = (configParams ? configParams : {panelClass: 'default-snackbar'});
     this.queue.next(
-      this.queue.value.concat([{isDisplayed: false, message: message, component: null, data: null, configParams: configParams}])
+      this.queue.value.concat([{isDisplayed: false, message: message, component: null, data: null, configParams: configs}])
     );
   }
   // NOTE!! Every call of this function has to be wrapped in a setTimeout with 0-delay like this:

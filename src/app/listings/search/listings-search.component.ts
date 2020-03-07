@@ -65,8 +65,10 @@ export class ListingsSearchComponent implements OnInit, OnDestroy {
     this.searchInfo.location   = this.route.snapshot.queryParams['location'] || '';
     this.searchInfo.locationId = this.route.snapshot.queryParams['locationId'] || '';
     this.isLoggedIn = !!this.authService.auth.isLoggedIn;  // set initial value
-    this.searchInfoSub = this.searchInfoEmit.subscribe( (wasApiCallMade: any[]) => {
-      console.log("Did location need to be retrieved from API: ", wasApiCallMade);
+    this.searchInfoSub = this.searchInfoEmit.subscribe( (updates: any) => {
+      console.log("Search Info Updates: ", updates);
+      if(updates['geoInfo']) { that.searchInfo.centerCoords = updates['geoInfo']; }
+      if(updates['locationId']) { that.searchInfo.locationId = updates['locationId']; }
     });
 
     this.typeaheadSub = this.typeaheadEmit.subscribe( (newTypeaheads: any[]) => {
@@ -221,7 +223,8 @@ export class ListingsSearchComponent implements OnInit, OnDestroy {
     // HAS to assign the same referenced value, else will think it's a different one & not auto-populate existing dropdown value
     if(this.isLoggedIn && defaultLoc && (this.searchInfo.locationId == '' || this.searchInfo.locationId == defaultLoc.userLocationId)) {
         console.log("Setting search default location for user... ", defaultLoc.userLocationId);
-        this.searchInfo.locationId = defaultLoc.userLocationId;
+        // this.searchInfo.locationId = defaultLoc.userLocationId;
+        this.searchInfoEmit.next({geoInfo: defaultLoc.geoInfo, locationId: defaultLoc.userLocationId})
     }
   }
 

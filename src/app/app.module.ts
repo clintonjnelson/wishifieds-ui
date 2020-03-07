@@ -121,8 +121,9 @@ import { CallbackPipe } from './shared/pipes/callback.pipe';
 // Providers
 export function HttpFactory(backend: XHRBackend,
                             defaultOptions: RequestOptions,
-                            authService: AuthService) {
-  return new HttpIntercept(backend, defaultOptions, authService);
+                            authService: AuthService,
+                            alertsService: AlertsService) {
+  return new HttpIntercept(backend, defaultOptions, authService, alertsService);
 }
 
 @NgModule({
@@ -232,9 +233,9 @@ export function HttpFactory(backend: XHRBackend,
                   GuestService,
                   GAEventService,
                   AuthService,
+                  AlertsService,
                   HelpersService,
                   IconService,
-                  AlertsService,
                   NotificationService,
                   ImageModalService,
                   ConfirmModalService,
@@ -253,7 +254,7 @@ export function HttpFactory(backend: XHRBackend,
                   ApiUsersLocationsService,
                   {provide: Http,
                     useFactory: HttpFactory,
-                    deps: [XHRBackend, RequestOptions, AuthService]
+                    deps: [XHRBackend, RequestOptions, AuthService, AlertsService]
                   },
                   {
                     provide: SWIPER_CONFIG,

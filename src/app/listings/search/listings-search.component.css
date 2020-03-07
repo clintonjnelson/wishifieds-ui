@@ -20,10 +20,24 @@ form {
   max-width: 400px;
 }
 
+p.advanced-button {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+div.advanced-grouping {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  width: 100%;
+}
+
 .advanced-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
 }
 
 .mat-form-field {
@@ -32,6 +46,14 @@ form {
 
 ::ng-deep span.mat-form-field-label-wrapper label.mat-form-field-label {
   color: white;
+}
+
+/*Getting the underline close to the Advanced-button*/
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+  padding-bottom: 0.3em;
+}
+::ng-deep div.mat-form-field-underline {
+  position: static;
 }
 
 ::ng-deep div.mat-form-field-underline.ng-star-inserted {

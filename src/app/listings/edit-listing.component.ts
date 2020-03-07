@@ -2,6 +2,7 @@ import { Component, ViewChild, Input, Output, OnInit, AfterViewInit, OnDestroy, 
 import { Subject, Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators, AbstractControl } from '@angular/forms';   // Remove if no validation logic
 import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';  // USING EVENT??? IF NO, REMOVE IT. KEPT JUST IN CASE NEED DURING CODING.
+import { MatBadgeModule } from '@angular/material';
 import { IconService } from '../core/services/icon.service';
 import { HelpersService } from '../shared/helpers/helpers.service';
 import { ApiTagsService } from '../core/api/api-tags.service';

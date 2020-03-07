@@ -22,7 +22,7 @@ export class ListingsSearchMapComponent implements OnInit, OnChanges, OnDestroy 
   @ViewChild('mapDiv') mapCont;
   @Input() listings: Listing[];
   @Input() readOnly: boolean = true;
-  @Input() searchInfo: any;  //{distMiles: 25, displayType: circle, showSearch: true}
+  @Input() searchInfo: any;  //{distMiles: 25, displayType: circle, showSearch: true, centerCoords}
   origMarkerInfo: any;
   defaultMapZoom: number = 12; // Higher num means closer in
   map: any;  // The map
@@ -130,7 +130,7 @@ export class ListingsSearchMapComponent implements OnInit, OnChanges, OnDestroy 
           <a href="/${listingLink}">
             <img src="${heroImgUrl}" alt="picture of the ${title}" width="80px" height="80px"/>
           </a>
-          <p><strong style="color:black">$ ${price}</strong></p>
+          <p style="margin:0;text-align:left"><strong style="color:black;">$ ${price}</strong></p>
         </div>
        `;
       // console.log("POPUP HTML IS: ", html);
@@ -140,14 +140,22 @@ export class ListingsSearchMapComponent implements OnInit, OnChanges, OnDestroy 
 
   private rebuildSearchExtentsCircle(callback) {
     const that = this;
+    // console.log("Rebuilding extents. SearchInfo: ", this.searchInfo);
     // Clear any existing circles
     if(this.circleGroup) { this.circleGroup.clearLayers(); }
 
-    this.searchInfo['showExtentsOnMap'] = (this.searchInfo['distance'] != 'any');
+    this.searchInfo['showExtentsOnMap'] = (this.searchInfo['distance'] !== 'any');
+    // console.log("Should show extents on map logic is: ", this.searchInfo['distance'] !== 'any');
+    // console.log("Should show extents on map is: ", this.searchInfo['showExtentsOnMap']);
+
     // Only do this if need circle & dont have coords ("any" distance searches don't need circle)
-    if(this.searchInfo['showExtentsOnMap'] && (this.searchInfo['centerCoords'].length < 2) && this.searchInfo['location']) {
+    if(this.searchInfo['showExtentsOnMap'] && (this.searchInfo['centerCoords'] && Object.getOwnPropertyNames(this.searchInfo['centerCoords']).length < 2) && this.searchInfo['location']) {
       const cityAndState = parseLocation();
       const maxResults = '1';
+      const leafletCoords = {
+        lng: that.searchInfo['centerCoords'] && that.searchInfo['centerCoords']['longitude'],
+        lat: that.searchInfo['centerCoords'] && that.searchInfo['centerCoords']['latitude']
+      };
       this.locationService
         .locationTypeahead(this.searchInfo.postal, cityAndState.city, cityAndState.stateCode, maxResults)
         .subscribe(
@@ -155,7 +163,7 @@ export class ListingsSearchMapComponent implements OnInit, OnChanges, OnDestroy 
             that.searchInfo['centerCoords'] = results.locations[0]['geoInfo'];
             console.log("RESULTS OF LOCATION SEARCH FOR MAP: ", results);
             that.radiusCircle = L.circle(
-              that.searchInfo.centerCoords,
+              leafletCoords,
               {radius: that.searchInfo.distance*1609.34, color: 'white', fillColor: 'gray'});
             that.circleGroup = L.featureGroup([that.radiusCircle]).addTo(that.map);
             callback(true);
@@ -167,9 +175,13 @@ export class ListingsSearchMapComponent implements OnInit, OnChanges, OnDestroy 
             callback(false)
           });
     }
-    else if(this.searchInfo['showExtentsOnMap'] && (this.searchInfo['centerCoords'] && this.searchInfo['centerCoords'].length === 2)) {
+    else if(this.searchInfo['showExtentsOnMap'] && (this.searchInfo['centerCoords'] && Object.getOwnPropertyNames(this.searchInfo['centerCoords']).length === 2)) {
+      const leafletCoords = {
+        lng: that.searchInfo['centerCoords'] && that.searchInfo['centerCoords']['longitude'],
+        lat: that.searchInfo['centerCoords'] && that.searchInfo['centerCoords']['latitude']
+      };
       that.radiusCircle = L.circle(
-        that.searchInfo.centerCoords,
+        leafletCoords,
         {radius: that.searchInfo.distance*1609.34, color: 'white', fillColor: 'gray'});
       that.circleGroup = L.featureGroup([that.radiusCircle]).addTo(that.map);
       callback(true);

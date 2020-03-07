@@ -20,6 +20,6 @@ export class IconLinkComponent {
   constructor( private icons: IconService ) {}
 
   buildIconClass(icon: string, size: string = '2') {
-    return this.icons.buildIconClass(icon, size);
+    return this.icons.buildIconClass(icon, size, 'b');
   }
 }

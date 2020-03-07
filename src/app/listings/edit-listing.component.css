@@ -62,8 +62,8 @@ mat-form-field {
 
 /*Min/Max width on input lines (to avoid cutting placeholders off or input lines being awkwardly long)*/
 ::ng-deep .mat-form-field-wrapper, .images-container {
-  width: 90%;
-  min-width: 280px;
+  width: 50%;
+  min-width: 300px;
   max-width: 600px;
 }
 ::ng-deep mat-form-field.price-input-container .mat-form-field-wrapper {
@@ -72,7 +72,7 @@ mat-form-field {
   max-width: 250px;
 }
 
-/deep/ div.mat-form-field-infix > textarea {
+::ng-deep div.mat-form-field-infix > textarea {
   border-radius: 5px;
   background-color: #8c8c8c;
   padding: 3px;
@@ -110,9 +110,9 @@ mat-form-field {
 }
 
 label.upload-file-label-button {
-  border: 1px solid white;
+  /*border: 1px solid white;*/
   border-radius: 3px;
-  background-color: gray;
+  background-color: #8c8c8c;
   color: white;
   margin-top: 5px;
   padding: 2px;
@@ -182,6 +182,13 @@ label.upload-file-label-button {
   color: gray;
 }
 
+/*Style the mat-badge on images*/
+::ng-deep div.messages-tab-label span {
+  background-color: black;  /* 0 opacity = transparent except text */
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+}
 
 ::ng-deep mat-label.price-input-label:parent:parent:parent {
   margin-left: -2em;
@@ -230,7 +237,7 @@ a.listing-saveicon {
 div.location-map-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
 }
 
 

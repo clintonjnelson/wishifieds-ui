@@ -3,13 +3,30 @@
   <div class="search-box">
     <form #searchForm="ngForm" name="searchForm" (ngSubmit)="search($event)" class="search-box-form">
 
+      <!-- Primary (non-advanced) -->
+      <div class="search-bar">
+        <mat-form-field mat-float [ngStyle]="{'color': 'white'}" layout="row" class="search-box-input-container">
+          <input matInput type="text" [(ngModel)]="searchInfo.searchStr" placeholder="what are YOU selling?" name="searchStr">
+        </mat-form-field>
+
+        <!-- Standard Search Button -->
+        <button (click)="search($event)" type="submit" class="search-btn-icon" aria-label="search button">
+          <i class="fa fa-search fa-2x sp-hover"></i>
+        </button>
+
+        <!-- Analytics Search Button -->
+        <!-- <button *ngIf="showAdvanced" (click)="toggleAnalytics($event)" type="button" class="search-btn-icon analytics-btn-icon">
+          <i class="fa fa-chart-bar fa-2x sp-hover"></i>
+        </button> -->
+      </div>
+
       <!-- Advanced Options-->
       <div class="advanced-container">
-        <p (click)="toggleAdvanced(true)" *ngIf="!showAdvanced">
+        <p (click)="toggleAdvanced(true)" *ngIf="!showAdvanced" class="advanced-button">
           <small><u>advanced</u></small>
         </p>
         <!-- Distance -->
-        <div *ngIf="showAdvanced">
+        <div *ngIf="showAdvanced" class="advanced-grouping">
           <div class="radius-select">
             <mat-form-field>
               <mat-label>Radius (miles)</mat-label>
@@ -34,23 +51,6 @@
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Primary (non-advanced) -->
-      <div class="search-bar">
-        <mat-form-field mat-float [ngStyle]="{'color': 'white'}" layout="row" class="search-box-input-container">
-          <input matInput type="text" [(ngModel)]="searchInfo.searchStr" placeholder="what are YOU selling?" name="searchStr">
-        </mat-form-field>
-
-        <!-- Standard Search Button -->
-        <button (click)="search($event)" type="submit" class="search-btn-icon" aria-label="search button">
-          <i class="fa fa-search fa-2x sp-hover"></i>
-        </button>
-
-        <!-- Analytics Search Button -->
-        <button *ngIf="showAdvanced" (click)="toggleAnalytics($event)" type="button" class="search-btn-icon analytics-btn-icon">
-          <i class="fa fa-chart-bar fa-2x sp-hover"></i>
-        </button>
       </div>
     </form>
     <p *ngIf="!hasSearched">Search to find buyers!</p>

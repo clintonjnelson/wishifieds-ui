@@ -25,18 +25,7 @@
   <div *ngIf="showLoginLinks && !auth.isLoggedIn" (click)="toggleShowLoginLinks()" matTooltip="[click to hide]" matTooltipPosition="above"  class="nav-toggle-control">
     <i class="{{buildIconClass('angle-double-right', '3')}}"></i>
   </div>
-  <div class="nav-right-links-container" *ngIf="auth.isLoggedOut">
-    <ul *ngIf="showLoginLinks" class="navbar-login-links">
-      <li class="nav-links-oauth" *ngFor="let link of oauthLinks">
-        <icon-link [url]="link.url"
-                   [icon]="link.icon"
-                   [bgColor]="link.bgColor"
-                   [iconSize]="'3'"
-                   (click)="gaClick(link.icon)">
-        </icon-link>
-      </li>
-    </ul>
-  </div>
+
 
 
   <!-- Icons When Logged IN -->

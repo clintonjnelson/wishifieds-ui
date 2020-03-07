@@ -54,6 +54,7 @@ export class ListingsSearchResultsComponent implements OnInit, OnChanges {
     this.resetListings();
   }
 
+  // This compiles our FULL list of possible filters for display
   private extractFiltersFromListings() {
     const that = this;
     this.listings.forEach((listing) => {
@@ -102,10 +103,13 @@ export class ListingsSearchResultsComponent implements OnInit, OnChanges {
       this.resetListings();
     }
     else {
+      // filters have name: false for ON and name: true for OFF. Get all of the ON(false) filters.
+      const onFilters = Object.keys(that.filters).filter(filterName => that.filters[filterName] );
+
+      // Show listing IF listing has ALL of selected filters
       this.filteredListings = this.listings.filter(function(listing) {
-        let tags = listing.tags.map(t => t.name);
-        // Check to see if one or more of the listing's tags supports it being shown
-        return tags.some(tag => that.filters[tag]);
+        let tagNames = listing.tags.map(t => t.name);
+        return onFilters.every(filter => tagNames.indexOf(filter) > -1 );
       });
     }
   }
